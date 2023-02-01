@@ -35,7 +35,6 @@
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
     "camelcase": "error",
-    "spaced-comment": "error",
     "quotes": ["error", "single"],
     "no-duplicate-imports": "error",
     "no-console": "warn",
