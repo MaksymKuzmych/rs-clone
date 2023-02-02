@@ -26,7 +26,7 @@ export enum Position {
 
 export enum TransactionType {
   Income = 'income',
-  Cost = 'cost',
+  Expenses = 'expenses',
 }
 
 export enum Shift {
