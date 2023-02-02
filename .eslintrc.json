@@ -5,7 +5,6 @@
     "jest": true
   },
   "extends": [
-    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
@@ -25,25 +24,24 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/no-explicit-any": "error",
-    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "import/prefer-default-export": "off",
+    "comma-dangle": ["error", "only-multiline"],
     "react/prop-types": "off",
-    "camelcase": "error",
-    "quotes": ["error", "single"],
-    "no-duplicate-imports": "error",
-    "no-console": "warn",
-    "prettier/prettier": ["error", { "endOfLine": "lf" }]
+    "react/display-name": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "prettier/prettier": ["error", { "endOfLine": "lf" }],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-var-requires": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-console": "warn"
   },
   "settings": {
-    "import/resolver": {
-      "typescript": {}
-    },
     "react": {
       "version": "detect"
     }
