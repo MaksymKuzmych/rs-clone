@@ -1,6 +1,6 @@
-import { Currency, Lang, Period, Position } from '../enums';
+import { Currency, Lang, Period } from '../enums';
 import { IStore } from '../interfaces';
-import { getDate } from './get-date';
+import { getPeriod } from './get-period';
 
 export const store: IStore = {
   login: false,
@@ -9,8 +9,7 @@ export const store: IStore = {
     currency: Currency.USD,
     selectedAccount: null,
     periodType: Period.Month,
-    periodStart: getDate(new Date(), Period.Month, Position.Start),
-    periodEnd: getDate(new Date(), Period.Month, Position.End),
+    period: getPeriod(Period.Month, new Date()),
   },
   data: {
     accounts: [

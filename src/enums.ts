@@ -19,17 +19,7 @@ export enum Period {
   Month = 'month',
 }
 
-export enum Position {
-  Start = 'start',
-  End = 'end',
-}
-
 export enum TransactionType {
   Income = 'income',
   Expenses = 'expenses',
-}
-
-export enum Shift {
-  Increase = 'increase',
-  Decrease = 'decrease ',
 }

@@ -5,8 +5,7 @@ export interface ISettings {
   currency: Currency;
   selectedAccount: null | number;
   periodType: Period;
-  periodStart: Date | null;
-  periodEnd: Date | null;
+  period: { start: Date | null; end: Date | null };
 }
 
 export interface IAccount {
