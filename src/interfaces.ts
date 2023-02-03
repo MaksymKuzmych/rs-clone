@@ -9,7 +9,7 @@ export interface ISettings {
   periodEnd: Date | null;
 }
 
-export interface IAcount {
+export interface IAccount {
   id: number;
   name: string;
   iconID: number;
@@ -37,7 +37,7 @@ export interface ITransaction {
 }
 
 export interface IData {
-  accounts: IAcount[];
+  accounts: IAccount[];
   categories: ICategory[];
   transactions: ITransaction[];
 }
