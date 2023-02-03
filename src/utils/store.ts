@@ -1,8 +1,8 @@
 import { Currency, Lang, Period, Position } from '../enums';
 import { IStore } from '../interfaces';
-import getDate from './get-date';
+import { getDate } from './get-date';
 
-const store: IStore = {
+export const store: IStore = {
   login: false,
   settings: {
     lang: Lang.EN,
@@ -92,5 +92,3 @@ const store: IStore = {
     transactions: [],
   },
 };
-
-export default store;

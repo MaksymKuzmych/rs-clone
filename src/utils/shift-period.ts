@@ -1,6 +1,6 @@
 import { Period, Shift } from '../enums';
 
-const shiftPeriod = (date: Date, type: Period, shift: Shift) => {
+export const shiftPeriod = (date: Date, type: Period, shift: Shift) => {
   switch (type) {
     case Period.Year:
       if (shift === Shift.Increase) {
@@ -31,5 +31,3 @@ const shiftPeriod = (date: Date, type: Period, shift: Shift) => {
       return null;
   }
 };
-
-export default shiftPeriod;

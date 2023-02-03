@@ -1,6 +1,6 @@
 import { Period, Position } from '../enums';
 
-const getDate = (date: Date, type: Period, position: Position) => {
+export const getDate = (date: Date, type: Period, position: Position) => {
   switch (type) {
     case Period.All:
       return null;
@@ -38,5 +38,3 @@ const getDate = (date: Date, type: Period, position: Position) => {
       }
   }
 };
-
-export default getDate;
