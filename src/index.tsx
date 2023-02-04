@@ -6,7 +6,7 @@ import { App } from './components/App';
 import './i18n';
 
 import './index.scss';
-import { readData, readDataOnce, writeData } from './utils/firebase';
+import { readDataOnce, writeData } from './utils/firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
