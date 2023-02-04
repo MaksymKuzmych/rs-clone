@@ -6,6 +6,7 @@ import { App } from './components/App';
 import './i18n';
 
 import './index.scss';
+import { readData, readDataOnce, writeData } from './utils/firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -15,3 +16,5 @@ root.render(
     </Suspense>
   </BrowserRouter>,
 );
+writeData(1, ['Anna', 'Marina', 'Katya'], 23);
+readDataOnce();
