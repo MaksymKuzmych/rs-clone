@@ -9,7 +9,7 @@ export const store: IStore = {
     currency: Currency.USD,
     selectedAccount: null,
     periodType: Period.Month,
-    period: getPeriod(Period.Month, new Date()),
+    period: getPeriod(Period.Month, Date.now()),
   },
   data: {
     accounts: [

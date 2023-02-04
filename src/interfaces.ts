@@ -5,7 +5,15 @@ export interface ISettings {
   currency: Currency;
   selectedAccount: null | number;
   periodType: Period;
-  period: { start: Date | null; end: Date | null };
+  period: { start: number | null; end: number | null };
+}
+
+export interface ISettingsFirebase {
+  lang?: Lang;
+  currency?: Currency;
+  selectedAccount?: null | number;
+  periodType?: Period;
+  period?: { start: number | null; end: number | null };
 }
 
 export interface IAccount {

@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './components/App';
+import { Period } from './enums';
 import './i18n';
 
 import './index.scss';
-import { readDataOnce, writeData } from './utils/firebase';
+import { setUserSettings } from './utils/firebase';
+import { getPeriod } from './utils/get-period';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -16,5 +18,7 @@ root.render(
     </Suspense>
   </BrowserRouter>,
 );
-writeData(1, ['Anna', 'Marina', 'Katya'], 23);
-readDataOnce();
+setUserSettings(1, {
+  periodType: Period.Range,
+  period: getPeriod(Period.Range, new Date(2023, 1, 1).getTime(), Date.now()),
+});
