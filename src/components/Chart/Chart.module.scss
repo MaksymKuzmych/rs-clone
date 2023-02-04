@@ -1,0 +1,24 @@
+@import '../../styles/variables.scss';
+
+.chartWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.chartInfo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.totalExpenses {
+  color: $red-font;
+}
+
+.totalIncome{
+  color: $turquoise;
+}

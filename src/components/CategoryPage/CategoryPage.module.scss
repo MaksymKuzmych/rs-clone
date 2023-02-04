@@ -1,0 +1,64 @@
+@import '../../styles/variables.scss';
+
+.wrapper {
+  padding: 10px;
+}
+
+.categoryArea {
+  padding: 0 20px;
+  display: grid;
+  grid-template-areas: 
+    'lineTop lineTop lineTop lineTop'
+    'lineLeft chart chart lineRight'
+    'lineLeft chart chart lineRight'
+    'lineLeft chart chart lineRight'
+    'lineLeft chart chart lineRight'
+    'lineBottom lineBottom lineBottom lineBottom';
+}
+
+.lineTop {
+  grid-area: lineTop;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.lineBottom {
+  grid-area: lineBottom;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.lineLeft {
+  grid-area: lineLeft;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.lineRight {
+  grid-area: lineRight;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+.chartWrapper {
+  grid-area: chart;
+}
+
+.buttonPlus {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed $gray;
+  background-color: $gray-light;
+  color: $gray;
+  width: 47px;
+  height: 47px;
+  padding: 10px;
+}

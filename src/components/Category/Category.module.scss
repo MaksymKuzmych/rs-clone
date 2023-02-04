@@ -1,0 +1,20 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categoryImg {
+  padding: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoryTitle {
+  font-weight: 500;
+}
