@@ -1,10 +1,13 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, child, get } from 'firebase/database';
-import { ISettingsFirebase, IStore } from '../interfaces';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
+import {
+  DataAllFB,
+  IDataFBDelete,
+  IDataFBPush,
+  IDataFBUpdate,
+  ISettingsFB,
+  IStore,
+} from '../interfaces';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,124 +21,166 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Realtime Database and get a reference to the service
-export const database = getDatabase(app);
-const db = getDatabase();
-
-export const exampleReadData = (userId: number) => {
-  const getName = ref(db, 'users/' + userId);
-  onValue(getName, (/*snapshot*/) => {
-    // const data = snapshot.val();
-    // console.log(data);
-  });
-};
-
-// export const exampleReadDataOnce = (userId: number) => {
-//   const dbRef = ref(getDatabase());
-//   get(child(dbRef, `users/` + userId))
-//     .then((snapshot) => {
-//       if (snapshot.exists()) {
-//         console.log(snapshot.val());
-//       } else {
-//         console.log('No data available');
-//       }
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// };
+export const app = initializeApp(firebaseConfig);
 
 export const createUser = async (userId: number, store: IStore) => {
-  await set(ref(db, 'users/' + userId), {
-    settings: store.settings,
-    data: store.data,
-  });
-};
-
-export const setUserSettings = async (userId: number, settings: ISettingsFirebase) => {
-  const lang = settings.lang;
-  const currency = settings.currency;
-  const selectedAccount = settings.selectedAccount;
-  const periodType = settings.periodType;
-  const period = settings.period;
-
-  if (lang) {
-    await set(ref(db, `users/${userId}/settings/lang`), { lang });
-  }
-  if (currency) {
-    await set(ref(db, `users/${userId}/settings/currency`), { currency });
-  }
-  if (selectedAccount) {
-    await set(ref(db, `users/${userId}/settings/selectedAccount`), { selectedAccount });
-  }
-  if (periodType) {
-    await set(ref(db, `users/${userId}/settings/periodType`), { periodType });
-  }
-  if (period) {
-    await set(ref(db, `users/${userId}/settings/period`), { period });
-  }
-};
-
-export const setUserData = async (userId: number) => {
-  await set(ref(db, 'users/' + userId + '/data'), {
-    time: Date.now(),
-  });
-};
-
-export const getUser = (userId: number) => {
-  const dbRef = ref(getDatabase());
-  get(child(dbRef, `users/` + userId))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        // console.log(snapshot.val());
-      } else {
-        // console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      // console.error(error);
+  const db = getDatabase();
+  try {
+    await set(ref(db, 'users/' + userId), {
+      settings: store.settings,
+      data: store.data,
     });
+  } catch (error) {
+    throw new Error('Firebase createUser: Create failed...');
+  }
 };
 
-// import { getDatabase, ref, child, push, update } from "firebase/database";
+export const getUser = async (userId: number) => {
+  const dbRef = ref(getDatabase());
+  let message = '';
+  try {
+    const snapshot = await get(child(dbRef, `users/` + userId));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      message = 'Firebase getUser: User not found!';
+      throw new Error();
+    }
+  } catch (error) {
+    throw message ? new Error(message) : new Error('Firebase getUser: Read failed...');
+  }
+};
 
-// function writeNewPost(uid, username, picture, title, body) {
-//   const db = getDatabase();
+export const deleteUser = async (userId: number) => {
+  const db = getDatabase();
+  let message = '';
+  try {
+    const snapshot = await get(child(ref(db), 'users/' + userId));
+    if (!snapshot.exists()) {
+      message = 'Firebase deleteUser: User not found!';
+      throw new Error();
+    } else {
+      await remove(ref(db, 'users/' + userId));
+    }
+  } catch (error) {
+    throw message ? new Error(message) : new Error('Firebase deleteUser: Delete failed...');
+  }
+};
 
-//   // A post entry.
-//   const postData = {
-//     author: username,
-//     uid: uid,
-//     body: body,
-//     title: title,
-//     starCount: 0,
-//     authorPic: picture
-//   };
+export const getUserSettings = async (userId: number) => {
+  const db = getDatabase();
+  let message = '';
+  try {
+    const snapshot = await get(child(ref(db), `users/${userId}/settings`));
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      message = 'Firebase getUserSettings: Settings not found!';
+      throw new Error();
+    }
+  } catch (error) {
+    throw message ? new Error(message) : new Error('Firebase getUserSettings: Read failed...');
+  }
+};
 
-//   // Get a key for a new Post.
-//   const newPostKey = push(child(ref(db), 'posts')).key;
+export const updateUserSettings = async (userId: number, settings: ISettingsFB) => {
+  const db = getDatabase();
 
-//   // Write the new post's data simultaneously in the posts list and the user's post list.
-//   const updates = {};
-//   updates['/posts/' + newPostKey] = postData;
-//   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+  try {
+    Object.entries(settings).forEach(async (setting) => {
+      const updates = { [`users/${userId}/settings/${setting[0]}`]: setting[1] };
+      await update(ref(db), updates);
+    });
+  } catch (error) {
+    new Error('Firebase updateUserSettings: Write failed...');
+  }
+};
 
-//   return update(ref(db), updates);
-// }
+export const getUserData = async (userId: number, data: IDataFBDelete) => {
+  const db = getDatabase();
+  let message = '';
+  try {
+    const accounts = Object.entries(data);
+    const snapshot = await get(
+      child(ref(db), `users/${userId}/data/${accounts[0][0]}/${accounts[0][1]}`),
+    );
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      message = 'Firebase getUserData: Data not found!';
+      throw new Error();
+    }
+  } catch (error) {
+    throw message ? new Error(message) : new Error('Firebase getUserData: Read failed...');
+  }
+};
 
-// import { getDatabase, ref, set } from "firebase/database";
+export const updateUserData = async (userId: number, data: IDataFBUpdate) => {
+  const db = getDatabase();
 
-// const db = getDatabase();
-// set(ref(db, 'users/' + userId), {
-//   username: name,
-//   email: email,
-//   profile_picture : imageUrl
-// })
-// .then(() => {
-//   // Data saved successfully!
-// })
-// .catch((error) => {
-//   // The write failed...
-// });
+  try {
+    Object.entries(data).forEach(async (accounts) => {
+      Object.entries(accounts[1]).forEach(async (id) => {
+        Object.entries(id[1] as DataAllFB).forEach(async (color) => {
+          const updates = {
+            [`users/${userId}/data/${accounts[0]}/${id[0]}/${color[0]}`]: color[1],
+          };
+          await update(ref(db), updates);
+        });
+      });
+    });
+  } catch (error) {
+    new Error('Firebase updateUserData: Write failed...');
+  }
+};
+
+export const pushUserData = async (userId: number, data: IDataFBPush) => {
+  const db = getDatabase();
+
+  try {
+    Object.entries(data).forEach(async (accounts) => {
+      Object.entries(accounts[1]).forEach(async (id) => {
+        const updates = {
+          [`users/${userId}/data/${accounts[0]}/${id[0]}`]: id[1],
+        };
+        await update(ref(db), updates);
+      });
+    });
+  } catch (error) {
+    new Error('Firebase pushUserData: Write failed...');
+  }
+};
+
+export const deleteUserData = async (userId: number, data: IDataFBDelete) => {
+  const db = getDatabase();
+  let message = '';
+  try {
+    Object.entries(data).forEach(async (accounts) => {
+      const snapshot = await get(
+        child(ref(db), `users/${userId}/data/${accounts[0]}/${accounts[1]}`),
+      );
+      if (!snapshot.exists()) {
+        message = 'Firebase deleteUserData: Data not found!';
+        throw new Error();
+      } else {
+        await remove(ref(db, `users/${userId}/data/${accounts[0]}/${accounts[1]}`));
+      }
+    });
+  } catch (error) {
+    throw message ? new Error(message) : new Error('Firebase deleteUserData: Delete failed...');
+  }
+};
+
+// Examples
+
+// await createUser(1, store);
+// await getUser(1);
+// await deleteUser(1);
+
+// await getUserSettings(1);
+// await updateUserSettings(1, { lang: Lang.RU });
+
+// await getUserData(1, { accounts: 1 })
+// await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
+// await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
+// await deleteUserData(1, { categories: 8 });
