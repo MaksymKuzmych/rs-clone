@@ -41,57 +41,10 @@ export interface IData {
   transactions: { [id: number]: ITransaction };
 }
 
-export interface IStore {
-  login: boolean;
-  settings: ISettings;
-  data: IData;
-}
-
-export interface ISettingsFB {
-  lang?: Lang;
-  currency?: Currency;
-  selectedAccount?: null | number;
-  periodType?: Period;
-  period?: { start: number | null; end: number | null };
-}
-
-export interface IAccountFB {
-  id?: number;
-  name?: string;
-  iconID?: number;
-  colorID?: number;
-  balance?: number;
-  description?: string;
-}
-
-export interface ICategoryFB {
-  id?: number;
-  name?: string;
-  iconID?: number;
-  colorID?: number;
-  description?: string;
-}
-
-export interface ITransactionFB {
-  id?: number;
-  date?: number;
-  type?: TransactionType;
-  account?: number;
-  category?: number;
-  amount?: number;
-  description?: string;
-}
-
-export interface IDataFBUpdate {
-  accounts?: { [id: number]: IAccountFB };
-  categories?: { [id: number]: ICategoryFB };
-  transactions?: { [id: number]: ITransactionFB };
-}
-
-export interface IDataFBPush {
-  accounts?: { [id: number]: IAccount };
-  categories?: { [id: number]: ICategory };
-  transactions?: { [id: number]: ITransaction };
+export interface IDataFB {
+  accounts?: { [id: number]: Partial<IAccount> };
+  categories?: { [id: number]: Partial<ICategory> };
+  transactions?: { [id: number]: Partial<ITransaction> };
 }
 
 export interface IDataFBDelete {
@@ -100,4 +53,10 @@ export interface IDataFBDelete {
   transactions?: number;
 }
 
-export type DataAllFB = IAccountFB | ICategoryFB | ITransactionFB;
+export interface IStore {
+  login: boolean;
+  settings: ISettings;
+  data: IData;
+}
+
+export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;

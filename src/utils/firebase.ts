@@ -1,13 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
-import {
-  DataAllFB,
-  IDataFBDelete,
-  IDataFBPush,
-  IDataFBUpdate,
-  ISettingsFB,
-  IStore,
-} from '../interfaces';
+import { Lang } from '../enums';
+import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
+import { store } from './store';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -83,7 +78,7 @@ export const getUserSettings = async (userId: number) => {
   }
 };
 
-export const updateUserSettings = async (userId: number, settings: ISettingsFB) => {
+export const updateUserSettings = async (userId: number, settings: Partial<ISettings>) => {
   const db = getDatabase();
 
   try {
@@ -115,7 +110,7 @@ export const getUserData = async (userId: number, data: IDataFBDelete) => {
   }
 };
 
-export const updateUserData = async (userId: number, data: IDataFBUpdate) => {
+export const updateUserData = async (userId: number, data: IDataFB) => {
   const db = getDatabase();
 
   try {
@@ -134,7 +129,7 @@ export const updateUserData = async (userId: number, data: IDataFBUpdate) => {
   }
 };
 
-export const pushUserData = async (userId: number, data: IDataFBPush) => {
+export const pushUserData = async (userId: number, data: Partial<IData>) => {
   const db = getDatabase();
 
   try {
@@ -173,14 +168,16 @@ export const deleteUserData = async (userId: number, data: IDataFBDelete) => {
 
 // Examples
 
-// await createUser(1, store);
-// await getUser(1);
-// await deleteUser(1);
+// export const firebase = async () => {
+//   await createUser(1, store);
+//   console.log(await getUser(1));
+//   await deleteUser(1);
 
-// await getUserSettings(1);
-// await updateUserSettings(1, { lang: Lang.RU });
+//   console.log(await getUserSettings(1));
+//   await updateUserSettings(1, { lang: Lang.RU });
 
-// await getUserData(1, { accounts: 1 })
-// await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
-// await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
-// await deleteUserData(1, { categories: 8 });
+//   console.log(await getUserData(1, { accounts: 1 }));
+//   await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
+//   await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
+//   await deleteUserData(1, { categories: 8 });
+// };
