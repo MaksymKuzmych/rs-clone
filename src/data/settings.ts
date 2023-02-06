@@ -7,5 +7,5 @@ export const settings: ISettings = {
   currency: Currency.USD,
   selectedAccount: null,
   periodType: Period.Month,
-  period: getPeriod(Period.Month, new Date()),
+  period: getPeriod(Period.Month, Date.now()),
 };
