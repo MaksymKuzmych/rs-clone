@@ -1,20 +1,50 @@
+@import '../../styles/variables.scss';
+
 .category {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.categoryImg {
-  padding: 10px;
+.categoryEmpty {
+  opacity: 0.5;
+}
+
+.buttonAdd {
+  border: 2px dashed $light-gray;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 51px;
+  height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.categoryTitle {
+.title {
   font-weight: 500;
+  margin: 0;
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+
+.sum {
+  padding-top: 10px;
+  color: $gray;
+  font-weight: 700;
+}
+
+.add {
+  color: $light-gray;
 }

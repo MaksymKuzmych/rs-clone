@@ -1,178 +1,131 @@
 import { Category } from '../Category/Category';
-import { Chart } from '../Chart/Chart';
+import { ChartComponent } from '../Chart/Chart';
 import styles from './CategoryPage.module.scss';
-import { IChart, IChartItem } from '../Chart/Chart';
+import { IChart } from '../Chart/Chart';
+import { colors } from '../../data';
+import { store } from '../../utils/store';
+import { TransactionType, CurrencySymbol } from '../../enums';
+import { ICategory } from '../../interfaces';
 
 export const CategoryPage = () => {
-  const data: IChart = [];
-  store.data.transactions.forEach((item) => {
-    const obj: IChartItem = {
-      value: item.amount,
-      label: String(item.category),
-    };
-    data.push(obj);
+  const dataForChart: IChart = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Expenses',
+        data: [],
+        backgroundColor: [],
+      },
+    ],
+  };
+
+  const currencySuymbol = CurrencySymbol[store.settings.currency];
+
+  const categories = Object.values(store.data.categories);
+  if (categories.length < 12) {
+    categories.push({
+      id: 0,
+      name: '',
+      iconID: 41,
+      colorID: 21,
+      description: '',
+    });
+  }
+
+  categories.forEach((item) => {
+    dataForChart.labels.push(item.name);
+    const color = colors.find((color) => color.id === item.colorID)?.color;
+    if (color) {
+      dataForChart.datasets[0].backgroundColor.push(color);
+    }
+    const categorySum = storeTr.data.transactions
+      .filter((action) => action.category === item.id)
+      .reduce((sum, current) => sum + current.amount, 0);
+    dataForChart.datasets[0].data.push(categorySum);
   });
+
+  const income = storeTr.data.transactions
+    .filter((item) => item.type === TransactionType.Income)
+    .reduce((sum, current) => sum + current.amount, 0);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.categoryPage}>
         <div className={styles.categoryArea}>
-          <div className={styles.lineTop}>
-            {store.data.categories
-              .filter((item, index) => index < 4)
-              .map((category) => (
-                <Category
-                  id={category.id}
-                  name={category.name}
-                  iconID={category.iconID}
-                  colorID={category.colorID}
-                  description={category.description}
-                  key={category.id}
-                />
-              ))}
-          </div>
-          <div className={styles.lineLeft}>
-            {store.data.categories
-              .filter((item, index) => index >= 4 && index < 6)
-              .map((category) => (
-                <Category
-                  id={category.id}
-                  name={category.name}
-                  iconID={category.iconID}
-                  colorID={category.colorID}
-                  description={category.description}
-                  key={category.id}
-                />
-              ))}
-          </div>
-          <div className={styles.lineRight}>
-            {store.data.categories
-              .filter((item, index) => index >= 6 && index < 8)
-              .map((category) => (
-                <Category
-                  id={category.id}
-                  name={category.name}
-                  iconID={category.iconID}
-                  colorID={category.colorID}
-                  description={category.description}
-                  key={category.id}
-                />
-              ))}
-          </div>
-          <div className={styles.lineBottom}>
-            {store.data.categories
-              .filter((item, index) => index >= 8 && index < 12)
-              .map((category) => (
-                <Category
-                  id={category.id}
-                  name={category.name}
-                  iconID={category.iconID}
-                  colorID={category.colorID}
-                  description={category.description}
-                  key={category.id}
-                />
-              ))}
-          </div>
-          <Chart dataChart={data} />
+          <CategoriesLine
+            dataCategories={categories}
+            start={0}
+            end={4}
+            currencySymbol={currencySuymbol}
+            class={'lineTop'}
+          />
+          <CategoriesLine
+            dataCategories={categories}
+            start={4}
+            end={6}
+            currencySymbol={currencySuymbol}
+            class={'lineLeft'}
+          />
+          <CategoriesLine
+            dataCategories={categories}
+            start={6}
+            end={8}
+            currencySymbol={currencySuymbol}
+            class={'lineRight'}
+          />
+          <CategoriesLine
+            dataCategories={categories}
+            start={8}
+            end={12}
+            currencySymbol={currencySuymbol}
+            class={'lineBottom'}
+          />
+          <ChartComponent
+            dataChart={dataForChart}
+            income={income}
+            currencySymbol={currencySuymbol}
+          />
         </div>
-        <button className={styles.buttonPlus}>
-          <span className='material-icons'>add</span>
-        </button>
       </div>
     </div>
   );
 };
 
-export interface ICategory {
-  id: number;
-  name: string;
-  iconID: number;
-  colorID: number;
-  description: string;
+const CategoriesLine = (props: props) => {
+  const name = props.class;
+  return (
+    <div className={styles[`${name}`]}>
+      {props.dataCategories
+        .filter((item, index) => index >= props.start && index < props.end)
+        .map((category) => (
+          <Category
+            dataCategory={category}
+            key={category.id}
+            sum={storeTr.data.transactions
+              .filter((item) => item.category === category.id)
+              .reduce((sum, current) => sum + current.amount, 0)}
+            currencySymbol={props.currencySymbol}
+          />
+        ))}
+    </div>
+  );
+};
+
+interface props {
+  dataCategories: ICategory[];
+  start: number;
+  end: number;
+  currencySymbol: string;
+  class: string;
 }
 
-const store = {
+const storeTr = {
   data: {
-    accounts: [
-      {
-        id: 1,
-        name: 'Card',
-        iconID: 1,
-        colorID: 1,
-        balance: 0,
-        description: '',
-      },
-      {
-        id: 2,
-        name: 'Cash',
-        iconID: 2,
-        colorID: 2,
-        balance: 0,
-        description: '',
-      },
-    ],
-    categories: [
-      {
-        id: 1,
-        name: 'Groceries',
-        iconID: 1,
-        colorID: 1,
-        description: '',
-      },
-      {
-        id: 2,
-        name: 'Restaurant',
-        iconID: 2,
-        colorID: 2,
-        description: '',
-      },
-      {
-        id: 3,
-        name: 'Leisure',
-        iconID: 3,
-        colorID: 3,
-        description: '',
-      },
-      {
-        id: 4,
-        name: 'Transport',
-        iconID: 4,
-        colorID: 4,
-        description: '',
-      },
-      {
-        id: 5,
-        name: 'Health',
-        iconID: 5,
-        colorID: 5,
-        description: '',
-      },
-      {
-        id: 6,
-        name: 'Gifts',
-        iconID: 6,
-        colorID: 6,
-        description: '',
-      },
-      {
-        id: 7,
-        name: 'Family',
-        iconID: 7,
-        colorID: 7,
-        description: '',
-      },
-      {
-        id: 8,
-        name: 'Shopping',
-        iconID: 8,
-        colorID: 8,
-        description: '',
-      },
-    ],
     transactions: [
       {
         id: 1,
         date: Date,
-        type: 'income',
+        type: 'expenses',
         account: 689,
         category: 2,
         amount: 500,
@@ -181,7 +134,7 @@ const store = {
       {
         id: 4,
         date: Date,
-        type: 'income',
+        type: 'expenses',
         account: 689,
         category: 1,
         amount: 50,
@@ -190,7 +143,7 @@ const store = {
       {
         id: 3,
         date: Date,
-        type: 'income',
+        type: 'expenses',
         account: 689,
         category: 7,
         amount: 520,
@@ -199,10 +152,73 @@ const store = {
       {
         id: 4,
         date: Date,
-        type: 'income',
+        type: 'expenses',
         account: 689,
         category: 2,
         amount: 80,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'expenses',
+        account: 689,
+        category: 3,
+        amount: 80,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'expenses',
+        account: 689,
+        category: 6,
+        amount: 80,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'expenses',
+        account: 689,
+        category: 2,
+        amount: 38,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'expenses',
+        account: 689,
+        category: 4,
+        amount: 80,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'expenses',
+        account: 689,
+        category: 1,
+        amount: 40,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'income',
+        account: 689,
+        category: null,
+        amount: 4050,
+        description: 'string',
+      },
+      {
+        id: 4,
+        date: Date,
+        type: 'income',
+        account: 689,
+        category: null,
+        amount: 50,
         description: 'string',
       },
     ],

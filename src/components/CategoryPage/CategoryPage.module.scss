@@ -1,56 +1,65 @@
 @import '../../styles/variables.scss';
 
 .wrapper {
-  padding: 10px;
+  padding: 40px 0;
 }
 
 .categoryArea {
-  padding: 0 20px;
   display: grid;
   grid-template-areas: 
     'lineTop lineTop lineTop lineTop'
     'lineLeft chart chart lineRight'
     'lineLeft chart chart lineRight'
-    'lineLeft chart chart lineRight'
-    'lineLeft chart chart lineRight'
-    'lineBottom lineBottom lineBottom lineBottom';
+    'lineBottom lineBottom lineBottom lineBottom'
+    'buttonAdd buttonAdd buttonAdd buttonAdd';
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
 }
 
 .lineTop {
   grid-area: lineTop;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: 30px;
 }
 
 .lineBottom {
   grid-area: lineBottom;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 30px;
 }
 
 .lineLeft {
   grid-area: lineLeft;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
 }
 
 .lineRight {
   grid-area: lineRight;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
 }
 
 .chartWrapper {
   grid-area: chart;
 }
 
-.buttonPlus {
+.button {
+  grid-area: buttonAdd;
+  width: 25%;
+  padding-top: 70px;
+}
+
+.buttonAdd {
+  margin: 0 auto;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -58,7 +67,11 @@
   border: 2px dashed $gray;
   background-color: $gray-light;
   color: $gray;
-  width: 47px;
-  height: 47px;
-  padding: 10px;
+  width: 53px;
+  height: 53px;
+  cursor: pointer;
+}
+
+.app {
+  background-color: aqua;
 }

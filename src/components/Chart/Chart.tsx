@@ -1,31 +1,51 @@
 import styles from './Chart.module.scss';
-import DonutChart from 'react-donut-chart';
+import 'chart.js/auto';
+import { Chart } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 
-export const Chart = (props: props) => {
+export const ChartComponent = (props: props) => {
+  const { t } = useTranslation();
+  Chart.defaults.plugins.legend.display = false;
   return (
     <div className={styles.chartWrapper}>
-      <DonutChart
+      <Doughnut
         data={props.dataChart}
-        colors={['#4154b0', '#1154b0', '#8154b0']}
-        legend={false}
+        options={{ responsive: true, maintainAspectRatio: true, cutout: '85%' }}
       />
       <div className={styles.chartInfo}>
-        <div>Расходы</div>
-        <div className={styles.totalExpenses}>500</div>
-        <div className={styles.totalIncome}>700</div>
+        <div className={styles.transactionType}>{t('Expenses')}</div>
+        <div className={styles.totalExpenses}>
+          {props.dataChart.datasets[0].data.reduce((sum, current) => sum + current, 0)}&thinsp;
+          {props.currencySymbol}
+        </div>
+        <div className={styles.totalIncome}>
+          {props.income}&thinsp;
+          {props.currencySymbol}
+        </div>
       </div>
     </div>
   );
 };
 
 export type IChartItem = {
-  value: number;
   label: string;
-  isEmpty?: boolean;
+  data: number[];
+  backgroundColor: string[];
+  hoverOffset: number;
 };
 
-export type IChart = IChartItem[];
+export type IChart = {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+  }[];
+};
 
 interface props {
-  dataChart: IChartItem[];
+  dataChart: IChart;
+  income: number;
+  currencySymbol: string;
 }
