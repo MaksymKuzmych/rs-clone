@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
-import { settings } from '../../data/settings';
-import { accounts } from '../../data/accounts';
+import { settings } from '../../../data/settings';
+import { accounts } from '../../../data/accounts';
 
 import styles from './AccountsHeader.module.scss';
 

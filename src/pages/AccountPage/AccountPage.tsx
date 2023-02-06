@@ -1,11 +1,11 @@
 import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
-import { AccountsHeader } from '../../components/AccountsHeader/AccountsHeader';
+import { AccountsHeader } from '../../components/Accounts/AccountsHeader/AccountsHeader';
 import { Loader } from '../../components/UI/Loader/Loader';
 import { useAccounts } from '../../hooks/accounts';
-import { AccountBtn } from '../../components/AccountBtn/AccountBtn';
+import { AccountBtn } from '../../components/Accounts/AccountBtn/AccountBtn';
 
 import styles from './AccountPage.module.scss';
-import { AddAccountBtn } from '../../components/AddAccountBtn/AddAccountBtn';
+import { AddAccountBtn } from '../../components/Accounts/AddAccountBtn/AddAccountBtn';
 
 export const AccountPage = () => {
   const { accounts, loading, error } = useAccounts();

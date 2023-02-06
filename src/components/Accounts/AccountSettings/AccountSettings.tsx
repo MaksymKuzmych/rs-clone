@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-import { IAccount } from '../../interfaces';
-import { BasicButton } from '../UI/Button/BasicButton';
+import { IAccount } from '../../../interfaces';
+import { BasicButton } from '../../UI/Button/BasicButton';
 
 import styles from './AccountSettings.module.scss';
 

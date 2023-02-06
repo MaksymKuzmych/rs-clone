@@ -1,4 +1,4 @@
-import { IAccount } from '../../interfaces';
+import { IAccount } from '../../../interfaces';
 
 import styles from './AccountInfo.module.scss';
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { IAccount } from '../../interfaces';
-import { icons } from '../../data/icons';
-import { colors } from '../../data/colors';
-import { settings } from '../../data/settings';
+import { IAccount } from '../../../interfaces';
+import { icons } from '../../../data/icons';
+import { colors } from '../../../data/colors';
+import { settings } from '../../../data/settings';
 import { AccountSettings } from '../AccountSettings/AccountSettings';
-import { TemporaryDrawer } from '../UI/Drawer/Drawer';
+import { TemporaryDrawer } from '../../UI/Drawer/Drawer';
 import { AccountInfo } from '../AccountInfo/AccountInfo';
 
 interface AccountBtnProps {
