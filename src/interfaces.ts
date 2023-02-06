@@ -46,3 +46,14 @@ export interface IStore {
   settings: ISettings;
   data: IData;
 }
+
+export interface IColor {
+  color: string;
+  id: number;
+  name: string;
+}
+
+export interface IIcon {
+  name: string;
+  id: number;
+}

@@ -1,0 +1,50 @@
+@import '../../styles/variables.scss';
+
+.header {
+  padding: 30px;
+  margin: 0 10px;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.name {
+  font-size: 20px;
+}
+
+.description {
+  color: $light-gray;
+}
+
+.balanceWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.balance {
+  font-size: 20px;
+}
+
+.btnsWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: $dark-gray;
+  padding: 10px;
+  gap: 20px 5px;
+}
