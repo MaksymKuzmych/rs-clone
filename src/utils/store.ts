@@ -1,5 +1,6 @@
 import { Currency, Lang, Period } from '../enums';
 import { IStore } from '../interfaces';
+import { getPeriod } from './get-period';
 
 export const store: IStore = {
   login: false,
