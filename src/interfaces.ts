@@ -5,7 +5,7 @@ export interface ISettings {
   currency: Currency;
   selectedAccount: null | number;
   periodType: Period;
-  period: { start: Date | null; end: Date | null };
+  period: { start: number | null; end: number | null };
 }
 
 export interface IAccount {
@@ -27,7 +27,7 @@ export interface ICategory {
 
 export interface ITransaction {
   id: number;
-  date: Date;
+  date: number;
   type: TransactionType;
   account: number;
   category: number;
@@ -36,9 +36,21 @@ export interface ITransaction {
 }
 
 export interface IData {
-  accounts: IAccount[];
-  categories: ICategory[];
-  transactions: ITransaction[];
+  accounts: { [id: number]: IAccount };
+  categories: { [id: number]: ICategory };
+  transactions: { [id: number]: ITransaction };
+}
+
+export interface IDataFB {
+  accounts?: { [id: number]: Partial<IAccount> };
+  categories?: { [id: number]: Partial<ICategory> };
+  transactions?: { [id: number]: Partial<ITransaction> };
+}
+
+export interface IDataFBDelete {
+  accounts?: number;
+  categories?: number;
+  transactions?: number;
 }
 
 export interface IStore {
@@ -46,3 +58,5 @@ export interface IStore {
   settings: ISettings;
   data: IData;
 }
+
+export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;
