@@ -1,4 +1,10 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .category {
   display: flex;
@@ -6,6 +12,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 10px;
+
+  &:hover .img{
+    filter: brightness(1.2);
+  }
 }
 
 .categoryEmpty {
@@ -20,6 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: $light-gray;
 }
 
 .img {
@@ -30,6 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: filter 0.3s;
 }
 
 .title {

@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .chartWrapper {
   display: flex;
@@ -24,7 +24,7 @@
   font-size: 18px;
 }
 
-.totalIncome{
+.totalIncome {
   color: $turquoise;
 }
 

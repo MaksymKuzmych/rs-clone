@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
-import { CategoryPage } from '../CategoryPage/CategoryPage';
+import { CategoryPage } from '../pages/CategoryPage/CategoryPage';
 
 export const App = () => {
   const { t, i18n } = useTranslation();
