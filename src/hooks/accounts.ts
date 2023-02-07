@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { IAccount } from '../interfaces';
 import { accounts as accountsData } from '../data/accounts';
+import { settings } from '../data/settings';
 
 export const useAccounts = () => {
   const [accounts, setAccounts] = useState<IAccount[]>(accountsData);
+  const [amount, setAmount] = useState(0);
+  const [currency, setCurrency] = useState(settings.currency);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,6 +25,8 @@ export const useAccounts = () => {
       const error = e as Error;
       setLoading(false);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -29,5 +34,14 @@ export const useAccounts = () => {
     getAccounts();
   }, []);
 
-  return { accounts, loading, error, addAccount };
+  useEffect(() => {
+    const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);
+    setAmount(allCardsAmount);
+  }, [accounts]);
+
+  useEffect(() => {
+    setCurrency(settings.currency);
+  }, []);
+
+  return { accounts, amount, currency, loading, error, addAccount };
 };

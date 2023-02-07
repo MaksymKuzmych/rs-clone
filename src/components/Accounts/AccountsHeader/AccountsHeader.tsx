@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './AccountsHeader.module.scss';
@@ -7,7 +8,7 @@ interface AccountsHeaderProps {
   amount: number;
 }
 
-export const AccountsHeader = ({ currency, amount }: AccountsHeaderProps) => {
+export const AccountsHeader = memo(({ currency, amount }: AccountsHeaderProps) => {
   const { t } = useTranslation();
 
   return (
@@ -18,4 +19,4 @@ export const AccountsHeader = ({ currency, amount }: AccountsHeaderProps) => {
       </p>
     </header>
   );
-};
+});

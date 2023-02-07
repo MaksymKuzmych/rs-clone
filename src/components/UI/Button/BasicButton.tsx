@@ -1,15 +1,16 @@
+import { memo } from 'react';
+
 import styles from './BasicButton.module.scss';
 
 interface ButtonProps {
   icon: string;
   color: string;
   title: string;
-  onClick?: () => void;
 }
 
-export const BasicButton = ({ icon, color, title, onClick = () => {} }: ButtonProps) => {
+export const BasicButton = memo(({ icon, color, title }: ButtonProps) => {
   return (
-    <div className={styles.btn} onClick={onClick}>
+    <div className={styles.btn}>
       <div className={styles.iconWrapper} style={{ backgroundColor: `${color}30` }}>
         <span className='material-icons' style={{ color: `${color}` }}>
           {icon}
@@ -18,4 +19,4 @@ export const BasicButton = ({ icon, color, title, onClick = () => {} }: ButtonPr
       {title && <p>{title}</p>}
     </div>
   );
-};
+});

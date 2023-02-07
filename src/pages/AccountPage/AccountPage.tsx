@@ -1,85 +1,45 @@
+import { useCallback, useState } from 'react';
+
 import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
 import { AccountsHeader } from '../../components/Accounts/AccountsHeader/AccountsHeader';
 import { Loader } from '../../components/UI/Loader/Loader';
-import { useAccounts } from '../../hooks/accounts';
 import { Anchor, TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
-import { useCallback, useEffect, useState } from 'react';
 import { AccountInfo } from '../../components/Accounts/AccountInfo/AccountInfo';
 import { AddAccountInfo } from '../../components/Accounts/AddAccountInfo/AddAccountInfo';
 import { IAccount } from '../../interfaces';
 import { AccountSettings } from '../../components/Accounts/AccountSettings/AccountSettings';
 import { icons } from '../../data/icons';
 import { colors } from '../../data/colors';
-import { settings } from '../../data/settings';
 import { AddAccountSettings } from '../../components/Accounts/AddAccountSettings/AddAccountSettings';
+import { useAccounts } from '../../hooks/accounts';
+import { useDrawer } from '../../hooks/drawer';
 
 import styles from './AccountPage.module.scss';
 
 export const AccountPage = () => {
-  const { accounts, loading, error } = useAccounts();
-  const [amount, setAmount] = useState(0);
+  const { accounts, amount, currency, loading, error } = useAccounts();
+  const { state, toggleDrawer } = useDrawer();
   const [iconName, setIconName] = useState('');
   const [colorName, setColorName] = useState('');
-  const [currency, setCurrency] = useState('');
   const [typeDrawer, setTypeDrawer] = useState('');
   const [currentAccount, setCurrentAccount] = useState(accounts[0]);
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
 
-  useEffect(() => {
-    const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);
-    setAmount(allCardsAmount);
-  }, []);
-
-  useEffect(() => {
-    setCurrentAccount(accounts[0]);
-  }, [accounts]);
-
-  const setIcon = useCallback((account: IAccount) => {
-    const defaultIcon = icons[9];
-    const iconObj = icons.find((el) => account.iconID === el.id) || defaultIcon;
-
-    setIconName(iconObj.name);
-  }, []);
-
-  const setColor = useCallback((account: IAccount) => {
-    const defaultColor = colors[0];
-    const colorObj = colors.find((el) => account.colorID === el.id) || defaultColor;
-
-    setColorName(colorObj.name);
-  }, []);
-
-  const getIcon = useCallback((account: IAccount) => {
+  const getIcon = (account: IAccount) => {
     const defaultIcon = icons[9];
     const iconObj = icons.find((el) => account.iconID === el.id) || defaultIcon;
 
     return iconObj.name;
-  }, []);
+  };
 
-  const getColor = useCallback((account: IAccount) => {
+  const getColor = (account: IAccount) => {
     const defaultColor = colors[0];
     const colorObj = colors.find((el) => account.colorID === el.id) || defaultColor;
 
     return colorObj.name;
-  }, []);
+  };
 
-  useEffect(() => {
-    setCurrency(settings.currency);
-  }, []);
-
-  const toggleDrawer = useCallback(
-    (anchor: Anchor, open: boolean) => {
-      setState({ ...state, [anchor]: open });
-    },
-    [state],
-  );
-
-  const insideDrawer = useCallback(() => {
+  const drawerContent = () => {
     switch (typeDrawer) {
       case 'info':
         return (
@@ -91,33 +51,40 @@ export const AccountPage = () => {
           />
         );
       case 'edit':
-        return <div>edit</div>;
+        return <div>Edit</div>;
       case 'balance':
-        return <div>balance</div>;
+        return <div>Balance</div>;
       case 'transactions':
-        return <div>transactions</div>;
+        return <div>Transactions</div>;
       case 'rechacrge':
-        return <div>recharge</div>;
+        return <div>Recharge</div>;
       case 'withdraw':
-        return <div>withdraw</div>;
+        return <div>Withdraw</div>;
       case 'transfer':
         return <div>Transfer</div>;
       case 'addAccount':
         return <AddAccountSettings />;
     }
-  }, [colorName, currency, currentAccount, iconName, typeDrawer]);
+  };
 
-  const onClickEventHandler = useCallback(
+  const drawerHandler = useCallback(
     (type: string, anchor: Anchor) => {
       setTypeDrawer(type);
       setIsOpenDrawer(!isOpenDrawer);
-      setIcon(currentAccount);
-      setColor(currentAccount);
       toggleDrawer(anchor, isOpenDrawer);
     },
-    [currentAccount, isOpenDrawer, setColor, setIcon, toggleDrawer],
+    [isOpenDrawer, toggleDrawer],
   );
 
+  const accountDrawerHandler = useCallback(
+    (type: string, anchor: Anchor, account: IAccount) => {
+      setCurrentAccount(account);
+      setIconName(getIcon(account));
+      setColorName(getColor(account));
+      drawerHandler(type, anchor);
+    },
+    [drawerHandler],
+  );
   return (
     <div className={styles.accountPage}>
       {loading && <Loader />}
@@ -131,20 +98,17 @@ export const AccountPage = () => {
             color={getColor(account)}
             currency={currency}
             key={account.id}
-            onClick={() => {
-              setCurrentAccount(account);
-              onClickEventHandler('info', 'bottom');
-            }}
+            accountDrawerHandler={accountDrawerHandler}
           />
         ))}
-      <AddAccountInfo onClick={() => onClickEventHandler('addAccount', 'bottom')} />
+      <AddAccountInfo drawerHandler={drawerHandler} />
       <TemporaryDrawer
         state={state}
-        toggleDrawer={toggleDrawer}
         anchor='bottom'
-        onClick={() => onClickEventHandler('info', 'bottom')}
+        type={typeDrawer}
+        drawerHandler={drawerHandler}
       >
-        {insideDrawer()}
+        {drawerContent()}
       </TemporaryDrawer>
     </div>
   );
