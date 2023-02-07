@@ -9,7 +9,7 @@ export interface ISettings {
 }
 
 export interface IAccount {
-  id: number;
+  id: string;
   name: string;
   currency: Currency;
   iconID: number;
@@ -19,7 +19,7 @@ export interface IAccount {
 }
 
 export interface ICategory {
-  id: number;
+  id: string;
   name: string;
   iconID: number;
   colorID: number;
@@ -27,7 +27,7 @@ export interface ICategory {
 }
 
 export interface ITransaction {
-  id: number;
+  id: string;
   date: number;
   currency: Currency;
   type: TransactionType;
@@ -38,21 +38,21 @@ export interface ITransaction {
 }
 
 export interface IData {
-  accounts: { [id: number]: IAccount };
-  categories: { [id: number]: ICategory };
-  transactions: { [id: number]: ITransaction };
+  accounts: { [id: string]: IAccount };
+  categories: { [id: string]: ICategory };
+  transactions: { [id: string]: ITransaction };
 }
 
 export interface IDataFB {
-  accounts?: { [id: number]: Partial<IAccount> };
-  categories?: { [id: number]: Partial<ICategory> };
-  transactions?: { [id: number]: Partial<ITransaction> };
+  accounts?: { [id: string]: Partial<IAccount> };
+  categories?: { [id: string]: Partial<ICategory> };
+  transactions?: { [id: string]: Partial<ITransaction> };
 }
 
 export interface IDataFBDelete {
-  accounts?: number;
-  categories?: number;
-  transactions?: number;
+  accounts?: string;
+  categories?: string;
+  transactions?: string;
 }
 
 export interface IStore {

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, addDoc, getDocs } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
 import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
 
@@ -16,31 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const testFunc = async () => {
-  const querySnapshot = await getDocs(collection(db, 'users'));
-  querySnapshot.forEach((doc) => {
-    throw new Error(`${doc.id} => ${JSON.stringify(doc.data())}`);
-  });
-
-  await setDoc(doc(db, 'users', 'new-city-id'), {
-    first: 'Alan',
-    middle: 'Mathison',
-    last: 'Turing',
-    born: 1854,
-  });
-
-  try {
-    const docRef = await addDoc(collection(db, 'users'), {
-      first: 'Alan',
-      middle: 'Mathison',
-      last: 'Turing',
-      born: 1912,
-    });
-    throw new Error(`Document written with ID: ${docRef.id}`);
-  } catch (e) {
-    throw new Error(`Error adding document: ${e}`);
+class FirebaseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'Firebase Error';
   }
-};
+}
 
 export const createUser = async (userId: number, store: IStore) => {
   const db = getDatabase();

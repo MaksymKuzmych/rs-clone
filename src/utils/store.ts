@@ -13,8 +13,8 @@ export const store: IStore = {
   },
   data: {
     accounts: {
-      1: {
-        id: 1,
+      defaultAccount1: {
+        id: 'defaultAccount1',
         name: 'Card',
         currency: Currency.USD,
         iconID: 1,
@@ -22,8 +22,8 @@ export const store: IStore = {
         balance: 0,
         description: '',
       },
-      2: {
-        id: 2,
+      defaultAccount2: {
+        id: 'defaultAccount2',
         name: 'Cash',
         currency: Currency.USD,
         iconID: 2,
@@ -33,57 +33,57 @@ export const store: IStore = {
       },
     },
     categories: {
-      1: {
-        id: 1,
+      defaultCategory1: {
+        id: 'defaultCategory1',
         name: 'Groceries',
         iconID: 1,
         colorID: 1,
         description: '',
       },
-      2: {
-        id: 2,
+      defaultCategory2: {
+        id: 'defaultCategory2',
         name: 'Restaurant',
         iconID: 2,
         colorID: 2,
         description: '',
       },
-      3: {
-        id: 3,
+      defaultCategory3: {
+        id: 'defaultCategory3',
         name: 'Leisure',
         iconID: 3,
         colorID: 3,
         description: '',
       },
-      4: {
-        id: 4,
+      defaultCategory4: {
+        id: 'defaultCategory4',
         name: 'Transport',
         iconID: 4,
         colorID: 4,
         description: '',
       },
-      5: {
-        id: 5,
+      defaultCategory5: {
+        id: 'defaultCategory5',
         name: 'Health',
         iconID: 5,
         colorID: 5,
         description: '',
       },
-      6: {
-        id: 6,
+      defaultCategory6: {
+        id: 'defaultCategory6',
         name: 'Gifts',
         iconID: 6,
         colorID: 6,
         description: '',
       },
-      7: {
-        id: 7,
+      defaultCategory7: {
+        id: 'defaultCategory7',
         name: 'Family',
         iconID: 7,
         colorID: 7,
         description: '',
       },
-      8: {
-        id: 8,
+      defaultCategory8: {
+        id: 'defaultCategory8',
         name: 'Shopping',
         iconID: 8,
         colorID: 8,
