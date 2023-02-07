@@ -1,24 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-
-import { settings } from '../../../data/settings';
-import { accounts } from '../../../data/accounts';
 
 import styles from './AccountsHeader.module.scss';
 
-export const AccountsHeader = () => {
+interface AccountsHeaderProps {
+  currency: string;
+  amount: number;
+}
+
+export const AccountsHeader = ({ currency, amount }: AccountsHeaderProps) => {
   const { t } = useTranslation();
-  const [currency, setCurrency] = useState('');
-  const [amount, setAmount] = useState(0);
-
-  useEffect(() => {
-    const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);
-    setAmount(allCardsAmount);
-  }, []);
-
-  useEffect(() => {
-    setCurrency(settings.currency);
-  }, [currency]);
 
   return (
     <header className={styles.header}>

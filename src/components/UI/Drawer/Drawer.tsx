@@ -2,12 +2,21 @@ import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import { createTheme, ThemeProvider } from '@mui/material';
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+export type Anchor = 'top' | 'left' | 'bottom' | 'right';
+
+export interface IState {
+  top: boolean;
+  left: boolean;
+  bottom: boolean;
+  right: boolean;
+}
 
 interface TemporaryDrawerProps {
-  btn: React.ReactNode;
+  state: IState;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  toggleDrawer: Function;
   anchor: Anchor;
-  children: React.ReactNode;
+  onClick: () => void;
 }
 
 const theme = createTheme({
@@ -22,26 +31,17 @@ const theme = createTheme({
   },
 });
 
-export const TemporaryDrawer = ({ btn, anchor, children }: TemporaryDrawerProps) => {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor: Anchor, open: boolean) => () => {
-    setState({ ...state, [anchor]: open });
-  };
-
+export const TemporaryDrawer = ({
+  state,
+  anchor,
+  children,
+  onClick,
+}: React.PropsWithChildren<TemporaryDrawerProps>) => {
   return (
     <ThemeProvider theme={theme}>
-      <React.Fragment key={anchor}>
-        <div onClick={toggleDrawer(anchor, true)}>{btn}</div>
-        <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-          {children}
-        </Drawer>
-      </React.Fragment>
+      <Drawer anchor={anchor} open={state[anchor]} onClose={onClick}>
+        {children}
+      </Drawer>
     </ThemeProvider>
   );
 };

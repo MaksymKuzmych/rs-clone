@@ -2,11 +2,15 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './AddAccountInfo.module.scss';
 
-export const AddAccountInfo = () => {
+interface AddAccountInfoProps {
+  onClick: () => void;
+}
+
+export const AddAccountInfo = ({ onClick }: AddAccountInfoProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.addAccount}>
+    <div className={styles.addAccount} onClick={onClick}>
       <div className={styles.iconWrapper}>
         <span className='material-icons'>add</span>
       </div>

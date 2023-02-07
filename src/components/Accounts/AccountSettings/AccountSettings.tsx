@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IAccount } from '../../../interfaces';
@@ -12,7 +13,7 @@ interface AccountSettingsProps {
   currency: string;
 }
 
-export const AccountSettings = ({ account, icon, color, currency }: AccountSettingsProps) => {
+export const AccountSettings = memo(({ account, icon, color, currency }: AccountSettingsProps) => {
   const { t } = useTranslation();
   const { name, description, balance } = account;
 
@@ -43,4 +44,4 @@ export const AccountSettings = ({ account, icon, color, currency }: AccountSetti
       </div>
     </>
   );
-};
+});

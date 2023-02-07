@@ -1,19 +1,22 @@
+import { memo } from 'react';
+
 import { IAccount } from '../../../interfaces';
 
 import styles from './AccountInfo.module.scss';
 
 interface AccountInfoProps {
   account: IAccount;
-  color: string;
   icon: string;
+  color: string;
   currency: string;
+  onClick: () => void;
 }
 
-export const AccountInfo = ({ account, color, icon, currency }: AccountInfoProps) => {
+export const AccountInfo = memo(({ account, icon, color, currency, onClick }: AccountInfoProps) => {
   const { name, description, balance } = account;
 
   return (
-    <div className={styles.account}>
+    <div className={styles.account} onClick={() => onClick()}>
       <div className={styles.iconWrapper} style={{ backgroundColor: `${color}` }}>
         <span className='material-icons'>{icon}</span>
       </div>
@@ -28,4 +31,4 @@ export const AccountInfo = ({ account, color, icon, currency }: AccountInfoProps
       </div>
     </div>
   );
-};
+});

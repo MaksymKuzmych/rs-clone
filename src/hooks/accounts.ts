@@ -4,7 +4,7 @@ import { IAccount } from '../interfaces';
 import { accounts as accountsData } from '../data/accounts';
 
 export const useAccounts = () => {
-  const [accounts, setAccounts] = useState<IAccount[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[]>(accountsData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
