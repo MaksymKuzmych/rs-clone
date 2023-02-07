@@ -1,22 +1,46 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, setDoc, addDoc, getDocs } from 'firebase/firestore';
 import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
-import { Lang } from '../enums';
 import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
-import { store } from './store';
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCcUXS1Bdjo_i-oy5fpaJU-Ru3jf0rbNKU',
-  authDomain: 'rs-clone-f66eb.firebaseapp.com',
-  projectId: 'rs-clone-f66eb',
-  storageBucket: 'rs-clone-f66eb.appspot.com',
-  messagingSenderId: '489433569397',
-  appId: '1:489433569397:web:93c58002c872e0af84c03c',
-  databaseURL: 'https://rs-clone-f66eb-default-rtdb.europe-west1.firebasedatabase.app',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export const testFunc = async () => {
+  const querySnapshot = await getDocs(collection(db, 'users'));
+  querySnapshot.forEach((doc) => {
+    throw new Error(`${doc.id} => ${JSON.stringify(doc.data())}`);
+  });
+
+  await setDoc(doc(db, 'users', 'new-city-id'), {
+    first: 'Alan',
+    middle: 'Mathison',
+    last: 'Turing',
+    born: 1854,
+  });
+
+  try {
+    const docRef = await addDoc(collection(db, 'users'), {
+      first: 'Alan',
+      middle: 'Mathison',
+      last: 'Turing',
+      born: 1912,
+    });
+    throw new Error(`Document written with ID: ${docRef.id}`);
+  } catch (e) {
+    throw new Error(`Error adding document: ${e}`);
+  }
+};
 
 export const createUser = async (userId: number, store: IStore) => {
   const db = getDatabase();
@@ -165,19 +189,3 @@ export const deleteUserData = async (userId: number, data: IDataFBDelete) => {
     throw message ? new Error(message) : new Error('Firebase deleteUserData: Delete failed...');
   }
 };
-
-// Examples
-
-// export const firebase = async () => {
-//   await createUser(1, store);
-//   console.log(await getUser(1));
-//   await deleteUser(1);
-
-//   console.log(await getUserSettings(1));
-//   await updateUserSettings(1, { lang: Lang.RU });
-
-//   console.log(await getUserData(1, { accounts: 1 }));
-//   await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
-//   await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
-//   await deleteUserData(1, { categories: 8 });
-// };

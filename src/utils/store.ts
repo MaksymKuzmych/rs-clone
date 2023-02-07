@@ -16,6 +16,7 @@ export const store: IStore = {
       1: {
         id: 1,
         name: 'Card',
+        currency: Currency.USD,
         iconID: 1,
         colorID: 1,
         balance: 0,
@@ -24,6 +25,7 @@ export const store: IStore = {
       2: {
         id: 2,
         name: 'Cash',
+        currency: Currency.USD,
         iconID: 2,
         colorID: 2,
         balance: 0,

@@ -11,6 +11,7 @@ export interface ISettings {
 export interface IAccount {
   id: number;
   name: string;
+  currency: Currency;
   iconID: number;
   colorID: number;
   balance: number;
@@ -28,6 +29,7 @@ export interface ICategory {
 export interface ITransaction {
   id: number;
   date: number;
+  currency: Currency;
   type: TransactionType;
   account: number;
   category: number;
