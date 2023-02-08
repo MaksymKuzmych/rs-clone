@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import { IAccount } from '../../../interfaces';
-import { Anchor } from '../../UI/Drawer/Drawer';
+import { Anchor } from '../../../types';
 
 import styles from './AccountInfo.module.scss';
 

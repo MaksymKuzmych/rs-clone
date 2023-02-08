@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import { Currency, Lang, Period, TransactionType } from './enums';
 
 export interface ISettings {
@@ -72,6 +70,9 @@ export interface IIcon {
   id: number;
 }
 
-export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;
-
-export type PropsWithChildren<P> = P & { children?: ReactNode };
+export interface IDrawerSide {
+  top: boolean;
+  left: boolean;
+  bottom: boolean;
+  right: boolean;
+}

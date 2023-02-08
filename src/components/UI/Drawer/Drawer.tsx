@@ -2,9 +2,9 @@ import Drawer from '@mui/material/Drawer';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { memo, PropsWithChildren } from 'react';
 
-export type Anchor = 'top' | 'left' | 'bottom' | 'right';
+import { Anchor } from '../../../types';
 
-export interface IState {
+interface IDrawerSide {
   top: boolean;
   left: boolean;
   bottom: boolean;
@@ -12,7 +12,7 @@ export interface IState {
 }
 
 interface TemporaryDrawerProps {
-  state: IState;
+  state: IDrawerSide;
   anchor: Anchor;
   type: string;
   drawerHandler: (type: string, anchor: Anchor) => void;

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Anchor } from '../components/UI/Drawer/Drawer';
+import { Anchor } from '../types';
 
 export const useDrawer = () => {
   const [state, setState] = useState({

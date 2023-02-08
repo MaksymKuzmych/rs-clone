@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Anchor } from '../../UI/Drawer/Drawer';
+import { Anchor } from '../../../types';
 
 import styles from './AddAccountInfo.module.scss';
 

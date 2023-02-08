@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
-import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
+
+import { IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
+import { DataAllFB } from '../types';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
 import { AccountsHeader } from '../../components/Accounts/AccountsHeader/AccountsHeader';
 import { Loader } from '../../components/UI/Loader/Loader';
-import { Anchor, TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
+import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { AccountInfo } from '../../components/Accounts/AccountInfo/AccountInfo';
 import { AddAccountInfo } from '../../components/Accounts/AddAccountInfo/AddAccountInfo';
 import { IAccount } from '../../interfaces';
@@ -13,6 +13,7 @@ import { colors } from '../../data/colors';
 import { AddAccountSettings } from '../../components/Accounts/AddAccountSettings/AddAccountSettings';
 import { useAccounts } from '../../hooks/accounts';
 import { useDrawer } from '../../hooks/drawer';
+import { Anchor } from '../../types';
 
 import styles from './AccountPage.module.scss';
 
