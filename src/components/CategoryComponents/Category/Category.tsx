@@ -12,18 +12,14 @@ interface CategoryProps {
   currencySymbol: string;
 }
 
-export const Category = memo(function Catgory(props: CategoryProps) {
-  const { dataCategory, sum, currencySymbol } = props;
+export const Category = memo(({ dataCategory, sum, currencySymbol }: CategoryProps) => {
   const { id, name, iconID, colorID } = dataCategory;
 
   const colorItem = colors.find((color) => color.id === colorID)?.color;
-  let iconItem = iconsCategory.find((icon) => icon.id === iconID)?.name;
-  let buttonAdd = false;
-
-  if (id === 0) {
-    buttonAdd = true;
-    iconItem = iconsProject.find((icon) => icon.id === iconID)?.name;
-  }
+  const buttonAdd = !id;
+  const iconItem = !buttonAdd
+    ? iconsCategory.find((icon) => icon.id === iconID)?.name
+    : iconsProject.find((icon) => icon.id === iconID)?.name;
 
   return (
     <div className={styles.wrapper}>

@@ -15,9 +15,7 @@ interface ChartComponentProps {
   currencySymbol: string;
 }
 
-export const ChartComponent = memo(function ChartComponent(props: ChartComponentProps) {
-  const { dataChart, income, currencySymbol } = props;
-
+export const ChartComponent = memo(({ dataChart, income, currencySymbol }: ChartComponentProps) => {
   const { t } = useTranslation();
   Chart.defaults.plugins.legend.display = false;
 
