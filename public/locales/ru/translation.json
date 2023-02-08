@@ -9,5 +9,14 @@
   "Transactions": "Операции",
   "Recharge": "Пополнить",
   "Withdraw": "Списать",
-  "Transfer": "Перевести"
+  "Transfer": "Перевести",
+  "Expenses": "Расходы",
+  "Gloceries": "Продукты",
+  "Restaurant": "Кафе",
+  "Leisure": "Досуг",
+  "Transport": "Транспорт",
+  "Health": "Здоровье",
+  "Gifts": "Подарки",
+  "Family": "Семья",
+  "Shopping": "Покупки"
 }

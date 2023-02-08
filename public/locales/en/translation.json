@@ -9,5 +9,14 @@
   "Transactions": "Transactions",
   "Recharge": "Recharge",
   "Withdraw": "Withdraw",
-  "Transfer": "Transfer"
+  "Transfer": "Transfer",
+  "Expenses": "Expenses",
+  "Gloceries": "Gloceries",
+  "Restaurant": "Restaurant",
+  "Leisure": "Leisure",
+  "Transport": "Transport",
+  "Health": "Health",
+  "Gifts": "Gifts",
+  "Family": "Family",
+  "Shopping": "Shopping"
 }

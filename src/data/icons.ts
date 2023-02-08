@@ -1,6 +1,49 @@
 import { IIcon } from '../interfaces';
 
-export const icons: IIcon[] = [
+export const iconsCard: IIcon[] = [
+  {
+    name: 'credit_card',
+    id: 1,
+  },
+  {
+    name: 'account_balance_wallet',
+    id: 2,
+  },
+  {
+    name: 'payments',
+    id: 3,
+  },
+  {
+    name: 'savings',
+    id: 4,
+  },
+  {
+    name: 'credit_score',
+    id: 5,
+  },
+  {
+    name: 'local_atm',
+    id: 6,
+  },
+  {
+    name: 'attach_money',
+    id: 7,
+  },
+  {
+    name: 'receipt',
+    id: 8,
+  },
+  {
+    name: 'currency_exchange',
+    id: 9,
+  },
+  {
+    name: 'euro',
+    id: 10,
+  },
+];
+
+export const iconsCategory: IIcon[] = [
   {
     name: 'shopping_basket',
     id: 1,
@@ -34,131 +77,146 @@ export const icons: IIcon[] = [
     id: 8,
   },
   {
-    name: 'credit_card',
+    name: 'train',
     id: 9,
   },
   {
-    name: 'account_balance-wallet',
+    name: 'directions_car',
     id: 10,
   },
   {
-    name: 'data_usage',
+    name: 'local_florist',
     id: 11,
   },
   {
-    name: 'receipt',
+    name: 'nightlife',
     id: 12,
   },
   {
-    name: 'edit',
+    name: 'breakfast_dining',
     id: 13,
   },
   {
-    name: 'language',
+    name: 'set_meal',
     id: 14,
   },
   {
-    name: 'dark_mode',
+    name: 'medication',
     id: 15,
   },
   {
-    name: 'light_mode',
+    name: 'bed',
     id: 16,
   },
   {
-    name: 'currency_exchange',
+    name: 'vaccines',
     id: 17,
   },
   {
-    name: 'search',
+    name: 'watch',
     id: 18,
   },
   {
-    name: 'event',
+    name: 'checkroom',
     id: 19,
   },
   {
-    name: 'calendar_month',
+    name: 'cancel',
     id: 20,
+  },
+];
+
+export const iconsCalendar: IIcon[] = [
+  {
+    name: 'event',
+    id: 1,
+  },
+  {
+    name: 'calendar_month',
+    id: 2,
   },
   {
     name: 'date_range',
-    id: 21,
+    id: 3,
   },
   {
     name: 'all_inclusive',
-    id: 22,
+    id: 4,
   },
   {
-    name: 'shevron_right',
-    id: 23,
+    name: 'looks_one',
+    id: 5,
   },
   {
-    name: 'shevron_left',
-    id: 24,
+    name: 'edit_calendar',
+    id: 6,
   },
   {
-    name: 'arrow_drop_down',
-    id: 25,
+    name: 'event_available',
+    id: 7,
+  },
+];
+
+export const iconsProject: IIcon[] = [
+  {
+    name: 'add',
+    id: 1,
   },
   {
     name: 'star',
-    id: 26,
+    id: 2,
   },
   {
-    name: 'train',
-    id: 27,
+    name: 'search',
+    id: 3,
+  },
+
+  {
+    name: 'navigate_next',
+    id: 4,
   },
   {
-    name: 'direction_car',
-    id: 28,
+    name: 'navigate_before',
+    id: 5,
   },
   {
-    name: 'deceased',
-    id: 29,
+    name: 'arrow_drop_down',
+    id: 6,
   },
   {
-    name: 'nutrition',
-    id: 30,
+    name: 'currency_exchange',
+    id: 7,
   },
   {
-    name: 'breakfast_dining',
-    id: 31,
+    name: 'data_usage',
+    id: 8,
   },
   {
-    name: 'set_meal',
-    id: 32,
+    name: 'receipt',
+    id: 9,
   },
   {
-    name: 'pill',
-    id: 33,
+    name: 'edit',
+    id: 10,
   },
   {
-    name: 'syringle',
-    id: 34,
+    name: 'language',
+    id: 11,
   },
   {
-    name: 'microbiology',
-    id: 35,
+    name: 'dark_mode',
+    id: 12,
   },
   {
-    name: 'watch',
-    id: 36,
+    name: 'light_mode',
+    id: 13,
   },
   {
-    name: 'checkroom',
-    id: 37,
+    name: 'arrow_forward_ios',
+    id: 12,
   },
   {
-    name: 'cloudy',
-    id: 38,
-  },
-  {
-    name: 'cancel',
-    id: 39,
-  },
-  {
-    name: 'shedule',
-    id: 40,
+    name: 'arrow_back_ios',
+    id: 13,
   },
 ];

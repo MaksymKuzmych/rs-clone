@@ -8,7 +8,7 @@ import { AccountInfo } from '../../components/Accounts/AccountInfo/AccountInfo';
 import { AddAccountInfo } from '../../components/Accounts/AddAccountInfo/AddAccountInfo';
 import { IAccount } from '../../interfaces';
 import { AccountSettings } from '../../components/Accounts/AccountSettings/AccountSettings';
-import { icons } from '../../data/icons';
+import { iconsCard } from '../../data/icons';
 import { colors } from '../../data/colors';
 import { AddAccountSettings } from '../../components/Accounts/AddAccountSettings/AddAccountSettings';
 import { useAccounts } from '../../hooks/accounts';
@@ -26,8 +26,8 @@ export const AccountPage = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
 
   const getIcon = (account: IAccount) => {
-    const defaultIcon = icons[9];
-    const iconObj = icons.find((el) => account.iconID === el.id) || defaultIcon;
+    const defaultIcon = iconsCard[1];
+    const iconObj = iconsCard.find((el) => account.iconID === el.id) || defaultIcon;
 
     return iconObj.name;
   };
