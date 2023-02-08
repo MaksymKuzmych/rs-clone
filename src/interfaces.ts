@@ -31,16 +31,16 @@ export interface ITransaction {
   date: number;
   currency: Currency;
   type: TransactionType;
-  account: number;
-  category: number;
+  account: string;
+  category: string;
   amount: number;
   description: string;
 }
 
 export interface IData {
-  accounts: { [id: string]: IAccount };
-  categories: { [id: string]: ICategory };
-  transactions: { [id: string]: ITransaction };
+  accounts: IAccount[];
+  categories: ICategory[];
+  transactions: ITransaction[];
 }
 
 export interface IDataFB {
@@ -49,7 +49,7 @@ export interface IDataFB {
   transactions?: { [id: string]: Partial<ITransaction> };
 }
 
-export interface IDataFBDelete {
+export interface IDataFBGet {
   accounts?: string;
   categories?: string;
   transactions?: string;
@@ -59,6 +59,18 @@ export interface IStore {
   login: boolean;
   settings: ISettings;
   data: IData;
+}
+
+export interface IDataFBFiltered {
+  accounts?: null;
+  categories?: null;
+  transactions?: {
+    periodStart?: number;
+    periodEnd?: number;
+    account?: string;
+    category?: string;
+    type?: TransactionType;
+  };
 }
 
 export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;
