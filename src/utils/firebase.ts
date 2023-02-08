@@ -12,15 +12,9 @@ import {
   where,
   QueryFieldFilterConstraint,
 } from 'firebase/firestore';
-import {
-  DataAllFB,
-  IData,
-  IDataFB,
-  IDataFBFiltered,
-  IDataFBGet,
-  ISettings,
-  IStore,
-} from '../interfaces';
+
+import { IData, IDataFB, IDataFBFiltered, IDataFBGet, ISettings, IStore } from '../interfaces';
+import { DataAllFB } from '../types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,

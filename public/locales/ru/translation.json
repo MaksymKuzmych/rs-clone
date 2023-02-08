@@ -1,4 +1,22 @@
 {
   "Start Page": "Начальная cтраница",
-  "Page Not Found": "Страница не найдена"
+  "Page Not Found": "Страница не найдена",
+  "Accounts": "Счета",
+  "Add account": "Добавить счёт",
+  "Account balance": "Остаток на счёте",
+  "Edit": "Изменить",
+  "Balance": "Баланс",
+  "Transactions": "Операции",
+  "Recharge": "Пополнить",
+  "Withdraw": "Списать",
+  "Transfer": "Перевести",
+  "Expenses": "Расходы",
+  "Gloceries": "Продукты",
+  "Restaurant": "Кафе",
+  "Leisure": "Досуг",
+  "Transport": "Транспорт",
+  "Health": "Здоровье",
+  "Gifts": "Подарки",
+  "Family": "Семья",
+  "Shopping": "Покупки"
 }

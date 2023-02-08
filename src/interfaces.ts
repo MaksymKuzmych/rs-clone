@@ -11,7 +11,6 @@ export interface ISettings {
 export interface IAccount {
   id: string;
   name: string;
-  currency: Currency;
   iconID: number;
   colorID: number;
   balance: number;
@@ -29,7 +28,6 @@ export interface ICategory {
 export interface ITransaction {
   id: string;
   date: number;
-  currency: Currency;
   type: TransactionType;
   account: string;
   category: string;
@@ -73,4 +71,29 @@ export interface IDataFBFiltered {
   };
 }
 
-export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;
+export interface IColor {
+  color: string;
+  id: number;
+  name: string;
+}
+
+export interface IIcon {
+  name: string;
+  id: number;
+}
+
+export interface IDrawerSide {
+  top: boolean;
+  left: boolean;
+  bottom: boolean;
+  right: boolean;
+}
+
+export type IChart = {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+  }[];
+};
