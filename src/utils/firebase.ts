@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
-import { Lang } from '../enums';
-import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
-import { store } from './store';
+
+import { IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
+import { DataAllFB } from '../types';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -165,19 +165,3 @@ export const deleteUserData = async (userId: number, data: IDataFBDelete) => {
     throw message ? new Error(message) : new Error('Firebase deleteUserData: Delete failed...');
   }
 };
-
-// Examples
-
-// export const firebase = async () => {
-//   await createUser(1, store);
-//   console.log(await getUser(1));
-//   await deleteUser(1);
-
-//   console.log(await getUserSettings(1));
-//   await updateUserSettings(1, { lang: Lang.RU });
-
-//   console.log(await getUserData(1, { accounts: 1 }));
-//   await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
-//   await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
-//   await deleteUserData(1, { categories: 8 });
-// };

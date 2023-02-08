@@ -1,4 +1,6 @@
-export const iconsCard = [
+import { IIcon } from '../interfaces';
+
+export const iconsCard: IIcon[] = [
   {
     name: 'credit_card',
     id: 1,
@@ -41,7 +43,7 @@ export const iconsCard = [
   },
 ];
 
-export const iconsCategory = [
+export const iconsCategory: IIcon[] = [
   {
     name: 'shopping_basket',
     id: 1,
@@ -124,7 +126,7 @@ export const iconsCategory = [
   },
 ];
 
-export const iconsCalendar = [
+export const iconsCalendar: IIcon[] = [
   {
     name: 'event',
     id: 1,
@@ -155,7 +157,7 @@ export const iconsCalendar = [
   },
 ];
 
-export const iconsProject = [
+export const iconsProject: IIcon[] = [
   {
     name: 'add',
     id: 1,

@@ -59,4 +59,20 @@ export interface IStore {
   data: IData;
 }
 
-export type DataAllFB = Partial<IAccount> | Partial<ICategory> | Partial<ITransaction>;
+export interface IColor {
+  color: string;
+  id: number;
+  name: string;
+}
+
+export interface IIcon {
+  name: string;
+  id: number;
+}
+
+export interface IDrawerSide {
+  top: boolean;
+  left: boolean;
+  bottom: boolean;
+  right: boolean;
+}
