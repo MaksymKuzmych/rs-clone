@@ -9,6 +9,12 @@ export enum Currency {
   RUB = 'RUB',
 }
 
+export enum CurrencySymbol {
+  USD = '$',
+  UAH = '₴',
+  RUB = '₽',
+}
+
 export enum Period {
   Range = 'range',
   All = 'all',

@@ -1,0 +1,70 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  padding: 0;
+}
+
+.categoryArea {
+  display: grid;
+  grid-template-areas:
+    'lineTop lineTop lineTop lineTop'
+    'lineLeft chart chart lineRight'
+    'lineLeft chart chart lineRight'
+    'lineBottom lineBottom lineBottom lineBottom';
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  justify-content: center;
+  height: 100vh;
+}
+
+.lineTop {
+  grid-area: lineTop;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.lineBottom {
+  grid-area: lineBottom;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.lineLeft {
+  grid-area: lineLeft;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.lineRight {
+  grid-area: lineRight;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.chartWrapper {
+  grid-area: chart;
+}
+
+.button {
+  grid-area: buttonAdd;
+  width: 25%;
+  padding-top: 70px;
+}
+
+.buttonAdd {
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed $gray;
+  background-color: $gray-light;
+  color: $gray;
+  width: 53px;
+  height: 53px;
+  cursor: pointer;
+}
