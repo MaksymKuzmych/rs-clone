@@ -12,6 +12,13 @@ import {
   where,
   QueryFieldFilterConstraint,
 } from 'firebase/firestore';
+import {
+  getAuth,
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from 'firebase/auth';
 
 import { IData, IDataFB, IDataFBFiltered, IDataFBGet, ISettings, IStore } from '../interfaces';
 import { DataAllFB } from '../types';
@@ -27,6 +34,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth();
 
 class FirebaseError extends Error {
   constructor(message: string) {
@@ -187,3 +195,41 @@ export const deleteUserData = async (userId: string, data: IDataFBGet) => {
       : new FirebaseError(`deleteUserData: Delete failed... ${error}`);
   }
 };
+
+export const registerUser = async (email: string, password: string) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    // console.log(error);
+  }
+};
+
+export const signInUser = async (email: string, password: string) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    // console.log(error);
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    // console.log(error);
+  }
+};
+
+export const userAuth = () => auth.currentUser;
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    // const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
