@@ -2,7 +2,7 @@ import { IAccount } from '../interfaces';
 
 export const accounts: IAccount[] = [
   {
-    id: 1,
+    id: 'defaultAccount1',
     name: 'Card',
     iconID: 7,
     colorID: 4,
@@ -10,7 +10,7 @@ export const accounts: IAccount[] = [
     description: '',
   },
   {
-    id: 2,
+    id: 'defaultAccount2',
     name: 'Cash',
     iconID: 2,
     colorID: 2,
@@ -18,7 +18,7 @@ export const accounts: IAccount[] = [
     description: '',
   },
   {
-    id: 3,
+    id: 'defaultAccount3',
     name: 'Privat',
     iconID: 3,
     colorID: 5,
@@ -26,7 +26,7 @@ export const accounts: IAccount[] = [
     description: 'my description',
   },
   {
-    id: 4,
+    id: 'defaultAccount4',
     name: 'Mono',
     iconID: 6,
     colorID: 7,

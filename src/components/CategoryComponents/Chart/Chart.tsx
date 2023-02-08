@@ -2,10 +2,9 @@ import { memo } from 'react';
 import 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-
 import { Chart } from 'chart.js';
 
-import { IChart } from '../../../types';
+import { IChart } from '../../../interfaces';
 
 import styles from './Chart.module.scss';
 

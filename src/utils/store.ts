@@ -12,82 +12,82 @@ export const store: IStore = {
     period: getPeriod(Period.Month, Date.now()),
   },
   data: {
-    accounts: {
-      1: {
-        id: 1,
+    accounts: [
+      {
+        id: 'defaultAccount1',
         name: 'Card',
         iconID: 1,
         colorID: 1,
         balance: 0,
         description: '',
       },
-      2: {
-        id: 2,
+      {
+        id: 'defaultAccount2',
         name: 'Cash',
         iconID: 2,
         colorID: 2,
         balance: 0,
         description: '',
       },
-    },
-    categories: {
-      1: {
-        id: 1,
+    ],
+    categories: [
+      {
+        id: 'defaultCategory1',
         name: 'Groceries',
         iconID: 1,
         colorID: 1,
         description: '',
       },
-      2: {
-        id: 2,
+      {
+        id: 'defaultCategory2',
         name: 'Restaurant',
         iconID: 2,
         colorID: 2,
         description: '',
       },
-      3: {
-        id: 3,
+      {
+        id: 'defaultCategory3',
         name: 'Leisure',
         iconID: 3,
         colorID: 3,
         description: '',
       },
-      4: {
-        id: 4,
+      {
+        id: 'defaultCategory4',
         name: 'Transport',
         iconID: 4,
         colorID: 4,
         description: '',
       },
-      5: {
-        id: 5,
+      {
+        id: 'defaultCategory5',
         name: 'Health',
         iconID: 5,
         colorID: 5,
         description: '',
       },
-      6: {
-        id: 6,
+      {
+        id: 'defaultCategory6',
         name: 'Gifts',
         iconID: 6,
         colorID: 6,
         description: '',
       },
-      7: {
-        id: 7,
+      {
+        id: 'defaultCategory7',
         name: 'Family',
         iconID: 7,
         colorID: 7,
         description: '',
       },
-      8: {
-        id: 8,
+      {
+        id: 'defaultCategory8',
         name: 'Shopping',
         iconID: 8,
         colorID: 8,
         description: '',
       },
-    },
-    transactions: {},
+    ],
+    transactions: [],
   },
 };

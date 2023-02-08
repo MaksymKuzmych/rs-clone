@@ -9,7 +9,7 @@ export interface ISettings {
 }
 
 export interface IAccount {
-  id: number;
+  id: string;
   name: string;
   iconID: number;
   colorID: number;
@@ -18,7 +18,7 @@ export interface IAccount {
 }
 
 export interface ICategory {
-  id: number;
+  id: string;
   name: string;
   iconID: number;
   colorID: number;
@@ -26,37 +26,49 @@ export interface ICategory {
 }
 
 export interface ITransaction {
-  id: number;
+  id: string;
   date: number;
   type: TransactionType;
-  account: number;
-  category: number;
+  account: string;
+  category: string;
   amount: number;
   description: string;
 }
 
 export interface IData {
-  accounts: { [id: number]: IAccount };
-  categories: { [id: number]: ICategory };
-  transactions: { [id: number]: ITransaction };
+  accounts: IAccount[];
+  categories: ICategory[];
+  transactions: ITransaction[];
 }
 
 export interface IDataFB {
-  accounts?: { [id: number]: Partial<IAccount> };
-  categories?: { [id: number]: Partial<ICategory> };
-  transactions?: { [id: number]: Partial<ITransaction> };
+  accounts?: { [id: string]: Partial<IAccount> };
+  categories?: { [id: string]: Partial<ICategory> };
+  transactions?: { [id: string]: Partial<ITransaction> };
 }
 
-export interface IDataFBDelete {
-  accounts?: number;
-  categories?: number;
-  transactions?: number;
+export interface IDataFBGet {
+  accounts?: string;
+  categories?: string;
+  transactions?: string;
 }
 
 export interface IStore {
   login: boolean;
   settings: ISettings;
   data: IData;
+}
+
+export interface IDataFBFiltered {
+  accounts?: null;
+  categories?: null;
+  transactions?: {
+    periodStart?: number;
+    periodEnd?: number;
+    account?: string;
+    category?: string;
+    type?: TransactionType;
+  };
 }
 
 export interface IColor {
@@ -76,3 +88,12 @@ export interface IDrawerSide {
   bottom: boolean;
   right: boolean;
 }
+
+export type IChart = {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+  }[];
+};

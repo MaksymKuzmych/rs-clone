@@ -5,7 +5,7 @@ import { Category } from '../Category/Category';
 import { ICategory } from '../../../interfaces';
 import { storeTr } from '../../../mockData/transactions';
 
-import styles from '../../pages/CategoryPage/CategoryPage.module.scss';
+import styles from '../../../pages/CategoryPage/CategoryPage.module.scss';
 
 interface CategoriesLineProps {
   dataCategories: ICategory[];

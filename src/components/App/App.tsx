@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
 
-import { CategoryPage } from '../pages/CategoryPage/CategoryPage';
+import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { AccountPage } from '../../pages/AccountPage/AccountPage';
 
 export const App = () => {
