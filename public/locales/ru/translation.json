@@ -1,5 +1,14 @@
 {
   "Start Page": "Начальная cтраница",
   "Page Not Found": "Страница не найдена",
+  "Expenses": "Расходы",
+  "Gloceries": "Продукты",
+  "Restaurant": "Кафе",
+  "Leisure": "Досуг",
+  "Transport": "Транспорт",
+  "Health": "Здоровье",
+  "Gifts": "Подарки",
+  "Family": "Семья",
+  "Shopping": "Покупки",
   "Log Out": "Выйти"
 }

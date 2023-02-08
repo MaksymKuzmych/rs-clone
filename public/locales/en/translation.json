@@ -1,5 +1,14 @@
 {
   "Start Page": "Start Page",
   "Page Not Found": "Page Not Found",
+  "Expenses": "Expenses",
+  "Gloceries": "Gloceries",
+  "Restaurant": "Restaurant",
+  "Leisure": "Leisure",
+  "Transport": "Transport",
+  "Health": "Health",
+  "Gifts": "Gifts",
+  "Family": "Family",
+  "Shopping": "Shopping"
   "Log Out": "Log Out"
 }
