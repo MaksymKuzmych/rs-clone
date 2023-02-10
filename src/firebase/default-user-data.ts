@@ -1,9 +1,9 @@
 import { Currency, Lang, Period } from '../enums';
 import { IStore } from '../interfaces';
-import { getPeriod } from './get-period';
+import { getPeriod } from '../utils/get-period';
 
-export const store: IStore = {
-  login: false,
+export const defaultUserData: IStore = {
+  userId: null,
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
@@ -16,16 +16,16 @@ export const store: IStore = {
       {
         id: 'defaultAccount1',
         name: 'Card',
-        iconID: 1,
-        colorID: 1,
+        icon: 'credit_card',
+        color: '#cd4863',
         balance: 0,
         description: '',
       },
       {
         id: 'defaultAccount2',
         name: 'Cash',
-        iconID: 2,
-        colorID: 2,
+        icon: 'account_balance_wallet',
+        color: '#6ebaa0',
         balance: 0,
         description: '',
       },
