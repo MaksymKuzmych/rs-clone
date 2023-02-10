@@ -77,7 +77,7 @@ export const iconsCategory: IIcon[] = [
     id: 8,
   },
   {
-    name: 'train',
+    name: 'payments',
     id: 9,
   },
   {
@@ -123,6 +123,10 @@ export const iconsCategory: IIcon[] = [
   {
     name: 'cancel',
     id: 20,
+  },
+  {
+    name: 'train',
+    id: 21,
   },
 ];
 

@@ -27,11 +27,11 @@ export const ChartComponent = memo(({ dataChart, income, currencySymbol }: Chart
       <div className={styles.chartInfo}>
         <div className={styles.transactionType}>{t('Expenses')}</div>
         <div className={styles.totalExpenses}>
-          {dataChart.datasets[0].data.reduce((sum, current) => sum + current, 0)}&thinsp;
+          {dataChart.datasets[0].data.reduce((sum, current) => sum + current, 0)}
           {currencySymbol}
         </div>
         <div className={styles.totalIncome}>
-          {income}&thinsp;
+          {income}
           {currencySymbol}
         </div>
       </div>

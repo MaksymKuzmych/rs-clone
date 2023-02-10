@@ -23,11 +23,15 @@ export const CategoryPage = () => {
 
   const currencySymbol = CurrencySymbol[store.settings.currency];
 
-  const categories = Object.values(store.data.categories);
+  const categories = Object.values(store.data.categories).filter(
+    (category) => category.type === TransactionType.Income,
+  );
+
   if (categories.length < 12) {
     categories.push({
       id: '0',
       name: '',
+      type: TransactionType.Income,
       iconID: 1,
       colorID: 21,
       description: '',
@@ -40,6 +44,7 @@ export const CategoryPage = () => {
     if (color) {
       dataForChart.datasets[0].backgroundColor.push(color);
     }
+
     const categorySum = storeTr.data.transactions
       .filter((action) => action.category === item.id)
       .reduce((sum, current) => sum + current.amount, 0);
@@ -49,7 +54,6 @@ export const CategoryPage = () => {
   const income = storeTr.data.transactions
     .filter((item) => item.type === TransactionType.Income)
     .reduce((sum, current) => sum + current.amount, 0);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.categoryArea}>

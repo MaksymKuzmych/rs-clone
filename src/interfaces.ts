@@ -20,6 +20,7 @@ export interface IAccount {
 export interface ICategory {
   id: string;
   name: string;
+  type: TransactionType;
   iconID: number;
   colorID: number;
   description: string;
@@ -89,11 +90,11 @@ export interface IDrawerSide {
   right: boolean;
 }
 
-export type IChart = {
+export interface IChart {
   labels: string[];
   datasets: {
     label: string;
     data: number[];
     backgroundColor: string[];
   }[];
-};
+}

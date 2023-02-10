@@ -1,4 +1,4 @@
-import { Currency, Lang, Period } from '../enums';
+import { Currency, Lang, Period, TransactionType } from '../enums';
 import { IStore } from '../interfaces';
 import { getPeriod } from './get-period';
 
@@ -34,6 +34,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory1',
         name: 'Groceries',
+        type: TransactionType.Income,
         iconID: 1,
         colorID: 1,
         description: '',
@@ -41,6 +42,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory2',
         name: 'Restaurant',
+        type: TransactionType.Income,
         iconID: 2,
         colorID: 2,
         description: '',
@@ -48,6 +50,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory3',
         name: 'Leisure',
+        type: TransactionType.Income,
         iconID: 3,
         colorID: 3,
         description: '',
@@ -55,6 +58,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory4',
         name: 'Transport',
+        type: TransactionType.Income,
         iconID: 4,
         colorID: 4,
         description: '',
@@ -62,6 +66,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory5',
         name: 'Health',
+        type: TransactionType.Income,
         iconID: 5,
         colorID: 5,
         description: '',
@@ -69,6 +74,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory6',
         name: 'Gifts',
+        type: TransactionType.Income,
         iconID: 6,
         colorID: 6,
         description: '',
@@ -76,6 +82,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory7',
         name: 'Family',
+        type: TransactionType.Income,
         iconID: 7,
         colorID: 7,
         description: '',
@@ -83,8 +90,17 @@ export const store: IStore = {
       {
         id: 'defaultCategory8',
         name: 'Shopping',
+        type: TransactionType.Income,
         iconID: 8,
         colorID: 8,
+        description: '',
+      },
+      {
+        id: 'defaultCategory9',
+        name: 'Shopping',
+        type: TransactionType.Expenses,
+        iconID: 9,
+        colorID: 9,
         description: '',
       },
     ],

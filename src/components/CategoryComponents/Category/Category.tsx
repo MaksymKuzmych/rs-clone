@@ -16,7 +16,10 @@ export const Category = memo(({ dataCategory, sum, currencySymbol }: CategoryPro
   const { id, name, iconID, colorID } = dataCategory;
 
   const colorItem = colors.find((color) => color.id === colorID)?.color;
-  const buttonAdd = !id;
+  let buttonAdd = false;
+  if (id === '0') {
+    buttonAdd = true;
+  }
   const iconItem = !buttonAdd
     ? iconsCategory.find((icon) => icon.id === iconID)?.name
     : iconsProject.find((icon) => icon.id === iconID)?.name;
