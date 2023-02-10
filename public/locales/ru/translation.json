@@ -18,5 +18,10 @@
   "Health": "Здоровье",
   "Gifts": "Подарки",
   "Family": "Семья",
-  "Shopping": "Покупки"
+  "Shopping": "Покупки",
+  "New account": "Новый счёт",
+  "Name": "Название",
+  "Account": "Счёт",
+  "Description": "Описание",
+  "Required": "Обязательное поле"
 }

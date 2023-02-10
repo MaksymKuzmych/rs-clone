@@ -11,8 +11,8 @@ export interface ISettings {
 export interface IAccount {
   id: string;
   name: string;
-  iconID: number;
-  colorID: number;
+  icon: string;
+  color: string;
   balance: number;
   description: string;
 }

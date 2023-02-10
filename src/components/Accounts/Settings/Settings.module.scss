@@ -1,7 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .header {
-  padding: 30px;
+  padding: 20px;
   margin: 0 10px;
   color: white;
   border-top-left-radius: 5px;
@@ -47,4 +47,5 @@
   background-color: $dark-gray;
   padding: 10px;
   gap: 20px 5px;
+  align-items: center;
 }

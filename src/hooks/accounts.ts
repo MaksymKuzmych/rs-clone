@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { IAccount } from '../interfaces';
-import { accounts as accountsData } from '../mockData/accounts';
-import { settings } from '../mockData/settings';
+import { store } from '../utils/store';
 
 export const useAccounts = () => {
-  const [accounts, setAccounts] = useState<IAccount[]>(accountsData);
+  const [accounts, setAccounts] = useState<IAccount[]>(store.data.accounts);
   const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState(settings.currency);
+  const [currency, setCurrency] = useState(store.settings.currency);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -19,7 +18,7 @@ export const useAccounts = () => {
     try {
       setError('');
       setLoading(true);
-      setAccounts(accountsData);
+      setAccounts(store.data.accounts);
     } catch (e) {
       const error = e as Error;
       setError(error.message);
@@ -30,7 +29,7 @@ export const useAccounts = () => {
 
   useEffect(() => {
     getAccounts();
-    setCurrency(settings.currency);
+    setCurrency(store.settings.currency);
   }, []);
 
   useEffect(() => {

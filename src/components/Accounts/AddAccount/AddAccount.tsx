@@ -3,21 +3,21 @@ import { useTranslation } from 'react-i18next';
 
 import { Anchor } from '../../../types';
 
-import styles from './AddAccountInfo.module.scss';
+import styles from './AddAccount.module.scss';
 
-interface AddAccountInfoProps {
+interface AddAccountProps {
   drawerHandler: (type: string, anchor: Anchor) => void;
 }
 
-export const AddAccountInfo = memo(({ drawerHandler }: AddAccountInfoProps) => {
+export const AddAccount = memo(({ drawerHandler }: AddAccountProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.addAccount} onClick={() => drawerHandler('addAccount', 'bottom')}>
+    <div className={styles.add} onClick={() => drawerHandler('addAccount', 'bottom')}>
       <div className={styles.iconWrapper}>
         <span className='material-icons'>add</span>
       </div>
-      <p className={styles.addPlaceholder}>{t('Add account')}</p>
+      <p className={styles.placeholder}>{t('Add account')}</p>
     </div>
   );
 });
