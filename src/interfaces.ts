@@ -11,8 +11,8 @@ export interface ISettings {
 export interface IAccount {
   id: string;
   name: string;
-  iconID: number;
-  colorID: number;
+  icon: string;
+  color: string;
   balance: number;
   description: string;
 }
@@ -20,6 +20,7 @@ export interface IAccount {
 export interface ICategory {
   id: string;
   name: string;
+  type: TransactionType;
   iconID: number;
   colorID: number;
   description: string;
@@ -54,7 +55,7 @@ export interface IDataFBGet {
 }
 
 export interface IStore {
-  login: boolean;
+  userId: null | string;
   settings: ISettings;
   data: IData;
 }
@@ -62,7 +63,7 @@ export interface IStore {
 export interface IDataFBFiltered {
   accounts?: null;
   categories?: null;
-  transactions?: {
+  transactions?: null | {
     periodStart?: number;
     periodEnd?: number;
     account?: string;
