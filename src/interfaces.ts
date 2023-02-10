@@ -20,6 +20,7 @@ export interface IAccount {
 export interface ICategory {
   id: string;
   name: string;
+  type: TransactionType;
   iconID: number;
   colorID: number;
   description: string;
