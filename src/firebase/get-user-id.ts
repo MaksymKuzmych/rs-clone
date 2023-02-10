@@ -7,12 +7,9 @@ import { userData } from './user-data';
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    console.log('user signed in', auth.currentUser?.uid);
     await createAnonUser();
     await pullUserData();
-    console.log(userData);
   } else {
-    console.log('user signed out');
     await signInAnon();
   }
 });

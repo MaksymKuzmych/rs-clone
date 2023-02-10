@@ -5,6 +5,7 @@ import { getUserSettings } from './get-user-settings';
 import { userData } from './user-data';
 
 export const pullUserData = async () => {
+  userData.userId = getUserId();
   userData.settings = await getUserSettings(getUserId());
   userData.data.accounts = (await getFilteredUserData(getUserId(), {
     accounts: null,
