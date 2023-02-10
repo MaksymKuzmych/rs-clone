@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Currency } from '../enums';
+import { getFilteredUserData } from '../firebase/get-filtered-user-data';
 
 import { IAccount } from '../interfaces';
-import { store } from '../utils/store';
 
 export const useAccounts = () => {
-  const [accounts, setAccounts] = useState<IAccount[]>(store.data.accounts);
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
   const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState(store.settings.currency);
+  const [currency, setCurrency] = useState(Currency.UAH);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -14,11 +15,11 @@ export const useAccounts = () => {
     setAccounts([...accounts, account]);
   };
 
-  function getAccounts() {
+  async function getAccounts() {
     try {
       setError('');
       setLoading(true);
-      setAccounts(store.data.accounts);
+      setAccounts((await getFilteredUserData('27', { accounts: null })) as IAccount[]);
     } catch (e) {
       const error = e as Error;
       setError(error.message);
@@ -29,7 +30,7 @@ export const useAccounts = () => {
 
   useEffect(() => {
     getAccounts();
-    setCurrency(store.settings.currency);
+    setCurrency(Currency.UAH);
   }, []);
 
   useEffect(() => {
