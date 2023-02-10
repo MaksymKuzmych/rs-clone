@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 
 import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
-import { Header } from '../../components/Accounts/Header/Header';
+import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { Loader } from '../../components/UI/Loader/Loader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { Account } from '../../components/Accounts/Account/Account';
 import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
 import { IAccount } from '../../interfaces';
 import { Settings } from '../../components/Accounts/Settings/Settings';
-import { AddSettings } from '../../components/Accounts/AddSettings/AddSettings';
+import { AccountForm } from '../../components/Accounts/AccountForm/AccountForm';
 import { useAccounts } from '../../hooks/accounts';
 import { useDrawer } from '../../hooks/drawer';
 import { Anchor } from '../../types';
@@ -25,23 +25,33 @@ export const AccountPage = () => {
   const drawerContent = () => {
     switch (typeDrawer) {
       case 'info':
-        return <Settings account={currentAccount} currency={currency} />;
+        return (
+          <Settings
+            account={currentAccount}
+            currency={currency}
+            typeDrawerHandler={typeDrawerHandler}
+          />
+        );
       case 'edit':
-        return <div>Edit</div>;
+        return (
+          <AccountForm account={currentAccount} currency={currency} drawerHandler={drawerHandler} />
+        );
       case 'balance':
         return <div>Balance</div>;
       case 'transactions':
         return <div>Transactions</div>;
-      case 'rechacrge':
+      case 'recharge':
         return <div>Recharge</div>;
       case 'withdraw':
         return <div>Withdraw</div>;
       case 'transfer':
         return <div>Transfer</div>;
       case 'addAccount':
-        return <AddSettings currency={currency} drawerHandler={drawerHandler} />;
+        return <AccountForm currency={currency} drawerHandler={drawerHandler} />;
     }
   };
+
+  const typeDrawerHandler = (type: string) => setTypeDrawer(type);
 
   const drawerHandler = useCallback(
     (type: string, anchor: Anchor) => {
@@ -64,7 +74,7 @@ export const AccountPage = () => {
     <div className={styles.accountPage}>
       {loading && <Loader />}
       {error && <ErrorMessage error={error} />}
-      <Header currency={currency} amount={amount} />
+      <AccountHeader currency={currency} amount={amount} />
       {accounts.length &&
         accounts.map((account) => (
           <Account

@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { Currency } from '../../../enums';
 
+import { Currency } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 
 import styles from './Account.module.scss';

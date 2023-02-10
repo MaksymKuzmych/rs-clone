@@ -10,9 +10,10 @@ import styles from './Settings.module.scss';
 interface SettingsProps {
   account: IAccount;
   currency: Currency;
+  typeDrawerHandler: (type: string) => void;
 }
 
-export const Settings = memo(({ account, currency }: SettingsProps) => {
+export const Settings = memo(({ account, currency, typeDrawerHandler }: SettingsProps) => {
   const { t } = useTranslation();
   const { name, icon, color, description, balance } = account;
 
@@ -34,21 +35,53 @@ export const Settings = memo(({ account, currency }: SettingsProps) => {
         </div>
       </header>
       <div className={styles.btnsWrapper}>
-        <SettingsBtn icon='edit' color='#fec107' title={t('Edit')} onClick={() => {}} />
-        <SettingsBtn icon='sync' color='#7f7f7f' title={t('Balance')} onClick={() => {}} />
-        <SettingsBtn icon='receipt' color='#029688' title={t('Transactions')} onClick={() => {}} />
+        <SettingsBtn
+          icon='edit'
+          color='#fec107'
+          title={t('Edit')}
+          onClick={() => {
+            typeDrawerHandler('edit');
+          }}
+        />
+        <SettingsBtn
+          icon='sync'
+          color='#7f7f7f'
+          title={t('Balance')}
+          onClick={() => {
+            typeDrawerHandler('balance');
+          }}
+        />
+        <SettingsBtn
+          icon='receipt'
+          color='#029688'
+          title={t('Transactions')}
+          onClick={() => {
+            typeDrawerHandler('transactions');
+          }}
+        />
         <SettingsBtn
           icon='arrow_downward'
           color='#4cb050'
           title={t('Recharge')}
-          onClick={() => {}}
+          onClick={() => {
+            typeDrawerHandler('recharge');
+          }}
         />
-        <SettingsBtn icon='arrow_upward' color='#f34334' title={t('Withdraw')} onClick={() => {}} />
+        <SettingsBtn
+          icon='arrow_upward'
+          color='#f34334'
+          title={t('Withdraw')}
+          onClick={() => {
+            typeDrawerHandler('withdraw');
+          }}
+        />
         <SettingsBtn
           icon='arrow_forward'
           color='#7f7f7f'
           title={t('Transfer')}
-          onClick={() => {}}
+          onClick={() => {
+            typeDrawerHandler('transfer');
+          }}
         />
       </div>
     </>

@@ -5,10 +5,11 @@ import { iconsCard } from '../../../data/icons';
 import styles from './Icons.module.scss';
 
 interface IconsProps {
+  color: string;
   iconHandler: (icon: string) => void;
 }
 
-export const Icons = ({ iconHandler }: IconsProps) => {
+export const Icons = ({ color, iconHandler }: IconsProps) => {
   const [icons, setIcons] = useState(iconsCard);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export const Icons = ({ iconHandler }: IconsProps) => {
           key={el.id}
           className={styles.btn}
         >
-          <span className='material-icons' style={{ color: `#fff` }}>
+          <span className='material-icons' style={{ color: `${color}` }}>
             {el.name}
           </span>
         </button>

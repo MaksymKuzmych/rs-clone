@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
 
 import { Currency } from '../../../enums';
+import { IAccount } from '../../../interfaces';
 import { Anchor } from '../../../types';
 import { store } from '../../../utils/store';
 import { Colors } from '../../UI/Colors/Colors';
@@ -12,7 +13,7 @@ import { Icons } from '../../UI/Icons/Icons';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { BasicTabs } from '../../UI/Tabs/Tabs';
 
-import styles from './AddSettings.module.scss';
+import styles from './AccountForm.module.scss';
 
 const theme = createTheme({
   palette: {
@@ -25,6 +26,13 @@ const theme = createTheme({
       styleOverrides: {
         underline: {
           color: '#fff',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: '24px',
         },
       },
     },
@@ -46,38 +54,44 @@ const theme = createTheme({
   },
 });
 
-interface AddSettingsProps {
+interface AccountFormProps {
+  account?: IAccount;
   currency: Currency;
   drawerHandler: (type: string, anchor: Anchor) => void;
 }
 
-export const AddSettings = memo(({ currency, drawerHandler }: AddSettingsProps) => {
+export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFormProps) => {
   const [openModal, setOpenModal] = useState(false);
-  const [icon, setIcon] = useState('credit_card');
-  const [color, setColor] = useState('#4154b0');
+  const [icon, setIcon] = useState(`${account ? account.icon : 'credit_card'}`);
+  const [color, setColor] = useState(`${account ? account.color : '#4154b0'}`);
 
   const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      balance: '',
-      description: '',
+      name: `${account ? account.name : ''}`,
+      balance: `${account ? account.balance : ''}`,
+      description: `${account ? account.description : ''}`,
     },
     validationSchema: object().shape({
       name: string().required(`${t('Required')}`),
       balance: string().required(`${t('Required')}`),
     }),
     onSubmit: (values) => {
-      store.data.accounts.push({
-        id: String(Date.now()),
+      const accountInfo = {
+        id: `${account ? account.id : String(Date.now())}`,
         name: values.name,
         balance: +values.balance,
         description: values.description,
         color: color,
         icon: icon,
-      });
-
+      };
+      if (account) {
+        const index = store.data.accounts.findIndex((el) => el.id === account.id);
+        store.data.accounts[index] = accountInfo;
+      } else {
+        store.data.accounts.push(accountInfo);
+      }
       drawerHandler('addAccount', 'bottom');
     },
   });
@@ -154,7 +168,7 @@ export const AddSettings = memo(({ currency, drawerHandler }: AddSettingsProps) 
         </form>
         <BasicModal openModal={openModal} handleClose={handleClose}>
           <BasicTabs
-            firstChild={<Icons iconHandler={iconHandler} />}
+            firstChild={<Icons color='#fff' iconHandler={iconHandler} />}
             secondChild={<Colors colorHandler={colorHandler} />}
           />
         </BasicModal>

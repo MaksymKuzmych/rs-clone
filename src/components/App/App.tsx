@@ -11,7 +11,8 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<AccountPage />} />
+      <Route path='/' element={<h1>{t('Start Page')}</h1>} />
+      <Route path='/account' element={<AccountPage />} />
       <Route path='/category' element={<CategoryPage />} />
       <Route path='*' element={<h1>{t('Page Not Found')}</h1>} />
     </Routes>
