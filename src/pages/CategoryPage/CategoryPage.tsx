@@ -28,6 +28,7 @@ export const CategoryPage = () => {
     categories.push({
       id: '0',
       name: '',
+      type: TransactionType.Expenses,
       iconID: 1,
       colorID: 21,
       description: '',
