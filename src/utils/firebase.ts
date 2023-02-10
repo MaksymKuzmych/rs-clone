@@ -1,183 +1,189 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, child, get, update, remove } from 'firebase/database';
-import { Lang } from '../enums';
-import { DataAllFB, IData, IDataFB, IDataFBDelete, ISettings, IStore } from '../interfaces';
-import { store } from './store';
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  QueryFieldFilterConstraint,
+} from 'firebase/firestore';
 
-// Your web app's Firebase configuration
+import { IData, IDataFB, IDataFBFiltered, IDataFBGet, ISettings, IStore } from '../interfaces';
+import { DataAllFB } from '../types';
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyCcUXS1Bdjo_i-oy5fpaJU-Ru3jf0rbNKU',
-  authDomain: 'rs-clone-f66eb.firebaseapp.com',
-  projectId: 'rs-clone-f66eb',
-  storageBucket: 'rs-clone-f66eb.appspot.com',
-  messagingSenderId: '489433569397',
-  appId: '1:489433569397:web:93c58002c872e0af84c03c',
-  databaseURL: 'https://rs-clone-f66eb-default-rtdb.europe-west1.firebasedatabase.app',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export const createUser = async (userId: number, store: IStore) => {
-  const db = getDatabase();
+class FirebaseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'Firebase Error';
+  }
+}
+
+export const createUser = async (userId: string, store: IStore) => {
   try {
-    await set(ref(db, 'users/' + userId), {
+    await setDoc(doc(db, 'users/', userId), {
       settings: store.settings,
-      data: store.data,
+    });
+    store.data.accounts.forEach(async (account) => {
+      await setDoc(doc(db, 'users/' + userId + '/accounts', account.id), account);
+    });
+    store.data.categories.forEach(async (category) => {
+      await setDoc(doc(db, 'users/' + userId + '/categories', category.id), category);
     });
   } catch (error) {
-    throw new Error('Firebase createUser: Create failed...');
+    throw new FirebaseError(`Create User: ${error}`);
   }
 };
 
-export const getUser = async (userId: number) => {
-  const dbRef = ref(getDatabase());
+export const getUserSettings = async (userId: string) => {
+  const docRef = doc(db, 'users', userId);
   let message = '';
   try {
-    const snapshot = await get(child(dbRef, `users/` + userId));
-    if (snapshot.exists()) {
-      return snapshot.val();
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data().settings;
     } else {
-      message = 'Firebase getUser: User not found!';
+      message = 'getUserSettings: User not found!';
       throw new Error();
     }
   } catch (error) {
-    throw message ? new Error(message) : new Error('Firebase getUser: Read failed...');
+    throw message
+      ? new FirebaseError(message)
+      : new FirebaseError(`getUserSettings: Read failed... ${error}`);
   }
 };
 
-export const deleteUser = async (userId: number) => {
-  const db = getDatabase();
-  let message = '';
-  try {
-    const snapshot = await get(child(ref(db), 'users/' + userId));
-    if (!snapshot.exists()) {
-      message = 'Firebase deleteUser: User not found!';
-      throw new Error();
-    } else {
-      await remove(ref(db, 'users/' + userId));
-    }
-  } catch (error) {
-    throw message ? new Error(message) : new Error('Firebase deleteUser: Delete failed...');
-  }
-};
-
-export const getUserSettings = async (userId: number) => {
-  const db = getDatabase();
-  let message = '';
-  try {
-    const snapshot = await get(child(ref(db), `users/${userId}/settings`));
-    if (snapshot.exists()) {
-      return snapshot.val();
-    } else {
-      message = 'Firebase getUserSettings: Settings not found!';
-      throw new Error();
-    }
-  } catch (error) {
-    throw message ? new Error(message) : new Error('Firebase getUserSettings: Read failed...');
-  }
-};
-
-export const updateUserSettings = async (userId: number, settings: Partial<ISettings>) => {
-  const db = getDatabase();
-
+export const updateUserSettings = async (userId: string, settings: Partial<ISettings>) => {
+  const docRef = doc(db, 'users', userId);
   try {
     Object.entries(settings).forEach(async (setting) => {
-      const updates = { [`users/${userId}/settings/${setting[0]}`]: setting[1] };
-      await update(ref(db), updates);
+      const updates = { [`settings.${setting[0]}`]: setting[1] };
+      await updateDoc(docRef, updates);
     });
   } catch (error) {
-    new Error('Firebase updateUserSettings: Write failed...');
+    throw new FirebaseError(`updateUserSettings: Write failed... ${error}`);
   }
 };
 
-export const getUserData = async (userId: number, data: IDataFBDelete) => {
-  const db = getDatabase();
+export const getUserData = async (userId: string, data: IDataFBGet) => {
   let message = '';
   try {
     const accounts = Object.entries(data);
-    const snapshot = await get(
-      child(ref(db), `users/${userId}/data/${accounts[0][0]}/${accounts[0][1]}`),
-    );
-    if (snapshot.exists()) {
-      return snapshot.val();
+    const docRef = doc(db, `users/${userId}/${accounts[0][0]}`, accounts[0][1]);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
     } else {
       message = 'Firebase getUserData: Data not found!';
       throw new Error();
     }
   } catch (error) {
-    throw message ? new Error(message) : new Error('Firebase getUserData: Read failed...');
+    throw message
+      ? new FirebaseError(message)
+      : new FirebaseError(`getUserData: Read failed... ${error}`);
   }
 };
 
-export const updateUserData = async (userId: number, data: IDataFB) => {
-  const db = getDatabase();
+export const getFilteredUserData = async (userId: string, data: IDataFBFiltered) => {
+  let message = '';
+  try {
+    const accounts = Object.entries(data);
+    const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
+    let queryRequest = query(dataRef);
+    const queryArray: QueryFieldFilterConstraint[] = [];
+    if (data.transactions?.periodStart && data.transactions?.periodEnd) {
+      queryArray.push(where('date', '>=', data.transactions.periodStart));
+      queryArray.push(where('date', '<=', data.transactions.periodEnd));
+    }
+    if (data.transactions?.account) {
+      queryArray.push(where('account', '==', data.transactions.account));
+    }
+    if (data.transactions?.category) {
+      queryArray.push(where('category', '==', data.transactions.category));
+    }
+    if (data.transactions?.type) {
+      queryArray.push(where('type', '==', data.transactions.type));
+    }
+    if (queryArray.length) {
+      queryRequest = query(dataRef, ...queryArray);
+    }
+    const querySnapshot = await getDocs(queryRequest);
+    const dataArray = querySnapshot.docs.map((doc) => doc.data());
+    if (dataArray.length) {
+      return dataArray;
+    } else {
+      message = 'getFilteredUserData: Data not found!';
+      throw new Error();
+    }
+  } catch (error) {
+    throw message
+      ? new FirebaseError(message)
+      : new FirebaseError(`getFilteredUserData: Read failed... ${error}`);
+  }
+};
 
+export const updateUserData = async (userId: string, data: IDataFB) => {
   try {
     Object.entries(data).forEach(async (accounts) => {
       Object.entries(accounts[1]).forEach(async (id) => {
         Object.entries(id[1] as DataAllFB).forEach(async (color) => {
-          const updates = {
-            [`users/${userId}/data/${accounts[0]}/${id[0]}/${color[0]}`]: color[1],
-          };
-          await update(ref(db), updates);
+          const docRef = doc(db, `users/${userId}/${accounts[0]}`, id[0]);
+          const updates = { [color[0]]: color[1] };
+          await updateDoc(docRef, updates);
         });
       });
     });
   } catch (error) {
-    new Error('Firebase updateUserData: Write failed...');
+    throw new FirebaseError(`updateUserData: Write failed... ${error}`);
   }
 };
 
-export const pushUserData = async (userId: number, data: Partial<IData>) => {
-  const db = getDatabase();
-
+export const pushUserData = async (userId: string, data: Partial<IData>) => {
   try {
     Object.entries(data).forEach(async (accounts) => {
-      Object.entries(accounts[1]).forEach(async (id) => {
-        const updates = {
-          [`users/${userId}/data/${accounts[0]}/${id[0]}`]: id[1],
-        };
-        await update(ref(db), updates);
+      accounts[1].forEach(async (id) => {
+        const docRef = doc(collection(db, `users/${userId}/${accounts[0]}`));
+        const docRefId = doc(db, `users/${userId}/${accounts[0]}`, docRef.id);
+        await setDoc(docRef, id);
+        await updateDoc(docRefId, { id: docRef.id });
       });
     });
   } catch (error) {
-    new Error('Firebase pushUserData: Write failed...');
+    throw new FirebaseError(`pushUserData: Write failed... ${error}`);
   }
 };
 
-export const deleteUserData = async (userId: number, data: IDataFBDelete) => {
-  const db = getDatabase();
+export const deleteUserData = async (userId: string, data: IDataFBGet) => {
   let message = '';
   try {
-    Object.entries(data).forEach(async (accounts) => {
-      const snapshot = await get(
-        child(ref(db), `users/${userId}/data/${accounts[0]}/${accounts[1]}`),
-      );
-      if (!snapshot.exists()) {
-        message = 'Firebase deleteUserData: Data not found!';
-        throw new Error();
-      } else {
-        await remove(ref(db, `users/${userId}/data/${accounts[0]}/${accounts[1]}`));
-      }
-    });
+    const accounts = Object.entries(data);
+    const docRef = doc(db, `users/${userId}/${accounts[0][0]}`, accounts[0][1]);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      message = 'deleteUserData: Data not found!';
+      throw new Error();
+    } else {
+      await deleteDoc(docRef);
+    }
   } catch (error) {
-    throw message ? new Error(message) : new Error('Firebase deleteUserData: Delete failed...');
+    throw message
+      ? new FirebaseError(message)
+      : new FirebaseError(`deleteUserData: Delete failed... ${error}`);
   }
 };
-
-// Examples
-
-// export const firebase = async () => {
-//   await createUser(1, store);
-//   console.log(await getUser(1));
-//   await deleteUser(1);
-
-//   console.log(await getUserSettings(1));
-//   await updateUserSettings(1, { lang: Lang.RU });
-
-//   console.log(await getUserData(1, { accounts: 1 }));
-//   await updateUserData(1, { accounts: { 1: { colorID: 7 } } });
-//   await pushUserData(1, { accounts: { 3: store.data.accounts[2] } });
-//   await deleteUserData(1, { categories: 8 });
-// };

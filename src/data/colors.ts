@@ -1,4 +1,6 @@
-export const colors = [
+import { IColor } from '../interfaces';
+
+export const colors: IColor[] = [
   {
     color: '#5c6ac2',
     id: 1,

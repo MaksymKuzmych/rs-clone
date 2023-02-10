@@ -1,13 +1,13 @@
-import { ChartComponent } from '../../CategoryComponents/Chart/Chart';
-import { CategoriesLine } from '../../CategoryComponents/CategoriesLine/CategoriesLine';
+import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
+import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
+
+import { IChart } from '../../interfaces';
+import { colors } from '../../data/colors';
+import { store } from '../../utils/store';
+import { storeTr } from '../../mockData/transactions';
+import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
-
-import { IChart } from '../../../types';
-import { colors } from '../../../data/colors';
-import { store } from '../../../utils/store';
-import { storeTr } from '../../../mockData/transactions';
-import { TransactionType, CurrencySymbol } from '../../../enums';
 
 export const CategoryPage = () => {
   const dataForChart: IChart = {
@@ -26,7 +26,7 @@ export const CategoryPage = () => {
   const categories = Object.values(store.data.categories);
   if (categories.length < 12) {
     categories.push({
-      id: 0,
+      id: '0',
       name: '',
       iconID: 1,
       colorID: 21,
