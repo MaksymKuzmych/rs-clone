@@ -46,7 +46,7 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
         </ListItemIcon>
         <div>
           <ListItemText primary={t(`${name}`)} />
-          <div className={styles.value}>{t(`${param}`)}</div>
+          <div className={styles.value}>{name === 'Mode' ? t(`${param}`) : param}</div>
         </div>
       </ListItem>
       <Menu
@@ -92,7 +92,7 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
                 <FormControlLabel
                   value={item}
                   control={<Radio color={'primary'} />}
-                  label={t(`${item}`)}
+                  label={name === 'Mode' ? t(`${item}`) : item}
                   key={item}
                   sx={{
                     padding: '10px',
