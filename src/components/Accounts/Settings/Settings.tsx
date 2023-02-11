@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Currency } from '../../../enums';
+import { CurrencySymbol } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 
@@ -9,7 +9,7 @@ import styles from './Settings.module.scss';
 
 interface SettingsProps {
   account: IAccount;
-  currency: Currency;
+  currency: CurrencySymbol;
   typeDrawerHandler: (type: string) => void;
 }
 

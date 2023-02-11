@@ -4,10 +4,13 @@ import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
 
-import { Currency } from '../../../enums';
+import { CurrencySymbol } from '../../../enums';
+import { pullUserData } from '../../../firebase/pull-user-data';
+import { pushUserData } from '../../../firebase/push-user-data';
+import { updateUserData } from '../../../firebase/update-user-data';
+import { userData } from '../../../firebase/user-data';
 import { IAccount } from '../../../interfaces';
 import { Anchor } from '../../../types';
-import { store } from '../../../utils/store';
 import { Colors } from '../../UI/Colors/Colors';
 import { Icons } from '../../UI/Icons/Icons';
 import { BasicModal } from '../../UI/Modal/Modal';
@@ -56,7 +59,7 @@ const theme = createTheme({
 
 interface AccountFormProps {
   account?: IAccount;
-  currency: Currency;
+  currency: CurrencySymbol;
   drawerHandler: (type: string, anchor: Anchor) => void;
 }
 
@@ -77,9 +80,10 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
       name: string().required(`${t('Required')}`),
       balance: string().required(`${t('Required')}`),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const accountInfo = {
-        id: `${account ? account.id : String(Date.now())}`,
+        id: `${account ? account.id : ''}`,
+        date: Date.now(),
         name: values.name,
         balance: +values.balance,
         description: values.description,
@@ -87,11 +91,17 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
         icon: icon,
       };
       if (account) {
-        const index = store.data.accounts.findIndex((el) => el.id === account.id);
-        store.data.accounts[index] = accountInfo;
+        await updateUserData(userData.userId, {
+          accounts: {
+            [account.id]: accountInfo,
+          },
+        });
       } else {
-        store.data.accounts.push(accountInfo);
+        await pushUserData(userData.userId, {
+          accounts: [accountInfo],
+        });
       }
+      await pullUserData();
       drawerHandler('addAccount', 'bottom');
     },
   });

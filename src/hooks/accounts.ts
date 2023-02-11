@@ -1,28 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Currency } from '../enums';
-import { getFilteredUserData } from '../firebase/get-filtered-user-data';
+import { CurrencySymbol } from '../enums';
+import { pullUserData } from '../firebase/pull-user-data';
+import { userData } from '../firebase/user-data';
 
 import { IAccount } from '../interfaces';
 
 export const useAccounts = () => {
-  const [accounts, setAccounts] = useState<IAccount[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[]>(userData.data.accounts);
   const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState(Currency.UAH);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const addAccount = (account: IAccount) => {
-    setAccounts([...accounts, account]);
-  };
+  const [currency, setCurrency] = useState(CurrencySymbol[userData.settings.currency]);
+  const [loading, setLoading] = useState(true);
 
   async function getAccounts() {
     try {
-      setError('');
-      setLoading(true);
-      setAccounts((await getFilteredUserData('27', { accounts: null })) as IAccount[]);
+      await pullUserData();
+      setAccounts(userData.data.accounts);
+      setCurrency(CurrencySymbol[userData.settings.currency]);
     } catch (e) {
-      const error = e as Error;
-      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -30,13 +24,17 @@ export const useAccounts = () => {
 
   useEffect(() => {
     getAccounts();
-    setCurrency(Currency.UAH);
   }, []);
+
+  useEffect(() => {
+    setAccounts(userData.data.accounts);
+    setCurrency(CurrencySymbol[userData.settings.currency]);
+  }, [userData.data.accounts, userData.settings.currency]);
 
   useEffect(() => {
     const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);
     setAmount(allCardsAmount);
   }, [accounts]);
 
-  return { accounts, amount, currency, loading, error, addAccount };
+  return { accounts, amount, currency, loading };
 };

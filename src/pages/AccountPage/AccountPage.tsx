@@ -1,8 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
-import { Loader } from '../../components/UI/Loader/Loader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { Account } from '../../components/Accounts/Account/Account';
 import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
@@ -14,9 +12,10 @@ import { useDrawer } from '../../hooks/drawer';
 import { Anchor } from '../../types';
 
 import styles from './AccountPage.module.scss';
+import { CircularProgress } from '@mui/material';
 
 export const AccountPage = () => {
-  const { accounts, amount, currency, loading, error } = useAccounts();
+  const { accounts, amount, currency, loading } = useAccounts();
   const { state, toggleDrawer } = useDrawer();
   const [typeDrawer, setTypeDrawer] = useState('');
   const [currentAccount, setCurrentAccount] = useState(accounts[0]);
@@ -72,10 +71,9 @@ export const AccountPage = () => {
 
   return (
     <div className={styles.accountPage}>
-      {loading && <Loader />}
-      {error && <ErrorMessage error={error} />}
+      {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
       <AccountHeader currency={currency} amount={amount} />
-      {accounts.length &&
+      {accounts.length !== 0 &&
         accounts.map((account) => (
           <Account
             account={account}

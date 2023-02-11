@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Currency } from '../../../enums';
+import { CurrencySymbol } from '../../../enums';
 
 import styles from './AccountHeader.module.scss';
 
 interface AccountHeaderProps {
-  currency: Currency;
+  currency: CurrencySymbol;
   amount: number;
 }
 

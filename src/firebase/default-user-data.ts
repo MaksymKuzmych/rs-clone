@@ -3,7 +3,7 @@ import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
 export const defaultUserData: IStore = {
-  userId: null,
+  userId: 'default',
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
@@ -15,6 +15,7 @@ export const defaultUserData: IStore = {
     accounts: [
       {
         id: 'defaultAccount1',
+        date: Date.now() + 1,
         name: 'Card',
         icon: 'credit_card',
         color: '#cd4863',
@@ -23,6 +24,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultAccount2',
+        date: Date.now() + 2,
         name: 'Cash',
         icon: 'account_balance_wallet',
         color: '#6ebaa0',

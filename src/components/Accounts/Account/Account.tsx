@@ -1,13 +1,13 @@
 import { memo } from 'react';
 
-import { Currency } from '../../../enums';
+import { CurrencySymbol } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 
 import styles from './Account.module.scss';
 
 interface AccountProps {
   account: IAccount;
-  currency: Currency;
+  currency: CurrencySymbol;
   accountDrawerHandler: (account: IAccount) => void;
 }
 
