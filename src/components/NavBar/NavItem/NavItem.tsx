@@ -20,14 +20,15 @@ interface NavItemProps {
 
 export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
   const [param, setParam] = useState(enumData[0]);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setOpen(false);
+    setAnchorEl(null);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +36,11 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   };
   return (
     <div className={styles.navItem}>
-      <ListItem onClick={handleOpen}>
+      <ListItem
+        onClick={(event) => {
+          handleClick(event);
+        }}
+      >
         <ListItemIcon>
           <span className='material-icons'>{icon}</span>
         </ListItemIcon>
@@ -48,13 +53,13 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
         id='simple-menu'
         keepMounted
         open={open}
+        anchorEl={anchorEl}
         onClick={handleClose}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
         }}
         sx={{
-          top: '200px',
           left: '50px',
         }}
       >
