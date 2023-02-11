@@ -1,0 +1,7 @@
+REACT_APP_API_KEY = 'AIzaSyCcUXS1Bdjo_i-oy5fpaJU-Ru3jf0rbNKU'
+REACT_APP_AUTH_DOMAIN = 'rs-clone-f66eb.firebaseapp.com'
+REACT_APP_PROJECT_ID = 'rs-clone-f66eb'
+REACT_APP_STORAGE_BUCKET = 'rs-clone-f66eb.appspot.com'
+REACT_APP_MESSAGING_SENDER_ID = '489433569397'
+REACT_APP_APP_ID = '1:489433569397:web:93c58002c872e0af84c03c'
+REACT_APP_DATABASE_URL = 'https://rs-clone-f66eb-default-rtdb.europe-west1.firebasedatabase.app'
