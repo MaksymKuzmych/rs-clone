@@ -20,6 +20,7 @@ export function Header() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <AppBar position='static'>
