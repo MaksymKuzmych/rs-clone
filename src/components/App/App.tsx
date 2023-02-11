@@ -7,6 +7,7 @@ import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { getUserId } from '../../firebase/get-user-id';
 
 import styles from './App.module.scss';
+import Footer from '../Footer/Footer';
 
 export const App = () => {
   const { t, i18n } = useTranslation();
@@ -20,9 +21,10 @@ export const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<CategoryPage />} />
-        <Route path='/account' element={<AccountPage />} />
+        <Route path='/accounts' element={<AccountPage />} />
         <Route path='*' element={<h1>{t('Page Not Found')}</h1>} />
       </Routes>
+      <Footer />
     </div>
   );
 };

@@ -1,0 +1,23 @@
+@import '../../styles/variables.scss';
+
+.bar {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid black;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: $light-gray;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.item:hover {
+  color: black;
+}
