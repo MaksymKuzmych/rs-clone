@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SwipeableDrawer from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,23 +20,15 @@ export function Header() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
   return (
-    <div className={styles.root}>
+    <div>
       <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={styles.menuButton}
-            color='inherit'
-            aria-label='menu'
-            onClick={handleDrawerOpen}
-          >
+          <IconButton edge='start' color='inherit' aria-label='menu' onClick={handleDrawerOpen}>
             <span className='material-icons'>menu</span>
           </IconButton>
           <Typography
             variant='h6'
-            className={styles.title}
             sx={{
               flexGrow: 1,
             }}
@@ -48,23 +40,26 @@ export function Header() {
               color: 'white',
             }}
           >
-            <span className={`material-icons ${styles.edit}`}>edit</span>
+            <span className='material-icons'>edit</span>
           </Button>
         </Toolbar>
       </AppBar>
-      <SwipeableDrawer
+      <Drawer
         className={styles.drawer}
         variant='persistent'
         anchor='left'
         open={open}
         sx={{
-          width: 240,
           flexShrink: 0,
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '300px' },
         }}
       >
         <NavBar />
-      </SwipeableDrawer>
-      {open ? <div className={styles.overlay} onClick={handleDrawerClose}></div> : null}
+      </Drawer>
+      <div
+        className={!open ? styles.overlay : `${styles.overlay} ${styles.overlayOpen}`}
+        onClick={handleDrawerClose}
+      ></div>
     </div>
   );
 }

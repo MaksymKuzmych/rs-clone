@@ -43,6 +43,7 @@
 
 .menu {
   padding: 0 10px;
+  position: relative;
 }
 
 .subtitle {
@@ -52,13 +53,20 @@
 }
 
 .RssLogo {
-  width: 30%;
-  transition: transform 0.3s;
+  width: 70%;
+}
+
+.logoWrapper {
+  padding: 5px 0;
+  border-radius: 15px;
+  transition: transform .5s;
+  &:hover {    
+    transform: scale(1.05);
+  }
 }
 
 .linkWrapper {
-  
-  &:hover .RssLogo {
-    transform: scale(1.05);
-  }
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 10px;
 }

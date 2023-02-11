@@ -20,14 +20,14 @@ interface NavItemProps {
 
 export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   const { t } = useTranslation();
-  const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
+  const [open, setOpen] = useState(false);
   const [param, setParam] = useState(enumData[0]);
 
-  const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpen = () => {
+    setOpen(true);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +35,7 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   };
   return (
     <div className={styles.navItem}>
-      <ListItem
-        onClick={(event) => {
-          handleClick(event);
-        }}
-      >
+      <ListItem onClick={handleOpen}>
         <ListItemIcon>
           <span className='material-icons'>{icon}</span>
         </ListItemIcon>
@@ -51,11 +47,15 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
       <Menu
         id='simple-menu'
         keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        open={open}
+        onClick={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
         sx={{
-          top: 100,
-          left: 30,
+          top: '200px',
+          left: '50px',
         }}
       >
         <div className={styles.paper}>

@@ -11,8 +11,6 @@ import { NavItem } from './NavItem/NavItem';
 import { NavLinkItem } from './NavLinkItem/NavLinkItem';
 import { DeleteButton } from './DeleteButton/DeleteButton';
 
-import RSS from '../../assets/rsLogo.svg';
-
 import styles from './NavBar.module.scss';
 
 export const NavBar = () => {
@@ -52,16 +50,18 @@ export const NavBar = () => {
           <NavLinkItem path={'https://github.com/maksymkuzmych'} name={'Maksym Kuzmych'} />
           <NavLinkItem path={'https://github.com/vladyka-nazarii'} name={'Nazarii Vladyka'} />
           <NavLinkItem path={'https://github.com/Julia-yes'} name={'Julia Bolonikova'} />
-          <NavLink to='https://rs.school'>
-            <ListItem
-              className={styles.linkWrapper}
-              sx={{
-                justifyContent: 'center',
-              }}
-            >
-              <img className={styles.RssLogo} src={RSS} alt='RSSchool logo' />
-            </ListItem>
-          </NavLink>
+          <div className={styles.linkWrapper}>
+            <NavLink to='https://rs.school'>
+              <ListItem
+                className={styles.logoWrapper}
+                sx={{
+                  justifyContent: 'center',
+                }}
+              >
+                <img className={styles.RssLogo} src='./assets/rsLogo.svg' alt='RSSchool logo' />
+              </ListItem>
+            </NavLink>
+          </div>
         </List>
       </div>
     </nav>

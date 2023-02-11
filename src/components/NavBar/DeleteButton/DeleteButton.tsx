@@ -6,8 +6,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 
-//import { makeStyles } from '@material-ui/core/styles';
-
 import styles from './DeleteButton.module.scss';
 
 export const DeleteButton = () => {
