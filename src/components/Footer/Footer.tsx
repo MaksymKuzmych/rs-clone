@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './Footer.module.scss';
 
-export default function Footer() {
+export const Footer = () => {
   const { t } = useTranslation();
 
   const [page, setPage] = useState('categories');
@@ -19,7 +19,7 @@ export default function Footer() {
         className={styles.item}
         to='/accounts'
         onClick={() => changePage('accounts')}
-        style={{ color: page === 'accounts' ? 'black' : 'gray' }}
+        style={{ color: page === 'accounts' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>credit_card</span>
         {page === 'accounts' && <p className={styles.text}>{t('Accounts')}</p>}
@@ -28,7 +28,7 @@ export default function Footer() {
         className={styles.item}
         to='/'
         onClick={() => changePage('categories')}
-        style={{ color: page === 'categories' ? 'black' : 'gray' }}
+        style={{ color: page === 'categories' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>data_usage</span>
         {page === 'categories' && <p className={styles.text}>{t('Categories')}</p>}
@@ -37,11 +37,11 @@ export default function Footer() {
         className={styles.item}
         to='/transactions'
         onClick={() => changePage('transactions')}
-        style={{ color: page === 'transactions' ? 'black' : 'gray' }}
+        style={{ color: page === 'transactions' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>receipt</span>
         {page === 'transactions' && <p className={styles.text}>{t('Transactions')}</p>}
       </Link>
     </nav>
   );
-}
+};

@@ -1,13 +1,12 @@
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
-
 import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { storeTr } from '../../mockData/transactions';
 import { TransactionType, CurrencySymbol } from '../../enums';
+import { userData } from '../../firebase/user-data';
 
 import styles from './CategoryPage.module.scss';
-import { userData } from '../../firebase/user-data';
 
 export const CategoryPage = () => {
   const dataForChart: IChart = {

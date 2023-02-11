@@ -4,24 +4,23 @@ import { Route, Routes } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { AccountPage } from '../../pages/AccountPage/AccountPage';
 import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
-
-import styles from './App.module.scss';
-import Footer from '../Footer/Footer';
+import { Footer } from '../Footer/Footer';
+import { NotFound } from '../NotFound/NotFound';
 
 export const App = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   i18n.changeLanguage('ru');
 
   return (
-    <div className={styles.wrapper}>
+    <>
       <Header />
       <Routes>
         <Route path='/' element={<CategoryPage />} />
         <Route path='/accounts' element={<AccountPage />} />
-        <Route path='*' element={<h1>{t('Page Not Found')}</h1>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
-    </div>
+    </>
   );
 };

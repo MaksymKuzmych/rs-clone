@@ -42,7 +42,7 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: '20px',
+          marginBottom: '10px',
         },
       },
     },
@@ -50,7 +50,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: '#a8adb3',
-          fontSize: '18px',
+          fontSize: '22px',
         },
       },
     },
@@ -82,7 +82,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
     }),
     onSubmit: async (values) => {
       const accountInfo = {
-        id: `${account ? account.id : ''}`,
+        id: account ? account.id : '',
         date: account ? account.date : Date.now(),
         name: values.name,
         balance: +values.balance,
@@ -160,7 +160,6 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
             <h2 className={styles.headerTitle}>{t('Balance')}</h2>
             <div className={styles.balanceWrapper}>
               <TextField
-                id='standard-basic'
                 variant='standard'
                 color='primary'
                 name='balance'
@@ -172,7 +171,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
                 helperText={formik.errors.balance}
                 error={!!formik.errors.balance}
               />
-              <span>{currency}</span>
+              <span className={styles.currency}>{currency}</span>
             </div>
           </div>
         </form>
