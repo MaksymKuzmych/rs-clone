@@ -3,11 +3,11 @@ import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLi
 
 import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
-import { store } from '../../utils/store';
 import { storeTr } from '../../mockData/transactions';
 import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
+import { userData } from '../../firebase/user-data';
 
 export const CategoryPage = () => {
   const dataForChart: IChart = {
@@ -21,13 +21,14 @@ export const CategoryPage = () => {
     ],
   };
 
-  const currencySymbol = CurrencySymbol[store.settings.currency];
+  const currencySymbol = CurrencySymbol[userData.settings.currency];
 
-  const categories = Object.values(store.data.categories);
+  const categories = Object.values(userData.data.categories);
   if (categories.length < 12) {
     categories.push({
       id: '0',
       name: '',
+      type: TransactionType.Expenses,
       iconID: 1,
       colorID: 21,
       description: '',
