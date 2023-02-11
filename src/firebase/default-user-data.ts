@@ -34,7 +34,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory1',
         date: Date.now() + 1,
-        name: 'Groceries',
+        name: 'Gloceries',
         type: TransactionType.Expenses,
         iconID: 1,
         colorID: 1,

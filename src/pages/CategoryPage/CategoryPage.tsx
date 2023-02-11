@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
@@ -6,14 +7,17 @@ import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLi
 import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { storeTr } from '../../mockData/transactions';
-import { defaultUserData } from '../../firebase/default-user-data';
-
-import { TransactionType, CurrencySymbol } from '../../enums';
-
-import styles from './CategoryPage.module.scss';
 import { userData } from '../../firebase/user-data';
 
+import { TransactionType, CurrencySymbol, Period, Currency, Lang } from '../../enums';
+
+import styles from './CategoryPage.module.scss';
+import { updateUserSettings } from '../../firebase/update-user-settings';
+import { getPeriod } from '../../utils/get-period';
+
 export const CategoryPage = () => {
+  const { t } = useTranslation();
+
   const [categoryType, setCategoryType] = useState('Expenses');
   function changeCategoryType(type: string) {
     setCategoryType(type);
@@ -32,7 +36,7 @@ export const CategoryPage = () => {
 
   const currencySymbol = CurrencySymbol[userData.settings.currency];
 
-  const categories = defaultUserData.data.categories.filter(
+  const categories = userData.data.categories.filter(
     (category) => category.type === TransactionType[categoryType as keyof typeof TransactionType],
   );
 
@@ -49,7 +53,8 @@ export const CategoryPage = () => {
   }
 
   categories.forEach((item) => {
-    dataForChart.labels.push(item.name);
+    const name = t(item.name);
+    dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
     if (color) {
       dataForChart.datasets[0].backgroundColor.push(color);
@@ -64,9 +69,11 @@ export const CategoryPage = () => {
   const income = storeTr.data.transactions
     .filter((item) => item.type === TransactionType.Income)
     .reduce((sum, current) => sum + current.amount, 0);
+
   const expenses = storeTr.data.transactions
     .filter((item) => item.type === TransactionType.Expenses)
     .reduce((sum, current) => sum + current.amount, 0);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.categoryArea}>
@@ -110,3 +117,17 @@ export const CategoryPage = () => {
     </div>
   );
 };
+
+const data = {
+  lang: Lang.RU,
+  currency: Currency.UAH,
+  selectedAccount: null,
+  periodType: Period.Month,
+  period: getPeriod(Period.Month, Date.now()),
+};
+
+const id = userData.userId;
+console.log('1', userData);
+console.log('22', id, data);
+
+if (id) updateUserSettings(id, data);

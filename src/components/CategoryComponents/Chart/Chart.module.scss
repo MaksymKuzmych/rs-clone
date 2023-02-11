@@ -24,12 +24,22 @@
   font-size: 18px;
   padding: 10px;
   cursor: pointer;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter:brightness(1.2)
+  }
 }
 
 .totalIncome {
   color: $turquoise;
   padding: 10px;
   cursor: pointer;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter:brightness(1.2)
+  }
 }
 
 .transactionType {

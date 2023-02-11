@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Chart } from 'chart.js';
 
 import { IChart } from '../../../interfaces';
-import { TransactionType } from '../../../enums';
 
 import styles from './Chart.module.scss';
 
