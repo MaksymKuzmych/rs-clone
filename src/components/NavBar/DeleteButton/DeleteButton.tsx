@@ -20,23 +20,6 @@ export const DeleteButton = () => {
     setOpen(false);
   };
 
-  const body = (
-    <div className={styles.paper}>
-      <h2 id='simple-modal-title' className={styles.modalTitle}>
-        {t('Delete data')}
-      </h2>
-      <p id='simple-modal-description' className={styles.modalContent}>
-        {t('Message content 1')}
-      </p>
-      <p id='simple-modal-description'>{t('Message content 2')}</p>
-      <div className={styles.buttons}>
-        <Button color='error'>{t('Delete All Data')}</Button>
-        <Button color='primary'>{t('Delete All Operations')}</Button>
-        <Button onClick={handleClose}>{t('Cancel')}</Button>
-      </div>
-    </div>
-  );
-
   return (
     <div>
       <ListItem onClick={handleOpen} className={styles.deleteButton}>
@@ -51,7 +34,20 @@ export const DeleteButton = () => {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        {body}
+        <div className={styles.paper}>
+          <h2 id='simple-modal-title' className={styles.modalTitle}>
+            {t('Delete data')}
+          </h2>
+          <p id='simple-modal-description' className={styles.modalContent}>
+            {t('Message content 1')}
+          </p>
+          <p id='simple-modal-description'>{t('Message content 2')}</p>
+          <div className={styles.buttons}>
+            <Button color='error'>{t('Delete All Data')}</Button>
+            <Button color='primary'>{t('Delete All Operations')}</Button>
+            <Button onClick={handleClose}>{t('Cancel')}</Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
