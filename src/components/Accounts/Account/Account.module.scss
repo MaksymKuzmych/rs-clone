@@ -17,23 +17,23 @@
   border-radius: 5px;
 }
 
-.accountInfo {
+.info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
 }
 
-.accountInfoUpper {
+.infoUpper {
   display: flex;
   justify-content: space-between;
 }
 
-.accountDescription {
+.description {
   color: $light-gray;
 }
 
-.accountAmount {
+.amount {
   font-size: 20px;
   color: $green;
 }

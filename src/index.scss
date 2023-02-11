@@ -10,3 +10,19 @@
 .material-icons {
   font-size: 30px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(1.05);
+}

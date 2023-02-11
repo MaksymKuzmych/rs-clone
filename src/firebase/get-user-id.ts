@@ -17,5 +17,5 @@ export const getUserId = () => {
   if (auth.currentUser) {
     return auth.currentUser.uid;
   }
-  return '';
+  return 'default';
 };
