@@ -10,6 +10,7 @@ export const useAccounts = () => {
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState(CurrencySymbol[userData.settings.currency]);
   const [loading, setLoading] = useState(true);
+  const user = userData;
 
   async function getAccounts() {
     try {
@@ -29,7 +30,7 @@ export const useAccounts = () => {
   useEffect(() => {
     setAccounts(userData.data.accounts);
     setCurrency(CurrencySymbol[userData.settings.currency]);
-  }, [userData.data.accounts, userData.settings.currency]);
+  }, [user.data.accounts, user.settings.currency]);
 
   useEffect(() => {
     const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);

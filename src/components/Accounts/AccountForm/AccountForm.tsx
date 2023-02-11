@@ -83,7 +83,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
     onSubmit: async (values) => {
       const accountInfo = {
         id: `${account ? account.id : ''}`,
-        date: Date.now(),
+        date: account ? account.date : Date.now(),
         name: values.name,
         balance: +values.balance,
         description: values.description,
