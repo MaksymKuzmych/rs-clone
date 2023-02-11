@@ -17,3 +17,19 @@ a.text {
   text-decoration: none;
   color: #666;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(1.05);
+}

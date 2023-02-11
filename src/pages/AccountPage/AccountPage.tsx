@@ -1,25 +1,22 @@
 import { useCallback, useState } from 'react';
 
-import { ErrorMessage } from '../../components/UI/ErrorMessage/ErrorMessage';
-import { AccountsHeader } from '../../components/Accounts/AccountsHeader/AccountsHeader';
-import { Loader } from '../../components/UI/Loader/Loader';
+import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
-import { AccountInfo } from '../../components/Accounts/AccountInfo/AccountInfo';
-import { AddAccountInfo } from '../../components/Accounts/AddAccountInfo/AddAccountInfo';
+import { Account } from '../../components/Accounts/Account/Account';
+import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
 import { IAccount } from '../../interfaces';
-import { AccountSettings } from '../../components/Accounts/AccountSettings/AccountSettings';
-import { AddAccountSettings } from '../../components/Accounts/AddAccountSettings/AddAccountSettings';
+import { Settings } from '../../components/Accounts/Settings/Settings';
+import { AccountForm } from '../../components/Accounts/AccountForm/AccountForm';
 import { useAccounts } from '../../hooks/accounts';
 import { useDrawer } from '../../hooks/drawer';
 import { Anchor } from '../../types';
 
 import styles from './AccountPage.module.scss';
+import { CircularProgress } from '@mui/material';
 
 export const AccountPage = () => {
-  const { accounts, amount, currency, loading, error } = useAccounts();
+  const { accounts, amount, currency, loading } = useAccounts();
   const { state, toggleDrawer } = useDrawer();
-  const [iconName, setIcon] = useState('');
-  const [colorName, setColor] = useState('');
   const [typeDrawer, setTypeDrawer] = useState('');
   const [currentAccount, setCurrentAccount] = useState(accounts[0]);
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
@@ -28,29 +25,32 @@ export const AccountPage = () => {
     switch (typeDrawer) {
       case 'info':
         return (
-          <AccountSettings
+          <Settings
             account={currentAccount}
-            icon={iconName}
-            color={colorName}
             currency={currency}
+            typeDrawerHandler={typeDrawerHandler}
           />
         );
       case 'edit':
-        return <div>Edit</div>;
+        return (
+          <AccountForm account={currentAccount} currency={currency} drawerHandler={drawerHandler} />
+        );
       case 'balance':
         return <div>Balance</div>;
       case 'transactions':
         return <div>Transactions</div>;
-      case 'rechacrge':
+      case 'recharge':
         return <div>Recharge</div>;
       case 'withdraw':
         return <div>Withdraw</div>;
       case 'transfer':
         return <div>Transfer</div>;
       case 'addAccount':
-        return <AddAccountSettings />;
+        return <AccountForm currency={currency} drawerHandler={drawerHandler} />;
     }
   };
+
+  const typeDrawerHandler = (type: string) => setTypeDrawer(type);
 
   const drawerHandler = useCallback(
     (type: string, anchor: Anchor) => {
@@ -62,31 +62,27 @@ export const AccountPage = () => {
   );
 
   const accountDrawerHandler = useCallback(
-    (type: string, anchor: Anchor, account: IAccount) => {
+    (account: IAccount) => {
       setCurrentAccount(account);
-      setIcon(account.icon);
-      setColor(account.color);
-      drawerHandler(type, anchor);
+      drawerHandler('info', 'bottom');
     },
     [drawerHandler],
   );
+
   return (
     <div className={styles.accountPage}>
-      {loading && <Loader />}
-      {error && <ErrorMessage error={error} />}
-      <AccountsHeader currency={currency} amount={amount} />
-      {accounts.length &&
+      {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
+      <AccountHeader currency={currency} amount={amount} />
+      {accounts.length !== 0 &&
         accounts.map((account) => (
-          <AccountInfo
+          <Account
             account={account}
-            icon={account.icon}
-            color={account.color}
             currency={currency}
             key={account.id}
             accountDrawerHandler={accountDrawerHandler}
           />
         ))}
-      <AddAccountInfo drawerHandler={drawerHandler} />
+      <AddAccount drawerHandler={drawerHandler} />
       <TemporaryDrawer
         state={state}
         anchor='bottom'

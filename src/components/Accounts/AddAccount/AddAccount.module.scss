@@ -1,6 +1,6 @@
 @import '../../../styles/variables.scss';
 
-.addAccount {
+.add {
   display: flex;
   gap: 20px;
   padding: 15px 0;
@@ -18,7 +18,7 @@
   border: 1px dashed $light-gray;
 }
 
-.addPlaceholder {
+.placeholder {
   display: flex;
   flex-direction: column;
   justify-content: center;

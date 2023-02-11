@@ -1,4 +1,11 @@
-import { collection, query, QueryFieldFilterConstraint, where, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  QueryFieldFilterConstraint,
+  where,
+  getDocs,
+  orderBy,
+} from 'firebase/firestore';
 import { IDataFBFiltered } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 
@@ -7,7 +14,8 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered)
   try {
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
-    let queryRequest = query(dataRef);
+    const order = orderBy('date');
+    let queryRequest = query(dataRef, order);
     const queryArray: QueryFieldFilterConstraint[] = [];
     if (data.transactions?.periodStart && data.transactions?.periodEnd) {
       queryArray.push(where('date', '>=', data.transactions.periodStart));

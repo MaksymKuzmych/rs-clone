@@ -107,13 +107,8 @@ export const colors: IColor[] = [
     name: 'gray-light',
   },
   {
-    color: '#2a3139',
-    id: 22,
-    name: 'dark-gray',
-  },
-  {
     color: '#a8adb3',
-    id: 23,
+    id: 22,
     name: 'light-gray',
   },
 ];

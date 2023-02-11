@@ -3,7 +3,7 @@ import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
 export const userData: IStore = {
-  userId: null,
+  userId: '',
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
