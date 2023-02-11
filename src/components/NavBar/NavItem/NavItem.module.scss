@@ -1,0 +1,13 @@
+@import '../../../styles/variables.scss';
+
+.value {
+  color: $lilac;
+  transition: filter .3s;
+}
+
+.navItem {
+  cursor: pointer;
+  &:hover .value {
+    filter: brightness(1.5);
+  }
+}

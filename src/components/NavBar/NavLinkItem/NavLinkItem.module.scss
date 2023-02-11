@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+
+.link {
+  color: black;
+  text-decoration: none;
+}
+
+.linkButton {
+  cursor: pointer;
+
+  &:hover .link {
+    color: $lilac;
+  }
+}
