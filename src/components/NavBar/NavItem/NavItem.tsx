@@ -20,6 +20,7 @@ interface NavItemProps {
 
 export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   const { t } = useTranslation();
+
   const [param, setParam] = useState(enumData[0]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -36,17 +37,18 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
   };
   return (
     <div className={styles.navItem}>
+
       <ListItem
         onClick={(event) => {
           handleClick(event);
         }}
-      >
+      
         <ListItemIcon>
           <span className='material-icons'>{icon}</span>
         </ListItemIcon>
         <div>
           <ListItemText primary={t(`${name}`)} />
-          <div className={styles.value}>{name === 'Mode' ? t(`${param}`) : param}</div>
+          <div className={styles.value}>{name === 'Mode' ? t(`${param}`) : param}</div>       
         </div>
       </ListItem>
       <Menu
