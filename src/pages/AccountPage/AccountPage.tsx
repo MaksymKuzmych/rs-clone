@@ -8,8 +8,6 @@ import { AccountInfo } from '../../components/Accounts/AccountInfo/AccountInfo';
 import { AddAccountInfo } from '../../components/Accounts/AddAccountInfo/AddAccountInfo';
 import { IAccount } from '../../interfaces';
 import { AccountSettings } from '../../components/Accounts/AccountSettings/AccountSettings';
-import { iconsCard } from '../../data/icons';
-import { colors } from '../../data/colors';
 import { AddAccountSettings } from '../../components/Accounts/AddAccountSettings/AddAccountSettings';
 import { useAccounts } from '../../hooks/accounts';
 import { useDrawer } from '../../hooks/drawer';
@@ -20,25 +18,11 @@ import styles from './AccountPage.module.scss';
 export const AccountPage = () => {
   const { accounts, amount, currency, loading, error } = useAccounts();
   const { state, toggleDrawer } = useDrawer();
-  const [iconName, setIconName] = useState('');
-  const [colorName, setColorName] = useState('');
+  const [iconName, setIcon] = useState('');
+  const [colorName, setColor] = useState('');
   const [typeDrawer, setTypeDrawer] = useState('');
   const [currentAccount, setCurrentAccount] = useState(accounts[0]);
   const [isOpenDrawer, setIsOpenDrawer] = useState(true);
-
-  const getIcon = (account: IAccount) => {
-    const defaultIcon = iconsCard[1];
-    const iconObj = iconsCard.find((el) => account.iconID === el.id) || defaultIcon;
-
-    return iconObj.name;
-  };
-
-  const getColor = (account: IAccount) => {
-    const defaultColor = colors[0];
-    const colorObj = colors.find((el) => account.colorID === el.id) || defaultColor;
-
-    return colorObj.name;
-  };
 
   const drawerContent = () => {
     switch (typeDrawer) {
@@ -80,8 +64,8 @@ export const AccountPage = () => {
   const accountDrawerHandler = useCallback(
     (type: string, anchor: Anchor, account: IAccount) => {
       setCurrentAccount(account);
-      setIconName(getIcon(account));
-      setColorName(getColor(account));
+      setIcon(account.icon);
+      setColor(account.color);
       drawerHandler(type, anchor);
     },
     [drawerHandler],
@@ -95,8 +79,8 @@ export const AccountPage = () => {
         accounts.map((account) => (
           <AccountInfo
             account={account}
-            icon={getIcon(account)}
-            color={getColor(account)}
+            icon={account.icon}
+            color={account.color}
             currency={currency}
             key={account.id}
             accountDrawerHandler={accountDrawerHandler}

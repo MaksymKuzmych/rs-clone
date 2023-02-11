@@ -1,9 +1,9 @@
 import { Currency, Lang, Period, TransactionType } from '../enums';
 import { IStore } from '../interfaces';
-import { getPeriod } from './get-period';
+import { getPeriod } from '../utils/get-period';
 
-export const store: IStore = {
-  login: false,
+export const defaultUserData: IStore = {
+  userId: null,
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
@@ -16,16 +16,16 @@ export const store: IStore = {
       {
         id: 'defaultAccount1',
         name: 'Card',
-        iconID: 1,
-        colorID: 1,
+        icon: 'credit_card',
+        color: '#cd4863',
         balance: 0,
         description: '',
       },
       {
         id: 'defaultAccount2',
         name: 'Cash',
-        iconID: 2,
-        colorID: 2,
+        icon: 'account_balance_wallet',
+        color: '#6ebaa0',
         balance: 0,
         description: '',
       },
@@ -34,7 +34,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory1',
         name: 'Groceries',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 1,
         colorID: 1,
         description: '',
@@ -42,7 +42,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory2',
         name: 'Restaurant',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 2,
         colorID: 2,
         description: '',
@@ -50,7 +50,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory3',
         name: 'Leisure',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 3,
         colorID: 3,
         description: '',
@@ -58,7 +58,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory4',
         name: 'Transport',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 4,
         colorID: 4,
         description: '',
@@ -66,7 +66,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory5',
         name: 'Health',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 5,
         colorID: 5,
         description: '',
@@ -74,7 +74,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory6',
         name: 'Gifts',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 6,
         colorID: 6,
         description: '',
@@ -82,7 +82,7 @@ export const store: IStore = {
       {
         id: 'defaultCategory7',
         name: 'Family',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 7,
         colorID: 7,
         description: '',
@@ -90,15 +90,15 @@ export const store: IStore = {
       {
         id: 'defaultCategory8',
         name: 'Shopping',
-        type: TransactionType.Income,
+        type: TransactionType.Expenses,
         iconID: 8,
         colorID: 8,
         description: '',
       },
       {
         id: 'defaultCategory9',
-        name: 'Shopping',
-        type: TransactionType.Expenses,
+        name: 'Salary',
+        type: TransactionType.Income,
         iconID: 9,
         colorID: 9,
         description: '',
