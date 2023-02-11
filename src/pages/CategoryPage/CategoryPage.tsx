@@ -1,20 +1,29 @@
+import { useState } from 'react';
+
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
 
 import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { storeTr } from '../../mockData/transactions';
+import { defaultUserData } from '../../firebase/default-user-data';
+
 import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
 import { userData } from '../../firebase/user-data';
 
 export const CategoryPage = () => {
+  const [categoryType, setCategoryType] = useState('Expenses');
+  function changeCategoryType(type: string) {
+    setCategoryType(type);
+  }
+
   const dataForChart: IChart = {
     labels: [],
     datasets: [
       {
-        label: 'Expenses',
+        label: categoryType,
         data: [],
         backgroundColor: [],
       },
@@ -23,13 +32,14 @@ export const CategoryPage = () => {
 
   const currencySymbol = CurrencySymbol[userData.settings.currency];
 
-  const categories = Object.values(store.data.categories).filter(
-    (category) => category.type === TransactionType.Income,
+  const categories = defaultUserData.data.categories.filter(
+    (category) => category.type === TransactionType[categoryType as keyof typeof TransactionType],
   );
 
   if (categories.length < 12) {
     categories.push({
       id: '0',
+      date: Date.now(),
       name: '',
       type: TransactionType.Income,
       iconID: 1,
@@ -53,6 +63,9 @@ export const CategoryPage = () => {
 
   const income = storeTr.data.transactions
     .filter((item) => item.type === TransactionType.Income)
+    .reduce((sum, current) => sum + current.amount, 0);
+  const expenses = storeTr.data.transactions
+    .filter((item) => item.type === TransactionType.Expenses)
     .reduce((sum, current) => sum + current.amount, 0);
   return (
     <div className={styles.wrapper}>
@@ -85,7 +98,14 @@ export const CategoryPage = () => {
           currencySymbol={currencySymbol}
           classLine={'lineBottom'}
         />
-        <ChartComponent dataChart={dataForChart} income={income} currencySymbol={currencySymbol} />
+        <ChartComponent
+          type={categoryType}
+          dataChart={dataForChart}
+          income={income}
+          expenses={expenses}
+          currencySymbol={currencySymbol}
+          callback={changeCategoryType}
+        />
       </div>
     </div>
   );

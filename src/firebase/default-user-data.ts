@@ -33,6 +33,7 @@ export const defaultUserData: IStore = {
     categories: [
       {
         id: 'defaultCategory1',
+        date: Date.now() + 1,
         name: 'Groceries',
         type: TransactionType.Expenses,
         iconID: 1,
@@ -41,6 +42,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory2',
+        date: Date.now() + 2,
         name: 'Restaurant',
         type: TransactionType.Expenses,
         iconID: 2,
@@ -49,6 +51,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory3',
+        date: Date.now() + 3,
         name: 'Leisure',
         type: TransactionType.Expenses,
         iconID: 3,
@@ -57,6 +60,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory4',
+        date: Date.now() + 4,
         name: 'Transport',
         type: TransactionType.Expenses,
         iconID: 4,
@@ -65,6 +69,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory5',
+        date: Date.now() + 5,
         name: 'Health',
         type: TransactionType.Expenses,
         iconID: 5,
@@ -73,6 +78,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory6',
+        date: Date.now() + 6,
         name: 'Gifts',
         type: TransactionType.Expenses,
         iconID: 6,
@@ -81,6 +87,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory7',
+        date: Date.now() + 7,
         name: 'Family',
         type: TransactionType.Expenses,
         iconID: 7,
@@ -89,6 +96,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory8',
+        date: Date.now() + 8,
         name: 'Shopping',
         type: TransactionType.Expenses,
         iconID: 8,
@@ -97,6 +105,7 @@ export const defaultUserData: IStore = {
       },
       {
         id: 'defaultCategory9',
+        date: Date.now() + 9,
         name: 'Salary',
         type: TransactionType.Income,
         iconID: 9,

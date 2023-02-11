@@ -22,10 +22,14 @@
 .totalExpenses {
   color: $red-font;
   font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .totalIncome {
   color: $turquoise;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .transactionType {

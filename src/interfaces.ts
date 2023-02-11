@@ -19,6 +19,7 @@ export interface IAccount {
 
 export interface ICategory {
   id: string;
+  date: number;
   name: string;
   type: TransactionType;
   iconID: number;
