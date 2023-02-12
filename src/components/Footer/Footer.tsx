@@ -7,7 +7,7 @@ import styles from './Footer.module.scss';
 export const Footer = () => {
   const { t } = useTranslation();
 
-  const [page, setPage] = useState('categories');
+  const [page, setPage] = useState(window.location.pathname);
 
   const changePage = (pageName: string) => {
     setPage(pageName);
@@ -18,29 +18,29 @@ export const Footer = () => {
       <Link
         className={styles.item}
         to='/accounts'
-        onClick={() => changePage('accounts')}
-        style={{ color: page === 'accounts' ? 'white' : 'gray' }}
+        onClick={() => changePage('/accounts')}
+        style={{ color: page === '/accounts' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>credit_card</span>
-        {page === 'accounts' && <p className={styles.text}>{t('Accounts')}</p>}
+        {page === '/accounts' && <p className={styles.text}>{t('Accounts')}</p>}
       </Link>
       <Link
         className={styles.item}
         to='/'
-        onClick={() => changePage('categories')}
-        style={{ color: page === 'categories' ? 'white' : 'gray' }}
+        onClick={() => changePage('/categories')}
+        style={{ color: page === '/categories' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>data_usage</span>
-        {page === 'categories' && <p className={styles.text}>{t('Categories')}</p>}
+        {page === '/categories' && <p className={styles.text}>{t('Categories')}</p>}
       </Link>
       <Link
         className={styles.item}
         to='/transactions'
-        onClick={() => changePage('transactions')}
-        style={{ color: page === 'transactions' ? 'white' : 'gray' }}
+        onClick={() => changePage('/transactions')}
+        style={{ color: page === '/transactions' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>receipt</span>
-        {page === 'transactions' && <p className={styles.text}>{t('Transactions')}</p>}
+        {page === '/transactions' && <p className={styles.text}>{t('Transactions')}</p>}
       </Link>
     </nav>
   );

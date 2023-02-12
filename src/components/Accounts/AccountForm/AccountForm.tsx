@@ -63,7 +63,7 @@ interface AccountFormProps {
 }
 
 export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFormProps) => {
-  const userData = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
   const [icon, setIcon] = useState(`${account ? account.icon : 'credit_card'}`);
   const [color, setColor] = useState(`${account ? account.color : '#4154b0'}`);
@@ -101,7 +101,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
           accounts: [accountInfo],
         });
       }
-      // await pullUserData();
+      await changeUserData();
       drawerHandler('addAccount', 'bottom');
     },
   });

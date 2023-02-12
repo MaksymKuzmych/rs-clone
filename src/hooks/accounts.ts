@@ -5,23 +5,11 @@ import { CurrencySymbol } from '../enums';
 import { IAccount } from '../interfaces';
 
 export const useAccounts = () => {
-  const userData = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const [accounts, setAccounts] = useState<IAccount[]>(userData.data.accounts);
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState(CurrencySymbol[userData.settings.currency]);
   const [loading, setLoading] = useState(true);
-  const user = userData;
-
-  async function getAccounts() {
-    try {
-      // await pullUserData();
-      setAccounts(userData.data.accounts);
-      setCurrency(CurrencySymbol[userData.settings.currency]);
-    } catch (e) {
-    } finally {
-      setLoading(false);
-    }
-  }
 
   useEffect(() => {
     async function getAccounts() {
@@ -39,7 +27,7 @@ export const useAccounts = () => {
   useEffect(() => {
     setAccounts(userData.data.accounts);
     setCurrency(CurrencySymbol[userData.settings.currency]);
-  }, [user.data.accounts, user.settings.currency]);
+  }, [userData.data.accounts, userData.settings.currency]);
 
   useEffect(() => {
     const allCardsAmount = accounts.reduce((acc, account) => acc + account.balance, 0);
