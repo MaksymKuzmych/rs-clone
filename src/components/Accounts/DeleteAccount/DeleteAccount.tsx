@@ -1,6 +1,3 @@
-import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import styles from './DeleteAccount.module.scss';
 
 export const DeleteAccount = () => {
