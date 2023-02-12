@@ -27,11 +27,11 @@ export const Footer = () => {
       <Link
         className={styles.item}
         to='/'
-        onClick={() => changePage('/categories')}
-        style={{ color: page === '/categories' ? 'white' : 'gray' }}
+        onClick={() => changePage('/')}
+        style={{ color: page === '/' ? 'white' : 'gray' }}
       >
         <span className='material-icons'>data_usage</span>
-        {page === '/categories' && <p className={styles.text}>{t('Categories')}</p>}
+        {page === '/' && <p className={styles.text}>{t('Categories')}</p>}
       </Link>
       <Link
         className={styles.item}

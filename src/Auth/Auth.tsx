@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
         (() => enqueueSnackbar(`${error}`, { variant: 'error', persist: true }))();
       }
     });
-  }, [userData]);
+  }, [enqueueSnackbar, userData]);
 
   if (pending) {
     return (
