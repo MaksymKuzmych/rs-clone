@@ -21,7 +21,7 @@ export const Account = memo(({ account, currency, accountDrawerHandler }: Accoun
       </div>
       <div className={styles.info}>
         <div className={styles.infoUpper}>
-          <h3>{name}</h3>
+          <h3 className={styles.name}>{name}</h3>
           <p className={styles.description}>{description}</p>
         </div>
         <p className={styles.amount}>

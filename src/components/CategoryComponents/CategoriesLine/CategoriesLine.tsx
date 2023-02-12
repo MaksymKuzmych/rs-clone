@@ -1,7 +1,6 @@
 import { memo } from 'react';
 
 import { Category } from '../Category/Category';
-
 import { ICategory } from '../../../interfaces';
 import { storeTr } from '../../../mockData/transactions';
 
