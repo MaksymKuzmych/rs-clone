@@ -50,7 +50,11 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   }, [userData]);
 
   if (pending) {
-    return <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />;
+    return (
+      <div style={{ flexGrow: 1 }}>
+        <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
+      </div>
+    );
   }
 
   return (
