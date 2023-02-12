@@ -1,0 +1,39 @@
+@import '../../../styles/variables.scss';
+
+.account {
+  display: flex;
+  gap: 20px;
+  padding: 15px 0;
+  cursor: pointer;
+  border-bottom: 0.5px solid $gray;
+}
+
+.iconWrapper {
+  width: 65px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.infoUpper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description {
+  color: $light-gray;
+}
+
+.amount {
+  font-size: 20px;
+  color: $green;
+}

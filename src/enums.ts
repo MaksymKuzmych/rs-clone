@@ -29,3 +29,8 @@ export enum TransactionType {
   Income = 'income',
   Expenses = 'expenses',
 }
+
+export enum Mode {
+  Light = 'light',
+  Dark = 'dark',
+}

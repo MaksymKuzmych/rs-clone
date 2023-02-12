@@ -1,0 +1,72 @@
+@import '../../styles/variables.scss';
+
+.navHeader {
+  background-color: $lilac;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+
+  .button {
+    color: white;
+    font-size: 10px;
+    transition: box-shadow 0.5s;
+    &:hover {
+      box-shadow: 0 0 7px;
+    }
+  }
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: center;
+}
+
+.userAva {
+  background-color: $gray-light;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+}
+
+.userName {
+  color: white;
+  padding-top: 10px;
+}
+
+.menu {
+  padding: 0 10px;
+  position: relative;
+}
+
+.subtitle {
+  color: $lilac;
+  padding: 5px 0;
+  font-size: 18px;
+}
+
+.RssLogo {
+  width: 70%;
+}
+
+.logoWrapper {
+  padding: 5px 0;
+  border-radius: 15px;
+  transition: transform .5s;
+  &:hover {    
+    transform: scale(1.05);
+  }
+}
+
+.linkWrapper {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 10px;
+}

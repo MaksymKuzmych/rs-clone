@@ -7,7 +7,6 @@ import { App } from './components/App/App';
 import './i18n';
 
 import './index.scss';
-import { getUserId } from './firebase/get-user-id';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,4 +16,3 @@ root.render(
     </Suspense>
   </BrowserRouter>,
 );
-getUserId();

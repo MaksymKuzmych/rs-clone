@@ -10,6 +10,7 @@ export interface ISettings {
 
 export interface IAccount {
   id: string;
+  date: number;
   name: string;
   icon: string;
   color: string;
@@ -56,7 +57,7 @@ export interface IDataFBGet {
 }
 
 export interface IStore {
-  userId: null | string;
+  userId: string;
   settings: ISettings;
   data: IData;
 }
