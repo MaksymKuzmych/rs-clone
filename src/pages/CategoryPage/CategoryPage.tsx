@@ -4,11 +4,13 @@ import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { storeTr } from '../../mockData/transactions';
 import { TransactionType, CurrencySymbol } from '../../enums';
-import { userData } from '../../firebase/user-data';
 
 import styles from './CategoryPage.module.scss';
+import { AuthContext } from '../../Auth/Auth';
+import { useContext } from 'react';
 
 export const CategoryPage = () => {
+  const userData = useContext(AuthContext);
   const dataForChart: IChart = {
     labels: [],
     datasets: [
@@ -27,6 +29,7 @@ export const CategoryPage = () => {
     categories.push({
       id: '0',
       name: '',
+      date: Date.now(),
       type: TransactionType.Expenses,
       iconID: 1,
       colorID: 21,

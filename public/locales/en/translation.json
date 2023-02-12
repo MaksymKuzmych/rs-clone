@@ -47,5 +47,7 @@
   "Cancel": "Cancel",
   "Message content 1": "If you want to delete all your data (accounts, categories, transactions), select Delete All Data.",
   "Message content 2": "If you want to delete only operations, select Delete All Operations",
-  "Categories": "Categories"
+  "Categories": "Categories",
+  "Delete": "Delete",
+  "Delete account permanently": "Delete account permanently"
 }

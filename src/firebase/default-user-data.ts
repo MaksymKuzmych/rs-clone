@@ -37,6 +37,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory1',
         name: 'Groceries',
         type: TransactionType.Expenses,
+        date: Date.now() + 1,
         iconID: 1,
         colorID: 1,
         description: '',
@@ -44,6 +45,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory2',
         name: 'Restaurant',
+        date: Date.now() + 2,
         type: TransactionType.Expenses,
         iconID: 2,
         colorID: 2,
@@ -52,6 +54,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory3',
         name: 'Leisure',
+        date: Date.now() + 3,
         type: TransactionType.Expenses,
         iconID: 3,
         colorID: 3,
@@ -60,6 +63,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory4',
         name: 'Transport',
+        date: Date.now() + 4,
         type: TransactionType.Expenses,
         iconID: 4,
         colorID: 4,
@@ -68,6 +72,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory5',
         name: 'Health',
+        date: Date.now() + 5,
         type: TransactionType.Expenses,
         iconID: 5,
         colorID: 5,
@@ -76,6 +81,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory6',
         name: 'Gifts',
+        date: Date.now() + 6,
         type: TransactionType.Expenses,
         iconID: 6,
         colorID: 6,
@@ -84,6 +90,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory7',
         name: 'Family',
+        date: Date.now() + 7,
         type: TransactionType.Expenses,
         iconID: 7,
         colorID: 7,
@@ -92,6 +99,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory8',
         name: 'Shopping',
+        date: Date.now() + 8,
         type: TransactionType.Expenses,
         iconID: 8,
         colorID: 8,
@@ -100,6 +108,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory9',
         name: 'Salary',
+        date: Date.now() + 9,
         type: TransactionType.Income,
         iconID: 9,
         colorID: 9,

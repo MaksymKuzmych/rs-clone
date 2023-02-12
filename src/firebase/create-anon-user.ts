@@ -1,11 +1,10 @@
 import { createUser } from './create-user';
 import { defaultUserData } from './default-user-data';
-import { getUserId } from './get-user-id';
 import { getUserSettings } from './get-user-settings';
 
-export const createAnonUser = async () => {
-  const user = await getUserSettings(getUserId());
+export const createAnonUser = async (id: string) => {
+  const user = await getUserSettings(id);
   if (!user) {
-    await createUser(getUserId(), defaultUserData);
+    await createUser(id, defaultUserData);
   }
 };

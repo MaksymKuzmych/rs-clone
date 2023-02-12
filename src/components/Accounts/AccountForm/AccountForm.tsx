@@ -1,14 +1,13 @@
 import { createTheme, TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
-import { memo, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
+import { AuthContext } from '../../../Auth/Auth';
 
 import { CurrencySymbol } from '../../../enums';
-import { pullUserData } from '../../../firebase/pull-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { updateUserData } from '../../../firebase/update-user-data';
-import { userData } from '../../../firebase/user-data';
 import { IAccount } from '../../../interfaces';
 import { Anchor } from '../../../types';
 import { Colors } from '../../UI/Colors/Colors';
@@ -64,6 +63,7 @@ interface AccountFormProps {
 }
 
 export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFormProps) => {
+  const userData = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
   const [icon, setIcon] = useState(`${account ? account.icon : 'credit_card'}`);
   const [color, setColor] = useState(`${account ? account.color : '#4154b0'}`);
@@ -101,7 +101,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
           accounts: [accountInfo],
         });
       }
-      await pullUserData();
+      // await pullUserData();
       drawerHandler('addAccount', 'bottom');
     },
   });

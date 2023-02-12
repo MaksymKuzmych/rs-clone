@@ -1,9 +1,11 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CurrencySymbol } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
+import { BasicModal } from '../../UI/Modal/Modal';
+import { DeleteAccount } from '../DeleteAccount/DeleteAccount';
 
 import styles from './Settings.module.scss';
 
@@ -16,6 +18,9 @@ interface SettingsProps {
 export const Settings = memo(({ account, currency, typeDrawerHandler }: SettingsProps) => {
   const { t } = useTranslation();
   const { name, icon, color, description, balance } = account;
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
 
   return (
     <>
@@ -44,19 +49,19 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           }}
         />
         <SettingsBtn
-          icon='sync'
-          color='#7f7f7f'
-          title={t('Balance')}
-          onClick={() => {
-            typeDrawerHandler('balance');
-          }}
-        />
-        <SettingsBtn
           icon='receipt'
           color='#029688'
           title={t('Transactions')}
           onClick={() => {
             typeDrawerHandler('transactions');
+          }}
+        />
+        <SettingsBtn
+          icon='delete'
+          color='#f34334'
+          title={t('Delete')}
+          onClick={() => {
+            handleOpen();
           }}
         />
         <SettingsBtn
@@ -69,7 +74,7 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
         />
         <SettingsBtn
           icon='arrow_upward'
-          color='#f34334'
+          color='#eda948'
           title={t('Withdraw')}
           onClick={() => {
             typeDrawerHandler('withdraw');
@@ -84,6 +89,9 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           }}
         />
       </div>
+      <BasicModal openModal={openModal} handleClose={handleClose}>
+        <DeleteAccount />
+      </BasicModal>
     </>
   );
 });
