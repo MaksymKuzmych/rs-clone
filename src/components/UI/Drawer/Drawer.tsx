@@ -15,7 +15,7 @@ interface TemporaryDrawerProps {
   state: IDrawerSide;
   anchor: Anchor;
   type: string;
-  drawerHandler: (type: string, anchor: Anchor) => void;
+  drawerHandler: (type: string, anchor: Anchor, open: boolean) => void;
 }
 
 const theme = createTheme({
@@ -34,7 +34,11 @@ export const TemporaryDrawer = memo(
   ({ state, anchor, children, type, drawerHandler }: PropsWithChildren<TemporaryDrawerProps>) => {
     return (
       <ThemeProvider theme={theme}>
-        <Drawer anchor={anchor} open={state[anchor]} onClose={() => drawerHandler(type, anchor)}>
+        <Drawer
+          anchor={anchor}
+          open={state[anchor]}
+          onClose={() => drawerHandler(type, anchor, false)}
+        >
           {children}
         </Drawer>
       </ThemeProvider>

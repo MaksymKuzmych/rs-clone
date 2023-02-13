@@ -2,30 +2,15 @@ import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
-import { Currency, Lang, Period } from '../enums';
+
 import { createAnonUser } from '../firebase/create-anon-user';
 import { defaultUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { signInAnon } from '../firebase/sign-in-anon';
-import { getPeriod } from '../utils/get-period';
 
 export const AuthContext = createContext({
-  userData: {
-    userId: 'default',
-    settings: {
-      lang: Lang.EN,
-      currency: Currency.USD,
-      selectedAccount: null,
-      periodType: Period.Month,
-      period: getPeriod(Period.Month, Date.now()),
-    },
-    data: {
-      accounts: [],
-      categories: [],
-      transactions: [],
-    },
-  },
+  userData: defaultUserData,
   changeUserData: () => {},
 });
 

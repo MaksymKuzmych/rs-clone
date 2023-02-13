@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { iconsCard } from '../../../data/icons';
 
@@ -9,7 +9,7 @@ interface IconsProps {
   iconHandler: (icon: string) => void;
 }
 
-export const Icons = ({ color, iconHandler }: IconsProps) => {
+export const Icons = memo(({ color, iconHandler }: IconsProps) => {
   const [icons, setIcons] = useState(iconsCard);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ export const Icons = ({ color, iconHandler }: IconsProps) => {
       ))}
     </div>
   );
-};
+});

@@ -1,13 +1,32 @@
-import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
+
+import { Anchor } from '../../../types';
 
 import styles from './DeleteAccount.module.scss';
 
-export const DeleteAccount = () => {
+interface DeleteAccountProps {
+  handleClose: () => void;
+  deleteUser: () => void;
+  drawerHandler: (type: string, anchor: Anchor, open: boolean) => void;
+}
+
+export const DeleteAccount = ({ handleClose, deleteUser, drawerHandler }: DeleteAccountProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.wrapper}>
-      <p>Удалить аккаунт безвозвратно?</p>
-      <button>Delete</button>
+      <p>{t('Delete account permanently')}</p>
+      <button
+        className={styles.btn}
+        onClick={async () => {
+          await deleteUser();
+          handleClose();
+          drawerHandler('info', 'bottom', false);
+        }}
+      >
+        <span className='material-icons'>delete</span>
+        Delete
+      </button>
     </div>
   );
 };

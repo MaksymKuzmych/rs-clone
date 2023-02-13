@@ -45,8 +45,8 @@
   "Delete All Data": "Удалить все данные",
   "Delete All Operations": "Удалить все операции",
   "Cancel": "Отменить",
-  "Message content 1": "Если вы хотите удалить все ваши данные(счёта, категории, операции) выберите Удалить все данные.",
-  "Message content 2": "Если вы хотите удалить только операции, выберите Удалить все операции",
+  "If you want to delete all your data (accounts, categories, transactions), select Delete All Data.": "Если вы хотите удалить все ваши данные(счёта, категории, операции) выберите Удалить все данные.",
+  "If you want to delete only operations, select Delete All Operations": "Если вы хотите удалить только операции, выберите Удалить все операции",
   "Categories": "Категории",
   "Delete": "Удалить",
   "Delete account permanently": "Удалить аккаунт безвозвратно"

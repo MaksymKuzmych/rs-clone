@@ -1,5 +1,6 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import styles from './NavLinkItem.module.scss';
@@ -9,7 +10,7 @@ interface NavLinkItemProps {
   name: string;
 }
 
-export const NavLinkItem = ({ path, name }: NavLinkItemProps) => {
+export const NavLinkItem = memo(({ path, name }: NavLinkItemProps) => {
   return (
     <ListItem className={styles.linkButton}>
       <ListItemIcon>
@@ -20,4 +21,4 @@ export const NavLinkItem = ({ path, name }: NavLinkItemProps) => {
       </NavLink>
     </ListItem>
   );
-};
+});

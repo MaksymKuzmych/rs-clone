@@ -1,26 +1,37 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CurrencySymbol } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { DeleteAccount } from '../DeleteAccount/DeleteAccount';
+import { deleteUserData } from '../../../firebase/delete-user-data';
+import { AuthContext } from '../../../Auth/Auth';
+import { DrawerContext } from '../../../context/Drawer';
 
 import styles from './Settings.module.scss';
 
 interface SettingsProps {
   account: IAccount;
-  currency: CurrencySymbol;
-  typeDrawerHandler: (type: string) => void;
 }
 
-export const Settings = memo(({ account, currency, typeDrawerHandler }: SettingsProps) => {
-  const { t } = useTranslation();
-  const { name, icon, color, description, balance } = account;
+export const Settings = memo(({ account }: SettingsProps) => {
+  const { userData, changeUserData } = useContext(AuthContext);
+  const { drawerHandler } = useContext(DrawerContext);
+
   const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
+
+  const { t } = useTranslation();
+
+  const { name, icon, color, description, balance } = account;
+
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
+
+  const deleteUser = useCallback(async () => {
+    deleteUserData(userData.userId, { accounts: account.id });
+    await changeUserData();
+  }, [account.id, changeUserData, userData.userId]);
 
   return (
     <>
@@ -35,7 +46,7 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
         <div className={styles.balanceWrapper}>
           <p>{t('Account balance')}</p>
           <p className={styles.balance}>
-            {balance} {currency}
+            {balance} {userData.settings.currency}
           </p>
         </div>
       </header>
@@ -45,7 +56,7 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           color='#fec107'
           title={t('Edit')}
           onClick={() => {
-            typeDrawerHandler('edit');
+            drawerHandler('edit', 'bottom', true);
           }}
         />
         <SettingsBtn
@@ -53,23 +64,16 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           color='#029688'
           title={t('Transactions')}
           onClick={() => {
-            typeDrawerHandler('transactions');
+            drawerHandler('transactions', 'bottom', true);
           }}
         />
-        <SettingsBtn
-          icon='delete'
-          color='#f34334'
-          title={t('Delete')}
-          onClick={() => {
-            handleOpen();
-          }}
-        />
+        <SettingsBtn icon='delete' color='#f34334' title={t('Delete')} onClick={handleOpen} />
         <SettingsBtn
           icon='arrow_downward'
           color='#4cb050'
           title={t('Recharge')}
           onClick={() => {
-            typeDrawerHandler('recharge');
+            drawerHandler('recharge', 'bottom', true);
           }}
         />
         <SettingsBtn
@@ -77,7 +81,7 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           color='#eda948'
           title={t('Withdraw')}
           onClick={() => {
-            typeDrawerHandler('withdraw');
+            drawerHandler('withdraw', 'bottom', true);
           }}
         />
         <SettingsBtn
@@ -85,12 +89,16 @@ export const Settings = memo(({ account, currency, typeDrawerHandler }: Settings
           color='#7f7f7f'
           title={t('Transfer')}
           onClick={() => {
-            typeDrawerHandler('transfer');
+            drawerHandler('transfer', 'bottom', true);
           }}
         />
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <DeleteAccount />
+        <DeleteAccount
+          deleteUser={deleteUser}
+          handleClose={handleClose}
+          drawerHandler={drawerHandler}
+        />
       </BasicModal>
     </>
   );

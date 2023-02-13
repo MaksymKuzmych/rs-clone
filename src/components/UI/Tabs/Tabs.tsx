@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { ReactNode, SyntheticEvent, useState } from 'react';
+import { memo, ReactNode, SyntheticEvent, useCallback, useState } from 'react';
 
 const theme = createTheme({
   components: {
@@ -67,12 +67,12 @@ interface BasicTabsProps {
   secondChild: ReactNode;
 }
 
-export const BasicTabs = ({ firstChild, secondChild }: BasicTabsProps) => {
+export const BasicTabs = memo(({ firstChild, secondChild }: BasicTabsProps) => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
+  const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -92,4 +92,4 @@ export const BasicTabs = ({ firstChild, secondChild }: BasicTabsProps) => {
       </Box>
     </ThemeProvider>
   );
-};
+});

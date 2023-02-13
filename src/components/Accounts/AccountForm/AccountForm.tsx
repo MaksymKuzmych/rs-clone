@@ -1,15 +1,15 @@
 import { createTheme, TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
-import { memo, useContext, useState } from 'react';
+import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
-import { AuthContext } from '../../../Auth/Auth';
 
+import { AuthContext } from '../../../Auth/Auth';
+import { DrawerContext } from '../../../context/Drawer';
 import { CurrencySymbol } from '../../../enums';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { updateUserData } from '../../../firebase/update-user-data';
 import { IAccount } from '../../../interfaces';
-import { Anchor } from '../../../types';
 import { Colors } from '../../UI/Colors/Colors';
 import { Icons } from '../../UI/Icons/Icons';
 import { BasicModal } from '../../UI/Modal/Modal';
@@ -58,17 +58,23 @@ const theme = createTheme({
 
 interface AccountFormProps {
   account?: IAccount;
-  currency: CurrencySymbol;
-  drawerHandler: (type: string, anchor: Anchor) => void;
 }
 
-export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFormProps) => {
+export const AccountForm = memo(({ account }: AccountFormProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
+  const { drawerHandler } = useContext(DrawerContext);
+
   const [openModal, setOpenModal] = useState(false);
   const [icon, setIcon] = useState(`${account ? account.icon : 'credit_card'}`);
   const [color, setColor] = useState(`${account ? account.color : '#4154b0'}`);
 
   const { t } = useTranslation();
+
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
+
+  const iconHandler = useCallback((icon: string) => setIcon(icon), []);
+  const colorHandler = useCallback((color: string) => setColor(color), []);
 
   const formik = useFormik({
     initialValues: {
@@ -102,15 +108,9 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
         });
       }
       await changeUserData();
-      drawerHandler('addAccount', 'bottom');
+      drawerHandler('addAccount', 'bottom', false);
     },
   });
-
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
-
-  const iconHandler = (icon: string) => setIcon(icon);
-  const colorHandler = (color: string) => setColor(color);
 
   return (
     <ThemeProvider theme={theme}>
@@ -171,7 +171,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
                 helperText={formik.errors.balance}
                 error={!!formik.errors.balance}
               />
-              <span className={styles.currency}>{currency}</span>
+              <span className={styles.currency}>{CurrencySymbol[userData.settings.currency]}</span>
             </div>
           </div>
         </form>

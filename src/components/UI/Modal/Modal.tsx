@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { PropsWithChildren } from 'react';
+import { memo, PropsWithChildren } from 'react';
 
 const style = {
   position: 'absolute',
@@ -17,21 +17,19 @@ interface BasicModalProps {
   handleClose: () => void;
 }
 
-export const BasicModal = ({
-  openModal,
-  children,
-  handleClose,
-}: PropsWithChildren<BasicModalProps>) => {
-  return (
-    <div>
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={style}>{children}</Box>
-      </Modal>
-    </div>
-  );
-};
+export const BasicModal = memo(
+  ({ openModal, children, handleClose }: PropsWithChildren<BasicModalProps>) => {
+    return (
+      <div>
+        <Modal
+          open={openModal}
+          onClose={handleClose}
+          aria-labelledby='modal-modal-title'
+          aria-describedby='modal-modal-description'
+        >
+          <Box sx={style}>{children}</Box>
+        </Modal>
+      </div>
+    );
+  },
+);
