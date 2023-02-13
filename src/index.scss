@@ -1,4 +1,5 @@
 @import '/node_modules/normalize.css';
+@import './styles/variables.scss';
 
 * {
   margin: 0;
@@ -7,8 +8,22 @@
   font-family: 'Roboto';
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $dark-gray;
+}
+
 .material-icons {
   font-size: 30px;
+}
+
+a.text:active, /* активная/посещенная ссылка */
+a.text:hover,  /* при наведении */
+a.text {
+  text-decoration: none;
+  color: #666;
 }
 
 input::-webkit-outer-spin-button,

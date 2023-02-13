@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { CircularProgress } from '@mui/material';
 
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
@@ -12,7 +13,6 @@ import { useDrawer } from '../../hooks/drawer';
 import { Anchor } from '../../types';
 
 import styles from './AccountPage.module.scss';
-import { CircularProgress } from '@mui/material';
 
 export const AccountPage = () => {
   const { accounts, amount, currency, loading } = useAccounts();

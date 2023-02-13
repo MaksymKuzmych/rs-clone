@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+
 import { CurrencySymbol } from '../enums';
 import { pullUserData } from '../firebase/pull-user-data';
 import { userData } from '../firebase/user-data';
-
 import { IAccount } from '../interfaces';
 
 export const useAccounts = () => {

@@ -29,11 +29,16 @@
   justify-content: space-between;
 }
 
+.name {
+  font-size: 22px;
+}
+
 .description {
+  font-size: 20px;
   color: $light-gray;
 }
 
 .amount {
-  font-size: 20px;
+  font-size: 22px;
   color: $green;
 }
