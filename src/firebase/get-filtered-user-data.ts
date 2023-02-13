@@ -10,7 +10,6 @@ import { IDataFBFiltered } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 
 export const getFilteredUserData = async (userId: string, data: IDataFBFiltered) => {
-  let message = '';
   try {
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
@@ -37,12 +36,8 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered)
     const dataArray = querySnapshot.docs.map((doc) => doc.data());
     if (dataArray.length) {
       return dataArray;
-    } else {
-      message = 'getFilteredUserData: Data not found!';
     }
   } catch (error) {
-    throw message
-      ? new FirebaseError(message)
-      : new FirebaseError(`getFilteredUserData: Read failed... ${error}`);
+    throw new FirebaseError(`Get Filtered User Data: ${error}`);
   }
 };

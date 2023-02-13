@@ -51,16 +51,16 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
           await createAnonUser(user.uid);
           setUserData(await pullUserData(userData, user.uid));
           if (user.isAnonymous) {
-            (() => enqueueSnackbar('Anonymous Login', { variant: 'success' }))();
+            enqueueSnackbar('Anonymous Login', { variant: 'success' });
           } else {
-            (() => enqueueSnackbar(`${user.email} Login`, { variant: 'success' }))();
+            enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
           }
           setPending(false);
         } else {
           await signInAnon();
         }
       } catch (error) {
-        (() => enqueueSnackbar(`${error}`, { variant: 'error', persist: true }))();
+        enqueueSnackbar(`${error}`, { variant: 'error', persist: true });
       }
     });
   }, [enqueueSnackbar, userData]);

@@ -13,10 +13,10 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: $dark-gray;
-}
 
-.SnackbarContainer-bottom {
-  bottom: 65px !important;
+  .SnackbarContainer-bottom {
+    bottom: 65px;
+  }
 }
 
 .material-icons {
