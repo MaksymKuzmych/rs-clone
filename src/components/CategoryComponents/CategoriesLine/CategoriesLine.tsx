@@ -12,10 +12,11 @@ interface CategoriesLineProps {
   end: number;
   currencySymbol: string;
   classLine: string;
+  callback(): void;
 }
 
 export const CategoriesLine = memo(
-  ({ dataCategories, start, end, currencySymbol, classLine }: CategoriesLineProps) => {
+  ({ dataCategories, start, end, currencySymbol, classLine, callback }: CategoriesLineProps) => {
     return (
       <div className={styles[`${classLine}`]}>
         {dataCategories
@@ -28,6 +29,7 @@ export const CategoriesLine = memo(
                 .filter((item) => item.category === category.id)
                 .reduce((sum, current) => sum + current.amount, 0)}
               currencySymbol={currencySymbol}
+              callbackOpenModal={callback}
             />
           ))}
       </div>

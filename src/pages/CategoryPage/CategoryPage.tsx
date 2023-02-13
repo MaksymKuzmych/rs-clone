@@ -13,9 +13,9 @@ import { userData } from '../../firebase/user-data';
 import { TransactionType, CurrencySymbol, Period, Currency, Lang } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
-import { updateUserSettings } from '../../firebase/update-user-settings';
-import { getPeriod } from '../../utils/get-period';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Drawer } from '@mui/material';
+import { defaultUserData } from '../../firebase/default-user-data';
+import { EditCategory } from '../../components/CategoryComponents/EditCetegory/EditCategory';
 
 export const CategoryPage = () => {
   const { categories, transactions, currency, loading } = useCategories();
@@ -26,6 +26,17 @@ export const CategoryPage = () => {
   function changeCategoryType(type: string) {
     setCategoryType(type);
   }
+
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    console.log('111');
+    setOpen(false);
+  };
 
   const dataForChart: IChart = {
     labels: [],
@@ -55,8 +66,9 @@ export const CategoryPage = () => {
       description: '',
     });
   }
+  const cat = defaultUserData.data.categories;
 
-  categoriesFiltered.forEach((item) => {
+  defaultUserData.data.categories.forEach((item) => {
     const name = t(item.name);
     dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
@@ -83,32 +95,36 @@ export const CategoryPage = () => {
       {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
       <div className={styles.categoryArea}>
         <CategoriesLine
-          dataCategories={categoriesFiltered}
+          dataCategories={cat}
           start={0}
           end={4}
           currencySymbol={currencySymbol}
           classLine={'lineTop'}
+          callback={handleDrawerOpen}
         />
         <CategoriesLine
-          dataCategories={categoriesFiltered}
+          dataCategories={cat}
           start={4}
           end={6}
           currencySymbol={currencySymbol}
           classLine={'lineLeft'}
+          callback={handleDrawerOpen}
         />
         <CategoriesLine
-          dataCategories={categoriesFiltered}
+          dataCategories={cat}
           start={6}
           end={8}
           currencySymbol={currencySymbol}
           classLine={'lineRight'}
+          callback={handleDrawerOpen}
         />
         <CategoriesLine
-          dataCategories={categoriesFiltered}
+          dataCategories={cat}
           start={8}
           end={12}
           currencySymbol={currencySymbol}
           classLine={'lineBottom'}
+          callback={handleDrawerOpen}
         />
         <ChartComponent
           type={categoryType}
@@ -122,17 +138,3 @@ export const CategoryPage = () => {
     </div>
   );
 };
-
-const data = {
-  lang: Lang.RU,
-  currency: Currency.UAH,
-  selectedAccount: null,
-  periodType: Period.Month,
-  period: getPeriod(Period.Month, Date.now()),
-};
-
-const id = userData.userId;
-console.log('1', userData);
-console.log('22', id, data);
-
-//if (id) updateUserSettings(id, data);
