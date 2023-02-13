@@ -7,6 +7,7 @@ import { Footer } from '../Footer/Footer';
 import { NotFound } from '../NotFound/NotFound';
 import { AuthProvider } from '../../Auth/Auth';
 import { DrawerProvider } from '../../context/Drawer';
+import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -19,7 +20,7 @@ export const App = () => {
         <Header />
         <AuthProvider>
           <Routes>
-            {/* <Route path='/' element={<CategoryPage />} /> */}
+            <Route path='/' element={<CategoryPage />} />
             <Route path='/accounts' element={<AccountPage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
