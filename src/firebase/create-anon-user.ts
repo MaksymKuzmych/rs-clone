@@ -1,13 +1,13 @@
-import { FirebaseError } from './firebase-config';
+import { checkUser } from './check-user';
 import { createUser } from './create-user';
 import { defaultUserData } from './default-user-data';
-import { getUserSettings } from './get-user-settings';
+import { FirebaseError } from './firebase-config';
 
-export const createAnonUser = async (id: string) => {
+export const createAnonUser = async (userId: string) => {
   try {
-    const user = await getUserSettings(id);
-    if (!user) {
-      await createUser(id, defaultUserData);
+    const userExist = await checkUser(userId);
+    if (!userExist) {
+      await createUser(userId, defaultUserData);
     }
   } catch (error) {
     throw new FirebaseError(`Create Anon User: ${error}`);
