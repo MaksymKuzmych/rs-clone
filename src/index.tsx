@@ -6,10 +6,13 @@ import { App } from './components/App/App';
 import './i18n';
 
 import './index.scss';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
-    <App />
+    <SnackbarProvider maxSnack={4}>
+      <App />
+    </SnackbarProvider>
   </BrowserRouter>,
 );

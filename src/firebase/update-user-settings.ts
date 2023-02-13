@@ -10,6 +10,6 @@ export const updateUserSettings = async (userId: string, settings: Partial<ISett
       await updateDoc(docRef, updates);
     });
   } catch (error) {
-    throw new FirebaseError(`updateUserSettings: Write failed... ${error}`);
+    throw new FirebaseError(`Update User Settings: ${error}`);
   }
 };

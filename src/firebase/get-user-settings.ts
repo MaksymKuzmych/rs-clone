@@ -9,11 +9,10 @@ export const getUserSettings = async (userId: string) => {
     if (docSnap.exists()) {
       return docSnap.data().settings;
     } else {
-      message = 'getUserSettings: User not found!';
+      message = 'Get User Settings: User not found!';
+      throw new Error();
     }
   } catch (error) {
-    throw message
-      ? new FirebaseError(message)
-      : new FirebaseError(`getUserSettings: Read failed... ${error}`);
+    throw message ? new FirebaseError(message) : new FirebaseError(`Get User Settings: ${error}`);
   }
 };

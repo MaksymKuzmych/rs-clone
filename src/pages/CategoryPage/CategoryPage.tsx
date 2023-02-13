@@ -5,10 +5,9 @@ import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart'
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
 import { useCategories } from '../../hooks/categories';
 
-import { IChart } from '../../interfaces';
+import { ICategory, IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { storeTr } from '../../mockData/transactions';
-import { userData } from '../../firebase/user-data';
 
 import { TransactionType, CurrencySymbol, Period, Currency, Lang } from '../../enums';
 
@@ -16,9 +15,12 @@ import styles from './CategoryPage.module.scss';
 import { CircularProgress, Drawer } from '@mui/material';
 import { defaultUserData } from '../../firebase/default-user-data';
 import { EditCategory } from '../../components/CategoryComponents/EditCetegory/EditCategory';
+import { AuthContext } from '../../Auth/Auth';
+import { useContext } from 'react';
 
 export const CategoryPage = () => {
-  const { categories, transactions, currency, loading } = useCategories();
+  const { userData } = useContext(AuthContext);
+  const { transactions, currency, loading } = useCategories();
 
   const { t } = useTranslation();
 
@@ -49,7 +51,8 @@ export const CategoryPage = () => {
     ],
   };
 
-  const currencySymbol = currency;
+  const currencySymbol = CurrencySymbol[userData.settings.currency];
+  const categories = userData.data.categories as ICategory[];
 
   const categoriesFiltered = categories.filter(
     (category) => category.type === TransactionType[categoryType as keyof typeof TransactionType],
@@ -58,8 +61,8 @@ export const CategoryPage = () => {
   if (categoriesFiltered.length < 12) {
     categoriesFiltered.push({
       id: '0',
-      date: Date.now(),
       name: '',
+      date: Date.now(),
       type: TransactionType.Income,
       iconID: 1,
       colorID: 21,

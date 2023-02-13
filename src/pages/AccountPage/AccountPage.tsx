@@ -35,10 +35,10 @@ export const AccountPage = () => {
         return (
           <AccountForm account={currentAccount} currency={currency} drawerHandler={drawerHandler} />
         );
-      case 'balance':
-        return <div>Balance</div>;
       case 'transactions':
         return <div>Transactions</div>;
+      case 'delete':
+        return <div>delete</div>;
       case 'recharge':
         return <div>Recharge</div>;
       case 'withdraw':
