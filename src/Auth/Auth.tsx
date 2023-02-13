@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     try {
       setUserData(await pullUserData(userData, userData.userId));
     } catch (error) {
-      (() => enqueueSnackbar(`${error}`, { variant: 'error' }))();
+      enqueueSnackbar(`${error}`, { variant: 'error' });
     }
   };
 
