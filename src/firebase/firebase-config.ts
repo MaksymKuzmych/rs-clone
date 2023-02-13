@@ -18,6 +18,6 @@ export const auth = getAuth();
 export class FirebaseError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'Firebase Error';
+    this.name = '';
   }
 }

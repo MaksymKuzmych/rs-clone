@@ -3,9 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Header } from '../Header/Header';
 import { AccountPage } from '../../pages/AccountPage/AccountPage';
-import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { Footer } from '../Footer/Footer';
 import { NotFound } from '../NotFound/NotFound';
+import { AuthProvider } from '../../Auth/Auth';
+import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -15,11 +16,13 @@ export const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path='/' element={<CategoryPage />} />
-        <Route path='/accounts' element={<AccountPage />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<CategoryPage />} />
+          <Route path='/accounts' element={<AccountPage />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
       <Footer />
     </>
   );

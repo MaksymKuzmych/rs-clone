@@ -15,6 +15,6 @@ export const updateUserData = async (userId: string, data: IDataFB) => {
       });
     });
   } catch (error) {
-    throw new FirebaseError(`updateUserData: Write failed... ${error}`);
+    throw new FirebaseError(`Update User Data: ${error}`);
   }
 };

@@ -13,6 +13,6 @@ export const pushUserData = async (userId: string, data: Partial<IData>) => {
       });
     });
   } catch (error) {
-    throw new FirebaseError(`pushUserData: Write failed... ${error}`);
+    throw new FirebaseError(`Push User Data: ${error}`);
   }
 };
