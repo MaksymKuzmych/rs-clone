@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
+import { useCategories } from '../../hooks/categories';
 
 import { IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
@@ -14,8 +15,11 @@ import { TransactionType, CurrencySymbol, Period, Currency, Lang } from '../../e
 import styles from './CategoryPage.module.scss';
 import { updateUserSettings } from '../../firebase/update-user-settings';
 import { getPeriod } from '../../utils/get-period';
+import { CircularProgress } from '@mui/material';
 
 export const CategoryPage = () => {
+  const { categories, transactions, currency, loading } = useCategories();
+
   const { t } = useTranslation();
 
   const [categoryType, setCategoryType] = useState('Expenses');
@@ -34,14 +38,14 @@ export const CategoryPage = () => {
     ],
   };
 
-  const currencySymbol = CurrencySymbol[userData.settings.currency];
+  const currencySymbol = currency;
 
-  const categories = userData.data.categories.filter(
+  const categoriesFiltered = categories.filter(
     (category) => category.type === TransactionType[categoryType as keyof typeof TransactionType],
   );
 
-  if (categories.length < 12) {
-    categories.push({
+  if (categoriesFiltered.length < 12) {
+    categoriesFiltered.push({
       id: '0',
       date: Date.now(),
       name: '',
@@ -52,7 +56,7 @@ export const CategoryPage = () => {
     });
   }
 
-  categories.forEach((item) => {
+  categoriesFiltered.forEach((item) => {
     const name = t(item.name);
     dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
@@ -76,30 +80,31 @@ export const CategoryPage = () => {
 
   return (
     <div className={styles.wrapper}>
+      {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
       <div className={styles.categoryArea}>
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={0}
           end={4}
           currencySymbol={currencySymbol}
           classLine={'lineTop'}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={4}
           end={6}
           currencySymbol={currencySymbol}
           classLine={'lineLeft'}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={6}
           end={8}
           currencySymbol={currencySymbol}
           classLine={'lineRight'}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={8}
           end={12}
           currencySymbol={currencySymbol}
@@ -130,4 +135,4 @@ const id = userData.userId;
 console.log('1', userData);
 console.log('22', id, data);
 
-if (id) updateUserSettings(id, data);
+//if (id) updateUserSettings(id, data);
