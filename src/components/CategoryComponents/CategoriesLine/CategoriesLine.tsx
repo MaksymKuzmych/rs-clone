@@ -1,8 +1,9 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 
+import { AuthContext } from '../../../Auth/Auth';
 import { Category } from '../Category/Category';
-import { ICategory } from '../../../interfaces';
-import { storeTr } from '../../../mockData/transactions';
+import { ICategory, ITransaction } from '../../../interfaces';
+import { Anchor } from '../../../types';
 
 import styles from '../../../pages/CategoryPage/CategoryPage.module.scss';
 
@@ -12,11 +13,23 @@ interface CategoriesLineProps {
   end: number;
   currencySymbol: string;
   classLine: string;
-  callback(): void;
+  callbackOpenModal(type: string, anchor: Anchor): void;
+  callbackTransferCategory(category: ICategory): void;
 }
 
 export const CategoriesLine = memo(
-  ({ dataCategories, start, end, currencySymbol, classLine, callback }: CategoriesLineProps) => {
+  ({
+    dataCategories,
+    start,
+    end,
+    currencySymbol,
+    classLine,
+    callbackOpenModal,
+    callbackTransferCategory,
+  }: CategoriesLineProps) => {
+    const { userData } = useContext(AuthContext);
+    const transactions = userData.data.transactions as ITransaction[];
+
     return (
       <div className={styles[`${classLine}`]}>
         {dataCategories
@@ -25,11 +38,12 @@ export const CategoriesLine = memo(
             <Category
               dataCategory={category}
               key={category.id}
-              sum={storeTr.data.transactions
+              sum={Object.values(transactions)
                 .filter((item) => item.category === category.id)
                 .reduce((sum, current) => sum + current.amount, 0)}
               currencySymbol={currencySymbol}
-              callbackOpenModal={callback}
+              callbackOpenModal={callbackOpenModal}
+              callbackTransferCategory={callbackTransferCategory}
             />
           ))}
       </div>

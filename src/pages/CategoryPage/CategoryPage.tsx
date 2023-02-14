@@ -1,44 +1,29 @@
-import { useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
-import { useCategories } from '../../hooks/categories';
-
-import { ICategory, IChart } from '../../interfaces';
+import { AuthContext } from '../../Auth/Auth';
+import { useDrawer } from '../../hooks/drawer';
+import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
+import { ICategory, IChart, ITransaction } from '../../interfaces';
 import { colors } from '../../data/colors';
-import { storeTr } from '../../mockData/transactions';
-
-import { TransactionType, CurrencySymbol, Period, Currency, Lang } from '../../enums';
+import { Anchor } from '../../types';
+import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
-import { CircularProgress, Drawer } from '@mui/material';
-import { defaultUserData } from '../../firebase/default-user-data';
-import { EditCategory } from '../../components/CategoryComponents/EditCetegory/EditCategory';
-import { AuthContext } from '../../Auth/Auth';
-import { useContext } from 'react';
+import { CategoryForm } from '../../components/CategoryComponents/CategoryForm/CategoryForm';
 
 export const CategoryPage = () => {
   const { userData } = useContext(AuthContext);
-  const { transactions, currency, loading } = useCategories();
 
   const { t } = useTranslation();
 
-  const [categoryType, setCategoryType] = useState('Expenses');
-  function changeCategoryType(type: string) {
+  const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
+
+  function changeCategoryType(type: TransactionType) {
     setCategoryType(type);
   }
-
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    console.log('111');
-    setOpen(false);
-  };
 
   const dataForChart: IChart = {
     labels: [],
@@ -53,10 +38,9 @@ export const CategoryPage = () => {
 
   const currencySymbol = CurrencySymbol[userData.settings.currency];
   const categories = userData.data.categories as ICategory[];
+  const transactions = userData.data.transactions as ITransaction[];
 
-  const categoriesFiltered = categories.filter(
-    (category) => category.type === TransactionType[categoryType as keyof typeof TransactionType],
-  );
+  const categoriesFiltered = categories.filter((category) => category.type === categoryType);
 
   if (categoriesFiltered.length < 12) {
     categoriesFiltered.push({
@@ -69,9 +53,8 @@ export const CategoryPage = () => {
       description: '',
     });
   }
-  const cat = defaultUserData.data.categories;
 
-  defaultUserData.data.categories.forEach((item) => {
+  categoriesFiltered.forEach((item) => {
     const name = t(item.name);
     dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
@@ -79,55 +62,81 @@ export const CategoryPage = () => {
       dataForChart.datasets[0].backgroundColor.push(color);
     }
 
-    const categorySum = storeTr.data.transactions
+    const categorySum = transactions
       .filter((action) => action.category === item.id)
       .reduce((sum, current) => sum + current.amount, 0);
     dataForChart.datasets[0].data.push(categorySum);
   });
 
-  const income = storeTr.data.transactions
+  const income = transactions
     .filter((item) => item.type === TransactionType.Income)
     .reduce((sum, current) => sum + current.amount, 0);
 
-  const expenses = storeTr.data.transactions
+  const expenses = transactions
     .filter((item) => item.type === TransactionType.Expenses)
     .reduce((sum, current) => sum + current.amount, 0);
 
+  const { state, toggleDrawer } = useDrawer();
+  const [typeDrawer, setTypeDrawer] = useState('');
+  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
+
+  const [categoryClicked, setcategoryClicked] = useState<ICategory | null>(null);
+
+  function setNewCategory(category: ICategory | null) {
+    setcategoryClicked(category);
+  }
+
+  function transferCategory(category: ICategory) {
+    category ? setNewCategory(category) : setNewCategory(null);
+  }
+
+  const drawerHandler = useCallback(
+    (type: string, anchor: Anchor) => {
+      setTypeDrawer(type);
+      setIsOpenDrawer(!isOpenDrawer);
+      toggleDrawer(anchor, isOpenDrawer);
+    },
+    [isOpenDrawer, toggleDrawer],
+  );
+
   return (
     <div className={styles.wrapper}>
-      {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
       <div className={styles.categoryArea}>
         <CategoriesLine
-          dataCategories={cat}
+          dataCategories={categoriesFiltered}
           start={0}
           end={4}
           currencySymbol={currencySymbol}
           classLine={'lineTop'}
-          callback={handleDrawerOpen}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={cat}
+          dataCategories={categoriesFiltered}
           start={4}
           end={6}
           currencySymbol={currencySymbol}
           classLine={'lineLeft'}
-          callback={handleDrawerOpen}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={cat}
+          dataCategories={categoriesFiltered}
           start={6}
           end={8}
           currencySymbol={currencySymbol}
           classLine={'lineRight'}
-          callback={handleDrawerOpen}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={cat}
+          dataCategories={categoriesFiltered}
           start={8}
           end={12}
           currencySymbol={currencySymbol}
           classLine={'lineBottom'}
-          callback={handleDrawerOpen}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <ChartComponent
           type={categoryType}
@@ -138,6 +147,18 @@ export const CategoryPage = () => {
           callback={changeCategoryType}
         />
       </div>
+      <TemporaryDrawer
+        state={state}
+        anchor='bottom'
+        type={typeDrawer}
+        drawerHandler={drawerHandler}
+      >
+        <CategoryForm
+          category={categoryClicked}
+          type={categoryType}
+          drawerHandler={drawerHandler}
+        />
+      </TemporaryDrawer>
     </div>
   );
 };

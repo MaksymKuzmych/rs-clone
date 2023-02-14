@@ -22,7 +22,6 @@ export interface ICategory {
   id: string;
   date: number;
   name: string;
-  date: number;
   type: TransactionType;
   iconID: number;
   colorID: number;

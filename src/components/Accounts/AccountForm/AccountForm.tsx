@@ -177,7 +177,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
         </form>
         <BasicModal openModal={openModal} handleClose={handleClose}>
           <BasicTabs
-            firstChild={<Icons color='#fff' iconHandler={iconHandler} />}
+            firstChild={<Icons page={'accounts'} color='#fff' iconHandler={iconHandler} />}
             secondChild={<Colors colorHandler={colorHandler} />}
           />
         </BasicModal>

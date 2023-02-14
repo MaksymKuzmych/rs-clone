@@ -22,8 +22,11 @@
   "Shopping": "Покупки",
   "Salary": "Зарплата",
   "New account": "Новый счёт",
+  "New category": "Новая категория",
+  "Add transaction": "Добавить операцию",
   "Name": "Название",
   "Account": "Счёт",
+  "Category": "Категория",
   "Description": "Описание",
   "Required": "Обязательное поле",
   "Log Out": "Выйти",
@@ -51,5 +54,7 @@
   "Message content 2": "Если вы хотите удалить только операции, выберите Удалить все операции",
   "Categories": "Категории",
   "Delete": "Удалить",
-  "Delete account permanently": "Удалить аккаунт безвозвратно"
+  "Delete account permanently": "Удалить аккаунт безвозвратно",
+  "All transactions associated with the category will be deleted": "Все операции, связанные с этой категорией будут удалены",
+  "The category cannot be restored" : "Категорию нельзя будет восстановить"
 }

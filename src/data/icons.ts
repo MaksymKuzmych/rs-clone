@@ -81,7 +81,7 @@ export const iconsCategory: IIcon[] = [
     id: 9,
   },
   {
-    name: 'directions_car',
+    name: 'shopping_cart',
     id: 10,
   },
   {
@@ -127,6 +127,10 @@ export const iconsCategory: IIcon[] = [
   {
     name: 'train',
     id: 21,
+  },
+  {
+    name: 'directions_car',
+    id: 22,
   },
 ];
 

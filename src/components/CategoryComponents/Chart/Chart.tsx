@@ -7,14 +7,15 @@ import { Chart } from 'chart.js';
 import { IChart } from '../../../interfaces';
 
 import styles from './Chart.module.scss';
+import { TransactionType } from '../../../enums';
 
 interface ChartComponentProps {
-  type: string;
+  type: TransactionType;
   dataChart: IChart;
   income: number;
   expenses: number;
   currencySymbol: string;
-  callback(props: string): void;
+  callback(props: TransactionType): void;
 }
 
 export const ChartComponent = memo(
@@ -29,11 +30,13 @@ export const ChartComponent = memo(
           options={{ responsive: true, maintainAspectRatio: true, cutout: '85%' }}
         />
         <div className={styles.chartInfo}>
-          <div className={styles.transactionType}>{t(`${type}`)}</div>
+          <div className={styles.transactionType}>
+            {t(`${type === 'expenses' ? 'Expenses' : 'Income'}`)}
+          </div>
           <div
             className={styles.totalExpenses}
             onClick={() => {
-              callback('Expenses');
+              callback(TransactionType.Expenses);
             }}
           >
             {dataChart.datasets[0].data.reduce((sum, current) => sum + current, 0)}
@@ -42,10 +45,10 @@ export const ChartComponent = memo(
           <div
             className={styles.totalIncome}
             onClick={() => {
-              callback('Income');
+              callback(TransactionType.Income);
             }}
           >
-            {type === 'Expenses' ? income : expenses}
+            {type === TransactionType.Expenses ? income : expenses}
             {currencySymbol}
           </div>
         </div>

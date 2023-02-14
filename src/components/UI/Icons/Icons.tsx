@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import { iconsCard } from '../../../data/icons';
+import { iconsCard, iconsCategory } from '../../../data/icons';
 
 import styles from './Icons.module.scss';
 
 interface IconsProps {
+  page: string;
   color: string;
   iconHandler: (icon: string) => void;
 }
 
-export const Icons = ({ color, iconHandler }: IconsProps) => {
+export const Icons = ({ page, color, iconHandler }: IconsProps) => {
   const [icons, setIcons] = useState(iconsCard);
 
   useEffect(() => {
-    setIcons(iconsCard);
+    setIcons(page === 'accounts' ? iconsCard : iconsCategory);
   }, []);
 
   return (
