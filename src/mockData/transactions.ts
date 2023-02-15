@@ -13,7 +13,7 @@ export const storeTr = {
       },
       {
         id: '2',
-        date: Date.now(),
+        date: Date.now() + 1,
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory1',
@@ -22,7 +22,7 @@ export const storeTr = {
       },
       {
         id: '3',
-        date: Date.now(),
+        date: Date.now() + 2,
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory7',
@@ -31,7 +31,7 @@ export const storeTr = {
       },
       {
         id: '4',
-        date: Date.now(),
+        date: Date.now() + 3,
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory2',
@@ -40,7 +40,7 @@ export const storeTr = {
       },
       {
         id: '5',
-        date: Date.now(),
+        date: Date.now() + 4,
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory3',
@@ -49,7 +49,7 @@ export const storeTr = {
       },
       {
         id: '6',
-        date: Date.now(),
+        date: Date.now() + 5,
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory6',
@@ -58,7 +58,7 @@ export const storeTr = {
       },
       {
         id: '7',
-        date: Date.now(),
+        date: Date.now() + 6,
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory2',
@@ -67,7 +67,7 @@ export const storeTr = {
       },
       {
         id: '8',
-        date: Date.now(),
+        date: Date.now() + 7,
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory4',
@@ -76,7 +76,7 @@ export const storeTr = {
       },
       {
         id: '9',
-        date: Date.now(),
+        date: Date.now() + 8,
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory1',
@@ -85,7 +85,7 @@ export const storeTr = {
       },
       {
         id: '10',
-        date: Date.now(),
+        date: Date.now() + 9,
         type: TransactionType.Income,
         account: 'defaultAccount2',
         category: 'defaultCategory9',
@@ -94,7 +94,7 @@ export const storeTr = {
       },
       {
         id: '11',
-        date: Date.now(),
+        date: Date.now() + 10,
         type: TransactionType.Income,
         account: 'defaultAccount2',
         category: 'defaultCategory9',
@@ -103,7 +103,7 @@ export const storeTr = {
       },
       {
         id: '12',
-        date: Date.now(),
+        date: Date.now() + 11,
         type: TransactionType.Income,
         account: 'defaultAccount2',
         category: 'defaultCategory9',
@@ -112,7 +112,7 @@ export const storeTr = {
       },
       {
         id: '13',
-        date: Date.now(),
+        date: Date.now() + 12,
         type: TransactionType.Income,
         account: 'defaultAccount2',
         category: 'defaultCategory9',
