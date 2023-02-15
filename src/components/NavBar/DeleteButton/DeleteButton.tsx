@@ -24,12 +24,7 @@ export const DeleteButton = () => {
         </ListItemIcon>
         <ListItemText primary={t('Delete data')} className={styles.title} />
       </ListItem>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
-      >
+      <Modal open={open} onClose={handleClose}>
         <div className={styles.paper}>
           <h2 id='simple-modal-title' className={styles.modalTitle}>
             {t('Delete data')}

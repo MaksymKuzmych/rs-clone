@@ -147,7 +147,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       </form>
       <BasicModal openModal={openModal} handleClose={handleClose}>
         <BasicTabs
-          firstChild={<Icons color='#fff' iconHandler={iconHandler} />}
+          firstChild={<Icons page={'accounts'} color='#fff' iconHandler={iconHandler} />}
           secondChild={<Colors colorHandler={colorHandler} />}
           firstTitle='Icons'
           secondTitle='Colors'

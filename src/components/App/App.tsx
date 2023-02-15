@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
 
 import { Header } from '../Header/Header';
 import { AccountPage } from '../../pages/AccountPage/AccountPage';
@@ -8,16 +8,13 @@ import { NotFound } from '../NotFound/NotFound';
 import { AuthProvider } from '../../Auth/Auth';
 import { DrawerProvider } from '../../context/Drawer';
 import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
+import { theme } from '../../styles/theme';
 
 export const App = () => {
-  const { i18n } = useTranslation();
-
-  i18n.changeLanguage('ru');
-
   return (
-    <>
-      <DrawerProvider>
-        <Header />
+    <DrawerProvider>
+      <Header />
+      <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
             <Route path='/' element={<CategoryPage />} />
@@ -26,7 +23,7 @@ export const App = () => {
           </Routes>
         </AuthProvider>
         <Footer />
-      </DrawerProvider>
-    </>
+      </ThemeProvider>
+    </DrawerProvider>
   );
 };

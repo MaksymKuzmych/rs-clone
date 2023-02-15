@@ -1,6 +1,4 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import { createTheme } from '@mui/material';
 
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
@@ -14,52 +12,6 @@ import { DrawerContext } from '../../context/Drawer';
 import { Transfer } from '../../components/Accounts/Transfer/Transfer';
 
 import styles from './AccountPage.module.scss';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fff',
-    },
-  },
-  components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          color: '#fff',
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          fontSize: '22px',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          marginBottom: '5px',
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: '#a8adb3',
-          fontSize: '23px',
-        },
-      },
-    },
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: 'transparent',
-        },
-      },
-    },
-  },
-});
 
 export const AccountPage = () => {
   const { userData } = useContext(AuthContext);
@@ -122,20 +74,18 @@ export const AccountPage = () => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={styles.accountPage}>
-        <AccountHeader amount={amount} />
-        {accounts}
-        <AddAccount drawerHandler={drawerHandler} />
-        <TemporaryDrawer
-          state={state}
-          anchor='bottom'
-          type={typeDrawer}
-          drawerHandler={drawerHandler}
-        >
-          {drawerContent()}
-        </TemporaryDrawer>
-      </div>
-    </ThemeProvider>
+    <div className={styles.accountPage}>
+      <AccountHeader amount={amount} />
+      {accounts}
+      <AddAccount drawerHandler={drawerHandler} />
+      <TemporaryDrawer
+        state={state}
+        anchor='bottom'
+        type={typeDrawer}
+        drawerHandler={drawerHandler}
+      >
+        {drawerContent()}
+      </TemporaryDrawer>
+    </div>
   );
 };

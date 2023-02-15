@@ -1,0 +1,26 @@
+.wrapper {
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+
+.content {
+  padding-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.deleteBtn {
+  color: red;
+}
+
+.cancelBtn {
+  color: gray;
+}
