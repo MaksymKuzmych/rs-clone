@@ -1,10 +1,10 @@
-@import '../../../styles/variables.scss';
+@import '../../styles/variables.scss';
 
-.add {
+.wrapper {
   color: white;
 }
 
-.upper {
+.upperWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,13 +20,13 @@
   align-items: center;
 }
 
-.headerTitle {
+.title {
   flex-grow: 1;
   margin: 0 10px 10px 0;
   font-size: 26px;
 }
 
-.inner {
+.innerWrapper {
   padding: 0 20px 20px;
   background-color: $dark-gray;
   display: flex;

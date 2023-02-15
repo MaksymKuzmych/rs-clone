@@ -3,26 +3,63 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  font-size: 16px;
-  padding: 20px 0;
+  gap: 20px;
+  padding: 15px;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 20px;
+  align-items: center;
+}
+
+.iconWrapper {
+  width: 50px;
+  height: 45px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerText {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btnsWrapper {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  justify-content: flex-end;
 }
 
 .btn {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
+  padding: 5px;
+  font-size: 14px;
   text-transform: uppercase;
-  background-color: #f3433430;
-  padding: 10px;
+}
+
+.delete {
+  color: #f3433490;
+}
+
+.delete:hover {
   color: #f34334;
-  border-radius: 5px;
 }
 
-.btn:hover {
-  background-color: #f3433460;
+.cancel {
+  color: #a8adb390;
 }
 
-.btn:active {
-  transform: scale(0.95);
+.cancel:hover {
+  color: #a8adb3;
 }

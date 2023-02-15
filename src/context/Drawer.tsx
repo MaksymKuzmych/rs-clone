@@ -1,8 +1,15 @@
 import { createContext, memo, PropsWithChildren, useCallback, useState } from 'react';
 
+import { IDrawerSide } from '../interfaces';
 import { Anchor } from '../types';
 
-export const DrawerContext = createContext({
+interface IDrawerContext {
+  state: IDrawerSide;
+  typeDrawer: string;
+  drawerHandler: (type: string, anchor: Anchor, open: boolean) => void;
+}
+
+export const DrawerContext = createContext<IDrawerContext>({
   state: {
     top: false,
     left: false,
@@ -10,7 +17,7 @@ export const DrawerContext = createContext({
     right: false,
   },
   typeDrawer: '',
-  drawerHandler: (type: string, anchor: Anchor, open: boolean) => {},
+  drawerHandler: () => {},
 });
 
 export const DrawerProvider = memo(({ children }: PropsWithChildren) => {

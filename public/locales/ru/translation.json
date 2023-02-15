@@ -49,5 +49,17 @@
   "If you want to delete only operations, select Delete All Operations": "Если вы хотите удалить только операции, выберите Удалить все операции",
   "Categories": "Категории",
   "Delete": "Удалить",
-  "Delete account permanently": "Удалить аккаунт безвозвратно"
+  "Name must be at least 2 characters": "Название должно быть не менее 2 символов",
+  "Name must be at most 8 characters": "Название должно быть не более 8 символов",
+  "Balance must be at most 9 characters": "Баланс должен быть не более 9 символов",
+  "Description must be at most 16 characters": "Описание должно быть не более 16 символов",
+  "Amount": "Сумма",
+  "From account": "Со счёта",
+  "To account": "На счёт",
+  "Not enough money in the account": "Недостаточно средств на счету",
+  "All transactions": "Все транзакции",
+  "associated with this account will be deleted. The balances of your other accounts will not change": "связанные с этой учетной записью, будут удалены. Балансы других ваших счетов не изменятся",
+  "The account cannot be restored": "Счёт не может быть восстановлен",
+  "Enter transfer amount": "Введите сумму перевода",
+  "No other accounts": "Других счетов нет"
 }

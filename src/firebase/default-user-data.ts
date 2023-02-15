@@ -8,6 +8,7 @@ export const defaultUserData: IStore = {
     lang: Lang.EN,
     currency: Currency.USD,
     selectedAccount: null,
+    selectedAccountInHeader: null,
     periodType: Period.Month,
     period: getPeriod(Period.Month, Date.now()),
   },
@@ -115,6 +116,23 @@ export const defaultUserData: IStore = {
         description: '',
       },
     ],
+    transactions: [],
+  },
+};
+
+export const emptyUserData: IStore = {
+  userId: '',
+  settings: {
+    lang: Lang.EN,
+    currency: Currency.USD,
+    selectedAccount: null,
+    selectedAccountInHeader: null,
+    periodType: Period.Month,
+    period: getPeriod(Period.Month, Date.now()),
+  },
+  data: {
+    accounts: [],
+    categories: [],
     transactions: [],
   },
 };

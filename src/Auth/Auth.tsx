@@ -1,33 +1,58 @@
 import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
 
+import { Currency } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
-import { defaultUserData } from '../firebase/default-user-data';
+import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { signInAnon } from '../firebase/sign-in-anon';
+import { IStore } from '../interfaces';
 
-export const AuthContext = createContext({
-  userData: defaultUserData,
+interface IAuthContext {
+  userData: IStore;
+  changeUserData: () => void;
+  setCurrency: (amount: number) => string;
+}
+
+export const AuthContext = createContext<IAuthContext>({
+  userData: emptyUserData,
   changeUserData: () => {},
+  setCurrency: (amount: number) =>
+    new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: Currency.USD,
+    }).format(amount),
 });
 
 export const AuthProvider = ({ children }: BrowserRouterProps) => {
-  const [userData, setUserData] = useState(JSON.parse(JSON.stringify(defaultUserData)));
+  const [userData, setUserData] = useState(emptyUserData);
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const changeUserData = async () => {
+  const setCurrency = useCallback(
+    (amount: number) =>
+      new Intl.NumberFormat('ru-RU', {
+        style: 'currency',
+        currency: userData.settings.currency,
+        currencyDisplay: 'narrowSymbol',
+      }).format(amount),
+    [userData.settings.currency],
+  );
+
+  const changeUserData = useCallback(async () => {
     try {
+      setPending(true);
       setUserData(await pullUserData(userData, userData.userId));
+      setPending(false);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     }
-  };
+  }, [enqueueSnackbar, userData]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -59,6 +84,8 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userData, changeUserData }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ userData, changeUserData, setCurrency }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

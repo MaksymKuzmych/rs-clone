@@ -3,7 +3,8 @@ import { Currency, Lang, Period, TransactionType } from './enums';
 export interface ISettings {
   lang: Lang;
   currency: Currency;
-  selectedAccount: null | number;
+  selectedAccount: string | null;
+  selectedAccountInHeader: string | null;
   periodType: Period;
   period: { start: number | null; end: number | null };
 }
@@ -100,3 +101,10 @@ export type IChart = {
     backgroundColor: string[];
   }[];
 };
+
+export interface IDrawerSide {
+  top: boolean;
+  left: boolean;
+  bottom: boolean;
+  right: boolean;
+}

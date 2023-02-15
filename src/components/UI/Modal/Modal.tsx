@@ -4,12 +4,11 @@ import { memo, PropsWithChildren } from 'react';
 
 const style = {
   position: 'absolute',
+  width: 320,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 300,
   bgcolor: '#2a3139',
-  p: 1,
 };
 
 interface BasicModalProps {

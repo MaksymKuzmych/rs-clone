@@ -36,6 +36,8 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered)
     const dataArray = querySnapshot.docs.map((doc) => doc.data());
     if (dataArray.length) {
       return dataArray;
+    } else {
+      return [];
     }
   } catch (error) {
     throw new FirebaseError(`Get Filtered User Data: ${error}`);

@@ -1,0 +1,47 @@
+@import '../../../styles/variables.scss';
+
+.accountsWrapper {
+  background-color: $dark-gray;
+  color: white;
+  padding: 10px;
+}
+
+.emptyAccountsTitle {
+  padding: 20px 10px;
+  color: $light-gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.modalContent {
+  width: 320px;
+}
+
+.modalHeader {
+  display: flex;
+  color: white;
+}
+
+.inputWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
+
+.error {
+  color: $red;
+  padding-left: 10px;
+}
+
+.modalBtn {
+  display: block;
+  padding: 10px;
+  color: white;
+  margin-left: auto;
+  margin-top: 10px;
+}

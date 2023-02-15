@@ -14,7 +14,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = useCallback(() => setOpen(true), []);
-
   const handleDrawerClose = useCallback(() => setOpen(false), []);
 
   return (

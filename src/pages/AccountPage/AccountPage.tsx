@@ -1,4 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { createTheme } from '@mui/material';
 
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
@@ -6,44 +8,92 @@ import { Account } from '../../components/Accounts/Account/Account';
 import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
 import { IAccount } from '../../interfaces';
 import { Settings } from '../../components/Accounts/Settings/Settings';
-import { AccountForm } from '../../components/Accounts/AccountForm/AccountForm';
+import { AccountForm } from '../../components/Forms/AccountForm';
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
-import { CurrencySymbol } from '../../enums';
+import { Transfer } from '../../components/Accounts/Transfer/Transfer';
 
 import styles from './AccountPage.module.scss';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#fff',
+    },
+  },
+  components: {
+    MuiInput: {
+      styleOverrides: {
+        underline: {
+          color: '#fff',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: '22px',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: '5px',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#a8adb3',
+          fontSize: '23px',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: 'transparent',
+        },
+      },
+    },
+  },
+});
 
 export const AccountPage = () => {
   const { userData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [amount, setAmount] = useState(0);
-  const [currentAccount, setCurrentAccount] = useState(userData.data.accounts[0]);
+  const [currentAccount, setCurrentAccount] = useState({
+    id: '',
+    date: Date.now(),
+    name: '',
+    icon: '',
+    color: '',
+    balance: 0,
+    description: '',
+  });
 
   useEffect(() => {
-    const allCardsAmount = userData.data.accounts.reduce(
-      (acc, account) => acc + account.balance,
-      0,
-    );
-    setAmount(allCardsAmount);
+    if (userData.data.accounts) {
+      const allCardsAmount = userData.data.accounts.reduce(
+        (acc, account) => acc + account.balance,
+        0,
+      );
+      setAmount(allCardsAmount);
+    }
   }, [userData.data.accounts]);
 
   const drawerContent = useCallback(() => {
     switch (typeDrawer) {
       case 'info':
-        return <Settings account={currentAccount} />;
+        return <Settings currentAccount={currentAccount} />;
       case 'edit':
-        return <AccountForm account={currentAccount} />;
-      case 'transactions':
-        return <div>Transactions</div>;
-      case 'delete':
-        return <div>delete</div>;
-      case 'recharge':
-        return <div>Recharge</div>;
-      case 'withdraw':
-        return <div>Withdraw</div>;
+        return <AccountForm currentAccount={currentAccount} />;
       case 'transfer':
-        return <div>Transfer</div>;
+        return <Transfer currentAccount={currentAccount} />;
       case 'addAccount':
         return <AccountForm />;
     }
@@ -62,27 +112,30 @@ export const AccountPage = () => {
       userData.data.accounts.map((account) => (
         <Account
           account={account}
-          currency={CurrencySymbol[userData.settings.currency]}
           key={account.id}
-          accountDrawerHandler={accountDrawerHandler}
+          onClick={() => {
+            accountDrawerHandler(account);
+          }}
         />
       )),
-    [accountDrawerHandler, userData.data.accounts, userData.settings.currency],
+    [accountDrawerHandler, userData.data.accounts],
   );
 
   return (
-    <div className={styles.accountPage}>
-      <AccountHeader currency={CurrencySymbol[userData.settings.currency]} amount={amount} />
-      {accounts}
-      <AddAccount drawerHandler={drawerHandler} />
-      <TemporaryDrawer
-        state={state}
-        anchor='bottom'
-        type={typeDrawer}
-        drawerHandler={drawerHandler}
-      >
-        {drawerContent()}
-      </TemporaryDrawer>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={styles.accountPage}>
+        <AccountHeader amount={amount} />
+        {accounts}
+        <AddAccount drawerHandler={drawerHandler} />
+        <TemporaryDrawer
+          state={state}
+          anchor='bottom'
+          type={typeDrawer}
+          drawerHandler={drawerHandler}
+        >
+          {drawerContent()}
+        </TemporaryDrawer>
+      </div>
+    </ThemeProvider>
   );
 };

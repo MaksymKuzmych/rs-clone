@@ -1,21 +1,23 @@
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { IAccount } from '../../../interfaces';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { DeleteAccount } from '../DeleteAccount/DeleteAccount';
-import { deleteUserData } from '../../../firebase/delete-user-data';
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
+import { SettingsHeader } from './SettingsHeader/SettingsHeader';
+import { updateUserSettings } from '../../../firebase/update-user-settings';
 
 import styles from './Settings.module.scss';
 
 interface SettingsProps {
-  account: IAccount;
+  currentAccount: IAccount;
 }
 
-export const Settings = memo(({ account }: SettingsProps) => {
+export const Settings = memo(({ currentAccount }: SettingsProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
@@ -23,33 +25,21 @@ export const Settings = memo(({ account }: SettingsProps) => {
 
   const { t } = useTranslation();
 
-  const { name, icon, color, description, balance } = account;
+  const navigate = useNavigate();
+
+  const redirectToTransactions = useCallback(async () => {
+    await updateUserSettings(userData.userId, { selectedAccount: currentAccount.id });
+    navigate(`/transactions`);
+    changeUserData();
+    drawerHandler('info', 'bottom', false);
+  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.userId]);
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
   const handleClose = useCallback(() => setOpenModal(false), []);
 
-  const deleteUser = useCallback(async () => {
-    deleteUserData(userData.userId, { accounts: account.id });
-    await changeUserData();
-  }, [account.id, changeUserData, userData.userId]);
-
   return (
     <>
-      <header className={styles.header} style={{ backgroundColor: `${color}` }}>
-        <div className={styles.info}>
-          <span className='material-icons'>{icon}</span>
-          <div className={styles.text}>
-            <p className={styles.name}>{name}</p>
-            {description && <p className={styles.description}>{description}</p>}
-          </div>
-        </div>
-        <div className={styles.balanceWrapper}>
-          <p>{t('Account balance')}</p>
-          <p className={styles.balance}>
-            {balance} {userData.settings.currency}
-          </p>
-        </div>
-      </header>
+      <SettingsHeader currentAccount={currentAccount} />
       <div className={styles.btnsWrapper}>
         <SettingsBtn
           icon='edit'
@@ -63,26 +53,7 @@ export const Settings = memo(({ account }: SettingsProps) => {
           icon='receipt'
           color='#029688'
           title={t('Transactions')}
-          onClick={() => {
-            drawerHandler('transactions', 'bottom', true);
-          }}
-        />
-        <SettingsBtn icon='delete' color='#f34334' title={t('Delete')} onClick={handleOpen} />
-        <SettingsBtn
-          icon='arrow_downward'
-          color='#4cb050'
-          title={t('Recharge')}
-          onClick={() => {
-            drawerHandler('recharge', 'bottom', true);
-          }}
-        />
-        <SettingsBtn
-          icon='arrow_upward'
-          color='#eda948'
-          title={t('Withdraw')}
-          onClick={() => {
-            drawerHandler('withdraw', 'bottom', true);
-          }}
+          onClick={redirectToTransactions}
         />
         <SettingsBtn
           icon='arrow_forward'
@@ -92,13 +63,10 @@ export const Settings = memo(({ account }: SettingsProps) => {
             drawerHandler('transfer', 'bottom', true);
           }}
         />
+        <SettingsBtn icon='delete' color='#f34334' title={t('Delete')} onClick={handleOpen} />
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <DeleteAccount
-          deleteUser={deleteUser}
-          handleClose={handleClose}
-          drawerHandler={drawerHandler}
-        />
+        <DeleteAccount currentAccount={currentAccount} handleClose={handleClose} />
       </BasicModal>
     </>
   );
