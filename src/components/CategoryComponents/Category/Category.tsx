@@ -1,40 +1,65 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ICategory } from '../../../interfaces';
 import { colors } from '../../../data/colors';
 import { iconsCategory, iconsProject } from '../../../data/icons';
+import { Anchor } from '../../../types';
 
 import styles from './Category.module.scss';
+import { defaultNames } from '../../../data/defaultNames';
 
 interface CategoryProps {
   dataCategory: ICategory;
   sum: number;
   currencySymbol: string;
+  callbackOpenModal(type: string, anchor: Anchor): void;
+  callbackTransferCategory(category: ICategory | null): void;
 }
 
-export const Category = memo(({ dataCategory, sum, currencySymbol }: CategoryProps) => {
-  const { id, name, iconID, colorID } = dataCategory;
+export const Category = memo(
+  ({
+    dataCategory,
+    sum,
+    currencySymbol,
+    callbackOpenModal,
+    callbackTransferCategory,
+  }: CategoryProps) => {
+    const { id, name, iconID, colorID } = dataCategory;
 
-  const colorItem = colors.find((color) => color.id === colorID)?.color;
-  const buttonAdd = !id;
-  const iconItem = !buttonAdd
-    ? iconsCategory.find((icon) => icon.id === iconID)?.name
-    : iconsProject.find((icon) => icon.id === iconID)?.name;
+    const { t } = useTranslation();
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={sum === 0 ? `${styles.category} ${styles.categoryEmpty}` : styles.category}>
-        {!buttonAdd ? <h3 className={styles.title}>{name}</h3> : null}
-        <div
-          className={!buttonAdd ? styles.img : styles.buttonAdd}
-          style={{ backgroundColor: colorItem }}
-        >
-          <span className={!buttonAdd ? `material-icons` : `material-icons ${styles.add}`}>
-            {iconItem}
-          </span>
+    const colorItem = colors.find((color) => color.id === colorID)?.color;
+    let buttonAdd = false;
+    if (id === '0') {
+      buttonAdd = true;
+    }
+    const iconItem = !buttonAdd
+      ? iconsCategory.find((icon) => icon.id === iconID)?.name
+      : iconsProject.find((icon) => icon.id === iconID)?.name;
+
+    const onСlick = useCallback(() => {
+      callbackOpenModal(buttonAdd ? 'new' : 'edit', 'bottom');
+      callbackTransferCategory(buttonAdd ? null : dataCategory);
+    }, [buttonAdd, dataCategory, callbackOpenModal, callbackTransferCategory]);
+
+    return (
+      <div className={styles.wrapper} onClick={onСlick}>
+        <div className={sum === 0 ? `${styles.category} ${styles.categoryEmpty}` : styles.category}>
+          {!buttonAdd ? (
+            <h3 className={styles.title}>{defaultNames.includes(name) ? t(`${name}`) : name}</h3>
+          ) : null}
+          <div
+            className={!buttonAdd ? styles.img : styles.buttonAdd}
+            style={{ backgroundColor: colorItem }}
+          >
+            <span className={!buttonAdd ? `material-icons` : `material-icons ${styles.add}`}>
+              {iconItem}
+            </span>
+          </div>
+          {!buttonAdd ? <div className={styles.sum}>{`${sum} ${currencySymbol}`}</div> : null}
         </div>
-        {!buttonAdd ? <div className={styles.sum}>{`${sum} ${currencySymbol}`}</div> : null}
       </div>
-    </div>
-  );
-});
+    );
+  },
+);

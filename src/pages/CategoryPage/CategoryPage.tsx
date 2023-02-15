@@ -1,86 +1,193 @@
+import { useCallback, useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
+import { AuthContext } from '../../Auth/Auth';
+import { useDrawer } from '../../hooks/drawer';
+import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { ICategory, IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
-import { storeTr } from '../../mockData/transactions';
+import { Anchor } from '../../types';
 import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
-import { AuthContext } from '../../Auth/Auth';
-import { useContext } from 'react';
+import { CategoryForm } from '../../components/Forms/CategoryForm';
+import { defaultNames } from '../../data/defaultNames';
 
 export const CategoryPage = () => {
   const { userData } = useContext(AuthContext);
+
+  const { t } = useTranslation();
+
+  const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
+
+  const changeCategoryType = useCallback((type: TransactionType) => {
+    setCategoryType(type);
+  }, []);
+
   const dataForChart: IChart = {
     labels: [],
     datasets: [
       {
-        label: 'Expenses',
+        label: categoryType,
         data: [],
         backgroundColor: [],
       },
     ],
   };
+
   const currencySymbol = CurrencySymbol[userData.settings.currency];
-  const categories = userData.data.categories as ICategory[];
-  if (categories.length < 12) {
-    categories.push({
+  const categories = userData.data.categories;
+  const transactions = userData.data.transactions;
+
+  const categoriesThisType =
+    categories.length !== 0 ? categories.filter((category) => category.type === categoryType) : [];
+
+  const categoriesFiltered =
+    categories.length !== 0 && categoriesThisType.length !== 0
+      ? categories.filter((category) => category.type === categoryType)
+      : [
+          {
+            id: '0',
+            name: '',
+            date: Date.now(),
+            type: categoryType,
+            iconID: 1,
+            colorID: 21,
+          },
+        ];
+
+  if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
+    categoriesFiltered.push({
       id: '0',
       name: '',
       date: Date.now(),
-      type: TransactionType.Expenses,
+      type: TransactionType.Income,
       iconID: 1,
       colorID: 21,
-      description: '',
     });
   }
-  categories.forEach((item) => {
-    dataForChart.labels.push(item.name);
+
+  categoriesFiltered.forEach((item) => {
+    const name = defaultNames.includes(item.name) ? t(item.name) : item.name;
+    dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
     if (color) {
       dataForChart.datasets[0].backgroundColor.push(color);
     }
-    const categorySum = storeTr.data.transactions
+
+    const categorySum = transactions
       .filter((action) => action.category === item.id)
       .reduce((sum, current) => sum + current.amount, 0);
     dataForChart.datasets[0].data.push(categorySum);
   });
-  const income = storeTr.data.transactions
+
+  const income = transactions
     .filter((item) => item.type === TransactionType.Income)
     .reduce((sum, current) => sum + current.amount, 0);
+
+  const expenses = transactions
+    .filter((item) => item.type === TransactionType.Expenses)
+    .reduce((sum, current) => sum + current.amount, 0);
+
+  const { state, toggleDrawer } = useDrawer();
+  const [typeDrawer, setTypeDrawer] = useState('');
+  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
+
+  const [categoryClicked, setcategoryClicked] = useState<ICategory | null>(null);
+
+  const setNewCategory = useCallback((category: ICategory | null) => {
+    setcategoryClicked(category);
+  }, []);
+
+  const transferCategory = useCallback(
+    (category: ICategory) => {
+      category ? setNewCategory(category) : setNewCategory(null);
+    },
+    [setNewCategory],
+  );
+
+  const drawerHandler = useCallback(
+    (type: string, anchor: Anchor) => {
+      setTypeDrawer(type);
+      setIsOpenDrawer(!isOpenDrawer);
+      toggleDrawer(anchor, isOpenDrawer);
+    },
+    [isOpenDrawer, toggleDrawer],
+  );
+
+  const dataForChartEmpty: IChart = {
+    labels: [''],
+    datasets: [
+      {
+        label: categoryType,
+        data: [100],
+        backgroundColor: ['#a8adb3'],
+      },
+    ],
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.categoryArea}>
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={0}
           end={4}
           currencySymbol={currencySymbol}
           classLine={'lineTop'}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={4}
           end={6}
           currencySymbol={currencySymbol}
           classLine={'lineLeft'}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={6}
           end={8}
           currencySymbol={currencySymbol}
           classLine={'lineRight'}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
         <CategoriesLine
-          dataCategories={categories}
+          dataCategories={categoriesFiltered}
           start={8}
           end={12}
           currencySymbol={currencySymbol}
           classLine={'lineBottom'}
+          callbackOpenModal={drawerHandler}
+          callbackTransferCategory={transferCategory}
         />
-        <ChartComponent dataChart={dataForChart} income={income} currencySymbol={currencySymbol} />
+        <ChartComponent
+          type={categoryType}
+          dataChart={transactions.length ? dataForChart : dataForChartEmpty}
+          income={income}
+          expenses={expenses}
+          currencySymbol={currencySymbol}
+          callback={changeCategoryType}
+        />
       </div>
+      <TemporaryDrawer
+        state={state}
+        anchor='bottom'
+        type={typeDrawer}
+        drawerHandler={drawerHandler}
+      >
+        <CategoryForm
+          category={categoryClicked}
+          type={categoryType}
+          drawerHandler={drawerHandler}
+        />
+      </TemporaryDrawer>
     </div>
   );
 };

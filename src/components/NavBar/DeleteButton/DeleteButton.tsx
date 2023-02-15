@@ -28,20 +28,11 @@ export const DeleteButton = () => {
         </ListItemIcon>
         <ListItemText primary={t('Delete data')} className={styles.title} />
       </ListItem>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
-      >
+      <Modal open={open} onClose={handleClose}>
         <div className={styles.paper}>
-          <h2 id='simple-modal-title' className={styles.modalTitle}>
-            {t('Delete data')}
-          </h2>
-          <p id='simple-modal-description' className={styles.modalContent}>
-            {t('Message content 1')}
-          </p>
-          <p id='simple-modal-description'>{t('Message content 2')}</p>
+          <h2 className={styles.modalTitle}>{t('Delete data')}</h2>
+          <p className={styles.modalContent}>{t('Message content 1')}</p>
+          <p className={styles.modalContent}>{t('Message content 2')}</p>
           <div className={styles.buttons}>
             <Button color='error'>{t('Delete All Data')}</Button>
             <Button color='primary'>{t('Delete All Operations')}</Button>

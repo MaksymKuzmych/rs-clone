@@ -1,5 +1,6 @@
 import { doc, setDoc } from 'firebase/firestore';
 import { IStore } from '../interfaces';
+import { storeTr } from '../mockData/transactions';
 import { db, FirebaseError } from './firebase-config';
 
 export const createUser = async (userId: string, userData: IStore) => {
@@ -12,6 +13,9 @@ export const createUser = async (userId: string, userData: IStore) => {
     });
     userData.data.categories.forEach(async (category) => {
       await setDoc(doc(db, 'users/' + userId + '/categories', category.id), category);
+    });
+    storeTr.data.transactions.forEach(async (transaction) => {
+      await setDoc(doc(db, 'users/' + userId + '/transactions', transaction.id), transaction);
     });
   } catch (error) {
     throw new FirebaseError(`Create User: ${error}`);

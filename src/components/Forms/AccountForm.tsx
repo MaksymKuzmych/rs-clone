@@ -3,19 +3,19 @@ import { useFormik } from 'formik';
 import { memo, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
-import { AuthContext } from '../../../Auth/Auth';
+import { AuthContext } from '../../Auth/Auth';
 
-import { CurrencySymbol } from '../../../enums';
-import { pushUserData } from '../../../firebase/push-user-data';
-import { updateUserData } from '../../../firebase/update-user-data';
-import { IAccount } from '../../../interfaces';
-import { Anchor } from '../../../types';
-import { Colors } from '../../UI/Colors/Colors';
-import { Icons } from '../../UI/Icons/Icons';
-import { BasicModal } from '../../UI/Modal/Modal';
-import { BasicTabs } from '../../UI/Tabs/Tabs';
+import { CurrencySymbol } from '../../enums';
+import { pushUserData } from '../../firebase/push-user-data';
+import { updateUserData } from '../../firebase/update-user-data';
+import { IAccount } from '../../interfaces';
+import { Anchor } from '../../types';
+import { Colors } from '../UI/Colors/Colors';
+import { Icons } from '../UI/Icons/Icons';
+import { BasicModal } from '../UI/Modal/Modal';
+import { BasicTabs } from '../UI/Tabs/Tabs';
 
-import styles from './AccountForm.module.scss';
+import styles from './Forms.module.scss';
 
 const theme = createTheme({
   palette: {
@@ -177,7 +177,7 @@ export const AccountForm = memo(({ account, currency, drawerHandler }: AccountFo
         </form>
         <BasicModal openModal={openModal} handleClose={handleClose}>
           <BasicTabs
-            firstChild={<Icons color='#fff' iconHandler={iconHandler} />}
+            firstChild={<Icons page={'accounts'} color='#fff' iconHandler={iconHandler} />}
             secondChild={<Colors colorHandler={colorHandler} />}
           />
         </BasicModal>

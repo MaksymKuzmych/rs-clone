@@ -11,6 +11,7 @@
   "Withdraw": "Withdraw",
   "Transfer": "Transfer",
   "Expenses": "Expenses",
+  "Income": "Income",
   "Gloceries": "Gloceries",
   "Restaurant": "Restaurant",
   "Leisure": "Leisure",
@@ -19,9 +20,13 @@
   "Gifts": "Gifts",
   "Family": "Family",
   "Shopping": "Shopping",
+  "Salary": "Salary",
   "New account": "New account",
+  "New category": "New category",
+  "Add transaction": "Add transaction",
   "Name": "Name",
   "Account": "Account",
+  "Category": "Category",
   "Description": "Description",
   "Required": "Required",
   "Log Out": "Log Out",
@@ -49,5 +54,8 @@
   "Message content 2": "If you want to delete only operations, select Delete All Operations",
   "Categories": "Categories",
   "Delete": "Delete",
-  "Delete account permanently": "Delete account permanently"
+  "Delete account permanently": "Delete account permanently",
+  "All transactions": "All transactions",
+  "associated with the category will be deleted":  "associated with the category will be deleted",
+  "The category cannot be restored" : "The category cannot be restored"
 }
