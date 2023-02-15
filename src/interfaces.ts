@@ -25,7 +25,6 @@ export interface ICategory {
   type: TransactionType;
   iconID: number;
   colorID: number;
-  description: string;
 }
 
 export interface ITransaction {

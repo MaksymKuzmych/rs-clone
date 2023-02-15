@@ -1,26 +1,27 @@
 import { createTheme, TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
-import { memo, useContext, useState } from 'react';
+import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { object, string } from 'yup';
 
-import { AuthContext } from '../../../Auth/Auth';
-import { pushUserData } from '../../../firebase/push-user-data';
-import { updateUserData } from '../../../firebase/update-user-data';
-import { BasicModal } from '../../UI/Modal/Modal';
-import { BasicTabs } from '../../UI/Tabs/Tabs';
-import { SettingsBtn } from '../../Accounts/Settings/SettingsBtn/SettingsBtn';
-import { Colors } from '../../UI/Colors/Colors';
-import { Icons } from '../../UI/Icons/Icons';
-import { DeleteCategory } from '../DeleteCategory/DeleteCategory';
+import { AuthContext } from '../../Auth/Auth';
+import { pushUserData } from '../../firebase/push-user-data';
+import { updateUserData } from '../../firebase/update-user-data';
+import { BasicModal } from '../UI/Modal/Modal';
+import { BasicTabs } from '../UI/Tabs/Tabs';
+import { SettingsBtn } from '../Accounts/Settings/SettingsBtn/SettingsBtn';
+import { Colors } from '../UI/Colors/Colors';
+import { Icons } from '../UI/Icons/Icons';
+import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCategory';
 
-import { colors } from '../../../data/colors';
-import { TransactionType } from '../../../enums';
-import { ICategory } from '../../../interfaces';
-import { Anchor } from '../../../types';
-import { iconsCategory } from '../../../data/icons';
+import { colors } from '../../data/colors';
+import { TransactionType } from '../../enums';
+import { ICategory } from '../../interfaces';
+import { Anchor } from '../../types';
+import { iconsCategory } from '../../data/icons';
+import { defaultNames } from '../../data/defaultNames';
 
-import styles from '../../Accounts/AccountForm/AccountForm.module.scss';
+import styles from './Forms.module.scss';
 
 const theme = createTheme({
   palette: {
@@ -79,7 +80,9 @@ export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFor
 
   const formik = useFormik({
     initialValues: {
-      name: `${category ? t(category.name) : ''}`,
+      name: `${
+        category ? (defaultNames.includes(category.name) ? t(category.name) : category.name) : ''
+      }`,
     },
     validationSchema: object().shape({
       name: string().required(`${t('Required')}`),
@@ -114,15 +117,16 @@ export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFor
     },
   });
 
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
 
-  const iconHandler = (icon: string) => setIcon(icon);
-  const colorHandler = (color: string) => setColor(color);
+  const iconHandler = useCallback((icon: string) => setIcon(icon), []);
+  const colorHandler = useCallback((color: string) => setColor(color), []);
 
   const [openModalDelete, setOpenModalDelete] = useState(false);
-  const handleOpenModalDelete = () => setOpenModalDelete(true);
-  const handleCloseModalDelete = () => setOpenModalDelete(false);
+
+  const handleOpenModalDelete = useCallback(() => setOpenModalDelete(true), []);
+  const handleCloseModalDelete = useCallback(() => setOpenModalDelete(false), []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,7 +134,13 @@ export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFor
         <form onSubmit={formik.handleSubmit}>
           <div className={styles.upper} style={{ backgroundColor: `${color}` }}>
             <div className={styles.header}>
-              <h2 className={styles.headerTitle}>{t(category ? category.name : 'New category')}</h2>
+              <h2 className={styles.headerTitle}>
+                {category
+                  ? defaultNames.includes(category.name)
+                    ? t(category.name)
+                    : category.name
+                  : t('New category')}
+              </h2>
               <button type='submit'>
                 <span className='material-icons' style={{ color: 'white' }}>
                   check

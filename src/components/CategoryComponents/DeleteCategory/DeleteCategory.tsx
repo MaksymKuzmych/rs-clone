@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
 import { deleteUserData } from '../../../firebase/delete-user-data';
+import { ITransaction } from '../../../interfaces';
 import { Anchor } from '../../../types';
 
 import styles from './DeleteCategory.module.scss';
@@ -18,10 +19,20 @@ export const DeleteCategory = ({
   drawerHandler,
 }: DeleteCategoryProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
+  const transactions = userData.data.transactions as ITransaction[];
+
+  const transactionsWithThisCategory = transactions.filter(
+    (transaction) => transaction.category === categoryId,
+  );
 
   async function deleteCategory() {
     if (categoryId) {
       await deleteUserData(userData.userId, { categories: categoryId });
+    }
+    if (transactionsWithThisCategory.length) {
+      transactionsWithThisCategory.forEach(async (item) => {
+        await deleteUserData(userData.userId, { transactions: item.id });
+      });
     }
     await changeUserData();
     handleCloseModalDelete();
@@ -31,7 +42,8 @@ export const DeleteCategory = ({
   return (
     <div className={styles.wrapper}>
       <p className={styles.content}>
-        {t('All transactions associated with the category will be deleted')}.
+        {t('All transactions')} ({transactionsWithThisCategory.length})
+        {t('associated with the category will be deleted')}.
       </p>
       <p className={styles.content}>{t('The category cannot be restored')}.</p>
       <div className={styles.buttons}>

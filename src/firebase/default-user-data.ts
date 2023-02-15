@@ -40,7 +40,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 1,
         colorID: 1,
-        description: '',
       },
       {
         id: 'defaultCategory2',
@@ -49,7 +48,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 2,
         colorID: 2,
-        description: '',
       },
       {
         id: 'defaultCategory3',
@@ -58,7 +56,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 3,
         colorID: 3,
-        description: '',
       },
       {
         id: 'defaultCategory4',
@@ -67,7 +64,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 4,
         colorID: 4,
-        description: '',
       },
       {
         id: 'defaultCategory5',
@@ -76,7 +72,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 5,
         colorID: 5,
-        description: '',
       },
       {
         id: 'defaultCategory6',
@@ -85,7 +80,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 6,
         colorID: 6,
-        description: '',
       },
       {
         id: 'defaultCategory7',
@@ -94,7 +88,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 7,
         colorID: 7,
-        description: '',
       },
       {
         id: 'defaultCategory8',
@@ -103,7 +96,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Expenses,
         iconID: 8,
         colorID: 8,
-        description: '',
       },
       {
         id: 'defaultCategory9',
@@ -112,7 +104,6 @@ export const defaultUserData: IStore = {
         type: TransactionType.Income,
         iconID: 9,
         colorID: 9,
-        description: '',
       },
     ],
     transactions: [],

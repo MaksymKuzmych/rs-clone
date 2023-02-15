@@ -55,6 +55,7 @@
   "Categories": "Категории",
   "Delete": "Удалить",
   "Delete account permanently": "Удалить аккаунт безвозвратно",
-  "All transactions associated with the category will be deleted": "Все операции, связанные с этой категорией будут удалены",
-  "The category cannot be restored" : "Категорию нельзя будет восстановить"
+  "All transactions": "Все операции",
+  "associated with the category will be deleted": ", связанные с этой категорией будут удалены",
+  "The category cannot be restored": "Категорию нельзя будет восстановить"
 }

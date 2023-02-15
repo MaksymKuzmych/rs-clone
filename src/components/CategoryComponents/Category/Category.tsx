@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ICategory } from '../../../interfaces';
@@ -7,6 +7,7 @@ import { iconsCategory, iconsProject } from '../../../data/icons';
 import { Anchor } from '../../../types';
 
 import styles from './Category.module.scss';
+import { defaultNames } from '../../../data/defaultNames';
 
 interface CategoryProps {
   dataCategory: ICategory;
@@ -37,15 +38,17 @@ export const Category = memo(
       ? iconsCategory.find((icon) => icon.id === iconID)?.name
       : iconsProject.find((icon) => icon.id === iconID)?.name;
 
-    function onclick() {
+    const onСlick = useCallback(() => {
       callbackOpenModal(buttonAdd ? 'new' : 'edit', 'bottom');
       callbackTransferCategory(buttonAdd ? null : dataCategory);
-    }
+    }, [buttonAdd, dataCategory]);
 
     return (
-      <div className={styles.wrapper} onClick={() => onclick()}>
+      <div className={styles.wrapper} onClick={onСlick}>
         <div className={sum === 0 ? `${styles.category} ${styles.categoryEmpty}` : styles.category}>
-          {!buttonAdd ? <h3 className={styles.title}>{t(`${name}`)}</h3> : null}
+          {!buttonAdd ? (
+            <h3 className={styles.title}>{defaultNames.includes(name) ? t(`${name}`) : name}</h3>
+          ) : null}
           <div
             className={!buttonAdd ? styles.img : styles.buttonAdd}
             style={{ backgroundColor: colorItem }}

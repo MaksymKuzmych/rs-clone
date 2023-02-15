@@ -7,7 +7,7 @@ import { Account } from '../../components/Accounts/Account/Account';
 import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
 import { IAccount } from '../../interfaces';
 import { Settings } from '../../components/Accounts/Settings/Settings';
-import { AccountForm } from '../../components/Accounts/AccountForm/AccountForm';
+import { AccountForm } from '../../components/Forms/AccountForm';
 import { useAccounts } from '../../hooks/accounts';
 import { useDrawer } from '../../hooks/drawer';
 import { Anchor } from '../../types';

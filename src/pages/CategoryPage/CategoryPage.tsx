@@ -12,7 +12,8 @@ import { Anchor } from '../../types';
 import { TransactionType, CurrencySymbol } from '../../enums';
 
 import styles from './CategoryPage.module.scss';
-import { CategoryForm } from '../../components/CategoryComponents/CategoryForm/CategoryForm';
+import { CategoryForm } from '../../components/Forms/CategoryForm';
+import { defaultNames } from '../../data/defaultNames';
 
 export const CategoryPage = () => {
   const { userData } = useContext(AuthContext);
@@ -21,9 +22,9 @@ export const CategoryPage = () => {
 
   const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
 
-  function changeCategoryType(type: TransactionType) {
+  const changeCategoryType = useCallback((type: TransactionType) => {
     setCategoryType(type);
-  }
+  }, []);
 
   const dataForChart: IChart = {
     labels: [],
@@ -50,12 +51,11 @@ export const CategoryPage = () => {
       type: TransactionType.Income,
       iconID: 1,
       colorID: 21,
-      description: '',
     });
   }
 
   categoriesFiltered.forEach((item) => {
-    const name = t(item.name);
+    const name = defaultNames.includes(item.name) ? t(item.name) : item.name;
     dataForChart.labels.push(name);
     const color = colors.find((color) => color.id === item.colorID)?.color;
     if (color) {
@@ -82,13 +82,16 @@ export const CategoryPage = () => {
 
   const [categoryClicked, setcategoryClicked] = useState<ICategory | null>(null);
 
-  function setNewCategory(category: ICategory | null) {
+  const setNewCategory = useCallback((category: ICategory | null) => {
     setcategoryClicked(category);
-  }
+  }, []);
 
-  function transferCategory(category: ICategory) {
-    category ? setNewCategory(category) : setNewCategory(null);
-  }
+  const transferCategory = useCallback(
+    (category: ICategory) => {
+      category ? setNewCategory(category) : setNewCategory(null);
+    },
+    [setNewCategory],
+  );
 
   const drawerHandler = useCallback(
     (type: string, anchor: Anchor) => {

@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react';
+import { memo, useContext, useMemo } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { Category } from '../Category/Category';
@@ -30,23 +30,27 @@ export const CategoriesLine = memo(
     const { userData } = useContext(AuthContext);
     const transactions = userData.data.transactions as ITransaction[];
 
-    return (
-      <div className={styles[`${classLine}`]}>
-        {dataCategories
+    const memoList = useMemo(
+      () =>
+        dataCategories
           .filter((item, index) => index >= start && index < end)
-          .map((category) => (
-            <Category
-              dataCategory={category}
-              key={category.id}
-              sum={Object.values(transactions)
-                .filter((item) => item.category === category.id)
-                .reduce((sum, current) => sum + current.amount, 0)}
-              currencySymbol={currencySymbol}
-              callbackOpenModal={callbackOpenModal}
-              callbackTransferCategory={callbackTransferCategory}
-            />
-          ))}
-      </div>
+          .map((category) => {
+            return (
+              <Category
+                dataCategory={category}
+                key={category.id}
+                sum={Object.values(transactions)
+                  .filter((item) => item.category === category.id)
+                  .reduce((sum, current) => sum + current.amount, 0)}
+                currencySymbol={currencySymbol}
+                callbackOpenModal={callbackOpenModal}
+                callbackTransferCategory={callbackTransferCategory}
+              />
+            );
+          }),
+      [dataCategories],
     );
+
+    return <div className={styles[`${classLine}`]}>{memoList}</div>;
   },
 );
