@@ -2,7 +2,7 @@ import { memo, useContext, useMemo } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { Category } from '../Category/Category';
-import { ICategory, ITransaction } from '../../../interfaces';
+import { ICategory } from '../../../interfaces';
 import { Anchor } from '../../../types';
 
 import styles from '../../../pages/CategoryPage/CategoryPage.module.scss';
@@ -28,7 +28,7 @@ export const CategoriesLine = memo(
     callbackTransferCategory,
   }: CategoriesLineProps) => {
     const { userData } = useContext(AuthContext);
-    const transactions = userData.data.transactions as ITransaction[];
+    const transactions = userData.data.transactions;
 
     const memoList = useMemo(
       () =>

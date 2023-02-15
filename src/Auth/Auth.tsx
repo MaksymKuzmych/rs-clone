@@ -9,15 +9,22 @@ import { defaultUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { signInAnon } from '../firebase/sign-in-anon';
+import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
-export const AuthContext = createContext({
+interface IAuthContext {
+  userData: IStore;
+  changeUserData: () => void;
+}
+
+export const AuthContext = createContext<IAuthContext>({
   userData: {
-    userId: 'default',
+    userId: '',
     settings: {
       lang: Lang.EN,
       currency: Currency.USD,
       selectedAccount: null,
+      selectedAccountInHeader: null,
       periodType: Period.Month,
       period: getPeriod(Period.Month, Date.now()),
     },

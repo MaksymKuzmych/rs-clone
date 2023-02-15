@@ -6,7 +6,7 @@ import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLi
 import { AuthContext } from '../../Auth/Auth';
 import { useDrawer } from '../../hooks/drawer';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
-import { ICategory, IChart, ITransaction } from '../../interfaces';
+import { ICategory, IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
 import { Anchor } from '../../types';
 import { TransactionType, CurrencySymbol } from '../../enums';
@@ -38,12 +38,27 @@ export const CategoryPage = () => {
   };
 
   const currencySymbol = CurrencySymbol[userData.settings.currency];
-  const categories = userData.data.categories as ICategory[];
-  const transactions = userData.data.transactions as ITransaction[];
+  const categories = userData.data.categories;
+  const transactions = userData.data.transactions;
 
-  const categoriesFiltered = categories.filter((category) => category.type === categoryType);
+  const categoriesThisType =
+    categories.length !== 0 ? categories.filter((category) => category.type === categoryType) : [];
 
-  if (categoriesFiltered.length < 12) {
+  const categoriesFiltered =
+    categories.length !== 0 && categoriesThisType.length !== 0
+      ? categories.filter((category) => category.type === categoryType)
+      : [
+          {
+            id: '0',
+            name: '',
+            date: Date.now(),
+            type: categoryType,
+            iconID: 1,
+            colorID: 21,
+          },
+        ];
+
+  if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
     categoriesFiltered.push({
       id: '0',
       name: '',
@@ -102,6 +117,17 @@ export const CategoryPage = () => {
     [isOpenDrawer, toggleDrawer],
   );
 
+  const dataForChartEmpty: IChart = {
+    labels: [''],
+    datasets: [
+      {
+        label: categoryType,
+        data: [100],
+        backgroundColor: ['#a8adb3'],
+      },
+    ],
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.categoryArea}>
@@ -143,7 +169,7 @@ export const CategoryPage = () => {
         />
         <ChartComponent
           type={categoryType}
-          dataChart={dataForChart}
+          dataChart={transactions.length ? dataForChart : dataForChartEmpty}
           income={income}
           expenses={expenses}
           currencySymbol={currencySymbol}

@@ -8,6 +8,7 @@ export const defaultUserData: IStore = {
     lang: Lang.EN,
     currency: Currency.USD,
     selectedAccount: null,
+    selectedAccountInHeader: null,
     periodType: Period.Month,
     period: getPeriod(Period.Month, Date.now()),
   },

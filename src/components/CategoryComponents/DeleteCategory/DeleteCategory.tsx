@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
 import { deleteUserData } from '../../../firebase/delete-user-data';
-import { ITransaction } from '../../../interfaces';
 import { Anchor } from '../../../types';
 
 import styles from './DeleteCategory.module.scss';
@@ -19,7 +18,7 @@ export const DeleteCategory = ({
   drawerHandler,
 }: DeleteCategoryProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
-  const transactions = userData.data.transactions as ITransaction[];
+  const transactions = userData.data.transactions;
 
   const transactionsWithThisCategory = transactions.filter(
     (transaction) => transaction.category === categoryId,

@@ -39,7 +39,7 @@ export const ChartComponent = memo(
               callback(TransactionType.Expenses);
             }}
           >
-            {dataChart.datasets[0].data.reduce((sum, current) => sum + current, 0)}
+            {type === TransactionType.Expenses ? expenses : income}
             {currencySymbol}
           </div>
           <div
