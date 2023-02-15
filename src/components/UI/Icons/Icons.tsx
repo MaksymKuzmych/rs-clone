@@ -15,7 +15,7 @@ export const Icons = ({ page, color, iconHandler }: IconsProps) => {
 
   useEffect(() => {
     setIcons(page === 'accounts' ? iconsCard : iconsCategory);
-  }, []);
+  }, [page]);
 
   return (
     <div className={styles.wrapper}>

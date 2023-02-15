@@ -48,7 +48,15 @@ export const CategoriesLine = memo(
               />
             );
           }),
-      [dataCategories],
+      [
+        dataCategories,
+        start,
+        end,
+        currencySymbol,
+        callbackOpenModal,
+        callbackTransferCategory,
+        transactions,
+      ],
     );
 
     return <div className={styles[`${classLine}`]}>{memoList}</div>;

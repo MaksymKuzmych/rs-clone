@@ -41,7 +41,7 @@ export const Category = memo(
     const onСlick = useCallback(() => {
       callbackOpenModal(buttonAdd ? 'new' : 'edit', 'bottom');
       callbackTransferCategory(buttonAdd ? null : dataCategory);
-    }, [buttonAdd, dataCategory]);
+    }, [buttonAdd, dataCategory, callbackOpenModal, callbackTransferCategory]);
 
     return (
       <div className={styles.wrapper} onClick={onСlick}>
