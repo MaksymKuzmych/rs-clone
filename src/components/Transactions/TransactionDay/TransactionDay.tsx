@@ -1,7 +1,10 @@
 import { memo, PropsWithChildren, useContext } from 'react';
+
 import { AuthContext } from '../../../Auth/Auth';
 import { Period } from '../../../enums';
 import { getPeriod } from '../../../utils/get-period';
+
+import styles from './TransactionDay.module.scss';
 
 interface IDay {
   date: number;
@@ -31,13 +34,26 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
     }
     return new Date(date).toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
   };
+  const today = dayOfWeek() === 'TODAY';
 
   return (
-    <div>
-      <h3>
-        {day} {dayOfWeek()} {month} {year} {setCurrency(sum, 'always')}
-      </h3>
+    <>
+      <div className={styles.day} style={{ color: `${today ? '#4da8ef' : '#a8adb3'}` }}>
+        <div className={styles.infoWrapper}>
+          <p className={styles.date}>{day}</p>
+          <div>
+            <p className={styles.dayOfWeek}>{dayOfWeek()}</p>
+            <p className={styles.month}>
+              {' '}
+              {month} {year}
+            </p>
+          </div>
+        </div>
+        <p className={styles.amount} style={{ color: `${sum > 0 ? 'green' : 'red'}` }}>
+          {setCurrency(sum, 'always')}
+        </p>
+      </div>
       {children}
-    </div>
+    </>
   );
 });

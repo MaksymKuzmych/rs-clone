@@ -10,6 +10,7 @@
 .accountsWrapper {
   height: calc(100vh - 190px);
   overflow-y: scroll;
+  padding-right: 15px;
 
   &::-webkit-scrollbar-track {
     padding: 2px 0;

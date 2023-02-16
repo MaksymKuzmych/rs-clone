@@ -41,13 +41,15 @@ export const TransactionPage = () => {
 
   return (
     <div className={styles.transactionPage}>
-      {transactionsDays.map((day) => (
-        <TransactionDay key={day.date} date={day.date} sum={day.sum}>
-          {day.transactions.map((transaction) => (
-            <Transaction transaction={transaction} key={transaction.id} />
-          ))}
-        </TransactionDay>
-      ))}
+      <div className={styles.transactionWrapper}>
+        {transactionsDays.map((day) => (
+          <TransactionDay key={day.date} date={day.date} sum={day.sum}>
+            {day.transactions.map((transaction) => (
+              <Transaction transaction={transaction} key={transaction.id} />
+            ))}
+          </TransactionDay>
+        ))}
+      </div>
     </div>
   );
 };

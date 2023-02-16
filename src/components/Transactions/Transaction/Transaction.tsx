@@ -34,17 +34,17 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
           <span className='material-icons'>{categoryIcon}</span>
         </div>
         <div>
-          <p className={styles.name}>{categoryName}</p>
+          <p className={styles.categoryName}>{categoryName}</p>
           <div className={styles.info}>
             <span className={'material-icons ' + styles.accountIcon}>{accountIcon}</span>
-            <span>{accountName}</span>
+            <span className={styles.accountName}>{accountName}</span>
           </div>
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <h3 style={{ color: `${sign ? 'green' : 'red'}` }}>
-        {setCurrency(sign ? amount : amount * -1)}
-      </h3>
+      <p className={styles.amount} style={{ color: `${sign ? 'green' : 'red'}` }}>
+        {setCurrency(sign ? amount : amount * -1, 'always')}
+      </p>
     </div>
   );
 });

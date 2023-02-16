@@ -58,15 +58,6 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     }
   }, [enqueueSnackbar, userData]);
 
-  const setCurrency: ISetCurrency = (amount, signDisplay = 'always') =>
-    new Intl.NumberFormat('uk-UA', {
-      style: 'currency',
-      currency: userData.settings.currency,
-      currencyDisplay: 'narrowSymbol',
-      minimumFractionDigits: 0,
-      signDisplay,
-    }).format(amount);
-
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       try {
