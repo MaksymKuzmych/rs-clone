@@ -13,17 +13,17 @@ import { theme } from '../../styles/theme';
 export const App = () => {
   return (
     <DrawerProvider>
-      <Header />
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
+      <AuthProvider>
+        <Header />
+        <ThemeProvider theme={theme}>
           <Routes>
             <Route path='/' element={<CategoryPage />} />
             <Route path='/accounts' element={<AccountPage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
-        </AuthProvider>
-        <Footer />
-      </ThemeProvider>
+        </ThemeProvider>
+      </AuthProvider>
+      <Footer />
     </DrawerProvider>
   );
 };

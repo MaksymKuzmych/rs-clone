@@ -76,8 +76,10 @@ export const AccountPage = () => {
   return (
     <div className={styles.accountPage}>
       <AccountHeader amount={amount} />
-      {accounts}
-      <AddAccount drawerHandler={drawerHandler} />
+      <div className={styles.accountsWrapper}>
+        {accounts}
+        <AddAccount drawerHandler={drawerHandler} />
+      </div>
       <TemporaryDrawer
         state={state}
         anchor='bottom'

@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack';
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
 
+import { Header } from '../components/Header/Header';
 import { Currency } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
 import { emptyUserData } from '../firebase/default-user-data';
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
         style: 'currency',
         currency: userData.settings.currency,
         currencyDisplay: 'narrowSymbol',
+        minimumFractionDigits: 0,
       }).format(amount),
     [userData.settings.currency],
   );
@@ -77,9 +79,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   if (pending) {
     return (
-      <div style={{ flexGrow: 1 }}>
-        <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
-      </div>
+      <>
+        <Header />
+        <div style={{ flexGrow: 1 }}>
+          <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
+        </div>
+      </>
     );
   }
 
