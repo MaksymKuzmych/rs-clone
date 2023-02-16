@@ -1,55 +1,58 @@
 import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
-import { Currency, Lang, Period } from '../enums';
+
+import { Header } from '../components/Header/Header';
 import { createAnonUser } from '../firebase/create-anon-user';
-import { defaultUserData } from '../firebase/default-user-data';
+import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
-import { getPeriod } from '../utils/get-period';
+
+interface ISetCurrency {
+  (amount: number, signDisplay?: 'always' | 'auto' | 'never'): string;
+}
 
 interface IAuthContext {
   userData: IStore;
   changeUserData: () => void;
+  setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  userData: {
-    userId: '',
-    settings: {
-      lang: Lang.EN,
-      currency: Currency.USD,
-      selectedAccount: null,
-      selectedAccountInHeader: null,
-      periodType: Period.Month,
-      period: getPeriod(Period.Month, Date.now()),
-    },
-    data: {
-      accounts: [],
-      categories: [],
-      transactions: [],
-    },
-  },
+  userData: emptyUserData,
   changeUserData: () => {},
+  setCurrency: () => '',
 });
 
 export const AuthProvider = ({ children }: BrowserRouterProps) => {
-  const [userData, setUserData] = useState(JSON.parse(JSON.stringify(defaultUserData)));
+  const [userData, setUserData] = useState(emptyUserData);
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const changeUserData = async () => {
+  const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
+    new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: userData.settings.currency,
+      currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 0,
+      signDisplay,
+    }).format(amount);
+
+  const changeUserData = useCallback(async () => {
     try {
+      setPending(true);
       setUserData(await pullUserData(userData, userData.userId));
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
+    } finally {
+      setPending(false);
     }
-  };
+  }, [enqueueSnackbar, userData]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -74,13 +77,18 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   if (pending) {
     return (
-      <div style={{ flexGrow: 1 }}>
-        <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
-      </div>
+      <>
+        <Header />
+        <div style={{ flexGrow: 1 }}>
+          <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
+        </div>
+      </>
     );
   }
 
   return (
-    <AuthContext.Provider value={{ userData, changeUserData }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ userData, changeUserData, setCurrency }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

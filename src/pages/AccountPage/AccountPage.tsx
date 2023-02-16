@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react';
-import { CircularProgress } from '@mui/material';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
@@ -8,81 +7,79 @@ import { AddAccount } from '../../components/Accounts/AddAccount/AddAccount';
 import { IAccount } from '../../interfaces';
 import { Settings } from '../../components/Accounts/Settings/Settings';
 import { AccountForm } from '../../components/Forms/AccountForm';
-import { useAccounts } from '../../hooks/accounts';
-import { useDrawer } from '../../hooks/drawer';
-import { Anchor } from '../../types';
+import { AuthContext } from '../../Auth/Auth';
+import { DrawerContext } from '../../context/Drawer';
+import { Transfer } from '../../components/Accounts/Transfer/Transfer';
 
 import styles from './AccountPage.module.scss';
 
 export const AccountPage = () => {
-  const { accounts, amount, currency, loading } = useAccounts();
-  const { state, toggleDrawer } = useDrawer();
-  const [typeDrawer, setTypeDrawer] = useState('');
-  const [currentAccount, setCurrentAccount] = useState(accounts[0]);
-  const [isOpenDrawer, setIsOpenDrawer] = useState(true);
+  const { userData } = useContext(AuthContext);
+  const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
-  const drawerContent = () => {
+  const [amount, setAmount] = useState(0);
+  const [currentAccount, setCurrentAccount] = useState({
+    id: '',
+    date: Date.now(),
+    name: '',
+    icon: '',
+    color: '',
+    balance: 0,
+    description: '',
+  });
+
+  useEffect(() => {
+    if (userData.data.accounts) {
+      const allCardsAmount = userData.data.accounts.reduce(
+        (acc, account) => acc + account.balance,
+        0,
+      );
+      setAmount(allCardsAmount);
+    }
+  }, [userData.data.accounts]);
+
+  const drawerContent = useCallback(() => {
     switch (typeDrawer) {
       case 'info':
-        return (
-          <Settings
-            account={currentAccount}
-            currency={currency}
-            typeDrawerHandler={typeDrawerHandler}
-          />
-        );
+        return <Settings currentAccount={currentAccount} />;
       case 'edit':
-        return (
-          <AccountForm account={currentAccount} currency={currency} drawerHandler={drawerHandler} />
-        );
-      case 'transactions':
-        return <div>Transactions</div>;
-      case 'delete':
-        return <div>delete</div>;
-      case 'recharge':
-        return <div>Recharge</div>;
-      case 'withdraw':
-        return <div>Withdraw</div>;
+        return <AccountForm currentAccount={currentAccount} />;
       case 'transfer':
-        return <div>Transfer</div>;
+        return <Transfer currentAccount={currentAccount} />;
       case 'addAccount':
-        return <AccountForm currency={currency} drawerHandler={drawerHandler} />;
+        return <AccountForm />;
     }
-  };
-
-  const typeDrawerHandler = (type: string) => setTypeDrawer(type);
-
-  const drawerHandler = useCallback(
-    (type: string, anchor: Anchor) => {
-      setTypeDrawer(type);
-      setIsOpenDrawer(!isOpenDrawer);
-      toggleDrawer(anchor, isOpenDrawer);
-    },
-    [isOpenDrawer, toggleDrawer],
-  );
+  }, [currentAccount, typeDrawer]);
 
   const accountDrawerHandler = useCallback(
     (account: IAccount) => {
       setCurrentAccount(account);
-      drawerHandler('info', 'bottom');
+      drawerHandler('info', 'bottom', true);
     },
     [drawerHandler],
   );
 
+  const accounts = useMemo(
+    () =>
+      userData.data.accounts.map((account) => (
+        <Account
+          account={account}
+          key={account.id}
+          onClick={() => {
+            accountDrawerHandler(account);
+          }}
+        />
+      )),
+    [accountDrawerHandler, userData.data.accounts],
+  );
+
   return (
     <div className={styles.accountPage}>
-      {loading && <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />}
-      <AccountHeader currency={currency} amount={amount} />
-      {accounts.length !== 0 &&
-        accounts.map((account) => (
-          <Account
-            account={account}
-            currency={currency}
-            key={account.id}
-            accountDrawerHandler={accountDrawerHandler}
-          />
-        ))}
-      <AddAccount drawerHandler={drawerHandler} />
+      <AccountHeader amount={amount} />
+      <div className={styles.accountsWrapper}>
+        {accounts}
+        <AddAccount drawerHandler={drawerHandler} />
+      </div>
       <TemporaryDrawer
         state={state}
         anchor='bottom'

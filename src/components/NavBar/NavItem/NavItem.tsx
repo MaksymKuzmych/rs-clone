@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -18,22 +18,24 @@ interface NavItemProps {
   enumData: string[];
 }
 
-export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
+export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
   const { t } = useTranslation();
+
   const [param, setParam] = useState(enumData[0]);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const open = Boolean(anchorEl);
+
+  const handleClick = useCallback((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+
+  const handleClose = useCallback(() => setAnchorEl(null), []);
+
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setParam(event.target.value);
-  };
+  }, []);
+
   return (
     <div className={styles.navItem}>
       <ListItem
@@ -105,4 +107,4 @@ export const NavItem = ({ icon, name, enumData }: NavItemProps) => {
       </Menu>
     </div>
   );
-};
+});

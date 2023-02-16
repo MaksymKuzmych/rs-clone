@@ -1,96 +1,72 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import { CurrencySymbol } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { DeleteAccount } from '../DeleteAccount/DeleteAccount';
+import { AuthContext } from '../../../Auth/Auth';
+import { DrawerContext } from '../../../context/Drawer';
+import { SettingsHeader } from './SettingsHeader/SettingsHeader';
+import { updateUserSettings } from '../../../firebase/update-user-settings';
 
 import styles from './Settings.module.scss';
 
 interface SettingsProps {
-  account: IAccount;
-  currency: CurrencySymbol;
-  typeDrawerHandler: (type: string) => void;
+  currentAccount: IAccount;
 }
 
-export const Settings = memo(({ account, currency, typeDrawerHandler }: SettingsProps) => {
-  const { t } = useTranslation();
-  const { name, icon, color, description, balance } = account;
+export const Settings = memo(({ currentAccount }: SettingsProps) => {
+  const { userData, changeUserData } = useContext(AuthContext);
+  const { drawerHandler } = useContext(DrawerContext);
+
   const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
+
+  const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const redirectToTransactions = useCallback(async () => {
+    await updateUserSettings(userData.userId, { selectedAccount: currentAccount.id });
+    navigate(`/transactions`);
+    changeUserData();
+    drawerHandler('info', 'bottom', false);
+  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.userId]);
+
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
 
   return (
     <>
-      <header className={styles.header} style={{ backgroundColor: `${color}` }}>
-        <div className={styles.info}>
-          <span className='material-icons'>{icon}</span>
-          <div className={styles.text}>
-            <p className={styles.name}>{name}</p>
-            {description && <p className={styles.description}>{description}</p>}
-          </div>
-        </div>
-        <div className={styles.balanceWrapper}>
-          <p>{t('Account balance')}</p>
-          <p className={styles.balance}>
-            {balance} {currency}
-          </p>
-        </div>
-      </header>
+      <SettingsHeader currentAccount={currentAccount} />
       <div className={styles.btnsWrapper}>
         <SettingsBtn
           icon='edit'
           color='#fec107'
           title={t('Edit')}
           onClick={() => {
-            typeDrawerHandler('edit');
+            drawerHandler('edit', 'bottom', true);
           }}
         />
         <SettingsBtn
           icon='receipt'
           color='#029688'
           title={t('Transactions')}
-          onClick={() => {
-            typeDrawerHandler('transactions');
-          }}
-        />
-        <SettingsBtn
-          icon='delete'
-          color='#f34334'
-          title={t('Delete')}
-          onClick={() => {
-            handleOpen();
-          }}
-        />
-        <SettingsBtn
-          icon='arrow_downward'
-          color='#4cb050'
-          title={t('Recharge')}
-          onClick={() => {
-            typeDrawerHandler('recharge');
-          }}
-        />
-        <SettingsBtn
-          icon='arrow_upward'
-          color='#eda948'
-          title={t('Withdraw')}
-          onClick={() => {
-            typeDrawerHandler('withdraw');
-          }}
+          onClick={redirectToTransactions}
         />
         <SettingsBtn
           icon='arrow_forward'
           color='#7f7f7f'
           title={t('Transfer')}
           onClick={() => {
-            typeDrawerHandler('transfer');
+            drawerHandler('transfer', 'bottom', true);
           }}
         />
+        <SettingsBtn icon='delete' color='#f34334' title={t('Delete')} onClick={handleOpen} />
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <DeleteAccount />
+        <DeleteAccount currentAccount={currentAccount} handleClose={handleClose} />
       </BasicModal>
     </>
   );

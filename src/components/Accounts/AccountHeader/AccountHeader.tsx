@@ -1,24 +1,23 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CurrencySymbol } from '../../../enums';
+import { AuthContext } from '../../../Auth/Auth';
 
 import styles from './AccountHeader.module.scss';
 
 interface AccountHeaderProps {
-  currency: CurrencySymbol;
   amount: number;
 }
 
-export const AccountHeader = memo(({ currency, amount }: AccountHeaderProps) => {
+export const AccountHeader = memo(({ amount }: AccountHeaderProps) => {
   const { t } = useTranslation();
+
+  const { setCurrency } = useContext(AuthContext);
 
   return (
     <header className={styles.header}>
       <h2 className={styles.title}>{t('Accounts')}</h2>
-      <p className={styles.amount}>
-        {amount} {currency}
-      </p>
+      <p className={styles.amount}>{setCurrency(amount)}</p>
     </header>
   );
 });

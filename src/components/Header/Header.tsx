@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
@@ -13,13 +13,8 @@ import styles from './Header.module.scss';
 export function Header() {
   const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerOpen = useCallback(() => setOpen(true), []);
+  const handleDrawerClose = useCallback(() => setOpen(false), []);
 
   return (
     <div>

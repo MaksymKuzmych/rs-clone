@@ -1,23 +1,22 @@
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
+import { DrawerContext } from '../../../context/Drawer';
 import { deleteUserData } from '../../../firebase/delete-user-data';
-import { Anchor } from '../../../types';
 
 import styles from './DeleteCategory.module.scss';
 
 interface DeleteCategoryProps {
   handleCloseModalDelete(): void;
-  drawerHandler(type: string, anchor: Anchor): void;
   categoryId: string | undefined;
 }
 
-export const DeleteCategory = ({
-  categoryId,
-  handleCloseModalDelete,
-  drawerHandler,
-}: DeleteCategoryProps) => {
+export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCategoryProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
+  const { drawerHandler } = useContext(DrawerContext);
+
+  const { t } = useTranslation();
+
   const transactions = userData.data.transactions;
 
   const transactionsWithThisCategory = transactions.filter(
@@ -33,33 +32,23 @@ export const DeleteCategory = ({
         await deleteUserData(userData.userId, { transactions: item.id });
       });
     }
-    await changeUserData();
-    handleCloseModalDelete();
-    drawerHandler('deleteCategory', 'bottom');
+
+    changeUserData();
+    drawerHandler('deleteCategory', 'bottom', false);
   }
-  const { t } = useTranslation();
+
   return (
     <div className={styles.wrapper}>
       <p className={styles.content}>
-        {t('All transactions')} ({transactionsWithThisCategory.length})
+        {t('All transactions')} ( {transactionsWithThisCategory.length} )
         {t('associated with the category will be deleted')}.
       </p>
       <p className={styles.content}>{t('The category cannot be restored')}.</p>
       <div className={styles.buttons}>
-        <button
-          className={styles.cancelBtn}
-          onClick={() => {
-            handleCloseModalDelete();
-          }}
-        >
+        <button className={styles.cancelBtn} onClick={handleCloseModalDelete}>
           {t('Cancel')}
         </button>
-        <button
-          className={styles.deleteBtn}
-          onClick={() => {
-            deleteCategory();
-          }}
-        >
+        <button className={styles.deleteBtn} onClick={deleteCategory}>
           {t('Delete')}
         </button>
       </div>
