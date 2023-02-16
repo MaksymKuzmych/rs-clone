@@ -26,15 +26,13 @@ export const DeleteButton = () => {
       </ListItem>
       <Modal open={open} onClose={handleClose}>
         <div className={styles.paper}>
-          <h2 id='simple-modal-title' className={styles.modalTitle}>
-            {t('Delete data')}
-          </h2>
-          <p id='simple-modal-description' className={styles.modalContent}>
+          <h2 className={styles.modalTitle}>{t('Delete data')}</h2>
+          <p className={styles.modalContent}>
             {t(
               'If you want to delete all your data (accounts, categories, transactions), select Delete All Data.',
             )}
           </p>
-          <p id='simple-modal-description'>
+          <p className={styles.modalContent}>
             {t('If you want to delete only operations, select Delete All Operations')}
           </p>
           <div className={styles.buttons}>

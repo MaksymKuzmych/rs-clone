@@ -5,7 +5,6 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
 
 import { Header } from '../components/Header/Header';
-import { Currency } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
 import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
@@ -13,20 +12,20 @@ import { pullUserData } from '../firebase/pull-user-data';
 import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
 
+interface ISetCurrency {
+  (amount: number, signDisplay?: 'always' | 'auto'): string;
+}
+
 interface IAuthContext {
   userData: IStore;
   changeUserData: () => void;
-  setCurrency: (amount: number) => string;
+  setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   userData: emptyUserData,
   changeUserData: () => {},
-  setCurrency: (amount: number) =>
-    new Intl.NumberFormat('ru-RU', {
-      style: 'currency',
-      currency: Currency.USD,
-    }).format(amount),
+  setCurrency: () => '',
 });
 
 export const AuthProvider = ({ children }: BrowserRouterProps) => {
@@ -35,16 +34,14 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const setCurrency = useCallback(
-    (amount: number) =>
-      new Intl.NumberFormat('ru-RU', {
-        style: 'currency',
-        currency: userData.settings.currency,
-        currencyDisplay: 'narrowSymbol',
-        minimumFractionDigits: 0,
-      }).format(amount),
-    [userData.settings.currency],
-  );
+  const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
+    new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: userData.settings.currency,
+      currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 0,
+      signDisplay,
+    }).format(amount);
 
   const changeUserData = useCallback(async () => {
     try {

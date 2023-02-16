@@ -157,7 +157,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
                 color='#f34334'
                 title={t('Cancel')}
                 onClick={() => {
-                  drawerHandler('cancel', 'bottom', true);
+                  drawerHandler('cancel', 'bottom', false);
                 }}
               />
             )}
