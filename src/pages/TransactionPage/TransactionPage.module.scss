@@ -1,0 +1,8 @@
+@import '../../styles/variables.scss';
+
+.transactionPage {
+  padding: 20px;
+  background-color: $dark-gray;
+  color: white;
+  flex-grow: 1;
+}

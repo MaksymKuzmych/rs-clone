@@ -12,9 +12,14 @@ import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
+interface ISetCurrency {
+  (amount: number, signDisplay?: 'always' | 'auto'): string;
+}
+
 interface IAuthContext {
   userData: IStore;
   changeUserData: () => void;
+  setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -35,6 +40,7 @@ export const AuthContext = createContext<IAuthContext>({
     },
   },
   changeUserData: () => {},
+  setCurrency: () => '',
 });
 
 export const AuthProvider = ({ children }: BrowserRouterProps) => {
@@ -50,6 +56,15 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     }
   };
+
+  const setCurrency: ISetCurrency = (amount, signDisplay = 'always') =>
+    new Intl.NumberFormat('uk-UA', {
+      style: 'currency',
+      currency: userData.settings.currency,
+      currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 0,
+      signDisplay,
+    }).format(amount);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -81,6 +96,8 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userData, changeUserData }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ userData, changeUserData, setCurrency }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
