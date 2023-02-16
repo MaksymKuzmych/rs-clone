@@ -47,9 +47,10 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     try {
       setPending(true);
       setUserData(await pullUserData(userData, userData.userId));
-      setPending(false);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
+    } finally {
+      setPending(false);
     }
   }, [enqueueSnackbar, userData]);
 

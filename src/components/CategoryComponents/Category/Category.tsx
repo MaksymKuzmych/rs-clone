@@ -26,11 +26,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
 
   const colorItem = colors.find((color) => color.id === colorID)?.color;
 
-  let buttonAdd = false;
-
-  if (id === '0') {
-    buttonAdd = true;
-  }
+  const buttonAdd = id === '0';
 
   const iconItem = !buttonAdd
     ? iconsCategory.find((icon) => icon.id === iconID)?.name
