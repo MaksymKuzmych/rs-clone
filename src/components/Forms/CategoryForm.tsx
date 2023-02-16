@@ -58,7 +58,10 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
       }`,
     },
     validationSchema: object().shape({
-      name: string().required(`${t('Required')}`),
+      name: string()
+        .min(2, `${t('Name must be at least 2 characters')}`)
+        .max(8, `${t('Name must be at most 8 characters')}`)
+        .required(`${t('Required')}`),
     }),
     onSubmit: async (values) => {
       const newColorId = colors.find((item) => item.color === color)?.id;
