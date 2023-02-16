@@ -16,10 +16,6 @@ interface ISetCurrency {
   (amount: number, signDisplay?: 'always' | 'auto' | 'never'): string;
 }
 
-interface ISetCurrency {
-  (amount: number, signDisplay?: 'always' | 'auto'): string;
-}
-
 interface IAuthContext {
   userData: IStore;
   changeUserData: () => void;
