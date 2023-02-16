@@ -102,6 +102,7 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
           </div>
           <div className={styles.inputWrapper}>
             <TextField
+              autoComplete='off'
               variant='standard'
               color='primary'
               name='balance'

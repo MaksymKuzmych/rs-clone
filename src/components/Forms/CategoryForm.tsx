@@ -97,7 +97,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} autoComplete='off'>
         <div className={styles.upperWrapper} style={{ backgroundColor: `${color}` }}>
           <div className={styles.header}>
             <h2 className={styles.title}>
@@ -169,7 +169,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
       </form>
       <BasicModal openModal={openModal} handleClose={handleClose}>
         <BasicTabs
-          firstChild={<Icons page={'categories'} color={'#fff'} iconHandler={iconHandler} />}
+          firstChild={<Icons page={'categories'} iconHandler={iconHandler} />}
           secondChild={<Colors colorHandler={colorHandler} />}
           firstTitle='Icons'
           secondTitle='Colors'

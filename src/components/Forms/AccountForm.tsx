@@ -83,7 +83,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} autoComplete='off'>
         <div className={styles.upperWrapper} style={{ backgroundColor: `${color}` }}>
           <div className={styles.header}>
             <h2 className={styles.title}>{t('New account')}</h2>
@@ -147,7 +147,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       </form>
       <BasicModal openModal={openModal} handleClose={handleClose}>
         <BasicTabs
-          firstChild={<Icons page={'accounts'} color='#fff' iconHandler={iconHandler} />}
+          firstChild={<Icons page={'accounts'} iconHandler={iconHandler} />}
           secondChild={<Colors colorHandler={colorHandler} />}
           firstTitle='Icons'
           secondTitle='Colors'

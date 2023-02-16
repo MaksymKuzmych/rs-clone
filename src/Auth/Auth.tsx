@@ -13,7 +13,7 @@ import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
 
 interface ISetCurrency {
-  (amount: number, signDisplay?: 'always' | 'auto'): string;
+  (amount: number, signDisplay?: 'always' | 'auto' | 'never'): string;
 }
 
 interface IAuthContext {

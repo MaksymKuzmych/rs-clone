@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -7,9 +9,20 @@
 
 .btn {
   margin: 0 auto;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 2px solid transparent;
+}
+
+.active {
+  margin: 0 auto;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid transparent;
 }
