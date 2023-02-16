@@ -1,4 +1,4 @@
-import { createTheme, TextField, ThemeProvider } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,66 +17,39 @@ import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCateg
 import { colors } from '../../data/colors';
 import { TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
-import { Anchor } from '../../types';
 import { iconsCategory } from '../../data/icons';
 import { defaultNames } from '../../data/defaultNames';
+import { DrawerContext } from '../../context/Drawer';
 
 import styles from './Forms.module.scss';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fff',
-    },
-  },
-  components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          color: '#fff',
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          fontSize: '24px',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          marginBottom: '10px',
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: '#a8adb3',
-          fontSize: '22px',
-        },
-      },
-    },
-  },
-});
-
 interface CategoryFormProps {
   type: TransactionType;
-  drawerHandler: (type: string, anchor: Anchor) => void;
   category: ICategory | null;
 }
 
-export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFormProps) => {
+export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
   const iconName = iconsCategory.find((item) => item.id === category?.iconID)?.name;
   const colorName = colors.find((item) => item.id === category?.colorID)?.color;
+
   const { userData, changeUserData } = useContext(AuthContext);
-  const [openModal, setOpenModal] = useState(false);
+  const { drawerHandler } = useContext(DrawerContext);
+
   const [icon, setIcon] = useState(category && iconName ? iconName : 'shopping_cart');
   const [color, setColor] = useState(category && colorName ? colorName : '#f95c57');
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const { t } = useTranslation();
+
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
+
+  const iconHandler = useCallback((icon: string) => setIcon(icon), []);
+  const colorHandler = useCallback((color: string) => setColor(color), []);
+
+  const handleOpenModalDelete = useCallback(() => setOpenModalDelete(true), []);
+  const handleCloseModalDelete = useCallback(() => setOpenModalDelete(false), []);
 
   const formik = useFormik({
     initialValues: {
@@ -85,11 +58,15 @@ export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFor
       }`,
     },
     validationSchema: object().shape({
-      name: string().required(`${t('Required')}`),
+      name: string()
+        .min(2, `${t('Name must be at least 2 characters')}`)
+        .max(8, `${t('Name must be at most 8 characters')}`)
+        .required(`${t('Required')}`),
     }),
     onSubmit: async (values) => {
       const newColorId = colors.find((item) => item.color === color)?.id;
       const newIconId = iconsCategory.find((item) => item.name === icon)?.id;
+
       if (newColorId && newIconId) {
         const categoryInfo = {
           id: category ? category.id : '',
@@ -111,110 +88,96 @@ export const CategoryForm = memo(({ type, drawerHandler, category }: CategoryFor
             categories: [categoryInfo],
           });
         }
-        await changeUserData();
-        drawerHandler('changeCategory', 'bottom');
+
+        changeUserData();
+        drawerHandler('changeCategory', 'bottom', false);
       }
     },
   });
 
-  const handleOpen = useCallback(() => setOpenModal(true), []);
-  const handleClose = useCallback(() => setOpenModal(false), []);
-
-  const iconHandler = useCallback((icon: string) => setIcon(icon), []);
-  const colorHandler = useCallback((color: string) => setColor(color), []);
-
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
-  const handleOpenModalDelete = useCallback(() => setOpenModalDelete(true), []);
-  const handleCloseModalDelete = useCallback(() => setOpenModalDelete(false), []);
-
   return (
-    <ThemeProvider theme={theme}>
-      <div className={styles.add}>
-        <form onSubmit={formik.handleSubmit}>
-          <div className={styles.upper} style={{ backgroundColor: `${color}` }}>
-            <div className={styles.header}>
-              <h2 className={styles.headerTitle}>
-                {category
-                  ? defaultNames.includes(category.name)
-                    ? t(category.name)
-                    : category.name
-                  : t('New category')}
-              </h2>
-              <button type='submit'>
-                <span className='material-icons' style={{ color: 'white' }}>
-                  check
-                </span>
-              </button>
-            </div>
-            <TextField
-              variant='standard'
-              color='primary'
-              sx={{ width: '70%' }}
-              label={t('Name')}
-              name='name'
-              type='text'
-              onChange={formik.handleChange}
-              helperText={formik.errors.name}
-              error={!!formik.errors.name}
-              value={formik.values.name}
-            />
-          </div>
-          <div className={styles.inner}>
-            <button className={styles.btn} onClick={() => handleOpen()} type='button'>
-              <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
-                <span className='material-icons' style={{ color: `${color}` }}>
-                  {icon}
-                </span>
-              </div>
+    <div className={styles.wrapper}>
+      <form onSubmit={formik.handleSubmit} autoComplete='off'>
+        <div className={styles.upperWrapper} style={{ backgroundColor: `${color}` }}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>
+              {category
+                ? defaultNames.includes(category.name)
+                  ? t(category.name)
+                  : category.name
+                : t('New category')}
+            </h2>
+            <button type='submit'>
+              <span className='material-icons' style={{ color: 'white' }}>
+                check
+              </span>
             </button>
-            <div className={styles.btnsWrapper}>
-              {category ? (
-                <div className={styles.categoriesBtnsWrapper}>
-                  <SettingsBtn
-                    icon='add'
-                    color='#fec107'
-                    title={t('Add transaction')}
-                    onClick={() => {
-                      alert('edit');
-                    }}
-                  />
-                  <SettingsBtn
-                    icon='delete'
-                    color='#f34334'
-                    title={t('Delete')}
-                    onClick={() => {
-                      handleOpenModalDelete();
-                    }}
-                  />
-                </div>
-              ) : (
+          </div>
+          <TextField
+            variant='standard'
+            color='primary'
+            sx={{ width: '70%' }}
+            label={t('Name')}
+            name='name'
+            type='text'
+            onChange={formik.handleChange}
+            helperText={formik.errors.name}
+            error={!!formik.errors.name}
+            value={formik.values.name}
+          />
+        </div>
+        <div className={styles.innerWrapper}>
+          <button className={styles.btn} onClick={() => handleOpen()} type='button'>
+            <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
+              <span className='material-icons' style={{ color: `${color}` }}>
+                {icon}
+              </span>
+            </div>
+          </button>
+          <div className={styles.btnsWrapper}>
+            {category ? (
+              <div className={styles.categoriesBtnsWrapper}>
                 <SettingsBtn
-                  icon='cancel'
-                  color='#f34334'
-                  title={t('Cancel')}
+                  icon='add'
+                  color='#fec107'
+                  title={t('Add transaction')}
                   onClick={() => {
-                    drawerHandler('cancel', 'bottom');
+                    alert('edit');
                   }}
                 />
-              )}
-            </div>
+                <SettingsBtn
+                  icon='delete'
+                  color='#f34334'
+                  title={t('Delete')}
+                  onClick={() => {
+                    handleOpenModalDelete();
+                  }}
+                />
+              </div>
+            ) : (
+              <SettingsBtn
+                icon='cancel'
+                color='#f34334'
+                title={t('Cancel')}
+                onClick={() => {
+                  drawerHandler('cancel', 'bottom', false);
+                }}
+              />
+            )}
           </div>
-        </form>
-        <BasicModal openModal={openModal} handleClose={handleClose}>
-          <BasicTabs
-            firstChild={<Icons page={'categories'} color={'#fff'} iconHandler={iconHandler} />}
-            secondChild={<Colors colorHandler={colorHandler} />}
-          />
-        </BasicModal>
-        <BasicModal openModal={openModalDelete} handleClose={handleCloseModalDelete}>
-          <DeleteCategory
-            categoryId={category?.id}
-            handleCloseModalDelete={handleCloseModalDelete}
-            drawerHandler={drawerHandler}
-          />
-        </BasicModal>
-      </div>
-    </ThemeProvider>
+        </div>
+      </form>
+      <BasicModal openModal={openModal} handleClose={handleClose}>
+        <BasicTabs
+          firstChild={<Icons page={'categories'} iconHandler={iconHandler} />}
+          secondChild={<Colors colorHandler={colorHandler} />}
+          firstTitle='Icons'
+          secondTitle='Colors'
+        />
+      </BasicModal>
+      <BasicModal openModal={openModalDelete} handleClose={handleCloseModalDelete}>
+        <DeleteCategory categoryId={category?.id} handleCloseModalDelete={handleCloseModalDelete} />
+      </BasicModal>
+    </div>
   );
 });

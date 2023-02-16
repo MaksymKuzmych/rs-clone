@@ -23,8 +23,8 @@
   font-size: 30px;
 }
 
-a.text:active, /* активная/посещенная ссылка */
-a.text:hover,  /* при наведении */
+a.text:active,
+a.text:hover,
 a.text {
   text-decoration: none;
   color: #666;
@@ -40,8 +40,9 @@ button {
   border: none;
   transition: all 0.2s;
   cursor: pointer;
+  outline: none;
 }
 
 button:active {
-  transform: scale(1.05);
+  transform: scale(0.95);
 }

@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  width: 50%;
+  text-align: center;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.name {
+  font-size: 23px;
+}
+
+.iconWrapper {
+  margin-top: -30px;
+  width: 45px;
+  height: 40px;
+  background-color: black;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
