@@ -34,9 +34,9 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
 
   return (
     <div>
-      <h1>
+      <h3>
         {day} {dayOfWeek()} {month} {year} {setCurrency(sum, 'always')}
-      </h1>
+      </h3>
       {children}
     </div>
   );

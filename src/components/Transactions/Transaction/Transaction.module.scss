@@ -1,0 +1,47 @@
+@import '../../../styles/variables.scss';
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 0.5px solid $gray;
+}
+
+.iconWrapper {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.infoWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.name {
+  font-size: 22px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.accountIcon {
+  font-size: 24px;
+}
+
+.description {
+  font-size: 14px;
+  color: $light-gray;
+}
+
+.amount {
+  font-size: 22px;
+  color: $green;
+}
