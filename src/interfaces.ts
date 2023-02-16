@@ -4,7 +4,6 @@ export interface ISettings {
   lang: Lang;
   currency: Currency;
   selectedAccount: null | string;
-  selectedAccountInHeader: null | string;
   periodType: Period;
   period: { start: number | null; end: number | null };
 }

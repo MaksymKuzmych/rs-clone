@@ -3,12 +3,13 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { NavBar } from '../NavBar/NavBar';
 
 import styles from './Header.module.scss';
+import FilterBlock from './Filter/FilterBlock';
+import { AuthContext, AuthProvider } from '../../Auth/Auth';
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -23,27 +24,30 @@ export function Header() {
 
   return (
     <div>
-      <AppBar position='static'>
+      <AppBar
+        position='static'
+        sx={{
+          backgroundColor: '#5c6ac2',
+        }}
+      >
         <Toolbar>
           <IconButton edge='start' color='inherit' aria-label='menu' onClick={handleDrawerOpen}>
             <span className='material-icons'>menu</span>
           </IconButton>
-          <Typography
-            variant='h6'
-            sx={{
-              flexGrow: 1,
-            }}
-          >
-            News
-          </Typography>
+          <div className={styles.filter}>
+            <AuthProvider>
+              <FilterBlock />
+            </AuthProvider>
+          </div>
           <Button
             sx={{
               color: 'white',
             }}
           >
-            <span className='material-icons'>edit</span>
+            <span className='material-icons'>search</span>
           </Button>
         </Toolbar>
+        <div className={styles.headerBottom}>Accounts</div>
       </AppBar>
       <Drawer
         className={styles.drawer}

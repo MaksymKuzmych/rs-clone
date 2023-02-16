@@ -24,7 +24,6 @@ export const AuthContext = createContext<IAuthContext>({
       lang: Lang.EN,
       currency: Currency.USD,
       selectedAccount: null,
-      selectedAccountInHeader: null,
       periodType: Period.Month,
       period: getPeriod(Period.Month, Date.now()),
     },

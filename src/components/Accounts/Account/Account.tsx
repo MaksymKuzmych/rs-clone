@@ -24,7 +24,7 @@ export const Account = memo(({ account, currency, accountDrawerHandler }: Accoun
           <h3 className={styles.name}>{name}</h3>
           <p className={styles.description}>{description}</p>
         </div>
-        <p className={styles.amount}>
+        <p className={styles.amount} style={balance ? { color: '#18ab81' } : { color: '#a8adb3' }}>
           {balance} {currency}
         </p>
       </div>

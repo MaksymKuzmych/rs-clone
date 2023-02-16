@@ -19,3 +19,15 @@
 .drawer {
   z-index: 2;
 }
+
+.filter {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerBottom {
+  padding: 0 24px 10px;
+  text-align: center;
+}

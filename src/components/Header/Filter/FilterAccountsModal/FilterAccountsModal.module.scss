@@ -1,0 +1,21 @@
+@import '../../../../styles/variables.scss';
+
+.modalWrapper {
+  color: white;
+}
+.modalTitle {
+  text-transform: uppercase;
+  color: $gray;
+  font-weight: 700;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 2px solid $gray;
+}
+
+.modalSubtitle {
+  text-transform: uppercase;
+  color: $gray;
+  font-weight: 700;
+  padding: 10px;
+}

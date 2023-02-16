@@ -57,5 +57,8 @@
   "Delete account permanently": "Delete account permanently",
   "All transactions": "All transactions",
   "associated with the category will be deleted":  "associated with the category will be deleted",
-  "The category cannot be restored" : "The category cannot be restored"
+  "The category cannot be restored" : "The category cannot be restored",
+  "Filter": "Filter",
+  "All accounts": "All accounts",
+  "Accounts filter": "Accounts filter"
 }
