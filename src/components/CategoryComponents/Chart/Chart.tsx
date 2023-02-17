@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Chart } from 'chart.js';
 
 import { IChart } from '../../../interfaces';
+import { TransactionType } from '../../../enums';
 
 import styles from './Chart.module.scss';
-import { TransactionType } from '../../../enums';
 
 interface ChartComponentProps {
   type: TransactionType;
@@ -21,6 +21,7 @@ interface ChartComponentProps {
 export const ChartComponent = memo(
   ({ type, dataChart, income, expenses, currencySymbol, callback }: ChartComponentProps) => {
     const { t } = useTranslation();
+
     Chart.defaults.plugins.legend.display = false;
 
     return (

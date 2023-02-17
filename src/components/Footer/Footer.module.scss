@@ -18,8 +18,30 @@
   color: $light-gray;
   transition: all 0.3s;
   font-size: 18px;
+  outline: none;
+
+  .text {
+    display: none;
+  }
 }
 
 .item:hover {
   transform: scale(1.05);
+}
+
+.item:active {
+  transform: scale(0.95);
+}
+
+.activeItem {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s;
+  font-size: 18px;
+  outline: none;
 }

@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { ReactNode, SyntheticEvent, useState } from 'react';
+import { memo, ReactNode, SyntheticEvent, useCallback, useState } from 'react';
 
 const theme = createTheme({
   components: {
@@ -65,31 +65,35 @@ function a11yProps(index: number) {
 interface BasicTabsProps {
   firstChild: ReactNode;
   secondChild: ReactNode;
+  firstTitle: string;
+  secondTitle: string;
 }
 
-export const BasicTabs = ({ firstChild, secondChild }: BasicTabsProps) => {
-  const [value, setValue] = useState(0);
+export const BasicTabs = memo(
+  ({ firstChild, secondChild, firstTitle, secondTitle }: BasicTabsProps) => {
+    const [value, setValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+    const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {
+      setValue(newValue);
+    }, []);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label='basic tabs example'>
-            <Tab label='Item One' {...a11yProps(0)} style={{ width: '50%' }} />
-            <Tab label='Item Two' {...a11yProps(1)} style={{ width: '50%' }} />
-          </Tabs>
+    return (
+      <ThemeProvider theme={theme}>
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange}>
+              <Tab label={firstTitle} {...a11yProps(0)} style={{ width: '50%' }} />
+              <Tab label={secondTitle} {...a11yProps(1)} style={{ width: '50%' }} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {firstChild}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {secondChild}
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          {firstChild}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {secondChild}
-        </TabPanel>
-      </Box>
-    </ThemeProvider>
-  );
-};
+      </ThemeProvider>
+    );
+  },
+);

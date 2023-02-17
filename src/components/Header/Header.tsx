@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,23 +15,8 @@ import { iconsCalendar } from '../../data/icons';
 export function Header() {
   const [open, setOpen] = useState(false);
 
-  const [location, setLocation] = useState(window.location.pathname);
-
-  // const changePage = (pageName: string) => {
-  //   setLocation(pageName);
-  // };
-
-  // useEffect(() => {
-  //   console.log('111');
-  // }, [location]);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerOpen = useCallback(() => setOpen(true), []);
+  const handleDrawerClose = useCallback(() => setOpen(false), []);
 
   return (
     <div>
@@ -50,17 +35,18 @@ export function Header() {
               <FilterBlock />
             </AuthProvider>
           </div>
-          {location === '/transactions' ? (
+        </Toolbar>
+        {/* {location === '/transactions' ? (
             <span className={`material-icons ${styles.iconButton}`}>search</span>
           ) : (
             <span className={`material-icons ${styles.iconButton}`}></span>
           )}
-        </Toolbar>
+        
         {location === '/accounts' ? (
           <div className={styles.headerBottom}>Accounts</div>
         ) : (
           <RangePeriod />
-        )}
+        )} */}
       </AppBar>
       <Drawer
         className={styles.drawer}
