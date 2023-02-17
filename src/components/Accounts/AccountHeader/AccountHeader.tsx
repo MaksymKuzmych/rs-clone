@@ -17,7 +17,12 @@ export const AccountHeader = memo(({ amount }: AccountHeaderProps) => {
   return (
     <header className={styles.header}>
       <h2 className={styles.title}>{t('Accounts')}</h2>
-      <p className={styles.amount}>{setCurrency(amount)}</p>
+      <p
+        className={styles.amount}
+        style={{ color: !amount ? '#a8adb3' : amount > 0 ? '#18ab81' : '#cd4863' }}
+      >
+        {setCurrency(amount)}
+      </p>
     </header>
   );
 });

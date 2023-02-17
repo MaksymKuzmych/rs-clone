@@ -29,7 +29,12 @@ export const Account = memo(({ account, onClick }: AccountProps) => {
           <h3 className={styles.name}>{defaultNames.includes(name) ? t(name) : name}</h3>
           <p className={styles.description}>{description}</p>
         </div>
-        <p className={styles.amount}>{setCurrency(balance)}</p>
+        <p
+          className={styles.amount}
+          style={{ color: !balance ? '#a8adb3' : balance > 0 ? '#18ab81' : '#cd4863' }}
+        >
+          {setCurrency(balance)}
+        </p>
       </div>
     </div>
   );
