@@ -21,6 +21,8 @@
   "Family": "Family",
   "Shopping": "Shopping",
   "Salary": "Salary",
+  "Card": "Card",
+  "Cash": "Cash",
   "New account": "New account",
   "New category": "New category",
   "Add transaction": "Add transaction",
@@ -69,5 +71,8 @@
   "No other accounts": "No other accounts",
   "Delete account permanently": "Delete account permanently",
   "associated with the category will be deleted": "associated with the category will be deleted",
-  "The category cannot be restored": "The category cannot be restored"
+  "The category cannot be restored": "The category cannot be restored",
+  "USD": "USD",
+  "UAH": "UAH",
+  "RUB": "RUB"
 }

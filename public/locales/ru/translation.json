@@ -21,6 +21,8 @@
   "Family": "Семья",
   "Shopping": "Покупки",
   "Salary": "Зарплата",
+  "Card": "Карта",
+  "Cash": "Наличные",
   "New account": "Новый счёт",
   "New category": "Новая категория",
   "Add transaction": "Добавить операцию",
@@ -69,5 +71,8 @@
   "No other accounts": "Других счетов нет",
   "Delete account permanently": "Удалить аккаунт безвозвратно",
   "associated with the category will be deleted": ", связанные с этой категорией будут удалены",
-  "The category cannot be restored": "Категорию нельзя будет восстановить"
+  "The category cannot be restored": "Категорию нельзя будет восстановить",
+  "USD": "USD",
+  "UAH": "UAH",
+  "RUB": "RUB"
 }

@@ -41,7 +41,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
     <div className={styles.wrapper} onClick={onСlick}>
       <div className={sum === 0 ? `${styles.category} ${styles.categoryEmpty}` : styles.category}>
         {!buttonAdd ? (
-          <h3 className={styles.title}>{defaultNames.includes(name) ? t(`${name}`) : name}</h3>
+          <h3 className={styles.title}>{defaultNames.includes(name) ? t(name) : name}</h3>
         ) : null}
         <div
           className={!buttonAdd ? styles.img : styles.buttonAdd}

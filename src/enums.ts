@@ -1,6 +1,6 @@
 export enum Lang {
-  EN = 'en',
-  RU = 'ru',
+  EN = 'EN',
+  RU = 'RU',
 }
 
 export enum Currency {
@@ -31,6 +31,6 @@ export enum TransactionType {
 }
 
 export enum Mode {
-  Light = 'light',
-  Dark = 'dark',
+  Light = 'Light',
+  Dark = 'Dark',
 }

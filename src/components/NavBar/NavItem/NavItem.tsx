@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,6 +10,10 @@ import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
+import { updateUserSettings } from '../../../firebase/update-user-settings';
+import { AuthContext } from '../../../Auth/Auth';
+import { Currency, Lang, Mode } from '../../../enums';
+
 import styles from './NavItem.module.scss';
 
 interface NavItemProps {
@@ -19,10 +23,26 @@ interface NavItemProps {
 }
 
 export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
-  const { t } = useTranslation();
+  const { userData, changeUserData } = useContext(AuthContext);
 
-  const [param, setParam] = useState(enumData[0]);
+  const [param, setParam] = useState('EN');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    switch (name) {
+      case 'Language':
+        setParam(userData.settings.lang);
+        break;
+      case 'Mode':
+        setParam(userData.settings.theme);
+        break;
+      case 'Currency':
+        setParam(userData.settings.currency);
+        break;
+    }
+  }, [name, userData.settings.currency, userData.settings.lang, userData.settings.theme]);
 
   const open = Boolean(anchorEl);
 
@@ -32,9 +52,30 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
 
   const handleClose = useCallback(() => setAnchorEl(null), []);
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setParam(event.target.value);
-  }, []);
+  const handleChange = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const target = event.target;
+
+      switch (target.name) {
+        case 'Language':
+          i18n.changeLanguage(event.target.value.toLowerCase());
+          await updateUserSettings(userData.userId, { lang: event.target.value as Lang });
+          break;
+        case 'Mode':
+          await updateUserSettings(userData.userId, { theme: event.target.value as Mode });
+          break;
+        case 'Currency':
+          await updateUserSettings(userData.userId, {
+            currency: event.target.value as Currency,
+          });
+          break;
+      }
+
+      changeUserData();
+      setParam(event.target.value);
+    },
+    [changeUserData, i18n, userData.userId],
+  );
 
   return (
     <div className={styles.navItem}>
@@ -48,7 +89,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
         </ListItemIcon>
         <div>
           <ListItemText primary={t(`${name}`)} />
-          <div className={styles.value}>{name === 'Mode' ? t(`${param}`) : param}</div>
+          <div className={styles.value}>{t(`${param}`)}</div>
         </div>
       </ListItem>
       <Menu
@@ -94,7 +135,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
                 <FormControlLabel
                   value={item}
                   control={<Radio color={'primary'} />}
-                  label={name === 'Mode' ? t(`${item}`) : item}
+                  label={t(`${item}`)}
                   key={item}
                   sx={{
                     padding: '10px',
