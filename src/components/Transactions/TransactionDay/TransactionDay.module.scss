@@ -1,11 +1,17 @@
 @import '../../../styles/variables.scss';
 
-.day {
+.day,
+.today {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 20px;
   cursor: pointer;
-  border-bottom: 0.5px solid $gray;
+  background-color: #262a33;
+  color: #a8adb3;
+}
+
+.today {
+  color: #4da8ef;
 }
 
 .infoWrapper {
@@ -28,6 +34,16 @@
   font-size: 16px;
 }
 
-.amount {
+.amountPositive,
+.amountNegative {
   font-size: 26px;
+  color: #18ab81;
+}
+
+.amountNegative {
+  color: #cd4863;
+}
+
+.dayContainer div:last-child {
+  border-bottom: none;
 }

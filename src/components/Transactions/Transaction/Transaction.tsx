@@ -30,7 +30,7 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
   return (
     <div className={styles.transaction}>
       <div className={styles.infoWrapper}>
-        <div className={styles.iconWrapper} style={{ backgroundColor: `${categoryColor}` }}>
+        <div className={styles.iconWrapper} style={{ backgroundColor: categoryColor }}>
           <span className='material-icons'>{categoryIcon}</span>
         </div>
         <div>
@@ -42,8 +42,8 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <p className={styles.amount} style={{ color: `${sign ? 'green' : 'red'}` }}>
-        {setCurrency(sign ? amount : amount * -1, 'always')}
+      <p className={sign ? styles.amountPositive : styles.amountNegative}>
+        {setCurrency(sign ? amount : -amount, 'always')}
       </p>
     </div>
   );

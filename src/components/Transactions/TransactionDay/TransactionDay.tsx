@@ -1,7 +1,8 @@
 import { memo, PropsWithChildren, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { Period } from '../../../enums';
+import { Lang, Period } from '../../../enums';
 import { getPeriod } from '../../../utils/get-period';
 
 import styles from './TransactionDay.module.scss';
@@ -12,33 +13,36 @@ interface IDay {
 }
 
 export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<IDay>) => {
+  const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
 
+  const { t } = useTranslation();
+  const { lang } = userData.settings;
+  const locale = lang === Lang.EN ? 'en-US' : 'ru-RU';
   const day = new Date(date).getDate();
+  const today = getPeriod(Period.Day, Date.now()).start;
   const year = new Date(date).getFullYear();
   const month = new Date(date)
-    .toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+    .toLocaleDateString(locale, { month: 'long', day: 'numeric' })
     .toUpperCase()
     .split(' ')
     .find((month) => month.length > 2);
 
   const dayOfWeek = () => {
     const MILISECONDS_IN_DAY = 86400000;
-    const today = getPeriod(Period.Day, Date.now()).start;
 
     if (date === today) {
-      return 'TODAY';
+      return t('TODAY');
     }
     if (date + MILISECONDS_IN_DAY === today) {
-      return 'YESTERDAY';
+      return t('YESTERDAY');
     }
-    return new Date(date).toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+    return new Date(date).toLocaleDateString(locale, { weekday: 'long' }).toUpperCase();
   };
-  const today = dayOfWeek() === 'TODAY';
 
   return (
-    <>
-      <div className={styles.day} style={{ color: `${today ? '#4da8ef' : '#a8adb3'}` }}>
+    <div className={styles.dayContainer}>
+      <div className={today ? styles.day : styles.day}>
         <div className={styles.infoWrapper}>
           <p className={styles.date}>{day}</p>
           <div>
@@ -49,11 +53,11 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
             </p>
           </div>
         </div>
-        <p className={styles.amount} style={{ color: `${sum > 0 ? 'green' : 'red'}` }}>
+        <p className={sum > 0 ? styles.amountPositive : styles.amountNegative}>
           {setCurrency(sum, 'always')}
         </p>
       </div>
       {children}
-    </>
+    </div>
   );
 });
