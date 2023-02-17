@@ -8,6 +8,7 @@ import { NotFound } from '../NotFound/NotFound';
 import { AuthProvider } from '../../Auth/Auth';
 import { DrawerProvider } from '../../context/Drawer';
 import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
+import { TransactionPage } from '../../pages/TransactionPage/TransactionPage';
 import { theme } from '../../styles/theme';
 
 export const App = () => {
@@ -19,6 +20,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<CategoryPage />} />
             <Route path='/accounts' element={<AccountPage />} />
+            <Route path='/transactions' element={<TransactionPage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </ThemeProvider>

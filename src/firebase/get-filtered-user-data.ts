@@ -13,7 +13,7 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered)
   try {
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
-    const order = orderBy('date');
+    const order = orderBy('date', 'desc');
     let queryRequest = query(dataRef, order);
     const queryArray: QueryFieldFilterConstraint[] = [];
     if (data.transactions?.periodStart && data.transactions?.periodEnd) {

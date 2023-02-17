@@ -1,0 +1,56 @@
+@import '../../../styles/variables.scss';
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 0.5px solid $gray;
+}
+
+.iconWrapper {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.infoWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.categoryName {
+  font-size: 22px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  & .accountIcon {
+    font-size: 20px;
+  }
+}
+
+.accountName {
+  font-size: 16px;
+}
+
+.description {
+  font-size: 14px;
+  color: $light-gray;
+}
+
+.amountPositive,
+.amountNegative {
+  font-size: 22px;
+  color: #18ab81;
+}
+
+.amountNegative {
+  color: #cd4863;
+}
