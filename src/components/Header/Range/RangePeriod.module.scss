@@ -1,0 +1,19 @@
+.rangeArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.rangeButton {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: center;
+  gap: 10px;
+}
+
+.arrow {
+  padding: 10px;
+}

@@ -1,0 +1,24 @@
+@import '../../../../styles/variables.scss';
+
+.rangeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  border-top: 1px solid white;
+  width: 100%;
+  height: 100%;
+}
+
+.active {
+  color: $lilac;
+}
+.rangeItem:first-child {
+  grid-column: 1 / 3;
+  border-top: none;
+}
+
+.rangeItem:nth-child(2n) {
+  border-right: 1px solid white;
+}

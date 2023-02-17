@@ -27,6 +27,13 @@ export interface ICategory {
   colorID: number;
 }
 
+export interface IPeriodItem {
+  name: string;
+  type: Period;
+  iconID: number;
+  description: string | null;
+}
+
 export interface ITransaction {
   id: string;
   date: number;

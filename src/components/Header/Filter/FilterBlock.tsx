@@ -13,18 +13,28 @@ export default function FilterBlock() {
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
-
-  console.log(userData.settings.selectedAccount);
-
+  const allAccountsAmount = userData.data.accounts.reduce(
+    (sum, current) => sum + current.balance,
+    0,
+  );
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.account} onClick={handleOpen}>
-        <div className={styles.accoutTitle}>
-          {userData.settings.selectedAccount
-            ? `${t('Filter')} - ${userData.settings.selectedAccount}`
-            : t('All accounts')}
+        <div className={styles.accountName}>
+          <div className={styles.accoutTitle}>
+            {userData.settings.selectedAccount
+              ? `${t('Filter')} - ${userData.settings.selectedAccount}`
+              : t('All accounts')}
+          </div>
+          <span className={`material-icons ${styles.arrow}`}>arrow_drop_down</span>
         </div>
-        <span className='material-icons'>arrow_drop_down</span>
+        <div className={styles.accountAmount}>
+          {userData.settings.selectedAccount
+            ? userData.data.accounts.find(
+                (account) => account.id === userData.settings.selectedAccount,
+              )?.balance
+            : allAccountsAmount}
+        </div>
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
         <FilterAccountsModal handleClose={handleClose} />
