@@ -1,0 +1,49 @@
+@import '../../../styles/variables.scss';
+
+.day,
+.today {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #262a33;
+  color: #a8adb3;
+}
+
+.today {
+  color: #4da8ef;
+}
+
+.infoWrapper {
+  display: flex;
+  gap: 5px;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  width: 55px;
+  font-size: 32px;
+}
+
+.dayOfWeek {
+  font-size: 15px;
+}
+
+.month {
+  font-size: 16px;
+}
+
+.amountPositive,
+.amountNegative {
+  font-size: 26px;
+  color: #18ab81;
+}
+
+.amountNegative {
+  color: #cd4863;
+}
+
+.dayContainer div:last-child {
+  border-bottom: none;
+}

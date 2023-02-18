@@ -74,5 +74,7 @@
   "The category cannot be restored": "Категорию нельзя будет восстановить",
   "USD": "USD",
   "UAH": "UAH",
-  "RUB": "RUB"
+  "RUB": "RUB",
+  "TODAY": "СЕГОДНЯ",
+  "YESTERDAY": "ВЧЕРА"
 }
