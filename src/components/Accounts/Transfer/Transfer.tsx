@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
-import { AmountColor, ThemeColor, CurrencySymbol } from '../../../enums';
+import { AmountColor, ThemeColor, CurrencySymbol, Theme } from '../../../enums';
 import { updateUserData } from '../../../firebase/update-user-data';
 import { IAccount } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
@@ -90,8 +90,9 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
       <div
         className={styles.accountsWrapper}
         style={{
-          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
-          color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
         }}
       >
         {accounts.length ? (
@@ -120,7 +121,7 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
             />
             <span
               style={{
-                color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               }}
             >
               {CurrencySymbol[userData.settings.currency]}

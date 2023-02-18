@@ -8,7 +8,7 @@ import { AuthContext } from '../../Auth/Auth';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { ICategory, IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
-import { TransactionType, CurrencySymbol, ThemeColor } from '../../enums';
+import { TransactionType, CurrencySymbol, ThemeColor, Theme } from '../../enums';
 import { CategoryForm } from '../../components/Forms/CategoryForm';
 import { defaultNames } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
@@ -124,8 +124,9 @@ export const CategoryPage = () => {
       <div
         className={styles.wrapper}
         style={{
-          color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
         }}
       >
         <div className={styles.categoryArea}>

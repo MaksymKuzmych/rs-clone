@@ -2,7 +2,7 @@ import { memo, useEffect, useMemo, useState, useContext } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { iconsCard, iconsCategory } from '../../../data/icons';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './Icons.module.scss';
 
@@ -35,7 +35,7 @@ export const Icons = memo(({ page, iconHandler }: IconsProps) => {
             className='material-icons'
             style={{
               color:
-                active === el.id && userData.settings.theme === 'Light'
+                active === el.id && userData.settings.theme === Theme.Light
                   ? ThemeColor.Dark
                   : active === el.id && userData.settings.theme === 'Dark'
                   ? ThemeColor.Light

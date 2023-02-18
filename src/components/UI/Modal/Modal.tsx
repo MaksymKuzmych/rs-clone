@@ -3,7 +3,7 @@ import Modal from '@mui/material/Modal';
 import { memo, PropsWithChildren, useContext } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 interface BasicModalProps {
   openModal: boolean;
@@ -30,7 +30,7 @@ export const BasicModal = memo(
               left: '50%',
               transform: 'translate(-50%, -50%)',
               backgroundColor:
-                userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
             }}
           >
             {children}

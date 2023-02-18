@@ -1,7 +1,7 @@
 import { memo, useState, useContext, useCallback } from 'react';
 
 import { AuthContext } from '../../../../Auth/Auth';
-import { ThemeColor } from '../../../../enums';
+import { Theme, ThemeColor } from '../../../../enums';
 
 import styles from './SettingsBtn.module.scss';
 
@@ -30,7 +30,7 @@ export const SettingsBtn = memo(({ icon, color, title, onClick }: SettingsBtnPro
       type='button'
       style={{
         color:
-          hover && userData.settings.theme === 'Light'
+          hover && userData.settings.theme === Theme.Light
             ? ThemeColor.Dark
             : hover && userData.settings.theme === 'Dark'
             ? ThemeColor.Light

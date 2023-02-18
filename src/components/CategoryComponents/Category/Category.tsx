@@ -9,7 +9,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
 
 import styles from './Category.module.scss';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 interface CategoryProps {
   dataCategory: ICategory;
@@ -45,7 +45,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
           <h3
             className={styles.title}
             style={{
-              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
             }}
           >
             {defaultNames.includes(name) ? t(name) : name}

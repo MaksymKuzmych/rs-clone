@@ -25,9 +25,9 @@ export const NavBar = () => {
       MuiPaper: {
         styleOverrides: {
           root: {
-            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
             backgroundColor:
-              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
             borderRadius: '5px',
           },
         },
@@ -36,7 +36,7 @@ export const NavBar = () => {
         styleOverrides: {
           root: {
             color:
-              userData.settings.theme === 'Light'
+              userData.settings.theme === Theme.Light
                 ? `${ThemeColor.Dark} !important`
                 : `${ThemeColor.Light} !important`,
           },
@@ -50,8 +50,9 @@ export const NavBar = () => {
       <nav
         className={styles.wrapper}
         style={{
-          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
-          color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
         }}
       >
         <div className={styles.navHeader}>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../Auth/Auth';
-import { ThemeColor } from '../../enums';
+import { Theme, ThemeColor } from '../../enums';
 
 import styles from './Footer.module.scss';
 
@@ -16,7 +16,8 @@ export const Footer = () => {
     <nav
       className={styles.bar}
       style={{
-        backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+        backgroundColor:
+          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
       }}
     >
       <NavLink
@@ -25,7 +26,7 @@ export const Footer = () => {
         }}
         style={({ isActive }) => ({
           color:
-            isActive && userData.settings.theme === 'Light'
+            isActive && userData.settings.theme === Theme.Light
               ? ThemeColor.Dark
               : isActive && userData.settings.theme === 'Dark'
               ? ThemeColor.Light
@@ -42,7 +43,7 @@ export const Footer = () => {
         }}
         style={({ isActive }) => ({
           color:
-            isActive && userData.settings.theme === 'Light'
+            isActive && userData.settings.theme === Theme.Light
               ? ThemeColor.Dark
               : isActive && userData.settings.theme === 'Dark'
               ? ThemeColor.Light
@@ -59,7 +60,7 @@ export const Footer = () => {
         }}
         style={({ isActive }) => ({
           color:
-            isActive && userData.settings.theme === 'Light'
+            isActive && userData.settings.theme === Theme.Light
               ? ThemeColor.Dark
               : isActive && userData.settings.theme === 'Dark'
               ? ThemeColor.Light

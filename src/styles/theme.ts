@@ -5,14 +5,14 @@ export const theme = (theme: Theme) =>
   createTheme({
     palette: {
       primary: {
-        main: theme === 'Light' ? '#000' : '#fff',
+        main: theme === Theme.Light ? '#000' : '#fff',
       },
     },
     components: {
       MuiInput: {
         styleOverrides: {
           underline: {
-            color: theme === 'Light' ? '#000' : '#fff',
+            color: theme === Theme.Light ? '#000' : '#fff',
           },
         },
       },

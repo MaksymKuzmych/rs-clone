@@ -2,7 +2,7 @@ import { memo, useContext, useEffect, useMemo, useState } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { colors as colorsData } from '../../../data/colors';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './Colors.module.scss';
 
@@ -32,7 +32,7 @@ export const Colors = memo(({ colorHandler }: ColorsProps) => {
           className={active === el.id ? styles.active : styles.btn}
           style={{
             borderColor:
-              active === el.id && userData.settings.theme === 'Light'
+              active === el.id && userData.settings.theme === Theme.Light
                 ? ThemeColor.Dark
                 : active === el.id && userData.settings.theme === 'Dark'
                 ? ThemeColor.Light

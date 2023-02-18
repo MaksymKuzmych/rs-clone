@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 
 import styles from './DeleteCategory.module.scss';
@@ -42,8 +42,9 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
     <div
       className={styles.wrapper}
       style={{
-        backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
-        color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+        backgroundColor:
+          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
       }}
     >
       <p className={styles.content}>

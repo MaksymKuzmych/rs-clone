@@ -88,7 +88,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
           <span
             className='material-icons'
             style={{
-              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
             }}
           >
             {icon}

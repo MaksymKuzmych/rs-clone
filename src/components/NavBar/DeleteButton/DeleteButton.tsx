@@ -10,7 +10,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 import { defaultUserData } from '../../../firebase/default-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './DeleteButton.module.scss';
 
@@ -64,7 +64,7 @@ export const DeleteButton = () => {
           <span
             className='material-icons'
             style={{
-              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
             }}
           >
             delete
@@ -73,7 +73,14 @@ export const DeleteButton = () => {
         <ListItemText primary={t('Delete data')} className={styles.title} />
       </ListItem>
       <Modal open={open} onClose={handleClose}>
-        <div className={styles.paper}>
+        <div
+          className={styles.paper}
+          style={{
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+            backgroundColor:
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+          }}
+        >
           <h2 className={styles.modalTitle}>{t('Delete data')}</h2>
           <p className={styles.modalContent}>
             {t(
@@ -81,14 +88,14 @@ export const DeleteButton = () => {
             )}
           </p>
           <p className={styles.modalContent}>
-            {t('If you want to delete only operations, select Delete All Operations')}
+            {t('If you want to delete only transactions, select Delete All Transactions')}
           </p>
           <div className={styles.buttons}>
             <Button color='error' onClick={deleteAllData}>
               {t('Delete All Data')}
             </Button>
             <Button color='primary' onClick={deleteTransactions}>
-              {t('Delete All Operations')}
+              {t('Delete All Transactions')}
             </Button>
             <Button onClick={handleClose}>{t('Cancel')}</Button>
           </div>

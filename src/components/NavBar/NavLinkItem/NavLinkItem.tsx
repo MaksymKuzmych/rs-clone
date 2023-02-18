@@ -4,7 +4,7 @@ import { memo, useCallback, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './NavLinkItem.module.scss';
 
@@ -28,7 +28,7 @@ export const NavLinkItem = memo(({ path, name }: NavLinkItemProps) => {
         <span
           className='material-icons'
           style={{
-            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
           }}
         >
           face
@@ -42,7 +42,7 @@ export const NavLinkItem = memo(({ path, name }: NavLinkItemProps) => {
         style={{
           color: hover
             ? '#5c6ac2'
-            : userData.settings.theme === 'Light'
+            : userData.settings.theme === Theme.Light
             ? ThemeColor.Dark
             : ThemeColor.Light,
         }}

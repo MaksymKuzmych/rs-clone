@@ -6,7 +6,7 @@ import { object, string } from 'yup';
 
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
-import { CurrencySymbol, ThemeColor } from '../../enums';
+import { CurrencySymbol, Theme, ThemeColor } from '../../enums';
 import { pushUserData } from '../../firebase/push-user-data';
 import { updateUserData } from '../../firebase/update-user-data';
 import { IAccount } from '../../interfaces';
@@ -110,8 +110,8 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
           className={styles.innerWrapper}
           style={{
             backgroundColor:
-              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
-            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
           }}
         >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>

@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { memo, ReactNode, SyntheticEvent, useCallback, useContext, useState } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { ThemeColor } from '../../../enums';
+import { Theme, ThemeColor } from '../../../enums';
 
 interface TabPanelProps {
   index: number;
@@ -66,7 +66,7 @@ export const BasicTabs = memo(
             },
             indicator: {
               backgroundColor:
-                userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+                userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
             },
           },
         },
@@ -74,7 +74,7 @@ export const BasicTabs = memo(
           styleOverrides: {
             root: {
               '&.Mui-selected': {
-                color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               },
             },
           },

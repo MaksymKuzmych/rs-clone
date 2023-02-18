@@ -12,7 +12,7 @@ import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
 import { Transfer } from '../../components/Accounts/Transfer/Transfer';
 import { theme } from '../../styles/theme';
-import { ThemeColor } from '../../enums';
+import { Theme, ThemeColor } from '../../enums';
 
 import styles from './AccountPage.module.scss';
 
@@ -81,8 +81,9 @@ export const AccountPage = () => {
       <div
         className={styles.accountPage}
         style={{
-          color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
         }}
       >
         <AccountHeader amount={amount} />

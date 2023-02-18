@@ -15,7 +15,7 @@ import { Icons } from '../UI/Icons/Icons';
 import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCategory';
 
 import { colors } from '../../data/colors';
-import { ThemeColor, TransactionType } from '../../enums';
+import { Theme, ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
 import { iconsCategory } from '../../data/icons';
 import { defaultNames } from '../../data/defaultNames';
@@ -130,8 +130,8 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
           className={styles.innerWrapper}
           style={{
             backgroundColor:
-              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
-            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
           }}
         >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>
