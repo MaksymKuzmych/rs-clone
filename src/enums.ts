@@ -34,3 +34,8 @@ export enum Mode {
   Light = 'light',
   Dark = 'dark',
 }
+
+export enum Sort {
+  ASC = 'asc',
+  DESC = 'desc',
+}

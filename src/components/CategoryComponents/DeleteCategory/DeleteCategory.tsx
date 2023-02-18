@@ -12,12 +12,12 @@ interface DeleteCategoryProps {
 }
 
 export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCategoryProps) => {
-  const { userSettings, userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const { t } = useTranslation();
 
-  const transactions = userData.transactions;
+  const transactions = userData.data.transactions;
 
   const transactionsWithThisCategory = transactions.filter(
     (transaction) => transaction.category === categoryId,
@@ -25,11 +25,11 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
 
   async function deleteCategory() {
     if (categoryId) {
-      await deleteUserData(userSettings.userId, { categories: categoryId });
+      await deleteUserData(userData.settings.userId, { categories: categoryId });
     }
     if (transactionsWithThisCategory.length) {
       transactionsWithThisCategory.forEach(async (item) => {
-        await deleteUserData(userSettings.userId, { transactions: item.id });
+        await deleteUserData(userData.settings.userId, { transactions: item.id });
       });
     }
 

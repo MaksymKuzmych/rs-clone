@@ -1,25 +1,36 @@
-import { Period } from '../enums';
-import { IAccount, ICategory, IData, IPeriod, ITransaction } from '../interfaces';
-import { getPeriod } from '../utils/get-period';
+import { Sort } from '../enums';
+import { IAccount, ICategory, IPeriod, IStore, ITransaction } from '../interfaces';
 import { getFilteredUserData } from './get-filtered-user-data';
 
 export const pullUserData = async (
-  userData: IData,
+  userData: IStore,
   id: string,
   account: string | null = null,
-  period: IPeriod = getPeriod(Period.Month, Date.now()),
+  period: IPeriod = { start: null, end: null },
 ) => {
-  userData.accounts = (await getFilteredUserData(id, {
-    accounts: null,
-  })) as IAccount[];
-  userData.categories = (await getFilteredUserData(id, {
-    categories: null,
-  })) as ICategory[];
-  userData.transactions = (await getFilteredUserData(id, {
-    transactions: {
-      account,
-      period,
+  userData.data.accounts = (await getFilteredUserData(
+    id,
+    {
+      accounts: null,
     },
-  })) as ITransaction[];
+    Sort.ASC,
+  )) as IAccount[];
+  userData.data.categories = (await getFilteredUserData(
+    id,
+    {
+      categories: null,
+    },
+    Sort.ASC,
+  )) as ICategory[];
+  userData.data.transactions = (await getFilteredUserData(
+    id,
+    {
+      transactions: {
+        account,
+        period,
+      },
+    },
+    Sort.DESC,
+  )) as ITransaction[];
   return userData;
 };

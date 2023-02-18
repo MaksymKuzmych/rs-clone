@@ -22,7 +22,7 @@ interface AccountFormProps {
 }
 
 export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
-  const { userSettings, userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [icon, setIcon] = useState(`${currentAccount ? currentAccount.icon : 'credit_card'}`);
@@ -65,13 +65,13 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       };
 
       if (currentAccount) {
-        await updateUserData(userSettings.userId, {
+        await updateUserData(userData.settings.userId, {
           accounts: {
             [currentAccount.id]: accountInfo,
           },
         });
       } else {
-        await pushUserData(userSettings.userId, {
+        await pushUserData(userData.settings.userId, {
           accounts: [accountInfo],
         });
       }
@@ -141,7 +141,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
               helperText={formik.errors.balance}
               error={!!formik.errors.balance}
             />
-            <span className={styles.currency}>{CurrencySymbol[userSettings.currency]}</span>
+            <span className={styles.currency}>{CurrencySymbol[userData.settings.currency]}</span>
           </div>
         </div>
       </form>

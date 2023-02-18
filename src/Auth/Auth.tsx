@@ -11,31 +11,26 @@ import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { pullUserSettings } from '../firebase/pull-user-settings';
 import { signInAnon } from '../firebase/sign-in-anon';
-import { IData, ISettings } from '../interfaces';
+import { IStore } from '../interfaces';
 
 interface ISetCurrency {
   (amount: number, signDisplay?: 'always' | 'auto' | 'never'): string;
 }
 
 interface IAuthContext {
-  userSettings: ISettings;
-  userData: IData;
-  changeUserSettings: () => void;
+  userData: IStore;
   changeUserData: () => void;
   setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  userSettings: emptyUserData.settings,
-  userData: emptyUserData.data,
-  changeUserSettings: () => {},
+  userData: emptyUserData,
   changeUserData: () => {},
   setCurrency: () => '',
 });
 
 export const AuthProvider = ({ children }: BrowserRouterProps) => {
-  const [userSettings, setUserSettings] = useState(emptyUserData.settings);
-  const [userData, setUserData] = useState(emptyUserData.data);
+  const [userData, setUserData] = useState(emptyUserData);
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -43,62 +38,59 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
       style: 'currency',
-      currency: userSettings.currency,
+      currency: userData.settings.currency,
       currencyDisplay: 'narrowSymbol',
       minimumFractionDigits: 0,
       signDisplay,
     }).format(amount);
 
-  const changeUserSettings = useCallback(async () => {
-    try {
-      setPending(true);
-      setUserSettings(await pullUserSettings(userSettings, userSettings.userId));
-    } catch (error) {
-      enqueueSnackbar(`${error}`, { variant: 'error' });
-    } finally {
-      setPending(false);
-    }
-  }, [enqueueSnackbar, userSettings]);
-
   const changeUserData = useCallback(async () => {
     try {
       setPending(true);
-      setUserData(await pullUserData(userData, userSettings.userId));
+      setUserData(await pullUserSettings(userData, userData.settings.userId));
+      setUserData(
+        await pullUserData(
+          userData,
+          userData.settings.userId,
+          userData.settings.selectedAccount,
+          userData.settings.period,
+        ),
+      );
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     } finally {
       setPending(false);
     }
-  }, [enqueueSnackbar, userData, userSettings.userId]);
+  }, [enqueueSnackbar, userData]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      try {
-        if (user) {
-          await createAnonUser(user.uid);
-          setUserSettings(await pullUserSettings(userSettings, user.uid));
-          setUserData(
-            await pullUserData(
-              userData,
-              user.uid,
-              userSettings.selectedAccount,
-              userSettings.period,
-            ),
-          );
-          if (user.isAnonymous) {
-            enqueueSnackbar('Anonymous Login', { variant: 'success' });
-          } else {
-            enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
-          }
-          setPending(false);
+      // try {
+      if (user) {
+        await createAnonUser(user.uid);
+        setUserData(await pullUserSettings(userData, user.uid));
+        setUserData(
+          await pullUserData(
+            userData,
+            user.uid,
+            userData.settings.selectedAccount,
+            userData.settings.period,
+          ),
+        );
+        if (user.isAnonymous) {
+          enqueueSnackbar('Anonymous Login', { variant: 'success' });
         } else {
-          await signInAnon();
+          enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
         }
-      } catch (error) {
-        enqueueSnackbar(`${error}`, { variant: 'error', persist: true });
+        setPending(false);
+      } else {
+        await signInAnon();
       }
+      // } catch (error) {
+      //   enqueueSnackbar(`${error}`, { variant: 'error' });
+      // }
     });
-  }, [enqueueSnackbar, userData, userSettings]);
+  }, [enqueueSnackbar, userData]);
 
   if (pending) {
     return (
@@ -112,9 +104,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ userSettings, userData, changeUserSettings, changeUserData, setCurrency }}
-    >
+    <AuthContext.Provider value={{ userData, changeUserData, setCurrency }}>
       {children}
     </AuthContext.Provider>
   );

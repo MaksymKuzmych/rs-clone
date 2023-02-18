@@ -18,7 +18,7 @@ export const CategoriesLine = memo(
   ({ dataCategories, start, end, classLine, callbackTransferCategory }: CategoriesLineProps) => {
     const { userData } = useContext(AuthContext);
 
-    const transactions = userData.transactions;
+    const transactions = userData.data.transactions;
 
     const memoList = useMemo(
       () =>

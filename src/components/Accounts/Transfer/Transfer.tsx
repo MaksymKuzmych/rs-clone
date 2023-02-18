@@ -19,7 +19,7 @@ interface TransferProps {
 }
 
 export const Transfer = ({ currentAccount }: TransferProps) => {
-  const { userSettings, userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [targetAccount, setTargetAccount] = useState<IAccount | null>(null);
@@ -62,7 +62,7 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
       from.balance -= +amount;
       to.balance += +amount;
 
-      await updateUserData(userSettings.userId, {
+      await updateUserData(userData.settings.userId, {
         accounts: {
           [currentAccount.id]: from,
           [targetAccount.id]: to,
@@ -76,12 +76,12 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
 
   const accounts = useMemo(
     () =>
-      userData.accounts
+      userData.data.accounts
         .filter((account) => account.id !== currentAccount.id)
         .map((account) => (
           <Account account={account} key={account.id} onClick={() => handleOpen(account)} />
         )),
-    [currentAccount.id, handleOpen, userData.accounts],
+    [currentAccount.id, handleOpen, userData.data.accounts],
   );
 
   return (
@@ -112,7 +112,7 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
               value={amount}
               onChange={changeAmountHandler}
             />
-            <span className={styles.currency}>{CurrencySymbol[userSettings.currency]}</span>
+            <span className={styles.currency}>{CurrencySymbol[userData.settings.currency]}</span>
           </div>
           {error && <p className={styles.error}>{error}</p>}
           <button

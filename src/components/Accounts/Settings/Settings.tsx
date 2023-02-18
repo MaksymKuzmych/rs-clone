@@ -18,7 +18,7 @@ interface SettingsProps {
 }
 
 export const Settings = memo(({ currentAccount }: SettingsProps) => {
-  const { userSettings, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -28,11 +28,11 @@ export const Settings = memo(({ currentAccount }: SettingsProps) => {
   const navigate = useNavigate();
 
   const redirectToTransactions = useCallback(async () => {
-    await updateUserSettings(userSettings.userId, { selectedAccount: currentAccount.id });
+    await updateUserSettings(userData.settings.userId, { selectedAccount: currentAccount.id });
     navigate(`/transactions`);
     changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userSettings.userId]);
+  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.settings.userId]);
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
   const handleClose = useCallback(() => setOpenModal(false), []);

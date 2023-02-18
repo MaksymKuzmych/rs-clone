@@ -17,7 +17,7 @@ interface ITransactionsDay {
 
 export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
-  const { transactions } = userData;
+  const { transactions } = userData.data;
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
