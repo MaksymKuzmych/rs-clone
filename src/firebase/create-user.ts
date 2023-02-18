@@ -1,4 +1,4 @@
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { IStore } from '../interfaces';
 import { storeTr } from '../mockData/transactions';
 import { db, FirebaseError } from './firebase-config';
