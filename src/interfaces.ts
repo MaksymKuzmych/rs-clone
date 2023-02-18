@@ -31,8 +31,7 @@ export interface ICategory {
 export interface IPeriodItem {
   name: string;
   type: Period;
-  iconID: number;
-  description: string | null;
+  icon: string;
 }
 
 export interface ITransaction {

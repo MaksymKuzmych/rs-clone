@@ -1,0 +1,15 @@
+.calendar {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.iconButton {
+  color: green;
+  padding: 10px;
+  cursor: pointer;
+}

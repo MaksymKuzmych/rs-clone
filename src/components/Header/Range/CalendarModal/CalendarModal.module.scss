@@ -1,0 +1,44 @@
+.calendar {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.calendarColumn {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.title {
+  font-weight: 700;
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton {
+  color: green;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.iconButtonClose {
+  color: red;
+  padding: 10px;
+  cursor: pointer;
+}

@@ -1,7 +1,6 @@
-import { useCallback, useState, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../../Auth/Auth';
-import { CurrencySymbol } from '../../../../enums';
 import { updateUserSettings } from '../../../../firebase/update-user-settings';
 import { IAccount } from '../../../../interfaces';
 import { Account } from '../../../Accounts/Account/Account';
@@ -16,14 +15,15 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
   const { userData, changeUserData } = useContext(AuthContext);
   const { t } = useTranslation();
 
-  const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
-
-  const changeSelectedAccount = async (account: IAccount) => {
-    setSelectedAccount(account.id);
-    await updateUserSettings(userData.userId, { selectedAccount: selectedAccount });
-    await changeUserData();
-    handleClose();
-  };
+  const accountDrawerHandler = useCallback(
+    async (account: IAccount) => {
+      const newSelectedAccount = account.id === 'allAccounts' ? null : account.id;
+      await updateUserSettings(userData.userId, { selectedAccount: newSelectedAccount });
+      await changeUserData();
+      handleClose();
+    },
+    [handleClose, changeUserData, userData.userId],
+  );
 
   const allAccountsAmount = userData.data.accounts.reduce(
     (sum, current) => sum + current.balance,
@@ -45,9 +45,10 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
       <div className={styles.modalTitle}>{t('Accounts filter')}</div>
       <Account
         account={AllAccounts}
-        currency={CurrencySymbol[userData.settings.currency]}
         key={AllAccounts.id}
-        accountDrawerHandler={changeSelectedAccount}
+        onClick={() => {
+          accountDrawerHandler(AllAccounts);
+        }}
       />
       <div className={styles.accountsWrapper}>
         <div className={styles.modalSubtitle}>{t('Accounts')}</div>
@@ -55,9 +56,10 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
           userData.data.accounts.map((account) => (
             <Account
               account={account}
-              currency={CurrencySymbol[userData.settings.currency]}
               key={account.id}
-              accountDrawerHandler={changeSelectedAccount}
+              onClick={() => {
+                accountDrawerHandler(account);
+              }}
             />
           ))}
       </div>

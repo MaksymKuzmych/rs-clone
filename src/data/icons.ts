@@ -134,37 +134,6 @@ export const iconsCategory: IIcon[] = [
   },
 ];
 
-export const iconsCalendar: IIcon[] = [
-  {
-    name: 'event',
-    id: 1,
-  },
-  {
-    name: 'calendar_month',
-    id: 2,
-  },
-  {
-    name: 'date_range',
-    id: 3,
-  },
-  {
-    name: 'all_inclusive',
-    id: 4,
-  },
-  {
-    name: 'looks_one',
-    id: 5,
-  },
-  {
-    name: 'edit_calendar',
-    id: 6,
-  },
-  {
-    name: 'event_available',
-    id: 7,
-  },
-];
-
 export const iconsProject: IIcon[] = [
   {
     name: 'add',

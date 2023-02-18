@@ -2,21 +2,18 @@ import { useCallback, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-
 import { NavBar } from '../NavBar/NavBar';
+import FilterBlock from './Filter/FilterBlock';
+import RangePeriod from './Range/RangePeriod';
 
 import styles from './Header.module.scss';
-import FilterBlock from './Filter/FilterBlock';
-import { AuthContext, AuthProvider } from '../../Auth/Auth';
-import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
-import RangePeriod from './Range/RangePeriod';
-import { iconsCalendar } from '../../data/icons';
 
 export function Header() {
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = useCallback(() => setOpen(true), []);
   const handleDrawerClose = useCallback(() => setOpen(false), []);
+
+  const location = window.location.pathname;
 
   return (
     <div>
@@ -31,22 +28,21 @@ export function Header() {
             menu
           </span>
           <div className={styles.filter}>
-            <AuthProvider>
-              <FilterBlock />
-            </AuthProvider>
+            <FilterBlock />
           </div>
-        </Toolbar>
-        {/* {location === '/transactions' ? (
-            <span className={`material-icons ${styles.iconButton}`}>search</span>
+          {location === '/transactions' ? (
+            <div className={styles.search}>
+              <span className={`material-icons ${styles.iconButton}`}>search</span>
+            </div>
           ) : (
             <span className={`material-icons ${styles.iconButton}`}></span>
           )}
-        
+        </Toolbar>
         {location === '/accounts' ? (
           <div className={styles.headerBottom}>Accounts</div>
         ) : (
           <RangePeriod />
-        )} */}
+        )}
       </AppBar>
       <Drawer
         className={styles.drawer}
