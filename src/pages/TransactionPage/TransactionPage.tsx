@@ -17,7 +17,7 @@ interface ITransactionsDay {
 
 export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
-  const { transactions } = userData.data;
+  const { transactions } = userData;
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -51,6 +51,7 @@ export const TransactionPage = () => {
 
   return (
     <div className={styles.transactionPage}>
+      <button className={styles.buttonAdd}>+</button>
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
     </div>
   );

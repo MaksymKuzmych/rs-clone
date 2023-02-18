@@ -32,7 +32,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
   const iconName = iconsCategory.find((item) => item.id === category?.iconID)?.name;
   const colorName = colors.find((item) => item.id === category?.colorID)?.color;
 
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userSettings, userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [icon, setIcon] = useState(category && iconName ? iconName : 'shopping_cart');
@@ -78,13 +78,13 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
           description: '',
         };
         if (category) {
-          await updateUserData(userData.userId, {
+          await updateUserData(userSettings.userId, {
             categories: {
               [category.id]: categoryInfo,
             },
           });
         } else {
-          await pushUserData(userData.userId, {
+          await pushUserData(userSettings.userId, {
             categories: [categoryInfo],
           });
         }

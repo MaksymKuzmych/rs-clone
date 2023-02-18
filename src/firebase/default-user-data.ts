@@ -3,8 +3,8 @@ import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
 export const defaultUserData: IStore = {
-  userId: 'default',
   settings: {
+    userId: '',
     lang: Lang.EN,
     currency: Currency.USD,
     theme: Mode.Dark,
@@ -112,8 +112,8 @@ export const defaultUserData: IStore = {
 };
 
 export const emptyUserData: IStore = {
-  userId: '',
   settings: {
+    userId: '',
     lang: Lang.EN,
     currency: Currency.USD,
     theme: Mode.Dark,

@@ -1,13 +1,15 @@
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { IStore } from '../interfaces';
 import { storeTr } from '../mockData/transactions';
 import { db, FirebaseError } from './firebase-config';
+import { updateUserSettings } from './update-user-settings';
 
 export const createUser = async (userId: string, userData: IStore) => {
   try {
     await setDoc(doc(db, 'users/', userId), {
       settings: userData.settings,
     });
+    await updateUserSettings(userId, { userId: userId });
     userData.data.accounts.forEach(async (account) => {
       await setDoc(doc(db, 'users/' + userId + '/accounts', account.id), account);
     });

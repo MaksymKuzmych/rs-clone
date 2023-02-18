@@ -15,7 +15,7 @@ import { DrawerContext } from '../../context/Drawer';
 import styles from './CategoryPage.module.scss';
 
 export const CategoryPage = () => {
-  const { userData } = useContext(AuthContext);
+  const { userSettings, userData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
@@ -42,9 +42,9 @@ export const CategoryPage = () => {
     ],
   };
 
-  const currencySymbol = CurrencySymbol[userData.settings.currency];
-  const categories = userData.data.categories;
-  const transactions = userData.data.transactions;
+  const currencySymbol = CurrencySymbol[userSettings.currency];
+  const categories = userData.categories;
+  const transactions = userData.transactions;
 
   const categoriesThisType =
     categories.length !== 0 ? categories.filter((category) => category.type === categoryType) : [];

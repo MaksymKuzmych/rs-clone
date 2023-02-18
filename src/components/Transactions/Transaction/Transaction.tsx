@@ -17,7 +17,7 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
   const { setCurrency } = useContext(AuthContext);
 
   const { type, account, category, amount, description } = transaction;
-  const { accounts, categories } = userData.data;
+  const { accounts, categories } = userData;
   const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
   const categoryName = categoryItem?.name;
   const categoryIcon = iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name;

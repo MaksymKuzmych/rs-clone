@@ -16,18 +16,12 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered)
     const order = orderBy('date', 'desc');
     let queryRequest = query(dataRef, order);
     const queryArray: QueryFieldFilterConstraint[] = [];
-    if (data.transactions?.periodStart && data.transactions?.periodEnd) {
-      queryArray.push(where('date', '>=', data.transactions.periodStart));
-      queryArray.push(where('date', '<=', data.transactions.periodEnd));
+    if (data.transactions?.period.start && data.transactions?.period.end) {
+      queryArray.push(where('date', '>=', data.transactions.period.start));
+      queryArray.push(where('date', '<=', data.transactions.period.end));
     }
     if (data.transactions?.account) {
       queryArray.push(where('account', '==', data.transactions.account));
-    }
-    if (data.transactions?.category) {
-      queryArray.push(where('category', '==', data.transactions.category));
-    }
-    if (data.transactions?.type) {
-      queryArray.push(where('type', '==', data.transactions.type));
     }
     if (queryArray.length) {
       queryRequest = query(dataRef, ...queryArray);

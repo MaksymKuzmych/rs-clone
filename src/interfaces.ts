@@ -1,12 +1,18 @@
 import { Currency, Lang, Mode, Period, TransactionType } from './enums';
 
+export interface IPeriod {
+  start: number | null;
+  end: number | null;
+}
+
 export interface ISettings {
+  userId: string;
   lang: Lang;
   currency: Currency;
   theme: Mode;
   selectedAccount: string | null;
   periodType: Period;
-  period: { start: number | null; end: number | null };
+  period: IPeriod;
 }
 
 export interface IAccount {
@@ -57,7 +63,6 @@ export interface IDataFBGet {
 }
 
 export interface IStore {
-  userId: string;
   settings: ISettings;
   data: IData;
 }
@@ -66,11 +71,8 @@ export interface IDataFBFiltered {
   accounts?: null;
   categories?: null;
   transactions?: null | {
-    periodStart?: number;
-    periodEnd?: number;
-    account?: string;
-    category?: string;
-    type?: TransactionType;
+    account: string | null;
+    period: IPeriod;
   };
 }
 

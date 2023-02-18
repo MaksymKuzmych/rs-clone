@@ -29,14 +29,11 @@ export const AccountPage = () => {
   });
 
   useEffect(() => {
-    if (userData.data.accounts) {
-      const allCardsAmount = userData.data.accounts.reduce(
-        (acc, account) => acc + account.balance,
-        0,
-      );
+    if (userData.accounts) {
+      const allCardsAmount = userData.accounts.reduce((acc, account) => acc + account.balance, 0);
       setAmount(allCardsAmount);
     }
-  }, [userData.data.accounts]);
+  }, [userData.accounts]);
 
   const drawerContent = useCallback(() => {
     switch (typeDrawer) {
@@ -61,7 +58,7 @@ export const AccountPage = () => {
 
   const accounts = useMemo(
     () =>
-      userData.data.accounts.map((account) => (
+      userData.accounts.map((account) => (
         <Account
           account={account}
           key={account.id}
@@ -70,7 +67,7 @@ export const AccountPage = () => {
           }}
         />
       )),
-    [accountDrawerHandler, userData.data.accounts],
+    [accountDrawerHandler, userData.accounts],
   );
 
   return (

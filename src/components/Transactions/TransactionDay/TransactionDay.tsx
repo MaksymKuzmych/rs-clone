@@ -13,11 +13,11 @@ interface IDay {
 }
 
 export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<IDay>) => {
-  const { userData } = useContext(AuthContext);
+  const { userSettings } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
-  const { lang } = userData.settings;
+  const { lang } = userSettings;
   const locale = lang === Lang.EN ? 'en-US' : 'ru-RU';
   const day = new Date(date).getDate();
   const today = getPeriod(Period.Day, Date.now()).start;

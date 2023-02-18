@@ -14,7 +14,7 @@ interface DeleteAccountProps {
 }
 
 export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProps) => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userSettings, userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const { t } = useTranslation();
@@ -22,20 +22,20 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
   const [transactions, setTransactions] = useState(0);
 
   useEffect(() => {
-    if (userData.data.transactions) {
-      const transactionsQuantity = userData.data.transactions.filter(
+    if (userData.transactions) {
+      const transactionsQuantity = userData.transactions.filter(
         (transaction) => transaction.account === currentAccount.name,
       ).length;
 
       setTransactions(transactionsQuantity);
     }
-  }, [currentAccount.name, userData.data.transactions]);
+  }, [currentAccount.name, userData.transactions]);
 
   const deleteUser = useCallback(async () => {
-    deleteUserData(userData.userId, { accounts: currentAccount.id });
+    deleteUserData(userSettings.userId, { accounts: currentAccount.id });
     changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [changeUserData, currentAccount.id, drawerHandler, userData.userId]);
+  }, [changeUserData, currentAccount.id, drawerHandler, userSettings.userId]);
 
   return (
     <div className={styles.wrapper}>
