@@ -37,8 +37,8 @@ export const NavBar = () => {
           root: {
             color:
               userData.settings.theme === Theme.Light
-                ? `${ThemeColor.Dark} !important`
-                : `${ThemeColor.Light} !important`,
+                ? `${ThemeColor.Dark}`
+                : `${ThemeColor.Light}`,
           },
         },
       },
@@ -101,7 +101,19 @@ export const NavBar = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <img className={styles.RssLogo} src='./assets/rsLogo.svg' alt='RSSchool logo' />
+                  {userData.settings.theme === Theme.Light ? (
+                    <img
+                      className={styles.RssLogo}
+                      src='./assets/rsLogoLight.svg'
+                      alt='RSSchool logo'
+                    />
+                  ) : (
+                    <img
+                      className={styles.RssLogo}
+                      src='./assets/rsLogoDark.svg'
+                      alt='RSSchool logo'
+                    />
+                  )}
                 </ListItem>
               </NavLink>
             </div>

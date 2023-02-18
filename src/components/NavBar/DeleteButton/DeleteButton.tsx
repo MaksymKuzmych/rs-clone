@@ -97,7 +97,9 @@ export const DeleteButton = () => {
             <Button color='primary' onClick={deleteTransactions}>
               {t('Delete All Transactions')}
             </Button>
-            <Button onClick={handleClose}>{t('Cancel')}</Button>
+            <Button onClick={handleClose} style={{ color: '#7f7f7f' }}>
+              {t('Cancel')}
+            </Button>
           </div>
         </div>
       </Modal>

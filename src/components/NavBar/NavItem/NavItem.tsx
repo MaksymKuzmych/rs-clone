@@ -121,13 +121,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
               padding: '15px',
             }}
           >
-            <FormLabel
-              component='legend'
-              className={styles.menuTitle}
-              sx={{
-                color: 'black',
-              }}
-            >
+            <FormLabel component='legend' className={styles.menuTitle}>
               {t(`${name}`)}
             </FormLabel>
             <RadioGroup
