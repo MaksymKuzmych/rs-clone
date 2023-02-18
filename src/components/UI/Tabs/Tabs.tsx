@@ -3,31 +3,10 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { memo, ReactNode, SyntheticEvent, useCallback, useState } from 'react';
+import { memo, ReactNode, SyntheticEvent, useCallback, useContext, useState } from 'react';
 
-const theme = createTheme({
-  components: {
-    MuiTabs: {
-      styleOverrides: {
-        flexContainer: {
-          justifyContent: 'space-around',
-        },
-        indicator: {
-          backgroundColor: '#fff',
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          '&.Mui-selected': {
-            color: '#fff',
-          },
-        },
-      },
-    },
-  },
-});
+import { AuthContext } from '../../../Auth/Auth';
+import { ThemeColor } from '../../../enums';
 
 interface TabPanelProps {
   index: number;
@@ -71,11 +50,37 @@ interface BasicTabsProps {
 
 export const BasicTabs = memo(
   ({ firstChild, secondChild, firstTitle, secondTitle }: BasicTabsProps) => {
+    const { userData } = useContext(AuthContext);
     const [value, setValue] = useState(0);
 
     const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {
       setValue(newValue);
     }, []);
+
+    const theme = createTheme({
+      components: {
+        MuiTabs: {
+          styleOverrides: {
+            flexContainer: {
+              justifyContent: 'space-around',
+            },
+            indicator: {
+              backgroundColor:
+                userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              '&.Mui-selected': {
+                color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+              },
+            },
+          },
+        },
+      },
+    });
 
     return (
       <ThemeProvider theme={theme}>

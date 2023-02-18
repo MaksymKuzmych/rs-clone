@@ -12,7 +12,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 
 import { updateUserSettings } from '../../../firebase/update-user-settings';
 import { AuthContext } from '../../../Auth/Auth';
-import { Currency, Lang, Mode } from '../../../enums';
+import { Currency, Lang, Theme, ThemeColor } from '../../../enums';
 
 import styles from './NavItem.module.scss';
 
@@ -35,7 +35,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
       case 'Language':
         setParam(userData.settings.lang);
         break;
-      case 'Mode':
+      case 'Theme':
         setParam(userData.settings.theme);
         break;
       case 'Currency':
@@ -61,8 +61,8 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
           i18n.changeLanguage(event.target.value.toLowerCase());
           await updateUserSettings(userData.userId, { lang: event.target.value as Lang });
           break;
-        case 'Mode':
-          await updateUserSettings(userData.userId, { theme: event.target.value as Mode });
+        case 'Theme':
+          await updateUserSettings(userData.userId, { theme: event.target.value as Theme });
           break;
         case 'Currency':
           await updateUserSettings(userData.userId, {
@@ -85,7 +85,14 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
         }}
       >
         <ListItemIcon>
-          <span className='material-icons'>{icon}</span>
+          <span
+            className='material-icons'
+            style={{
+              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            }}
+          >
+            {icon}
+          </span>
         </ListItemIcon>
         <div>
           <ListItemText primary={t(`${name}`)} />

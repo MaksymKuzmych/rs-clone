@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
+import { ThemeColor } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 
 import styles from './DeleteCategory.module.scss';
@@ -38,17 +39,23 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{
+        backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+        color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+      }}
+    >
       <p className={styles.content}>
-        {t('All transactions')} ( {transactionsWithThisCategory.length} )
+        {t('All transactions')} ( {transactionsWithThisCategory.length} ){' '}
         {t('associated with the category will be deleted')}.
       </p>
       <p className={styles.content}>{t('The category cannot be restored')}.</p>
       <div className={styles.buttons}>
-        <button className={styles.cancelBtn} onClick={handleCloseModalDelete}>
+        <button className={styles.cancel} onClick={handleCloseModalDelete}>
           {t('Cancel')}
         </button>
-        <button className={styles.deleteBtn} onClick={deleteCategory}>
+        <button className={styles.delete} onClick={deleteCategory}>
           {t('Delete')}
         </button>
       </div>

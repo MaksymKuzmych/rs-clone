@@ -15,7 +15,7 @@ import { Icons } from '../UI/Icons/Icons';
 import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCategory';
 
 import { colors } from '../../data/colors';
-import { TransactionType } from '../../enums';
+import { ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
 import { iconsCategory } from '../../data/icons';
 import { defaultNames } from '../../data/defaultNames';
@@ -126,7 +126,14 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
             value={formik.values.name}
           />
         </div>
-        <div className={styles.innerWrapper}>
+        <div
+          className={styles.innerWrapper}
+          style={{
+            backgroundColor:
+              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+          }}
+        >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>
             <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
               <span className='material-icons' style={{ color: `${color}` }}>

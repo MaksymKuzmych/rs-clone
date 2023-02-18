@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
 
+.wrapper {
+  height: 100%;
+}
+
 .navHeader {
   background-color: $lilac;
   padding: 20px;
@@ -14,7 +18,7 @@
 
   .button {
     color: white;
-    font-size: 10px;
+    font-size: 12px;
     transition: box-shadow 0.5s;
     &:hover {
       box-shadow: 0 0 7px;
@@ -59,8 +63,8 @@
 .logoWrapper {
   padding: 5px 0;
   border-radius: 15px;
-  transition: transform .5s;
-  &:hover {    
+  transition: transform 0.5s;
+  &:hover {
     transform: scale(1.05);
   }
 }

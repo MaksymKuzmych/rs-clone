@@ -1,17 +1,36 @@
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+
+import { AuthContext } from '../../Auth/Auth';
+import { ThemeColor } from '../../enums';
 
 import styles from './Footer.module.scss';
 
 export const Footer = () => {
+  const { userData } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   return (
-    <nav className={styles.bar}>
+    <nav
+      className={styles.bar}
+      style={{
+        backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+      }}
+    >
       <NavLink
         className={({ isActive }) => {
           return isActive ? styles.activeItem : styles.item;
         }}
+        style={({ isActive }) => ({
+          color:
+            isActive && userData.settings.theme === 'Light'
+              ? ThemeColor.Dark
+              : isActive && userData.settings.theme === 'Dark'
+              ? ThemeColor.Light
+              : '#7f7f7f',
+        })}
         to='/accounts'
       >
         <span className='material-icons'>credit_card</span>
@@ -21,6 +40,14 @@ export const Footer = () => {
         className={({ isActive }) => {
           return isActive ? styles.activeItem : styles.item;
         }}
+        style={({ isActive }) => ({
+          color:
+            isActive && userData.settings.theme === 'Light'
+              ? ThemeColor.Dark
+              : isActive && userData.settings.theme === 'Dark'
+              ? ThemeColor.Light
+              : '#7f7f7f',
+        })}
         to='/'
       >
         <span className='material-icons'>data_usage</span>
@@ -30,6 +57,14 @@ export const Footer = () => {
         className={({ isActive }) => {
           return isActive ? styles.activeItem : styles.item;
         }}
+        style={({ isActive }) => ({
+          color:
+            isActive && userData.settings.theme === 'Light'
+              ? ThemeColor.Dark
+              : isActive && userData.settings.theme === 'Dark'
+              ? ThemeColor.Light
+              : '#7f7f7f',
+        })}
         to='/transactions'
       >
         <span className='material-icons'>receipt</span>

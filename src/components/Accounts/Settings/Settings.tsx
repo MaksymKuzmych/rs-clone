@@ -10,6 +10,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
 import { SettingsHeader } from './SettingsHeader/SettingsHeader';
 import { updateUserSettings } from '../../../firebase/update-user-settings';
+import { ThemeColor } from '../../../enums';
 
 import styles from './Settings.module.scss';
 
@@ -40,7 +41,12 @@ export const Settings = memo(({ currentAccount }: SettingsProps) => {
   return (
     <>
       <SettingsHeader currentAccount={currentAccount} />
-      <div className={styles.btnsWrapper}>
+      <div
+        className={styles.btnsWrapper}
+        style={{
+          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+        }}
+      >
         <SettingsBtn
           icon='edit'
           color='#fec107'

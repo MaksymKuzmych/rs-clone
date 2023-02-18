@@ -4,7 +4,9 @@ import { useSnackbar } from 'notistack';
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
 
+import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
+import { ThemeColor } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
 import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
@@ -79,9 +81,16 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     return (
       <>
         <Header />
-        <div style={{ flexGrow: 1 }}>
+        <div
+          style={{
+            flexGrow: 1,
+            backgroundColor:
+              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+          }}
+        >
           <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
         </div>
+        <Footer />
       </>
     );
   }

@@ -1,47 +1,49 @@
 import { createTheme } from '@mui/material';
+import { Theme } from '../enums';
 
-export const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fff',
+export const theme = (theme: Theme) =>
+  createTheme({
+    palette: {
+      primary: {
+        main: theme === 'Light' ? '#000' : '#fff',
+      },
     },
-  },
-  components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          color: '#fff',
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            color: theme === 'Light' ? '#000' : '#fff',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: '22px',
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            marginBottom: '5px',
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: '#a8adb3',
+            fontSize: '23px',
+          },
+        },
+      },
+      MuiDrawer: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: 'transparent',
+          },
         },
       },
     },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          fontSize: '22px',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          marginBottom: '5px',
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: '#a8adb3',
-          fontSize: '23px',
-        },
-      },
-    },
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: 'transparent',
-        },
-      },
-    },
-  },
-});
+  });

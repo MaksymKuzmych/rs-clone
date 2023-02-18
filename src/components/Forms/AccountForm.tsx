@@ -6,7 +6,7 @@ import { object, string } from 'yup';
 
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
-import { CurrencySymbol } from '../../enums';
+import { CurrencySymbol, ThemeColor } from '../../enums';
 import { pushUserData } from '../../firebase/push-user-data';
 import { updateUserData } from '../../firebase/update-user-data';
 import { IAccount } from '../../interfaces';
@@ -106,7 +106,14 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
             value={formik.values.name}
           />
         </div>
-        <div className={styles.innerWrapper}>
+        <div
+          className={styles.innerWrapper}
+          style={{
+            backgroundColor:
+              userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+          }}
+        >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>
             <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
               <span className='material-icons' style={{ color: `${color}` }}>

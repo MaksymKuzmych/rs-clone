@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { defaultNames } from '../../../data/defaultNames';
+import { AmountColor } from '../../../enums';
 import { IAccount } from '../../../interfaces';
 
 import styles from './Account.module.scss';
@@ -22,7 +23,9 @@ export const Account = memo(({ account, onClick }: AccountProps) => {
   return (
     <div className={styles.account} onClick={onClick}>
       <div className={styles.iconWrapper} style={{ backgroundColor: `${color}` }}>
-        <span className='material-icons'>{icon}</span>
+        <span className='material-icons' style={{ color: 'white' }}>
+          {icon}
+        </span>
       </div>
       <div className={styles.info}>
         <div className={styles.infoUpper}>
@@ -31,7 +34,13 @@ export const Account = memo(({ account, onClick }: AccountProps) => {
         </div>
         <p
           className={styles.amount}
-          style={{ color: !balance ? '#a8adb3' : balance > 0 ? '#18ab81' : '#cd4863' }}
+          style={{
+            color: !balance
+              ? AmountColor.Zero
+              : balance > 0
+              ? AmountColor.Income
+              : AmountColor.Expenses,
+          }}
         >
           {setCurrency(balance)}
         </p>

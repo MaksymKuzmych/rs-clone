@@ -30,7 +30,18 @@ export enum TransactionType {
   Expenses = 'expenses',
 }
 
-export enum Mode {
+export enum Theme {
   Light = 'Light',
   Dark = 'Dark',
+}
+
+export enum ThemeColor {
+  Light = 'white',
+  Dark = '#2a3139',
+}
+
+export enum AmountColor {
+  Zero = '#7f7f7f',
+  Income = '#6ebaa0',
+  Expenses = '#cd4863',
 }

@@ -10,6 +10,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 import { defaultUserData } from '../../../firebase/default-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
+import { ThemeColor } from '../../../enums';
 
 import styles from './DeleteButton.module.scss';
 
@@ -36,8 +37,6 @@ export const DeleteButton = () => {
 
     await pushUserData(userData.userId, {
       accounts: [...defaultUserData.data.accounts],
-    });
-    await pushUserData(userData.userId, {
       categories: [...defaultUserData.data.categories],
     });
 
@@ -62,7 +61,14 @@ export const DeleteButton = () => {
     <div>
       <ListItem onClick={handleOpen} className={styles.deleteButton}>
         <ListItemIcon>
-          <span className='material-icons'>delete</span>
+          <span
+            className='material-icons'
+            style={{
+              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            }}
+          >
+            delete
+          </span>
         </ListItemIcon>
         <ListItemText primary={t('Delete data')} className={styles.title} />
       </ListItem>

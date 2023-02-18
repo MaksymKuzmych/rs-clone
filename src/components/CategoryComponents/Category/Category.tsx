@@ -9,6 +9,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
 
 import styles from './Category.module.scss';
+import { ThemeColor } from '../../../enums';
 
 interface CategoryProps {
   dataCategory: ICategory;
@@ -20,7 +21,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
   const { id, name, iconID, colorID } = dataCategory;
 
   const { drawerHandler } = useContext(DrawerContext);
-  const { setCurrency } = useContext(AuthContext);
+  const { userData, setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
 
@@ -41,7 +42,14 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
     <div className={styles.wrapper} onClick={onСlick}>
       <div className={sum === 0 ? `${styles.category} ${styles.categoryEmpty}` : styles.category}>
         {!buttonAdd ? (
-          <h3 className={styles.title}>{defaultNames.includes(name) ? t(name) : name}</h3>
+          <h3
+            className={styles.title}
+            style={{
+              color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+            }}
+          >
+            {defaultNames.includes(name) ? t(name) : name}
+          </h3>
         ) : null}
         <div
           className={!buttonAdd ? styles.img : styles.buttonAdd}

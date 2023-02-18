@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { ThemeProvider } from '@mui/material';
 
 import { AccountHeader } from '../../components/Accounts/AccountHeader/AccountHeader';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
@@ -10,6 +11,8 @@ import { AccountForm } from '../../components/Forms/AccountForm';
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
 import { Transfer } from '../../components/Accounts/Transfer/Transfer';
+import { theme } from '../../styles/theme';
+import { ThemeColor } from '../../enums';
 
 import styles from './AccountPage.module.scss';
 
@@ -74,20 +77,28 @@ export const AccountPage = () => {
   );
 
   return (
-    <div className={styles.accountPage}>
-      <AccountHeader amount={amount} />
-      <div className={styles.accountsWrapper}>
-        {accounts}
-        <AddAccount drawerHandler={drawerHandler} />
-      </div>
-      <TemporaryDrawer
-        state={state}
-        anchor='bottom'
-        type={typeDrawer}
-        drawerHandler={drawerHandler}
+    <ThemeProvider theme={theme(userData.settings.theme)}>
+      <div
+        className={styles.accountPage}
+        style={{
+          color: userData.settings.theme === 'Light' ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor: userData.settings.theme === 'Light' ? ThemeColor.Light : ThemeColor.Dark,
+        }}
       >
-        {drawerContent()}
-      </TemporaryDrawer>
-    </div>
+        <AccountHeader amount={amount} />
+        <div className={styles.accountsWrapper}>
+          {accounts}
+          <AddAccount drawerHandler={drawerHandler} />
+        </div>
+        <TemporaryDrawer
+          state={state}
+          anchor='bottom'
+          type={typeDrawer}
+          drawerHandler={drawerHandler}
+        >
+          {drawerContent()}
+        </TemporaryDrawer>
+      </div>
+    </ThemeProvider>
   );
 };
