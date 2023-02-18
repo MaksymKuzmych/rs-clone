@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import List from '@mui/material/List';
@@ -12,13 +12,37 @@ import { NavItem } from './NavItem/NavItem';
 import { NavLinkItem } from './NavLinkItem/NavLinkItem';
 import { DeleteButton } from './DeleteButton/DeleteButton';
 import { AuthContext } from '../../Auth/Auth';
+import { BasicModal } from '../UI/Modal/Modal';
+import { SignIn } from './SignIn/SignIn';
+import { SignUp } from './SignUp/SignUp';
 
 import styles from './NavBar.module.scss';
+import { auth } from '../../firebase/firebase-config';
+import { signOutUser } from '../../firebase/sign-out-user';
 
 export const NavBar = () => {
   const { userData } = useContext(AuthContext);
 
+  const [openModal, setOpenModal] = useState(false);
+  const [typeModal, setTypeModal] = useState('');
+
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
+
+  const handleTypeModal = (type: string) => {
+    setTypeModal(type);
+  };
+
   const { t } = useTranslation();
+
+  const modalContent = useCallback(() => {
+    switch (typeModal) {
+      case 'signIn':
+        return <SignIn handleTypeModal={handleTypeModal} />;
+      case 'signUp':
+        return <SignUp handleTypeModal={handleTypeModal} />;
+    }
+  }, [typeModal]);
 
   const theme = createTheme({
     components: {
@@ -68,8 +92,16 @@ export const NavBar = () => {
             <Button
               className={styles.button}
               startIcon={<span className='material-icons'>login</span>}
+              onClick={() => {
+                if (auth.currentUser?.isAnonymous) {
+                  setTypeModal('signIn');
+                  handleOpen();
+                } else {
+                  signOutUser();
+                }
+              }}
             >
-              {t('Log In')}
+              {auth.currentUser?.isAnonymous ? t('Log In') : t('Log Out')}
             </Button>
           </div>
         </div>
@@ -120,6 +152,9 @@ export const NavBar = () => {
           </List>
         </div>
       </nav>
+      <BasicModal openModal={openModal} handleClose={handleClose}>
+        {modalContent()}
+      </BasicModal>
     </ThemeProvider>
   );
 };
