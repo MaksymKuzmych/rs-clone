@@ -68,6 +68,10 @@
   "Enter transfer amount": "Enter transfer amount",
   "No other accounts": "No other accounts",
   "Delete account permanently": "Delete account permanently",
+  "associated with the category will be deleted": "associated with the category will be deleted",
+  "The category cannot be restored": "The category cannot be restored",
+  "TODAY": "TODAY",
+  "YESTERDAY": "YESTERDAY"
   "associated with the category will be deleted":  "associated with the category will be deleted",
   "The category cannot be restored" : "The category cannot be restored",
   "Filter": "Filter",

@@ -1,19 +1,16 @@
 @import '../../styles/variables.scss';
 
-.accountPage {
-  padding: 20px 5px 0 20px;
+.transactionPage {
   background-color: $dark-gray;
   color: white;
   flex-grow: 1;
 }
 
-.accountsWrapper {
-  height: calc(100vh - 190px);
+.transactionWrapper {
+  height: calc(100vh - 127px);
   overflow-y: scroll;
-  padding-right: 15px;
 
   &::-webkit-scrollbar-track {
-    padding: 2px 0;
     border-radius: 3px;
     background-color: $dark-gray;
   }

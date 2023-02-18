@@ -70,6 +70,9 @@
   "Delete account permanently": "Удалить аккаунт безвозвратно",
   "associated with the category will be deleted": ", связанные с этой категорией будут удалены",
   "The category cannot be restored": "Категорию нельзя будет восстановить",
+  "TODAY": "СЕГОДНЯ",
+  "YESTERDAY": "ВЧЕРА"
+  "The category cannot be restored": "Категорию нельзя будет восстановить",
   "Filter": "Фильтр",
   "All accounts": "Все счета",
   "Accounts filter" : "Фильтр счетов",
