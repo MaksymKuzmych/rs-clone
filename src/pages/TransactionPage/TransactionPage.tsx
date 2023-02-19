@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { ChangeEvent, useContext, useMemo } from 'react';
 
 import { AuthContext } from '../../Auth/Auth';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
@@ -6,6 +6,7 @@ import { TransactionDay } from '../../components/Transactions/TransactionDay/Tra
 import { Period, TransactionType } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
+import { parseStatement } from '../../utils/parse-statement';
 
 import styles from './TransactionPage.module.scss';
 
@@ -18,6 +19,11 @@ interface ITransactionsDay {
 export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
   const { transactions } = userData.data;
+
+  const onClick = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    await parseStatement(files);
+  };
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -52,6 +58,7 @@ export const TransactionPage = () => {
   return (
     <div className={styles.transactionPage}>
       <button className={styles.buttonAdd}>+</button>
+      <input type='file' onChange={onClick} />
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
     </div>
   );
