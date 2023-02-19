@@ -2,7 +2,9 @@ import { TransactionType } from '../enums';
 import { IPrivat, ITransaction } from '../interfaces';
 
 export const parsePrivat = (data: IPrivat[]) => {
-  const privatTransactions: ITransaction[] = [];
+  const transactions: ITransaction[] = [];
+  const accounts: string[] = [];
+  const categories: string[] = [];
 
   data.forEach((row, index) => {
     if (index > 1 && index < data.length - 1) {
@@ -18,7 +20,9 @@ export const parsePrivat = (data: IPrivat[]) => {
       const account = 'Приват ' + row[3].split('(')[1].replace(')', '');
       const description = row[4];
       const amount = row[5];
-      privatTransactions.push({
+      const newAccount = accounts.includes(account);
+      const newCategory = categories.includes(category);
+      transactions.push({
         id: '',
         date,
         type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
@@ -27,7 +31,13 @@ export const parsePrivat = (data: IPrivat[]) => {
         amount,
         description,
       });
+      if (!newAccount) {
+        accounts.push(account);
+      }
+      if (!newCategory) {
+        categories.push(category);
+      }
     }
   });
-  return privatTransactions;
+  return { accounts, categories, transactions };
 };

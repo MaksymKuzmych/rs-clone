@@ -2,7 +2,9 @@ import { TransactionType } from '../enums';
 import { IMono, ITransaction } from '../interfaces';
 
 export const parseMono = (data: IMono[]) => {
-  const monoTransactions: ITransaction[] = [];
+  const transactions: ITransaction[] = [];
+  const accounts: string[] = [];
+  const categories: string[] = [];
   let cardNumber = '';
 
   data.forEach((row, index) => {
@@ -25,7 +27,9 @@ export const parseMono = (data: IMono[]) => {
       const account = 'Монобанк ' + cardNumber;
       const description = row[1];
       const amount = row[3];
-      monoTransactions.push({
+      const newAccount = accounts.includes(account);
+      const newCategory = categories.includes(category);
+      transactions.push({
         id: '',
         date,
         type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
@@ -34,7 +38,13 @@ export const parseMono = (data: IMono[]) => {
         amount,
         description,
       });
+      if (!newAccount) {
+        accounts.push(account);
+      }
+      if (!newCategory) {
+        categories.push(category);
+      }
     }
   });
-  return monoTransactions;
+  return { accounts, categories, transactions };
 };
