@@ -1,7 +1,7 @@
 import { iconsCategory } from '../data/icons';
 import { TransactionType } from '../enums';
 import { IAccount, ICategory, IMono, ITransaction } from '../interfaces';
-import { findAccount, findCategory, findMCC, findTransaction, increaseID } from './find-data';
+import { findAccount, findCategory, findMCC, increaseID } from './find-data';
 import { getRandomColor, getRandomIcon } from './get-random-data';
 
 export const parseMono = (data: IMono[]) => {
