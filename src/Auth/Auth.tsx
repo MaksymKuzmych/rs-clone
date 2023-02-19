@@ -65,30 +65,30 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      // try {
-      if (user) {
-        await createAnonUser(user.uid);
-        setUserData(await pullUserSettings(userData, user.uid));
-        setUserData(
-          await pullUserData(
-            userData,
-            user.uid,
-            userData.settings.selectedAccount,
-            userData.settings.period,
-          ),
-        );
-        if (user.isAnonymous) {
-          enqueueSnackbar('Anonymous Login', { variant: 'success' });
+      try {
+        if (user) {
+          await createAnonUser(user.uid);
+          setUserData(await pullUserSettings(userData, user.uid));
+          setUserData(
+            await pullUserData(
+              userData,
+              user.uid,
+              userData.settings.selectedAccount,
+              userData.settings.period,
+            ),
+          );
+          if (user.isAnonymous) {
+            enqueueSnackbar('Anonymous Login', { variant: 'success' });
+          } else {
+            enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
+          }
+          setPending(false);
         } else {
-          enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
+          await signInAnon();
         }
-        setPending(false);
-      } else {
-        await signInAnon();
+      } catch (error) {
+        enqueueSnackbar(`${error}`, { variant: 'error' });
       }
-      // } catch (error) {
-      //   enqueueSnackbar(`${error}`, { variant: 'error' });
-      // }
     });
   }, [enqueueSnackbar, userData]);
 

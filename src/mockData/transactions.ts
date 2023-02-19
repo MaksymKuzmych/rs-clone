@@ -8,7 +8,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory2',
-        amount: 500,
+        amount: -500,
         description: null,
       },
       {
@@ -17,7 +17,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory1',
-        amount: 50,
+        amount: -50,
         description: 'none',
       },
       {
@@ -26,7 +26,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory7',
-        amount: 520,
+        amount: -520,
         description: null,
       },
       {
@@ -35,7 +35,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory2',
-        amount: 80,
+        amount: -80,
         description: 'something',
       },
       {
@@ -44,7 +44,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory3',
-        amount: 80,
+        amount: -80,
         description: 'my notes',
       },
       {
@@ -53,7 +53,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount1',
         category: 'defaultCategory6',
-        amount: 80,
+        amount: -80,
         description: null,
       },
       {
@@ -62,7 +62,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory2',
-        amount: 38,
+        amount: -38,
         description: null,
       },
       {
@@ -71,7 +71,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory4',
-        amount: 80,
+        amount: -80,
         description: 'some text',
       },
       {
@@ -80,7 +80,7 @@ export const storeTr = {
         type: TransactionType.Expenses,
         account: 'defaultAccount2',
         category: 'defaultCategory1',
-        amount: 40,
+        amount: -40,
         description: 'other text',
       },
       {

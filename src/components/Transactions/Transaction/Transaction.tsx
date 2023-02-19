@@ -43,7 +43,7 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
         </div>
       </div>
       <p className={sign ? styles.amountPositive : styles.amountNegative}>
-        {setCurrency(sign ? amount : -amount, 'always')}
+        {setCurrency(amount, 'always')}
       </p>
     </div>
   );

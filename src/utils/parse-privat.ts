@@ -1,42 +1,71 @@
+import { iconsCategory } from '../data/icons';
 import { TransactionType } from '../enums';
-import { IPrivat, ITransaction } from '../interfaces';
+import { IAccount, ICategory, IPrivat, ITransaction } from '../interfaces';
+import { findAccount, findCategory, increaseID } from './find-data';
+import { getRandomColor, getRandomIcon } from './get-random-data';
 
 export const parsePrivat = (data: IPrivat[]) => {
   const transactions: ITransaction[] = [];
-  const accounts: string[] = [];
-  const categories: string[] = [];
+  const accounts: IAccount[] = [];
+  const categories: ICategory[] = [];
+  let balance = 0;
 
   data.forEach((row, index) => {
+    if (index === 2) {
+      balance = row[9];
+    }
     if (index > 1 && index < data.length - 1) {
+      const time = row[1].split(':').map((hours) => +hours);
       const day = row[0].split('.').map((month, index) => {
         if (index === 1) {
           return +month - 1;
         }
         return +month;
       });
-      const time = row[1].split(':').map((hours) => +hours);
       const date = new Date(day[2], day[1], day[0], time[0], time[1]).getTime();
-      const category = row[2];
-      const account = 'Приват ' + row[3].split('(')[1].replace(')', '');
-      const description = row[4];
       const amount = row[5];
-      const newAccount = accounts.includes(account);
-      const newCategory = categories.includes(category);
-      transactions.push({
-        id: '',
-        date,
+      let accountId = `importedPrivat${row[3].split('(')[1].replace(')', '').slice(-4)}`;
+      let categoryId = `importedPrivatCategory${categories.length + 1}`;
+      const transactionId = `importedPrivat${date}`;
+      const account = {
+        id: accountId,
+        date: Date.now(),
+        name: 'Приват',
+        icon: 'credit_card',
+        color: getRandomColor().color,
+        balance,
+        description: row[3].split('(')[1].replace(')', ''),
+      };
+      const category = {
+        id: categoryId,
+        date: Date.now(),
+        name: row[2],
         type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
-        account,
-        category,
+        iconID: getRandomIcon(iconsCategory).id,
+        colorID: getRandomColor().id,
+      };
+      const description = row[4];
+      const newAccount = findAccount(accounts, accountId);
+      const newCategory = findCategory(categories, row[2], category.type);
+      if (newAccount) {
+        accountId = newAccount.id;
+      } else {
+        accounts.push(account);
+      }
+      if (newCategory) {
+        categoryId = newCategory.id;
+      } else {
+        categories.push(category);
+      }
+      transactions.push({
+        id: increaseID(transactions, 'importedPrivat', transactionId) || 'importedPrivat',
+        date,
+        type: category.type,
+        account: accountId,
+        category: categoryId,
         amount,
         description,
       });
-      if (!newAccount) {
-        accounts.push(account);
-      }
-      if (!newCategory) {
-        categories.push(category);
-      }
     }
   });
   return { accounts, categories, transactions };

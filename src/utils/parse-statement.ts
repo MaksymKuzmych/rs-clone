@@ -17,5 +17,6 @@ export const parseStatement = async (files: FileList | null) => {
       const data = utils.sheet_to_json(workSheet, { header: 1 }) as IMono[];
       return parseMono(data);
     }
+    throw new Error();
   }
 };

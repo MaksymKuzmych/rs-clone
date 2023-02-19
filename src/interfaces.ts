@@ -41,7 +41,7 @@ export interface ITransaction {
   account: string;
   category: string;
   amount: number;
-  description: string;
+  description: string | null;
 }
 
 export interface IData {
@@ -135,4 +135,10 @@ export interface IMono {
   7: string;
   8: string;
   9: number;
+}
+
+export interface IImportedData {
+  transactions: ITransaction[];
+  accounts: IAccount[];
+  categories: ICategory[];
 }
