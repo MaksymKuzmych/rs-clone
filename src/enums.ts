@@ -1,6 +1,6 @@
 export enum Lang {
-  EN = 'en',
-  RU = 'ru',
+  EN = 'EN',
+  RU = 'RU',
 }
 
 export enum Currency {
@@ -30,9 +30,20 @@ export enum TransactionType {
   Expenses = 'expenses',
 }
 
-export enum Mode {
-  Light = 'light',
-  Dark = 'dark',
+export enum Theme {
+  Light = 'Light',
+  Dark = 'Dark',
+}
+
+export enum ThemeColor {
+  Light = '#f8f8f8',
+  Dark = '#2a3139',
+}
+
+export enum AmountColor {
+  Zero = '#7f7f7f',
+  Income = '#6ebaa0',
+  Expenses = '#cd4863',
 }
 
 export enum Sort {

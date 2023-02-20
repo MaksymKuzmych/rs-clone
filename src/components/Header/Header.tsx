@@ -5,10 +5,23 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 import { NavBar } from '../NavBar/NavBar';
 
 import styles from './Header.module.scss';
+
+const theme = createTheme({
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+        },
+      },
+    },
+  },
+});
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -17,7 +30,7 @@ export function Header() {
   const handleDrawerClose = useCallback(() => setOpen(false), []);
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <AppBar position='static'>
         <Toolbar>
           <IconButton edge='start' color='inherit' aria-label='menu' onClick={handleDrawerOpen}>
@@ -56,6 +69,6 @@ export function Header() {
         className={!open ? styles.overlay : `${styles.overlay} ${styles.overlayOpen}`}
         onClick={handleDrawerClose}
       ></div>
-    </div>
+    </ThemeProvider>
   );
 }

@@ -4,7 +4,9 @@ import { useSnackbar } from 'notistack';
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { BrowserRouterProps } from 'react-router-dom';
 
+import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
+import { Theme, ThemeColor } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
 import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
@@ -56,10 +58,9 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
           userData.settings.period,
         ),
       );
+      setPending(false);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
-    } finally {
-      setPending(false);
     }
   }, [enqueueSnackbar, userData]);
 
@@ -67,6 +68,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
+          setPending(true);
           await createAnonUser(user.uid);
           setUserData(await pullUserSettings(userData, user.uid));
           setUserData(
@@ -77,12 +79,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
               userData.settings.period,
             ),
           );
+          setPending(false);
           if (user.isAnonymous) {
             enqueueSnackbar('Anonymous Login', { variant: 'success' });
           } else {
             enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
           }
-          setPending(false);
         } else {
           await signInAnon();
         }
@@ -96,9 +98,16 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     return (
       <>
         <Header />
-        <div style={{ flexGrow: 1 }}>
+        <div
+          style={{
+            flexGrow: 1,
+            backgroundColor:
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+          }}
+        >
           <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
         </div>
+        <Footer />
       </>
     );
   }

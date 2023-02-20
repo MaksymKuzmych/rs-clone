@@ -1,8 +1,6 @@
 @import '../../styles/variables.scss';
 
 .transactionPage {
-  background-color: $dark-gray;
-  color: white;
   flex-grow: 1;
 }
 
@@ -12,7 +10,7 @@
 
   &::-webkit-scrollbar-track {
     border-radius: 3px;
-    background-color: $dark-gray;
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar {
@@ -22,7 +20,7 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: $light-gray;
+    background-color: $gray;
   }
 }
 

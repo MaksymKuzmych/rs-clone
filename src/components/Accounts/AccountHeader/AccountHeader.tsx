@@ -2,6 +2,7 @@ import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
+import { AmountColor } from '../../../enums';
 
 import styles from './AccountHeader.module.scss';
 
@@ -17,7 +18,18 @@ export const AccountHeader = memo(({ amount }: AccountHeaderProps) => {
   return (
     <header className={styles.header}>
       <h2 className={styles.title}>{t('Accounts')}</h2>
-      <p className={styles.amount}>{setCurrency(amount)}</p>
+      <p
+        className={styles.amount}
+        style={{
+          color: !amount
+            ? AmountColor.Zero
+            : amount > 0
+            ? AmountColor.Income
+            : AmountColor.Expenses,
+        }}
+      >
+        {setCurrency(amount)}
+      </p>
     </header>
   );
 });

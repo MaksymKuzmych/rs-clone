@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
+import { Theme, ThemeColor } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 import { IAccount } from '../../../interfaces';
 
@@ -17,9 +18,9 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
-  const { t } = useTranslation();
-
   const [transactions, setTransactions] = useState(0);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (userData.data.transactions) {
@@ -38,10 +39,17 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
   }, [changeUserData, currentAccount.id, drawerHandler, userData.settings.userId]);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{
+        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+      }}
+    >
       <div className={styles.header}>
         <div className={styles.iconWrapper} style={{ backgroundColor: currentAccount.color }}>
-          <span className='material-icons'>{currentAccount.icon}</span>
+          <span className='material-icons' style={{ color: 'white' }}>
+            {currentAccount.icon}
+          </span>
         </div>
         <p className={styles.headerText}>
           {t('Delete')} {currentAccount.name} ?

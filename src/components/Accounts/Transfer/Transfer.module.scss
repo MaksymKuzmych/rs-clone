@@ -1,8 +1,6 @@
 @import '../../../styles/variables.scss';
 
 .accountsWrapper {
-  background-color: $dark-gray;
-  color: white;
   padding: 5px;
   height: 290px;
   overflow-y: scroll;
@@ -10,7 +8,7 @@
   &::-webkit-scrollbar-track {
     padding: 2px 0;
     border-radius: 3px;
-    background-color: $dark-gray;
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar {
@@ -20,13 +18,13 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
-    background-color: $light-gray;
+    background-color: $gray;
   }
 }
 
 .emptyAccountsTitle {
   padding: 20px 10px;
-  color: $light-gray;
+  color: $gray;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,11 +46,10 @@
   gap: 5px;
   align-items: center;
   font-size: 22px;
-  color: white;
 }
 
 .error {
-  color: $red;
+  color: $red-font;
   padding-left: 10px;
 }
 

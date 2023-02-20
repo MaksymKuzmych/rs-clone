@@ -2,7 +2,7 @@ import { memo, PropsWithChildren, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { Lang, Period } from '../../../enums';
+import { Lang, Period, Theme, ThemeColor } from '../../../enums';
 import { getPeriod } from '../../../utils/get-period';
 
 import styles from './TransactionDay.module.scss';
@@ -17,6 +17,7 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
   const { setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
+
   const { lang } = userData.settings;
   const locale = lang === Lang.EN ? 'en-US' : 'ru-RU';
   const day = new Date(date).getDate();
@@ -42,7 +43,12 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
 
   return (
     <div className={styles.dayContainer}>
-      <div className={today === date ? styles.today : styles.day}>
+      <div
+        className={today === date ? styles.today : styles.day}
+        style={{
+          backgroundColor: userData.settings.theme === Theme.Light ? '#e9ecef' : ThemeColor.Dark,
+        }}
+      >
         <div className={styles.infoWrapper}>
           <p className={styles.date}>{day}</p>
           <div>

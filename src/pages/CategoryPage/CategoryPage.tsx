@@ -1,5 +1,6 @@
 import { useCallback, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ThemeProvider } from '@mui/material';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
@@ -7,10 +8,11 @@ import { AuthContext } from '../../Auth/Auth';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { ICategory, IChart } from '../../interfaces';
 import { colors } from '../../data/colors';
-import { TransactionType, CurrencySymbol } from '../../enums';
+import { TransactionType, CurrencySymbol, ThemeColor, Theme } from '../../enums';
 import { CategoryForm } from '../../components/Forms/CategoryForm';
 import { defaultNames } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
+import { theme } from '../../styles/theme';
 
 import styles from './CategoryPage.module.scss';
 
@@ -118,53 +120,62 @@ export const CategoryPage = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.categoryArea}>
-        <CategoriesLine
-          dataCategories={categoriesFiltered}
-          start={0}
-          end={4}
-          classLine={'lineTop'}
-          callbackTransferCategory={transferCategory}
-        />
-        <CategoriesLine
-          dataCategories={categoriesFiltered}
-          start={4}
-          end={6}
-          classLine={'lineLeft'}
-          callbackTransferCategory={transferCategory}
-        />
-        <CategoriesLine
-          dataCategories={categoriesFiltered}
-          start={6}
-          end={8}
-          classLine={'lineRight'}
-          callbackTransferCategory={transferCategory}
-        />
-        <CategoriesLine
-          dataCategories={categoriesFiltered}
-          start={8}
-          end={12}
-          classLine={'lineBottom'}
-          callbackTransferCategory={transferCategory}
-        />
-        <ChartComponent
-          type={categoryType}
-          dataChart={transactions.length ? dataForChart : dataForChartEmpty}
-          income={income}
-          expenses={expenses}
-          currencySymbol={currencySymbol}
-          callback={changeCategoryType}
-        />
-      </div>
-      <TemporaryDrawer
-        state={state}
-        anchor='bottom'
-        type={typeDrawer}
-        drawerHandler={drawerHandler}
+    <ThemeProvider theme={theme(userData.settings.theme)}>
+      <div
+        className={styles.wrapper}
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+        }}
       >
-        <CategoryForm category={categoryClicked} type={categoryType} />
-      </TemporaryDrawer>
-    </div>
+        <div className={styles.categoryArea}>
+          <CategoriesLine
+            dataCategories={categoriesFiltered}
+            start={0}
+            end={4}
+            classLine={'lineTop'}
+            callbackTransferCategory={transferCategory}
+          />
+          <CategoriesLine
+            dataCategories={categoriesFiltered}
+            start={4}
+            end={6}
+            classLine={'lineLeft'}
+            callbackTransferCategory={transferCategory}
+          />
+          <CategoriesLine
+            dataCategories={categoriesFiltered}
+            start={6}
+            end={8}
+            classLine={'lineRight'}
+            callbackTransferCategory={transferCategory}
+          />
+          <CategoriesLine
+            dataCategories={categoriesFiltered}
+            start={8}
+            end={12}
+            classLine={'lineBottom'}
+            callbackTransferCategory={transferCategory}
+          />
+          <ChartComponent
+            type={categoryType}
+            dataChart={transactions.length ? dataForChart : dataForChartEmpty}
+            income={income}
+            expenses={expenses}
+            currencySymbol={currencySymbol}
+            callback={changeCategoryType}
+          />
+        </div>
+        <TemporaryDrawer
+          state={state}
+          anchor='bottom'
+          type={typeDrawer}
+          drawerHandler={drawerHandler}
+        >
+          <CategoryForm category={categoryClicked} type={categoryType} />
+        </TemporaryDrawer>
+      </div>
+    </ThemeProvider>
   );
 };

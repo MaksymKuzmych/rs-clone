@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { createTheme, TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,8 @@ import { SettingsBtn } from '../Accounts/Settings/SettingsBtn/SettingsBtn';
 import { Colors } from '../UI/Colors/Colors';
 import { Icons } from '../UI/Icons/Icons';
 import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCategory';
-
 import { colors } from '../../data/colors';
-import { TransactionType } from '../../enums';
+import { Theme, ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
 import { iconsCategory } from '../../data/icons';
 import { defaultNames } from '../../data/defaultNames';
@@ -27,6 +26,46 @@ interface CategoryFormProps {
   type: TransactionType;
   category: ICategory | null;
 }
+
+const themeForTitle = () =>
+  createTheme({
+    palette: {
+      primary: {
+        main: '#fff',
+      },
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            color: '#fff',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: '22px',
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            marginBottom: '5px',
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: '#f8f8f8',
+            fontSize: '23px',
+          },
+        },
+      },
+    },
+  });
 
 export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
   const iconName = iconsCategory.find((item) => item.id === category?.iconID)?.name;
@@ -113,20 +152,29 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
               </span>
             </button>
           </div>
-          <TextField
-            variant='standard'
-            color='primary'
-            sx={{ width: '70%' }}
-            label={t('Name')}
-            name='name'
-            type='text'
-            onChange={formik.handleChange}
-            helperText={formik.errors.name}
-            error={!!formik.errors.name}
-            value={formik.values.name}
-          />
+          <ThemeProvider theme={themeForTitle}>
+            <TextField
+              variant='standard'
+              color='primary'
+              sx={{ width: '70%' }}
+              label={t('Name')}
+              name='name'
+              type='text'
+              onChange={formik.handleChange}
+              helperText={formik.errors.name}
+              error={!!formik.errors.name}
+              value={formik.values.name}
+            />
+          </ThemeProvider>
         </div>
-        <div className={styles.innerWrapper}>
+        <div
+          className={styles.innerWrapper}
+          style={{
+            backgroundColor:
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          }}
+        >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>
             <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
               <span className='material-icons' style={{ color: `${color}` }}>

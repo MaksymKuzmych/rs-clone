@@ -5,6 +5,7 @@ import {
   where,
   getDocs,
   orderBy,
+  OrderByDirection,
 } from 'firebase/firestore';
 
 import { Sort } from '../enums';

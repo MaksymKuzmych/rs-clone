@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../Auth/Auth';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
-import { Period } from '../../enums';
+import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 import { parseStatement } from '../../utils/parse-statement';
@@ -70,7 +70,14 @@ export const TransactionPage = () => {
   }, [t, transactions]);
 
   return (
-    <div className={styles.transactionPage}>
+    <div
+      className={styles.transactionPage}
+      style={{
+        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+        backgroundColor:
+          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+      }}
+    >
       <button className={styles.buttonAdd}>+</button>
       <input type='file' onChange={onClick} />
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
