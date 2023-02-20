@@ -36,7 +36,7 @@ export enum Theme {
 }
 
 export enum ThemeColor {
-  Light = 'white',
+  Light = '#f8f8f8',
   Dark = '#2a3139',
 }
 

@@ -5,7 +5,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { colors } from '../../../data/colors';
 import { defaultNames } from '../../../data/defaultNames';
 import { iconsCategory } from '../../../data/icons';
-import { TransactionType } from '../../../enums';
+import { Theme, ThemeColor, TransactionType } from '../../../enums';
 import { ITransaction } from '../../../interfaces';
 
 import styles from './Transaction.module.scss';
@@ -32,7 +32,12 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
   const sign = type === TransactionType.Income;
 
   return (
-    <div className={styles.transaction}>
+    <div
+      className={styles.transaction}
+      style={{
+        backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : '#343a40',
+      }}
+    >
       <div className={styles.infoWrapper}>
         <div className={styles.iconWrapper} style={{ backgroundColor: categoryColor }}>
           <span className='material-icons' style={{ color: 'white' }}>

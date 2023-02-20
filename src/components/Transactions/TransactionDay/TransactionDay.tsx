@@ -17,6 +17,7 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
   const { setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
+
   const { lang } = userData.settings;
   const locale = lang === Lang.EN ? 'en-US' : 'ru-RU';
   const day = new Date(date).getDate();

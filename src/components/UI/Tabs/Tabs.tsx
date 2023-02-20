@@ -14,9 +14,7 @@ interface TabPanelProps {
   children?: ReactNode;
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
+function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
     <div
       role='tabpanel'
@@ -51,6 +49,7 @@ interface BasicTabsProps {
 export const BasicTabs = memo(
   ({ firstChild, secondChild, firstTitle, secondTitle }: BasicTabsProps) => {
     const { userData } = useContext(AuthContext);
+
     const [value, setValue] = useState(0);
 
     const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {

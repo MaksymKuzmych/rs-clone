@@ -7,9 +7,9 @@ import { iconsCategory, iconsProject } from '../../../data/icons';
 import { defaultNames } from '../../../data/defaultNames';
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './Category.module.scss';
-import { Theme, ThemeColor } from '../../../enums';
 
 interface CategoryProps {
   dataCategory: ICategory;

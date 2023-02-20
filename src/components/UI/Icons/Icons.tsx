@@ -13,6 +13,7 @@ interface IconsProps {
 
 export const Icons = memo(({ page, iconHandler }: IconsProps) => {
   const { userData } = useContext(AuthContext);
+
   const [icons, setIcons] = useState(iconsCard);
   const [active, setActive] = useState(0);
 

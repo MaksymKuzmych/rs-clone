@@ -76,5 +76,15 @@
   "UAH": "UAH",
   "RUB": "RUB",
   "TODAY": "TODAY",
-  "YESTERDAY": "YESTERDAY"
+  "YESTERDAY": "YESTERDAY",
+  "Email": "Email",
+  "Password": "Password",
+  "Invalid email": "Invalid email",
+  "Password must be at least 6 characters": "Password must be at least 6 characters",
+  "Password must be at most 16 characters": "Password must be at most 16 characters",
+  "Sign In": "Sign In",
+  "Sign Up": "Sign Up",
+  "Don't have an account? Sign Up": "Don't have an account? Sign Up",
+  "Already have an account? Sign In": "Already have an account? Sign In",
+  "Authors": "Authors"
 }

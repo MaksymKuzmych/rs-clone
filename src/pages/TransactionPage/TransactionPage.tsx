@@ -54,7 +54,8 @@ export const TransactionPage = () => {
       className={styles.transactionPage}
       style={{
         color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-        backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : '#343a40',
+        backgroundColor:
+          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
       }}
     >
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>

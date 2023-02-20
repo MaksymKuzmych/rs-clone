@@ -30,6 +30,8 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
 
   const { t, i18n } = useTranslation();
 
+  const open = Boolean(anchorEl);
+
   useEffect(() => {
     switch (name) {
       case 'Language':
@@ -43,8 +45,6 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
         break;
     }
   }, [name, userData.settings.currency, userData.settings.lang, userData.settings.theme]);
-
-  const open = Boolean(anchorEl);
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -116,14 +116,11 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
         <div className={styles.paper}>
           <FormControl
             component='fieldset'
-            className={styles.menuWrapper}
             sx={{
               padding: '15px',
             }}
           >
-            <FormLabel component='legend' className={styles.menuTitle}>
-              {t(`${name}`)}
-            </FormLabel>
+            <FormLabel component='legend'>{t(`${name}`)}</FormLabel>
             <RadioGroup
               aria-label={name}
               name={name}

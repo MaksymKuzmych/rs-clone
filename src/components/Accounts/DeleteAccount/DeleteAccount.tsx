@@ -18,9 +18,9 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
-  const { t } = useTranslation();
-
   const [transactions, setTransactions] = useState(0);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (userData.data.transactions) {

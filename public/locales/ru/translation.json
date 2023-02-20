@@ -76,5 +76,15 @@
   "UAH": "UAH",
   "RUB": "RUB",
   "TODAY": "СЕГОДНЯ",
-  "YESTERDAY": "ВЧЕРА"
+  "YESTERDAY": "ВЧЕРА",
+  "Email": "Электронная почта",
+  "Password": "Пароль",
+  "Invalid email": "Неверный адрес почты",
+  "Password must be at least 6 characters": "Пароль должен быть не менее 6 символов",
+  "Password must be at most 16 characters": "Пароль должен быть не более 16 символов",
+  "Sign In": "Вход",
+  "Sign Up": "Регистрация",
+  "Don't have an account? Sign Up": "Нет аккаунта? Зарегистрироваться",
+  "Already have an account? Sign In": "Уже есть аккаунт? Войти",
+  "Authors": "Авторы"
 }

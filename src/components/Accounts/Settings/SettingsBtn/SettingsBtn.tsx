@@ -18,7 +18,6 @@ export const SettingsBtn = memo(({ icon, color, title, onClick }: SettingsBtnPro
   const [hover, setHover] = useState(false);
 
   const handleMouseEnter = useCallback(() => setHover(true), []);
-
   const handleMouseLeave = useCallback(() => setHover(false), []);
 
   return (

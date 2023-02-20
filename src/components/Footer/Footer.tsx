@@ -21,9 +21,7 @@ export const Footer = () => {
       }}
     >
       <NavLink
-        className={({ isActive }) => {
-          return isActive ? styles.activeItem : styles.item;
-        }}
+        className={({ isActive }) => (isActive ? styles.activeItem : styles.item)}
         style={({ isActive }) => ({
           color:
             isActive && userData.settings.theme === Theme.Light
@@ -38,9 +36,7 @@ export const Footer = () => {
         <p className={styles.text}>{t('Accounts')}</p>
       </NavLink>
       <NavLink
-        className={({ isActive }) => {
-          return isActive ? styles.activeItem : styles.item;
-        }}
+        className={({ isActive }) => (isActive ? styles.activeItem : styles.item)}
         style={({ isActive }) => ({
           color:
             isActive && userData.settings.theme === Theme.Light
@@ -55,9 +51,7 @@ export const Footer = () => {
         <p className={styles.text}>{t('Categories')}</p>
       </NavLink>
       <NavLink
-        className={({ isActive }) => {
-          return isActive ? styles.activeItem : styles.item;
-        }}
+        className={({ isActive }) => (isActive ? styles.activeItem : styles.item)}
         style={({ isActive }) => ({
           color:
             isActive && userData.settings.theme === Theme.Light

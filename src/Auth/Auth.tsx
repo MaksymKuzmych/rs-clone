@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
           setPending(true);
           await createAnonUser(user.uid);
           setUserData(await pullUserData(userData, user.uid));
+          setPending(false);
           if (user.isAnonymous) {
             enqueueSnackbar('Anonymous Login', { variant: 'success' });
           } else {
@@ -73,8 +74,6 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
         }
       } catch (error) {
         enqueueSnackbar(`${error}`, { variant: 'error' });
-      } finally {
-        setPending(false);
       }
     });
   }, [enqueueSnackbar, userData]);
