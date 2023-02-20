@@ -24,9 +24,6 @@ export const NavLinkItem = memo(({ path, name, src }: NavLinkItemProps) => {
 
   return (
     <ListItem className={styles.linkButton}>
-      <ListItemIcon>
-        <img className={styles.icon} src={src} alt='icon' />
-      </ListItemIcon>
       <NavLink
         to={path}
         className={styles.link}
@@ -40,6 +37,9 @@ export const NavLinkItem = memo(({ path, name, src }: NavLinkItemProps) => {
             : ThemeColor.Light,
         }}
       >
+        <ListItemIcon>
+          <img className={styles.icon} src={src} alt='icon' />
+        </ListItemIcon>
         {name}
       </NavLink>
     </ListItem>

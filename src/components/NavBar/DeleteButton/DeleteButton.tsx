@@ -36,18 +36,12 @@ export const DeleteButton = () => {
     });
 
     await pushUserData(userData.userId, {
-      accounts: [...defaultUserData.data.accounts],
-      categories: [...defaultUserData.data.categories],
+      accounts: defaultUserData.data.accounts,
+      categories: defaultUserData.data.categories,
     });
 
     changeUserData();
-  }, [
-    changeUserData,
-    userData.data.accounts,
-    userData.data.categories,
-    userData.data.transactions,
-    userData.userId,
-  ]);
+  }, [changeUserData, userData.data, userData.userId]);
 
   const deleteTransactions = useCallback(async () => {
     userData.data.transactions.forEach(async (transaction) => {
