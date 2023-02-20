@@ -21,13 +21,13 @@
 
 .totalExpenses {
   color: $red-font;
-  font-size: 18px;
+  font-size: 20px;
   padding: 10px;
   cursor: pointer;
   transition: filter 0.3s;
 
   &:hover {
-    filter:brightness(1.2)
+    filter: brightness(1.2);
   }
 }
 
@@ -38,7 +38,7 @@
   transition: filter 0.3s;
 
   &:hover {
-    filter:brightness(1.2)
+    filter: brightness(1.2);
   }
 }
 

@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
 
+.wrapper {
+  height: 100%;
+}
+
 .navHeader {
   background-color: $lilac;
   padding: 20px;
@@ -14,7 +18,9 @@
 
   .button {
     color: white;
-    font-size: 10px;
+    font-size: 12px;
+    border: 0.5px solid white;
+    border-radius: 5px;
     transition: box-shadow 0.5s;
     &:hover {
       box-shadow: 0 0 7px;
@@ -25,15 +31,29 @@
 .userInfo {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
+}
+
+.userUpper {
+  display: flex;
   align-items: center;
+  justify-content: space-around;
 }
 
 .userAva {
   background-color: $gray-light;
-  padding: 10px;
   border-radius: 50%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+}
+
+.userPhoto {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
 }
 
 .userName {
@@ -59,8 +79,8 @@
 .logoWrapper {
   padding: 5px 0;
   border-radius: 15px;
-  transition: transform .5s;
-  &:hover {    
+  transition: transform 0.5s;
+  &:hover {
     transform: scale(1.05);
   }
 }

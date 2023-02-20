@@ -2,6 +2,7 @@ import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../../Auth/Auth';
+import { defaultNames } from '../../../../data/defaultNames';
 import { IAccount } from '../../../../interfaces';
 
 import styles from './SettingsHeader.module.scss';
@@ -22,7 +23,7 @@ export const SettingsHeader = memo(({ currentAccount }: SettingsHeaderProps) => 
       <div className={styles.info}>
         <span className='material-icons'>{icon}</span>
         <div className={styles.text}>
-          <p className={styles.name}>{name}</p>
+          <p className={styles.name}>{defaultNames.includes(name) ? t(name) : name}</p>
           {description && <p className={styles.description}>{description}</p>}
         </div>
       </div>
