@@ -1,24 +1,12 @@
 import { deleteDoc, doc } from 'firebase/firestore';
 import { Sort } from '../enums';
-import { IAccount, ICategory, IData, ITransaction } from '../interfaces';
+import { IData, ITransaction } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 import { getFilteredUserData } from './get-filtered-user-data';
 
-export const deleteAllUserData = async (userId: string) => {
-  const firebase: Partial<IData> = { accounts: [], categories: [], transactions: [] };
+export const deleteAllUserTransactions = async (userId: string) => {
+  const firebase: Partial<IData> = { transactions: [] };
   try {
-    firebase.accounts = (await getFilteredUserData(
-      userId,
-      { accounts: null },
-      Sort.ASC,
-    )) as IAccount[];
-    firebase.categories = (await getFilteredUserData(
-      userId,
-      {
-        categories: null,
-      },
-      Sort.ASC,
-    )) as ICategory[];
     firebase.transactions = (await getFilteredUserData(
       userId,
       {
