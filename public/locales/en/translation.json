@@ -87,5 +87,10 @@
   "Don't have an account? Sign Up": "Don't have an account? Sign Up",
   "Already have an account? Sign In": "Already have an account? Sign In",
   "Authors": "Authors",
-  "No transactions": "No transactions"
+  "No transactions": "No transactions",
+  "Account ": "Account ",
+  "Unlink Google": "Unlink Google",
+  "Link Google": "Link Google",
+  "Unlink GitHub": "Unlink GitHub",
+  "Link GitHub": "Link GitHub"
 }

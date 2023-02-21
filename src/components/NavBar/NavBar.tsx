@@ -16,9 +16,10 @@ import { BasicModal } from '../UI/Modal/Modal';
 import { Login } from './Login/Login';
 import { auth } from '../../firebase/firebase-config';
 import { signOutUser } from '../../firebase/sign-out-user';
+import { ImportXLS } from './ImportXLS/ImportXLS';
+import { NavLinkAccount } from './NavLinkAccount/NavLinkAccount';
 
 import styles from './NavBar.module.scss';
-import { ImportXLS } from './ImportXLS/ImportXLS';
 
 export const NavBar = () => {
   const { userData } = useContext(AuthContext);
@@ -113,12 +114,12 @@ export const NavBar = () => {
                 auth.currentUser?.providerData[2]?.displayName ||
                 auth.currentUser?.email ||
                 t('User Name')}{' '}
-              {auth.currentUser?.providerData[0]?.providerId}
             </div>
           </div>
         </div>
         <div className={styles.menu}>
           <List component='nav' aria-label='burgerMenu'>
+            <NavLinkAccount />
             <div className={styles.subtitle}>{t('Settings')}</div>
             <NavItem icon={'language'} name={'Language'} enumData={Object.keys(Lang)} />
             <Divider />

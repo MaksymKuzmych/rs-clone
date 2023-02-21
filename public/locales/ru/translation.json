@@ -87,5 +87,10 @@
   "Don't have an account? Sign Up": "Нет аккаунта? Зарегистрироваться",
   "Already have an account? Sign In": "Уже есть аккаунт? Войти",
   "Authors": "Авторы",
-  "No transactions": "Нет транзакций"
+  "No transactions": "Нет транзакций",
+  "Account ": "Учетная запись ",
+  "Unlink Google": "Отвязать Google",
+  "Link Google": "Связать Google",
+  "Unlink GitHub": "Отвязать GitHub",
+  "Link GitHub": "Связать GitHub"
 }

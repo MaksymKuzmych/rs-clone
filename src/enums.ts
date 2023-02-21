@@ -52,6 +52,6 @@ export enum Sort {
 }
 
 export enum Provider {
-  Google = 'Google',
-  Github = 'Github',
+  Google = 'google.com',
+  Github = 'github.com',
 }

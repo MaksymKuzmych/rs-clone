@@ -1,0 +1,53 @@
+@import '../../../styles/variables.scss';
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+
+  .button {
+    color: white;
+    font-size: 22px;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: box-shadow 0.5s;
+    &:hover {
+      box-shadow: 0 0 7px;
+    }
+  }
+}
+
+.subtitle {
+  color: $lilac;
+  padding: 5px 0;
+  font-size: 18px;
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16%;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #d44f3d;
+  color: white;
+  width: 100%;
+  font-size: 20px;
+}
+
+.githubBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16%;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #90969f;
+  color: white;
+  width: 100%;
+  font-size: 20px;
+}
+
+.icon {
+  height: 25px;
+}

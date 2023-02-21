@@ -24,8 +24,8 @@ export const Login = () => {
 
   const { t } = useTranslation();
 
-  const signInGoogleHandler = () => signInProvider(Provider.Google);
-  const signInGithubHandler = () => signInProvider(Provider.Github);
+  const signInGoogleHandler = async () => await signInProvider(Provider.Google);
+  const signInGithubHandler = async () => await signInProvider(Provider.Github);
 
   const formik = useFormik({
     initialValues: {
