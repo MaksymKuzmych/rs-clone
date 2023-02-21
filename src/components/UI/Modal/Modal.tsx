@@ -1,15 +1,9 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { memo, PropsWithChildren } from 'react';
+import { memo, PropsWithChildren, useContext } from 'react';
 
-const style = {
-  position: 'absolute',
-  width: 320,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: '#2a3139',
-};
+import { AuthContext } from '../../../Auth/Auth';
+import { Theme, ThemeColor } from '../../../enums';
 
 interface BasicModalProps {
   openModal: boolean;
@@ -18,6 +12,8 @@ interface BasicModalProps {
 
 export const BasicModal = memo(
   ({ openModal, children, handleClose }: PropsWithChildren<BasicModalProps>) => {
+    const { userData } = useContext(AuthContext);
+
     return (
       <div>
         <Modal
@@ -26,7 +22,19 @@ export const BasicModal = memo(
           aria-labelledby='modal-modal-title'
           aria-describedby='modal-modal-description'
         >
-          <Box sx={style}>{children}</Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              width: 320,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor:
+                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            }}
+          >
+            {children}
+          </Box>
         </Modal>
       </div>
     );

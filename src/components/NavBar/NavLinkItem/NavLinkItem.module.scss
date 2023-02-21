@@ -1,14 +1,18 @@
 @import '../../../styles/variables.scss';
 
 .link {
-  color: black;
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  transition: all 0.3s;
 }
 
 .linkButton {
   cursor: pointer;
+}
 
-  &:hover .link {
-    color: $lilac;
-  }
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

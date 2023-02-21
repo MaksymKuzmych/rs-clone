@@ -1,6 +1,8 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState, useContext } from 'react';
 
+import { AuthContext } from '../../../Auth/Auth';
 import { iconsCard, iconsCategory } from '../../../data/icons';
+import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './Icons.module.scss';
 
@@ -10,6 +12,8 @@ interface IconsProps {
 }
 
 export const Icons = memo(({ page, iconHandler }: IconsProps) => {
+  const { userData } = useContext(AuthContext);
+
   const [icons, setIcons] = useState(iconsCard);
   const [active, setActive] = useState(0);
 
@@ -26,17 +30,24 @@ export const Icons = memo(({ page, iconHandler }: IconsProps) => {
             setActive(el.id);
           }}
           key={el.id}
-          className={active === el.id ? styles.active : styles.btn}
+          className={styles.btn}
         >
           <span
             className='material-icons'
-            style={{ color: active === el.id ? 'white' : '#a8adb3' }}
+            style={{
+              color:
+                active === el.id && userData.settings.theme === Theme.Light
+                  ? ThemeColor.Dark
+                  : active === el.id && userData.settings.theme === 'Dark'
+                  ? ThemeColor.Light
+                  : '#7f7f7f',
+            }}
           >
             {el.name}
           </span>
         </button>
       )),
-    [active, iconHandler, icons],
+    [active, iconHandler, icons, userData.settings.theme],
   );
 
   return <div className={styles.wrapper}>{iconsLayout}</div>;

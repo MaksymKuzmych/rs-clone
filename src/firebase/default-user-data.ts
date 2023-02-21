@@ -1,4 +1,4 @@
-import { Currency, Lang, Mode, Period, TransactionType } from '../enums';
+import { Currency, Lang, Theme, Period, TransactionType } from '../enums';
 import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
@@ -7,7 +7,7 @@ export const defaultUserData: IStore = {
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
-    theme: Mode.Dark,
+    theme: Theme.Dark,
     selectedAccount: null,
     periodType: Period.Month,
     period: getPeriod(Period.Month, Date.now()),
@@ -116,7 +116,7 @@ export const emptyUserData: IStore = {
   settings: {
     lang: Lang.EN,
     currency: Currency.USD,
-    theme: Mode.Dark,
+    theme: Theme.Dark,
     selectedAccount: null,
     periodType: Period.Month,
     period: getPeriod(Period.Month, Date.now()),

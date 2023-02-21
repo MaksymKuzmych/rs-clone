@@ -1,6 +1,4 @@
 .wrapper {
-  background-color: white;
-  color: black;
   padding: 20px;
 }
 
@@ -17,10 +15,18 @@
   padding-top: 20px;
 }
 
-.deleteBtn {
-  color: red;
+.delete {
+  color: #f3433490;
 }
 
-.cancelBtn {
-  color: gray;
+.delete:hover {
+  color: #f34334;
+}
+
+.cancel {
+  color: #7f7f7f90;
+}
+
+.cancel:hover {
+  color: #7f7f7f;
 }

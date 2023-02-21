@@ -1,9 +1,9 @@
-import { Currency, Lang, Mode, Period, TransactionType } from './enums';
+import { Currency, Lang, Theme, Period, TransactionType } from './enums';
 
 export interface ISettings {
   lang: Lang;
   currency: Currency;
-  theme: Mode;
+  theme: Theme;
   selectedAccount: string | null;
   periodType: Period;
   period: { start: number | null; end: number | null };

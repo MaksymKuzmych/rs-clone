@@ -5,15 +5,20 @@ import {
   where,
   getDocs,
   orderBy,
+  OrderByDirection,
 } from 'firebase/firestore';
 import { IDataFBFiltered } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 
-export const getFilteredUserData = async (userId: string, data: IDataFBFiltered) => {
+export const getFilteredUserData = async (
+  userId: string,
+  data: IDataFBFiltered,
+  orderType: OrderByDirection,
+) => {
   try {
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
-    const order = orderBy('date', 'desc');
+    const order = orderBy('date', orderType);
     let queryRequest = query(dataRef, order);
     const queryArray: QueryFieldFilterConstraint[] = [];
     if (data.transactions?.periodStart && data.transactions?.periodEnd) {

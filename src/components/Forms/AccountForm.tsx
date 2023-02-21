@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { createTheme, TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,8 @@ import { object, string } from 'yup';
 
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
-import { CurrencySymbol } from '../../enums';
+import { defaultNames } from '../../data/defaultNames';
+import { CurrencySymbol, Theme, ThemeColor } from '../../enums';
 import { pushUserData } from '../../firebase/push-user-data';
 import { updateUserData } from '../../firebase/update-user-data';
 import { IAccount } from '../../interfaces';
@@ -20,6 +21,46 @@ import styles from './Forms.module.scss';
 interface AccountFormProps {
   currentAccount?: IAccount;
 }
+
+const themeForTitle = () =>
+  createTheme({
+    palette: {
+      primary: {
+        main: '#fff',
+      },
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            color: '#fff',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: '22px',
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            marginBottom: '5px',
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: '#f8f8f8',
+            fontSize: '23px',
+          },
+        },
+      },
+    },
+  });
 
 export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
@@ -39,7 +80,13 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
 
   const formik = useFormik({
     initialValues: {
-      name: `${currentAccount ? currentAccount.name : ''}`,
+      name: `${
+        !currentAccount
+          ? ''
+          : defaultNames.includes(currentAccount.name)
+          ? t(currentAccount.name)
+          : currentAccount.name
+      }`,
       balance: `${currentAccount ? currentAccount.balance : ''}`,
       description: `${currentAccount ? currentAccount.description : ''}`,
     },
@@ -93,20 +140,29 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
               </span>
             </button>
           </div>
-          <TextField
-            variant='standard'
-            color='primary'
-            sx={{ width: '70%' }}
-            label={t('Name')}
-            name='name'
-            type='text'
-            onChange={formik.handleChange}
-            helperText={formik.errors.name}
-            error={!!formik.errors.name}
-            value={formik.values.name}
-          />
+          <ThemeProvider theme={themeForTitle}>
+            <TextField
+              variant='standard'
+              color='primary'
+              sx={{ width: '70%' }}
+              label={t('Name')}
+              name='name'
+              type='text'
+              onChange={formik.handleChange}
+              helperText={formik.errors.name}
+              error={!!formik.errors.name}
+              value={formik.values.name}
+            />
+          </ThemeProvider>
         </div>
-        <div className={styles.innerWrapper}>
+        <div
+          className={styles.innerWrapper}
+          style={{
+            backgroundColor:
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          }}
+        >
           <button className={styles.btn} onClick={() => handleOpen()} type='button'>
             <div className={styles.iconWrapper} style={{ backgroundColor: 'black' }}>
               <span className='material-icons' style={{ color: `${color}` }}>

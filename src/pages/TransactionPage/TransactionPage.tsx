@@ -3,7 +3,7 @@ import { useContext, useMemo } from 'react';
 import { AuthContext } from '../../Auth/Auth';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
-import { Period, TransactionType } from '../../enums';
+import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 
@@ -50,7 +50,14 @@ export const TransactionPage = () => {
   }, [transactions]);
 
   return (
-    <div className={styles.transactionPage}>
+    <div
+      className={styles.transactionPage}
+      style={{
+        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+        backgroundColor:
+          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+      }}
+    >
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
     </div>
   );

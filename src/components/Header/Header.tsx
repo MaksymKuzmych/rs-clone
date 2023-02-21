@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { createTheme, ThemeProvider } from '@mui/material';
 import { NavBar } from '../NavBar/NavBar';
 import FilterBlock from './Filter/FilterBlock';
 import RangePeriod from './Range/RangePeriod';
@@ -11,6 +12,17 @@ import { OutlinedInputProps, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export function Header() {
+  const theme = createTheme({
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: 'transparent',
+          },
+        },
+      },
+    },
+  });
   const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
@@ -27,7 +39,7 @@ export function Header() {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <AppBar
         position='static'
         sx={{
@@ -102,6 +114,6 @@ export function Header() {
         className={!open ? styles.overlay : `${styles.overlay} ${styles.overlayOpen}`}
         onClick={handleDrawerClose}
       ></div>
-    </div>
+    </ThemeProvider>
   );
 }
