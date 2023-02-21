@@ -69,8 +69,21 @@ export const NavBar = () => {
           <div className={styles.userInfo}>
             <div className={styles.userUpper}>
               <div className={styles.userAva}>
-                {auth.currentUser?.photoURL ? (
-                  <img className={styles.userPhoto} src={auth.currentUser?.photoURL} alt='user' />
+                {auth.currentUser?.photoURL ||
+                auth.currentUser?.providerData[0]?.photoURL ||
+                auth.currentUser?.providerData[1]?.photoURL ||
+                auth.currentUser?.providerData[2]?.photoURL ? (
+                  <img
+                    className={styles.userPhoto}
+                    src={
+                      auth.currentUser?.photoURL ||
+                      auth.currentUser?.providerData[0]?.photoURL ||
+                      auth.currentUser?.providerData[1]?.photoURL ||
+                      auth.currentUser?.providerData[2]?.photoURL ||
+                      ''
+                    }
+                    alt='user'
+                  />
                 ) : (
                   <span className='material-icons' style={{ color: 'black' }}>
                     face
@@ -94,7 +107,13 @@ export const NavBar = () => {
               </div>
             </div>
             <div className={styles.userName}>
-              {auth.currentUser?.email ? auth.currentUser?.email : t('User Name')}
+              {auth.currentUser?.displayName ||
+                auth.currentUser?.providerData[0]?.displayName ||
+                auth.currentUser?.providerData[1]?.displayName ||
+                auth.currentUser?.providerData[2]?.displayName ||
+                auth.currentUser?.email ||
+                t('User Name')}{' '}
+              {auth.currentUser?.providerData[0]?.providerId}
             </div>
           </div>
         </div>

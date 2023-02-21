@@ -26,7 +26,11 @@ export const DeleteButton = () => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   const deleteAllData = useCallback(async () => {
-    await deleteAllUserData(userData.settings.userId);
+    await deleteAllUserData(userData.settings.userId, {
+      accounts: userData.data.accounts,
+      categories: userData.data.categories,
+    });
+    await deleteAllUserTransactions(userData.settings.userId);
 
     await pushUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
@@ -34,7 +38,7 @@ export const DeleteButton = () => {
     });
 
     await changeUserData();
-  }, [changeUserData, userData.settings.userId]);
+  }, [changeUserData, userData.data.accounts, userData.data.categories, userData.settings.userId]);
 
   const deleteTransactions = useCallback(async () => {
     await deleteAllUserTransactions(userData.settings.userId);
