@@ -18,6 +18,7 @@ import { auth } from '../../firebase/firebase-config';
 import { signOutUser } from '../../firebase/sign-out-user';
 
 import styles from './NavBar.module.scss';
+import { ImportXLS } from './ImportXLS/ImportXLS';
 
 export const NavBar = () => {
   const { userData } = useContext(AuthContext);
@@ -111,6 +112,7 @@ export const NavBar = () => {
             />
             <Divider />
             <div className={styles.subtitle}>{t('Data')}</div>
+            <ImportXLS />
             <DeleteButton />
             <Divider />
             <div className={styles.subtitle}>{t('Authors')}</div>

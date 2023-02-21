@@ -1,15 +1,12 @@
-import { useSnackbar } from 'notistack';
-import { ChangeEvent, useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../Auth/Auth';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
-import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
+import { Period, Theme, ThemeColor } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
-import { parseStatement } from '../../utils/parse-statement';
-import { pushImportedData } from '../../utils/push-imported-data';
 
 import styles from './TransactionPage.module.scss';
 
@@ -20,21 +17,9 @@ interface ITransactionsDay {
 }
 
 export const TransactionPage = () => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const { transactions } = userData.data;
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-
-  const onClick = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    try {
-      await pushImportedData(userData.settings.userId, await parseStatement(files));
-      enqueueSnackbar('Import Successfull', { variant: 'success' });
-      changeUserData();
-    } catch (error) {
-      enqueueSnackbar('Wrong Import Format', { variant: 'error' });
-    }
-  };
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -79,7 +64,6 @@ export const TransactionPage = () => {
       }}
     >
       <button className={styles.buttonAdd}>+</button>
-      <input type='file' onChange={onClick} />
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
     </div>
   );

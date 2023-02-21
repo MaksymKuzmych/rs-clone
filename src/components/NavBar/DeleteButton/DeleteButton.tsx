@@ -7,12 +7,12 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { deleteUserData } from '../../../firebase/delete-user-data';
 import { defaultUserData } from '../../../firebase/default-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './DeleteButton.module.scss';
+import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
 
 export const DeleteButton = () => {
   const { userData, changeUserData } = useContext(AuthContext);
@@ -25,30 +25,20 @@ export const DeleteButton = () => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   const deleteAllData = useCallback(async () => {
-    userData.data.accounts.forEach(async (account) => {
-      await deleteUserData(userData.settings.userId, { accounts: account.id });
-    });
-    userData.data.categories.forEach(async (category) => {
-      await deleteUserData(userData.settings.userId, { categories: category.id });
-    });
-    userData.data.transactions.forEach(async (transaction) => {
-      await deleteUserData(userData.settings.userId, { transactions: transaction.id });
-    });
+    await deleteAllUserData(userData.settings.userId, userData.data);
 
     await pushUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
       categories: defaultUserData.data.categories,
     });
 
-    changeUserData();
+    await changeUserData();
   }, [changeUserData, userData.data, userData.settings.userId]);
 
   const deleteTransactions = useCallback(async () => {
-    userData.data.transactions.forEach(async (transaction) => {
-      await deleteUserData(userData.settings.userId, { transactions: transaction.id });
-    });
+    await deleteAllUserData(userData.settings.userId, { transactions: userData.data.transactions });
 
-    changeUserData();
+    await changeUserData();
   }, [changeUserData, userData.data.transactions, userData.settings.userId]);
 
   return (

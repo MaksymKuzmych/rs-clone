@@ -69,7 +69,7 @@ export const Transfer = ({ currentAccount }: TransferProps) => {
         },
       });
 
-      changeUserData();
+      await changeUserData();
       drawerHandler('info', 'bottom', false);
     }
   };

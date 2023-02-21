@@ -11,10 +11,9 @@ export const signInProvider = async (provider: Provider) => {
   const CREDENTIALS_ERROR = 'FirebaseError: Firebase: Error (auth/credential-already-in-use).';
   const EMAIL_ERROR = 'FirebaseError: Firebase: Error (auth/email-already-in-use).';
   let authProvider = new GoogleAuthProvider();
-  let message = Provider.Google;
+
   if (provider === Provider.Github) {
     authProvider = new GithubAuthProvider();
-    message = Provider.Github;
   }
   try {
     try {
@@ -35,6 +34,6 @@ export const signInProvider = async (provider: Provider) => {
       }
     }
   } catch (error) {
-    throw new FirebaseError(`Sign In ${message}: ${error}`);
+    throw new FirebaseError(`Sign In ${provider}: ${error}`);
   }
 };

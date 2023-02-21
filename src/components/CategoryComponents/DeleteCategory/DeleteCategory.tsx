@@ -35,7 +35,7 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
       });
     }
 
-    changeUserData();
+    await changeUserData();
     drawerHandler('deleteCategory', 'bottom', false);
   }
 

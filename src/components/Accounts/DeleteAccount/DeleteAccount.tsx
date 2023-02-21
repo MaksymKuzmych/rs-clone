@@ -33,8 +33,8 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
   }, [currentAccount.name, userData.data.transactions]);
 
   const deleteUser = useCallback(async () => {
-    deleteUserData(userData.settings.userId, { accounts: currentAccount.id });
-    changeUserData();
+    await deleteUserData(userData.settings.userId, { accounts: currentAccount.id });
+    await changeUserData();
     drawerHandler('info', 'bottom', false);
   }, [changeUserData, currentAccount.id, drawerHandler, userData.settings.userId]);
 
