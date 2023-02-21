@@ -7,7 +7,7 @@
 }
 
 .transactionWrapper {
-  height: calc(100vh - 127px);
+  height: calc(100vh - 115px - 65px);
   overflow-y: scroll;
 
   &::-webkit-scrollbar-track {

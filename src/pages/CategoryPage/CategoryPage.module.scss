@@ -14,7 +14,8 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   justify-content: center;
-  height: calc(100vh - 65px*2);
+  overflow: hidden;
+  height: calc(100vh - 115px - 65px);
 }
 
 .lineTop {

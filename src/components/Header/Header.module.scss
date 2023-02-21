@@ -1,3 +1,7 @@
+.header {
+  grid-area: header;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -21,6 +25,7 @@
 }
 
 .filter {
+  position: relative;
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -28,11 +33,47 @@
 }
 
 .headerBottom {
-  padding: 0 24px 10px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 74px;
 }
 
 .iconButton {
   padding: 10px;
   cursor: pointer;
+  width: 50px;
+}
+
+.input {
+  opacity: 0;
+  width: 0;
+  display: flex;
+  flex-direction: row;
+  transition: width 0.3s;
+}
+
+.inputVisible {
+  opacity: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  transition: width 0.3s;
+}
+
+.iconButtonCheck {
+  color: green;
+  background-color: white;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.iconButtonSearch {
+  color: white;
+  padding: 10px;
 }

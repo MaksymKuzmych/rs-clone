@@ -16,14 +16,16 @@ export const App = () => {
     <DrawerProvider>
       <AuthProvider>
         <Header />
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path='/' element={<CategoryPage />} />
-            <Route path='/accounts' element={<AccountPage />} />
-            <Route path='/transactions' element={<TransactionPage />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </ThemeProvider>
+        <div className='main'>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path='/' element={<CategoryPage />} />
+              <Route path='/accounts' element={<AccountPage />} />
+              <Route path='/transactions' element={<TransactionPage />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </ThemeProvider>
+        </div>
       </AuthProvider>
       <Footer />
     </DrawerProvider>

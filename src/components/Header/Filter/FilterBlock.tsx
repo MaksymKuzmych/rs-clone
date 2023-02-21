@@ -6,7 +6,11 @@ import FilterAccountsModal from './FilterAccountsModal/FilterAccountsModal';
 
 import styles from './FilterBlock.module.scss';
 
-export default function FilterBlock() {
+interface FilterBlockProps {
+  openSearch: boolean;
+}
+
+export default function FilterBlock({ openSearch }: FilterBlockProps) {
   const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
 
@@ -28,7 +32,7 @@ export default function FilterBlock() {
   )?.name;
 
   return (
-    <div className={styles.filterWrapper}>
+    <div className={openSearch ? styles.filterWrapper : styles.filterWrapperVisible}>
       <div className={styles.account} onClick={handleOpen}>
         <div className={styles.accountName}>
           <div className={styles.accoutTitle}>
