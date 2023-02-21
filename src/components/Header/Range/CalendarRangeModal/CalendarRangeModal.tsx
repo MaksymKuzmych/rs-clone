@@ -48,7 +48,7 @@ export default function CalendarRangeModal({ onClick }: CalendarRangeModalProps)
       <div className={styles.title}>{t('Select range')}</div>
       <LocalizationProvider
         dateAdapter={AdapterDayjs}
-        adapterLocale={userData.settings.lang}
+        adapterLocale={userData.settings.lang.toLocaleLowerCase()}
         sx={{ width: '500px' }}
       >
         <DatePicker

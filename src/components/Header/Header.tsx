@@ -1,15 +1,21 @@
-import { useCallback, useState } from 'react';
-import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import {
+  createTheme,
+  ThemeProvider,
+  Drawer,
+  AppBar,
+  Toolbar,
+  OutlinedInputProps,
+  TextField,
+} from '@mui/material';
 import { NavBar } from '../NavBar/NavBar';
 import FilterBlock from './Filter/FilterBlock';
 import RangePeriod from './Range/RangePeriod';
+import { SearchContext } from '../../context/Search';
 
 import styles from './Header.module.scss';
-import { OutlinedInputProps, TextField } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 export function Header() {
   const theme = createTheme({
@@ -25,21 +31,27 @@ export function Header() {
   });
   const { t } = useTranslation();
 
+  const { setNewValue } = useContext(SearchContext);
+
+  const location = useLocation();
+  const [activePage, setActivePage] = useState(location.pathname);
+
+  useEffect(() => {
+    setActivePage(location.pathname);
+  }, [location]);
+
   const [open, setOpen] = useState(false);
   const handleDrawerOpen = useCallback(() => setOpen(true), []);
   const handleDrawerClose = useCallback(() => setOpen(false), []);
 
-  const location = window.location.pathname;
-
   const [openSearch, setOpenSearch] = useState(false);
-  const [inputValue, setInputValue] = useState('');
 
   const changeInputValue = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setInputValue(event.currentTarget.value);
+    setNewValue(event.currentTarget.value);
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <AppBar
         position='static'
         sx={{
@@ -82,7 +94,7 @@ export function Header() {
               </button>
             </div>
           </div>
-          {location === '/transactions' ? (
+          {activePage === '/transactions' ? (
             <div className={styles.search}>
               <button onClick={() => setOpenSearch(!openSearch)}>
                 <span className={`material-icons ${styles.iconButtonSearch}`}>search</span>
@@ -92,7 +104,7 @@ export function Header() {
             <span className={`material-icons ${styles.iconButton}`}></span>
           )}
         </Toolbar>
-        {location === '/accounts' ? (
+        {activePage === '/accounts' ? (
           <div className={styles.headerBottom}>Accounts</div>
         ) : (
           <RangePeriod />
@@ -108,12 +120,14 @@ export function Header() {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '300px' },
         }}
       >
-        <NavBar />
+        <ThemeProvider theme={theme}>
+          <NavBar />
+        </ThemeProvider>
       </Drawer>
       <div
         className={!open ? styles.overlay : `${styles.overlay} ${styles.overlayOpen}`}
         onClick={handleDrawerClose}
       ></div>
-    </ThemeProvider>
+    </>
   );
 }

@@ -39,7 +39,10 @@ export default function CalendarModal({ onClick }: CalendarModalProps) {
 
   return (
     <div className={styles.calendar}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={userData.settings.lang}>
+      <LocalizationProvider
+        dateAdapter={AdapterDayjs}
+        adapterLocale={userData.settings.lang.toLocaleLowerCase()}
+      >
         <DatePicker
           label={t('Select day')}
           value={value}

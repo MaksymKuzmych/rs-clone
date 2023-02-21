@@ -54,7 +54,7 @@ export default function RangePeriod() {
   const getTitleOfSelectedPeriod = useCallback(() => {
     switch (userData.settings.periodType) {
       case Period.All:
-        return 'All time';
+        return `${t('All time')}`;
       case Period.Day:
         return userData.settings.period.start
           ? new Date(userData.settings.period.start).toLocaleString(language, {
@@ -186,6 +186,7 @@ export default function RangePeriod() {
           selectedPeriod={userData.settings.periodType}
           openCalendar={toggleModalCalendar}
           openCalendarRange={toggleModalRangeCalendar}
+          theme={userData.settings.theme}
         />
       </BasicModal>
       <BasicModal openModal={openModalCalendar} handleClose={toggleModalCalendar}>

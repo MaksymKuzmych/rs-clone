@@ -1,6 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../../Auth/Auth';
+import { Theme, ThemeColor } from '../../../../enums';
 import { updateUserSettings } from '../../../../firebase/update-user-settings';
 import { IAccount } from '../../../../interfaces';
 import { Account } from '../../../Accounts/Account/Account';
@@ -43,14 +44,25 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
   return (
     <div className={styles.modalWrapper}>
       <div className={styles.modalTitle}>{t('Accounts filter')}</div>
-      <Account
-        account={AllAccounts}
-        key={AllAccounts.id}
-        onClick={() => {
-          accountDrawerHandler(AllAccounts);
+      <div
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
         }}
-      />
-      <div className={styles.accountsWrapper}>
+      >
+        <Account
+          account={AllAccounts}
+          key={AllAccounts.id}
+          onClick={() => {
+            accountDrawerHandler(AllAccounts);
+          }}
+        />
+      </div>
+      <div
+        className={styles.accountsWrapper}
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+        }}
+      >
         <div className={styles.modalSubtitle}>{t('Accounts')}</div>
         {userData.data.accounts.length !== 0 &&
           userData.data.accounts.map((account) => (

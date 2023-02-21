@@ -1,5 +1,5 @@
 import { periodTypes } from '../../../../data/periodTypes';
-import { Period } from '../../../../enums';
+import { Period, Theme, ThemeColor } from '../../../../enums';
 import { IPeriodItem } from '../../../../interfaces';
 import RangeItem from '../RangeItem/RangeItem';
 
@@ -10,6 +10,7 @@ interface RangeModalProps {
   openCalendar(): void;
   openCalendarRange(): void;
   selectedPeriod: Period;
+  theme: Theme;
 }
 
 export default function RangeModal({
@@ -17,9 +18,15 @@ export default function RangeModal({
   openCalendar,
   openCalendarRange,
   selectedPeriod,
+  theme,
 }: RangeModalProps) {
   return (
-    <div className={styles.modalWrapper}>
+    <div
+      className={styles.modalWrapper}
+      style={{
+        color: theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+      }}
+    >
       {periodTypes.map((item) => (
         <RangeItem
           onClick={onClick}

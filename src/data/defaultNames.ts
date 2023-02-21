@@ -10,4 +10,5 @@ export const defaultNames = [
   'Salary',
   'Card',
   'Cash',
+  'All accounts',
 ];

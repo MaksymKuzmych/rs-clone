@@ -38,7 +38,7 @@ export default function FilterBlock({ openSearch }: FilterBlockProps) {
           <div className={styles.accoutTitle}>
             {userData.settings.selectedAccount
               ? `${t('Filter')} - ${selectedAccountName}`
-              : t('All accounts')}
+              : `${t('All accounts')}`}
           </div>
           <span className={`material-icons ${styles.arrow}`}>arrow_drop_down</span>
         </div>
