@@ -10,14 +10,18 @@ import {
   OutlinedInputProps,
   TextField,
 } from '@mui/material';
+
 import { NavBar } from '../NavBar/NavBar';
 import { FilterBlock } from './Filter/FilterBlock';
 import { RangePeriod } from './Range/RangePeriod';
 import { SearchContext } from '../../context/Search';
+import { theme } from '../../styles/theme';
+import { AuthContext } from '../../Auth/Auth';
+import { Theme, ThemeColor } from '../../enums';
 
 import styles from './Header.module.scss';
 
-export const theme = createTheme({
+export const themePaper = createTheme({
   components: {
     MuiPaper: {
       styleOverrides: {
@@ -29,22 +33,11 @@ export const theme = createTheme({
   },
 });
 
-export const themeRange = createTheme({
-  components: {
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'white',
-        },
-      },
-    },
-  },
-});
-
 export const Header = () => {
   const { t } = useTranslation();
 
   const { setNewValue } = useContext(SearchContext);
+  const { userData } = useContext(AuthContext);
 
   const location = useLocation();
   const [activePage, setActivePage] = useState(location.pathname);
@@ -54,11 +47,11 @@ export const Header = () => {
   }, [location]);
 
   const [open, setOpen] = useState(false);
-  const handleDrawerOpen = useCallback(() => setOpen(true), []);
-  const handleDrawerClose = useCallback(() => setOpen(false), []);
-
   const [openSearch, setOpenSearch] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  const handleDrawerOpen = useCallback(() => setOpen(true), []);
+  const handleDrawerClose = useCallback(() => setOpen(false), []);
 
   const closeSearch = () => {
     if (openSearch) {
@@ -86,7 +79,7 @@ export const Header = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themePaper}>
         <AppBar
           position='static'
           sx={{
@@ -114,14 +107,27 @@ export const Header = () => {
                     }}
                     autoComplete='off'
                     sx={{
-                      backgroundColor: 'white',
+                      backgroundColor:
+                        userData.settings.theme === Theme.Light
+                          ? ThemeColor.Light
+                          : ThemeColor.Dark,
+                      color: 'white',
                       width: '100%',
-                      padding: '0 20px',
-                      paddingBottom: '10px',
-                      paddingLeft: '10px',
+                      padding: '0 5px 5px 10px',
+                      input: {
+                        fontSize: '22px',
+                        color:
+                          userData.settings.theme === Theme.Light
+                            ? ThemeColor.Dark
+                            : ThemeColor.Light,
+                      },
                       '& label': {
-                        color: 'gray',
+                        color:
+                          userData.settings.theme === Theme.Light
+                            ? ThemeColor.Dark
+                            : ThemeColor.Light,
                         paddingLeft: '20px',
+                        fontSize: '18px',
                       },
                       '& label.Mui-focused': {
                         color: 'gray',
@@ -144,7 +150,7 @@ export const Header = () => {
           {activePage === '/accounts' ? (
             <div className={styles.headerBottom}>Accounts</div>
           ) : (
-            <ThemeProvider theme={themeRange}>
+            <ThemeProvider theme={theme(userData.settings.theme)}>
               <RangePeriod />
             </ThemeProvider>
           )}

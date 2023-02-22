@@ -123,7 +123,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
         });
       }
 
-      changeUserData();
+      await changeUserData();
       drawerHandler('addAccount', 'bottom', false);
     },
   });
