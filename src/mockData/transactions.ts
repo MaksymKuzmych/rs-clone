@@ -3,7 +3,7 @@ import { ITransaction } from '../interfaces';
 export const storeTr: ITransaction[] = [
   {
     id: '1',
-    date: new Date(2023, 1, 12).getTime(),
+    date: Date.now(),
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -13,7 +13,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '2',
-    date: new Date(2023, 1, 12).getTime(),
+    date: Date.now(),
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -23,7 +23,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '3',
-    date: new Date(2023, 1, 12).getTime(),
+    date: Date.now(),
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -33,7 +33,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '4',
-    date: new Date(2023, 1, 13).getTime(),
+    date: Date.now() - 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -43,7 +43,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '5',
-    date: new Date(2023, 1, 14).getTime(),
+    date: Date.now() - 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -53,7 +53,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '6',
-    date: new Date(2023, 1, 14).getTime(),
+    date: Date.now() - 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount1',
     accountTo: null,
@@ -63,7 +63,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '7',
-    date: new Date(2023, 1, 15).getTime(),
+    date: Date.now() - 2 * 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount2',
     accountTo: null,
@@ -73,7 +73,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '8',
-    date: new Date(2023, 1, 15).getTime(),
+    date: Date.now() - 2 * 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount2',
     accountTo: null,
@@ -83,7 +83,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '9',
-    date: new Date(2023, 1, 15).getTime(),
+    date: Date.now() - 2 * 86400000,
     type: TransactionType.Expenses,
     account: 'defaultAccount2',
     accountTo: null,
@@ -93,7 +93,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '10',
-    date: new Date(2023, 1, 15).getTime(),
+    date: new Date(2023, 1, 1).getTime(),
     type: TransactionType.Income,
     account: 'defaultAccount2',
     accountTo: null,
@@ -103,7 +103,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '11',
-    date: Date.now() + 10,
+    date: new Date(2023, 1, 15).getTime(),
     type: TransactionType.Income,
     account: 'defaultAccount2',
     accountTo: null,
@@ -113,7 +113,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '12',
-    date: Date.now() + 11,
+    date: Date.now(),
     type: TransactionType.Income,
     account: 'defaultAccount2',
     accountTo: null,
@@ -123,7 +123,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '13',
-    date: Date.now() + 12,
+    date: Date.now() - 2 * 86400000,
     type: TransactionType.Income,
     account: 'defaultAccount2',
     accountTo: null,
@@ -133,7 +133,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '14',
-    date: Date.now() + 13,
+    date: Date.now() - 86400000,
     type: TransactionType.Transfer,
     account: 'defaultAccount2',
     accountTo: 'defaultAccount1',
@@ -143,7 +143,7 @@ export const storeTr: ITransaction[] = [
   },
   {
     id: '15',
-    date: Date.now() + 14,
+    date: Date.now() - 86400000,
     type: TransactionType.Transfer,
     account: 'defaultAccount1',
     accountTo: 'defaultAccount2',
