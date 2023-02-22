@@ -141,4 +141,14 @@ export const storeTr: ITransaction[] = [
     amount: 200,
     description: 'other text',
   },
+  {
+    id: '15',
+    date: Date.now() + 14,
+    type: TransactionType.Transfer,
+    account: 'defaultAccount1',
+    accountTo: 'defaultAccount2',
+    category: null,
+    amount: -200,
+    description: 'other text',
+  },
 ];

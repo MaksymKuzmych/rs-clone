@@ -33,7 +33,7 @@ export const parseMono = (data: IMono[]) => {
       let accountId = `importedMono${cardNumber.slice(-4)}`;
       let categoryId = `importedMonoCategory${categories.length + 1}`;
       const transactionId = `importedMono${date}`;
-      const account = {
+      const account: IAccount = {
         id: accountId,
         date: Date.now(),
         name: 'Монобанк',
@@ -42,13 +42,13 @@ export const parseMono = (data: IMono[]) => {
         balance,
         description: cardNumber,
       };
-      const category = {
+      const category: ICategory = {
         id: categoryId,
         date: Date.now(),
         name: findMCC(row[2]),
         type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
-        iconID: getRandomIcon(iconsCategory).id,
-        colorID: getRandomColor().id,
+        icon: getRandomIcon(iconsCategory).name,
+        color: getRandomColor().color,
       };
       const description = row[1];
       const newAccount = findAccount(accounts, accountId);

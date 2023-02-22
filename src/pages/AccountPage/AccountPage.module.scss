@@ -3,10 +3,11 @@
 .accountPage {
   padding: 20px 5px 0 20px;
   flex-grow: 1;
+  height: calc(100vh - 100px - 65px);
 }
 
 .accountsWrapper {
-  height: calc(100vh - 190px);
+  height: calc(100vh - 100px - 65px - 68px);
   overflow-y: scroll;
   padding-right: 15px;
 

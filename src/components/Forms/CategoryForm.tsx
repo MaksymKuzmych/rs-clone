@@ -13,11 +13,9 @@ import { SettingsBtn } from '../Accounts/Settings/SettingsBtn/SettingsBtn';
 import { Colors } from '../UI/Colors/Colors';
 import { Icons } from '../UI/Icons/Icons';
 import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCategory';
-import { colors } from '../../data/colors';
 import { Theme, ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
-import { iconsCategory } from '../../data/icons';
-import { defaultNames } from '../../data/defaultNames';
+import { defaultNames, defaultNamesRu } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
 
 import styles from './Forms.module.scss';
@@ -68,14 +66,11 @@ const themeForTitle = () =>
   });
 
 export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
-  const iconName = iconsCategory.find((item) => item.id === category?.iconID)?.name;
-  const colorName = colors.find((item) => item.id === category?.colorID)?.color;
-
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
-  const [icon, setIcon] = useState(category && iconName ? iconName : 'shopping_cart');
-  const [color, setColor] = useState(category && colorName ? colorName : '#f95c57');
+  const [icon, setIcon] = useState(category && category.icon ? category.icon : 'shopping_cart');
+  const [color, setColor] = useState(category && category.color ? category.color : '#f95c57');
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
@@ -103,34 +98,30 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
         .required(`${t('Required')}`),
     }),
     onSubmit: async (values) => {
-      const newColorId = colors.find((item) => item.color === color)?.id;
-      const newIconId = iconsCategory.find((item) => item.name === icon)?.id;
-
-      if (newColorId && newIconId) {
-        const categoryInfo = {
-          id: category ? category.id : '',
-          name: values.name,
-          date: category ? category.date : Date.now(),
-          type: type,
-          colorID: newColorId,
-          iconID: newIconId,
-          description: '',
-        };
-        if (category) {
-          await updateUserData(userData.settings.userId, {
-            categories: {
-              [category.id]: categoryInfo,
-            },
-          });
-        } else {
-          await pushUserData(userData.settings.userId, {
-            categories: [categoryInfo],
-          });
-        }
-
-        await changeUserData();
-        drawerHandler('changeCategory', 'bottom', false);
+      const nameEnInd = defaultNamesRu.indexOf(values.name);
+      const categoryInfo = {
+        id: category ? category.id : '',
+        name: nameEnInd !== -1 ? defaultNames[nameEnInd] : values.name,
+        date: category ? category.date : Date.now(),
+        type: type,
+        color: color,
+        icon: icon,
+        description: '',
+      };
+      if (category) {
+        await updateUserData(userData.settings.userId, {
+          categories: {
+            [category.id]: categoryInfo,
+          },
+        });
+      } else {
+        await pushUserData(userData.settings.userId, {
+          categories: [categoryInfo],
+        });
       }
+
+      changeUserData();
+      drawerHandler('changeCategory', 'bottom', false);
     },
   });
 

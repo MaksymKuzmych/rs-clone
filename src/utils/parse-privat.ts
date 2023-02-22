@@ -27,7 +27,7 @@ export const parsePrivat = (data: IPrivat[]) => {
       let accountId = `importedPrivat${row[3].split('(')[1].replace(')', '').slice(-4)}`;
       let categoryId = `importedPrivatCategory${categories.length + 1}`;
       const transactionId = `importedPrivat${date}`;
-      const account = {
+      const account: IAccount = {
         id: accountId,
         date: Date.now(),
         name: 'Приват',
@@ -36,13 +36,13 @@ export const parsePrivat = (data: IPrivat[]) => {
         balance,
         description: row[3].split('(')[1].replace(')', ''),
       };
-      const category = {
+      const category: ICategory = {
         id: categoryId,
         date: Date.now(),
         name: row[2],
         type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
-        iconID: getRandomIcon(iconsCategory).id,
-        colorID: getRandomColor().id,
+        icon: getRandomIcon(iconsCategory).name,
+        color: getRandomColor().color,
       };
       const description = row[4];
       const newAccount = findAccount(accounts, accountId);

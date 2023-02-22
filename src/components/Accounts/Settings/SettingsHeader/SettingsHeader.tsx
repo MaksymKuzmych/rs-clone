@@ -29,7 +29,7 @@ export const SettingsHeader = memo(({ currentAccount }: SettingsHeaderProps) => 
       </div>
       <div className={styles.balanceWrapper}>
         <p>{t('Account balance')}</p>
-        <p className={styles.balance}>{setCurrency(balance)}</p>
+        <p className={styles.balance}>{setCurrency(balance, 'never')}</p>
       </div>
     </header>
   );

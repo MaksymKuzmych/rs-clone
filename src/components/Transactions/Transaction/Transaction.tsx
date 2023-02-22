@@ -27,11 +27,8 @@ export const Transaction = memo(({ transaction, onClick }: AccountProps) => {
   const accountToItem = accounts.find((accountItem) => accountItem.id === accountTo);
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
   const categoryName = categoryItem?.name || accountToItem?.name || '';
-  const categoryIcon =
-    iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name || accountToItem?.icon;
-  const categoryColor =
-    colors.find((color) => color.id === categoryItem?.colorID)?.color || accountToItem?.color;
-
+  const categoryIcon = categoryItem?.icon || accountToItem?.icon || '';
+  const categoryColor = categoryItem?.color || accountToItem?.color || '';
   const accountName = accountItem?.name || '';
   const accountIcon = accountItem?.icon || '';
 
@@ -67,18 +64,8 @@ export const Transaction = memo(({ transaction, onClick }: AccountProps) => {
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <p
-        className={
-          type === TransactionType.Income
-            ? styles.amountPositive
-            : type === TransactionType.Expenses
-            ? styles.amountNegative
-            : styles.amountNone
-        }
-      >
-        {type === TransactionType.Transfer
-          ? setCurrency(amount, 'never')
-          : setCurrency(amount, 'always')}
+      <p className={amount > 0 ? styles.amountPositive : styles.amountNegative}>
+        {setCurrency(amount, 'always')}
       </p>
     </div>
   );

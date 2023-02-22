@@ -10,4 +10,17 @@ export const defaultNames = [
   'Salary',
   'Card',
   'Cash',
+  'All accounts',
+];
+
+export const defaultNamesRu = [
+  'Продукты',
+  'Кафе',
+  'Досуг',
+  'Транспорт',
+  'Здоровье',
+  'Подарки',
+  'Семья',
+  'Покупки',
+  'Зарплата',
 ];

@@ -1,26 +1,34 @@
 import { Sort } from '../enums';
-import { IAccount, ICategory, IStore, ITransaction } from '../interfaces';
-import { getUserData } from './get-user-data';
+import { IAccount, ICategory, IPeriod, IStore, ITransaction } from '../interfaces';
+import { getFilteredUserData } from './get-filtered-user-data';
 
-export const pullUserData = async (userData: IStore, id: string) => {
-  userData.data.accounts = (await getUserData(
+export const pullUserData = async (
+  userData: IStore,
+  id: string,
+  account: string | null = null,
+  period: IPeriod = { start: null, end: null },
+) => {
+  userData.data.accounts = (await getFilteredUserData(
     id,
     {
       accounts: null,
     },
     Sort.ASC,
   )) as IAccount[];
-  userData.data.categories = (await getUserData(
+  userData.data.categories = (await getFilteredUserData(
     id,
     {
       categories: null,
     },
     Sort.ASC,
   )) as ICategory[];
-  userData.data.transactions = (await getUserData(
+  userData.data.transactions = (await getFilteredUserData(
     id,
     {
-      transactions: null,
+      transactions: {
+        account,
+        period,
+      },
     },
     Sort.DESC,
   )) as ITransaction[];

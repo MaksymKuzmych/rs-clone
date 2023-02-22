@@ -1,0 +1,36 @@
+@import '../../../styles/variables.scss';
+
+.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.accountName {
+  display: flex;
+  flex-direction: row;
+}
+
+.arrow {
+  width: 20px;
+  position: relative;
+  bottom: 5px;
+}
+
+.accountAmount {
+  height: 20px;
+}
+
+.filterWrapper {
+  opacity: 0;
+  width: 0;
+  transition: opacity 0.3s, width 0.3s;
+}
+
+.filterWrapperVisible {
+  opacity: 1;
+  width: auto;
+  transition: opacity 0.3s, width 0.3s;
+  cursor: pointer;
+}

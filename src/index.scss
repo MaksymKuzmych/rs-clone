@@ -9,10 +9,9 @@
 }
 
 #root {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-
   .SnackbarContainer-bottom {
     bottom: 65px;
   }

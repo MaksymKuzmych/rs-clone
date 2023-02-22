@@ -6,7 +6,7 @@ import { Transaction } from '../../components/Transactions/Transaction/Transacti
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { DrawerContext } from '../../context/Drawer';
-import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
+import { Period, Theme, ThemeColor } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 
@@ -50,12 +50,12 @@ export const TransactionPage = () => {
       const sum = transaction.amount;
 
       if (day) {
-        day.sum += transaction.type === TransactionType.Transfer ? 0 : sum;
+        day.sum += sum;
         day.transactions.push(transaction);
       } else {
         transactionsDays.push({
           date,
-          sum: transaction.type === TransactionType.Transfer ? 0 : sum,
+          sum,
           transactions: [transaction],
         });
       }
