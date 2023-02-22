@@ -89,8 +89,6 @@
   "Authors": "Авторы",
   "No transactions": "Нет транзакций",
   "Account ": "Учетная запись ",
-  "Unlink Google": "Отвязать Google",
-  "Link Google": "Связать Google",
-  "Unlink GitHub": "Отвязать GitHub",
-  "Link GitHub": "Связать GitHub"
+  "Link": "Связать",
+  "Unlink": "Отвязать"
 }

@@ -1,5 +1,6 @@
 import Divider from '@mui/material/Divider';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Provider } from '../../../enums';
 import { auth } from '../../../firebase/firebase-config';
@@ -18,6 +19,9 @@ export const NavLinkAccount = () => {
     auth.currentUser?.providerData[2]?.providerId,
   ];
 
+  const [googleStatus, setGoogleStatus] = useState(providers.includes(Provider.Google));
+  const [githubStatus, setGithubStatus] = useState(providers.includes(Provider.Github));
+
   const linkProvider = async (provider: Provider) => {
     try {
       if (providers.includes(provider)) {
@@ -26,6 +30,11 @@ export const NavLinkAccount = () => {
       } else {
         await signInProvider(provider);
         enqueueSnackbar(`${provider} linked`, { variant: 'success' });
+      }
+      if (provider === Provider.Google) {
+        setGoogleStatus(!googleStatus);
+      } else {
+        setGithubStatus(!githubStatus);
       }
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
@@ -45,7 +54,7 @@ export const NavLinkAccount = () => {
             type='button'
           >
             <img className={styles.icon} src='./assets/google.png' alt='Google' />
-            {providers.includes(Provider.Google) ? t('Unlink Google') : t('Link Google')}
+            {googleStatus ? t('Unlink') : t('Link')} Google
           </button>
           <button
             onClick={() => linkProvider(Provider.Github)}
@@ -53,7 +62,7 @@ export const NavLinkAccount = () => {
             type='button'
           >
             <img className={styles.icon} src='./assets/github.png' alt='GitHub' />
-            {providers.includes(Provider.Github) ? t('Unlink GitHub') : t('Link GitHub')}
+            {githubStatus ? t('Unlink') : t('Link')} GitHub
           </button>
         </div>
         <Divider />

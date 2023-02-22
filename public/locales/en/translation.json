@@ -89,8 +89,6 @@
   "Authors": "Authors",
   "No transactions": "No transactions",
   "Account ": "Account ",
-  "Unlink Google": "Unlink Google",
-  "Link Google": "Link Google",
-  "Unlink GitHub": "Unlink GitHub",
-  "Link GitHub": "Link GitHub"
+  "Link": "Link",
+  "Unlink": "Unlink"
 }

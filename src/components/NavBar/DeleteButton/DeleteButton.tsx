@@ -12,7 +12,6 @@ import { pushUserData } from '../../../firebase/push-user-data';
 import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './DeleteButton.module.scss';
-import { deleteAllUserTransactions } from '../../../firebase/delete-all-user-transactions';
 import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
 
 export const DeleteButton = () => {
@@ -26,11 +25,7 @@ export const DeleteButton = () => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   const deleteAllData = useCallback(async () => {
-    await deleteAllUserData(userData.settings.userId, {
-      accounts: userData.data.accounts,
-      categories: userData.data.categories,
-    });
-    await deleteAllUserTransactions(userData.settings.userId);
+    await deleteAllUserData(userData.settings.userId, userData.data);
 
     await pushUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
@@ -38,13 +33,13 @@ export const DeleteButton = () => {
     });
 
     await changeUserData();
-  }, [changeUserData, userData.data.accounts, userData.data.categories, userData.settings.userId]);
+  }, [changeUserData, userData.data, userData.settings.userId]);
 
   const deleteTransactions = useCallback(async () => {
-    await deleteAllUserTransactions(userData.settings.userId);
+    await deleteAllUserData(userData.settings.userId, { transactions: userData.data.transactions });
 
     await changeUserData();
-  }, [changeUserData, userData.settings.userId]);
+  }, [changeUserData, userData.data.transactions, userData.settings.userId]);
 
   return (
     <div>
