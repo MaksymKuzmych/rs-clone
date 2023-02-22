@@ -24,8 +24,8 @@ export interface ICategory {
   date: number;
   name: string;
   type: TransactionType;
-  iconID: number;
-  colorID: number;
+  icon: string;
+  color: string;
 }
 
 export interface IPeriodItem {

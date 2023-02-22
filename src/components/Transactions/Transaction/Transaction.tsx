@@ -2,9 +2,7 @@ import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { colors } from '../../../data/colors';
 import { defaultNames } from '../../../data/defaultNames';
-import { iconsCategory } from '../../../data/icons';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
 import { ITransaction } from '../../../interfaces';
 
@@ -24,8 +22,6 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
   const { accounts, categories } = userData.data;
   const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
   const categoryName = categoryItem?.name || '';
-  const categoryIcon = iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name;
-  const categoryColor = colors.find((color) => color.id === categoryItem?.colorID)?.color;
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
   const accountName = accountItem?.name || '';
   const accountIcon = accountItem?.icon;
@@ -39,9 +35,9 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
       }}
     >
       <div className={styles.infoWrapper}>
-        <div className={styles.iconWrapper} style={{ backgroundColor: categoryColor }}>
+        <div className={styles.iconWrapper} style={{ backgroundColor: categoryItem?.color }}>
           <span className='material-icons' style={{ color: 'white' }}>
-            {categoryIcon}
+            {categoryItem?.icon}
           </span>
         </div>
         <div>
