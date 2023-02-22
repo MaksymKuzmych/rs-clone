@@ -12,7 +12,7 @@ export const createUser = async (userId: string, userData: IStore) => {
     await setUserData(userId, {
       accounts: userData.data.accounts,
       categories: userData.data.categories,
-      transactions: storeTr.data.transactions,
+      transactions: storeTr,
     });
   } catch (error) {
     throw new FirebaseError(`Create User: ${error}`);

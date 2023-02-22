@@ -62,6 +62,7 @@ export const parsePrivat = (data: IPrivat[]) => {
         date,
         type: category.type,
         account: accountId,
+        accountTo: null,
         category: categoryId,
         amount,
         description,

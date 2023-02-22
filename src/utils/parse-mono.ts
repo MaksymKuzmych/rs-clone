@@ -68,6 +68,7 @@ export const parseMono = (data: IMono[]) => {
         date,
         type: category.type,
         account: accountId,
+        accountTo: null,
         category: categoryId,
         amount,
         description,

@@ -12,24 +12,28 @@ import styles from './Transaction.module.scss';
 
 interface AccountProps {
   transaction: ITransaction;
+  onClick: () => void;
 }
 
-export const Transaction = memo(({ transaction }: AccountProps) => {
+export const Transaction = memo(({ transaction, onClick }: AccountProps) => {
   const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
 
-  const { type, account, category, amount, description } = transaction;
+  const { type, account, accountTo, category, amount, description } = transaction;
   const { accounts, categories } = userData.data;
   const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
-  const categoryName = categoryItem?.name || '';
-  const categoryIcon = iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name;
-  const categoryColor = colors.find((color) => color.id === categoryItem?.colorID)?.color;
+  const accountToItem = accounts.find((accountItem) => accountItem.id === accountTo);
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
+  const categoryName = categoryItem?.name || accountToItem?.name || '';
+  const categoryIcon =
+    iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name || accountToItem?.icon;
+  const categoryColor =
+    colors.find((color) => color.id === categoryItem?.colorID)?.color || accountToItem?.color;
+
   const accountName = accountItem?.name || '';
-  const accountIcon = accountItem?.icon;
-  const sign = type === TransactionType.Income;
+  const accountIcon = accountItem?.icon || '';
 
   return (
     <div
@@ -37,9 +41,15 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
       style={{
         backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : '#343a40',
       }}
+      onClick={onClick}
     >
       <div className={styles.infoWrapper}>
-        <div className={styles.iconWrapper} style={{ backgroundColor: categoryColor }}>
+        <div
+          className={
+            type === TransactionType.Transfer ? styles.accountIconWrapper : styles.iconWrapper
+          }
+          style={{ backgroundColor: categoryColor }}
+        >
           <span className='material-icons' style={{ color: 'white' }}>
             {categoryIcon}
           </span>
@@ -57,8 +67,18 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <p className={sign ? styles.amountPositive : styles.amountNegative}>
-        {setCurrency(amount, 'always')}
+      <p
+        className={
+          type === TransactionType.Income
+            ? styles.amountPositive
+            : type === TransactionType.Expenses
+            ? styles.amountNegative
+            : styles.amountNone
+        }
+      >
+        {type === TransactionType.Transfer
+          ? setCurrency(amount, 'never')
+          : setCurrency(amount, 'always')}
       </p>
     </div>
   );

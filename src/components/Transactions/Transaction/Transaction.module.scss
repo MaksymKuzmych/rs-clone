@@ -8,7 +8,8 @@
   border-bottom: 0.5px solid $gray;
 }
 
-.iconWrapper {
+.iconWrapper,
+.accountIconWrapper {
   width: 55px;
   height: 55px;
   display: flex;
@@ -16,6 +17,10 @@
   align-items: center;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+.accountIconWrapper {
+  border-radius: 5px;
 }
 
 .infoWrapper {
@@ -47,11 +52,16 @@
 }
 
 .amountPositive,
-.amountNegative {
+.amountNegative,
+.amountNone {
   font-size: 22px;
   color: #18ab81;
 }
 
 .amountNegative {
   color: #cd4863;
+}
+
+.amountNone {
+  color: $light-gray;
 }

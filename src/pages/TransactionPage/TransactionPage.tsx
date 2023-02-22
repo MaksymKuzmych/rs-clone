@@ -1,10 +1,12 @@
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../Auth/Auth';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
-import { Period, Theme, ThemeColor } from '../../enums';
+import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
+import { DrawerContext } from '../../context/Drawer';
+import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 
@@ -18,8 +20,26 @@ interface ITransactionsDay {
 
 export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
+  const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
   const { transactions } = userData.data;
   const { t } = useTranslation();
+
+  const drawerContent = useCallback(() => {
+    switch (typeDrawer) {
+      case 'info':
+        return <>INFO</>;
+      case 'edit':
+        return <>EDIT</>;
+      case 'transfer':
+        return <>TRANSFER</>;
+      case 'addAccount':
+        return <>ADD</>;
+    }
+  }, [typeDrawer]);
+
+  const transactionDrawerHandler = useCallback(() => {
+    drawerHandler('info', 'bottom', true);
+  }, [drawerHandler]);
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -30,12 +50,12 @@ export const TransactionPage = () => {
       const sum = transaction.amount;
 
       if (day) {
-        day.sum += sum;
+        day.sum += transaction.type === TransactionType.Transfer ? 0 : sum;
         day.transactions.push(transaction);
       } else {
         transactionsDays.push({
           date,
-          sum,
+          sum: transaction.type === TransactionType.Transfer ? 0 : sum,
           transactions: [transaction],
         });
       }
@@ -45,14 +65,18 @@ export const TransactionPage = () => {
       return transactionsDays.map((day) => (
         <TransactionDay key={day.date} date={day.date} sum={day.sum}>
           {day.transactions.map((transaction) => (
-            <Transaction transaction={transaction} key={transaction.id} />
+            <Transaction
+              transaction={transaction}
+              key={transaction.id}
+              onClick={transactionDrawerHandler}
+            />
           ))}
         </TransactionDay>
       ));
     } else {
       return <p className={styles.noTransactions}>{t('No transactions')}</p>;
     }
-  }, [t, transactions]);
+  }, [t, transactionDrawerHandler, transactions]);
 
   return (
     <div
@@ -65,6 +89,14 @@ export const TransactionPage = () => {
     >
       <button className={styles.buttonAdd}>+</button>
       <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
+      <TemporaryDrawer
+        state={state}
+        anchor='bottom'
+        type={typeDrawer}
+        drawerHandler={drawerHandler}
+      >
+        {drawerContent()}
+      </TemporaryDrawer>
     </div>
   );
 };
