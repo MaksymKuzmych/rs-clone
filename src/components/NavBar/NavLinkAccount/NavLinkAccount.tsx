@@ -26,10 +26,14 @@ export const NavLinkAccount = () => {
     try {
       if (providers.includes(provider)) {
         await unlinkProvider(provider);
-        enqueueSnackbar(`${provider} unlinked`, { variant: 'success' });
+        enqueueSnackbar(`${t('Unlinked')} ${provider === Provider.Google ? 'Google' : 'GitHub'}`, {
+          variant: 'success',
+        });
       } else {
         await signInProvider(provider);
-        enqueueSnackbar(`${provider} linked`, { variant: 'success' });
+        enqueueSnackbar(`${t('Linked')} ${provider === Provider.Google ? 'Google' : 'GitHub'}`, {
+          variant: 'success',
+        });
       }
       if (provider === Provider.Google) {
         setGoogleStatus(!googleStatus);

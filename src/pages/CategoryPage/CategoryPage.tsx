@@ -20,7 +20,7 @@ export const CategoryPage = () => {
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
-  const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
+  const [categoryType, setCategoryType] = useState(TransactionType.Expense);
 
   const { t } = useTranslation();
 
@@ -91,7 +91,7 @@ export const CategoryPage = () => {
     .reduce((sum, current) => sum + current.amount, 0);
 
   const expenses = transactions
-    .filter((item) => item.type === TransactionType.Expenses)
+    .filter((item) => item.type === TransactionType.Expense)
     .reduce((sum, current) => sum + current.amount, 0);
 
   const transferCategory = useCallback(

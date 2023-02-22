@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import { createContext, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BrowserRouterProps } from 'react-router-dom';
 
 import { Footer } from '../components/Footer/Footer';
@@ -36,6 +37,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
@@ -68,6 +70,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
+          const displayName =
+            user.displayName ||
+            user.providerData[0]?.displayName ||
+            user.providerData[1]?.displayName ||
+            user.providerData[2]?.displayName ||
+            user.email;
           setPending(true);
           await createAnonUser(user.uid);
           setUserData(await pullUserSettings(userData, user.uid));
@@ -81,9 +89,9 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
           );
           setPending(false);
           if (user.isAnonymous) {
-            enqueueSnackbar('Anonymous Login', { variant: 'success' });
+            enqueueSnackbar(t('Anonymous Login'), { variant: 'success' });
           } else {
-            enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
+            enqueueSnackbar(`${t('Login')} ${displayName}`, { variant: 'success' });
           }
         } else {
           await signInAnon();
@@ -92,7 +100,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
         enqueueSnackbar(`${error}`, { variant: 'error' });
       }
     });
-  }, [enqueueSnackbar, userData]);
+  }, [enqueueSnackbar, t, userData]);
 
   if (pending) {
     return (

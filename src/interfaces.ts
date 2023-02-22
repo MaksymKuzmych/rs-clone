@@ -149,3 +149,12 @@ export interface IImportedData {
   accounts: IAccount[];
   categories: ICategory[];
 }
+
+export interface ITransactionAll extends ITransaction {
+  accountName: string;
+  accountColor: string;
+  accountIcon: string;
+  categoryName: string;
+  categoryColor: string;
+  categoryIcon: string;
+}

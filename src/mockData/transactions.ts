@@ -4,7 +4,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '1',
     date: Date.now(),
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory2',
@@ -14,7 +14,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '2',
     date: Date.now(),
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory1',
@@ -24,7 +24,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '3',
     date: Date.now(),
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory7',
@@ -34,7 +34,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '4',
     date: Date.now() - 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory2',
@@ -44,7 +44,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '5',
     date: Date.now() - 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory3',
@@ -54,7 +54,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '6',
     date: Date.now() - 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount1',
     accountTo: null,
     category: 'defaultCategory6',
@@ -64,7 +64,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '7',
     date: Date.now() - 2 * 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount2',
     accountTo: null,
     category: 'defaultCategory2',
@@ -74,7 +74,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '8',
     date: Date.now() - 2 * 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount2',
     accountTo: null,
     category: 'defaultCategory4',
@@ -84,7 +84,7 @@ export const storeTr: ITransaction[] = [
   {
     id: '9',
     date: Date.now() - 2 * 86400000,
-    type: TransactionType.Expenses,
+    type: TransactionType.Expense,
     account: 'defaultAccount2',
     accountTo: null,
     category: 'defaultCategory1',

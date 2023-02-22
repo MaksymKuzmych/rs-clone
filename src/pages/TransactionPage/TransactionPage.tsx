@@ -1,16 +1,20 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ThemeProvider } from '@mui/material';
 
 import { AuthContext } from '../../Auth/Auth';
+import { TransactionForm } from '../../components/Forms/TransactionForm';
+import { Settings } from '../../components/Transactions/Settings/Settings';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { DrawerContext } from '../../context/Drawer';
-import { Period, Theme, ThemeColor } from '../../enums';
-import { ITransaction } from '../../interfaces';
+import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
+import { ITransaction, ITransactionAll } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 
 import styles from './TransactionPage.module.scss';
+import { theme } from '../../styles/theme';
 
 interface ITransactionsDay {
   date: number;
@@ -24,22 +28,45 @@ export const TransactionPage = () => {
   const { transactions } = userData.data;
   const { t } = useTranslation();
 
+  const emptyTransaction: ITransactionAll = {
+    id: '',
+    date: 0,
+    type: TransactionType.Expense,
+    account: '',
+    accountTo: null,
+    category: null,
+    amount: 0,
+    description: null,
+    accountName: '',
+    accountColor: '',
+    accountIcon: '',
+    categoryName: '',
+    categoryColor: '',
+    categoryIcon: '',
+  };
+
+  const [currentTransaction, setcurrentTransaction] = useState(emptyTransaction);
+
   const drawerContent = useCallback(() => {
     switch (typeDrawer) {
       case 'info':
-        return <>INFO</>;
+        return <Settings currentTransaction={currentTransaction} />;
       case 'edit':
         return <>EDIT</>;
       case 'transfer':
         return <>TRANSFER</>;
       case 'addAccount':
-        return <>ADD</>;
+        return <TransactionForm />;
     }
-  }, [typeDrawer]);
+  }, [currentTransaction, typeDrawer]);
 
-  const transactionDrawerHandler = useCallback(() => {
-    drawerHandler('info', 'bottom', true);
-  }, [drawerHandler]);
+  const transactionDrawerHandler = useCallback(
+    (currentTransaction: ITransactionAll) => {
+      setcurrentTransaction(currentTransaction);
+      drawerHandler('info', 'bottom', true);
+    },
+    [drawerHandler],
+  );
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -68,7 +95,7 @@ export const TransactionPage = () => {
             <Transaction
               transaction={transaction}
               key={transaction.id}
-              onClick={transactionDrawerHandler}
+              transactionDrawerHandler={transactionDrawerHandler}
             />
           ))}
         </TransactionDay>
@@ -79,24 +106,31 @@ export const TransactionPage = () => {
   }, [t, transactionDrawerHandler, transactions]);
 
   return (
-    <div
-      className={styles.transactionPage}
-      style={{
-        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-        backgroundColor:
-          userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-      }}
-    >
-      <button className={styles.buttonAdd}>+</button>
-      <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
-      <TemporaryDrawer
-        state={state}
-        anchor='bottom'
-        type={typeDrawer}
-        drawerHandler={drawerHandler}
+    <ThemeProvider theme={theme(userData.settings.theme)}>
+      <div
+        className={styles.transactionPage}
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+        }}
       >
-        {drawerContent()}
-      </TemporaryDrawer>
-    </div>
+        <button
+          className={styles.buttonAdd}
+          onClick={() => drawerHandler('addAccount', 'bottom', true)}
+        >
+          +
+        </button>
+        <div className={styles.transactionWrapper}>{transactionsDaysLayout}</div>
+        <TemporaryDrawer
+          state={state}
+          anchor='bottom'
+          type={typeDrawer}
+          drawerHandler={drawerHandler}
+        >
+          {drawerContent()}
+        </TemporaryDrawer>
+      </div>
+    </ThemeProvider>
   );
 };

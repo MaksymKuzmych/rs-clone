@@ -40,7 +40,7 @@ export const parsePrivat = (data: IPrivat[]) => {
         id: categoryId,
         date: Date.now(),
         name: row[2],
-        type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
+        type: amount > 0 ? TransactionType.Income : TransactionType.Expense,
         icon: getRandomIcon(iconsCategory).name,
         color: getRandomColor().color,
       };

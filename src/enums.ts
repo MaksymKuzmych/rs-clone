@@ -26,9 +26,9 @@ export enum Period {
 }
 
 export enum TransactionType {
-  Income = 'income',
-  Expenses = 'expenses',
-  Transfer = 'transfer',
+  Income = 'Income',
+  Expense = 'Expense',
+  Transfer = 'Transfer',
 }
 
 export enum Theme {

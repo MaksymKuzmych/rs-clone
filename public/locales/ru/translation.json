@@ -12,6 +12,9 @@
   "Transfer": "Перевести",
   "Expenses": "Расходы",
   "Income": "Доходы",
+  "Transfer ": "Перевод ",
+  "Expense ": "Расход ",
+  "Income ": "Доход ",
   "Gloceries": "Продукты",
   "Restaurant": "Кафе",
   "Leisure": "Досуг",
@@ -104,5 +107,16 @@
   "No transactions": "Нет транзакций",
   "Account ": "Учетная запись ",
   "Link": "Связать",
-  "Unlink": "Отвязать"
+  "Unlink": "Отвязать",
+  "Login": "Вошёл",
+  "Anonymous Login": "Анонимный Вход",
+  "Linked": "Связан с",
+  "Unlinked": "Отвязан от",
+  "Date": "Дата",
+  "Duplicate": "Дублировать",
+  "Notes...": "Заметки...",
+  "Transaction": "Операцию",
+  "Transaction will be deleted": "Операция будет удалена",
+  "Transaction associated with this transfer will be deleted too": "Операция, связанная с этим переводом, также будет удалена",
+  "This action cannot be undone": "Действие невозможно будет отменить"
 }

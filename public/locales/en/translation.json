@@ -12,6 +12,9 @@
   "Transfer": "Transfer",
   "Expenses": "Expenses",
   "Income": "Income",
+  "Transfer ": "Transfer ",
+  "Expense ": "Expense ",
+  "Income ": "Income ",
   "Gloceries": "Gloceries",
   "Restaurant": "Restaurant",
   "Leisure": "Leisure",
@@ -104,5 +107,16 @@
   "No transactions": "No transactions",
   "Account ": "Account ",
   "Link": "Link",
-  "Unlink": "Unlink"
+  "Unlink": "Unlink",
+  "Login": "Login",
+  "Anonymous Login": "Anonymous Login",
+  "Linked": "Linked",
+  "Unlinked": "Unlinked",
+  "Date": "Date",
+  "Duplicate": "Duplicate",
+  "Notes...": "Notes...",
+  "Transaction": "Transaction",
+  "Transaction will be deleted": "Transaction will be deleted",
+  "Transaction associated with this transfer will be deleted too": "Transaction associated with this transfer will be deleted too",
+  "This action cannot be undone": "This action cannot be undone"
 }

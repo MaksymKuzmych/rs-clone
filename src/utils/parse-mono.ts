@@ -46,7 +46,7 @@ export const parseMono = (data: IMono[]) => {
         id: categoryId,
         date: Date.now(),
         name: findMCC(row[2]),
-        type: amount > 0 ? TransactionType.Income : TransactionType.Expenses,
+        type: amount > 0 ? TransactionType.Income : TransactionType.Expense,
         icon: getRandomIcon(iconsCategory).name,
         color: getRandomColor().color,
       };
