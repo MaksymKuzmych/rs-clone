@@ -1,0 +1,45 @@
+@import '../../../../styles/variables.scss';
+
+.calendar {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: $light-gray;
+}
+
+.calendarColumn {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: $light-gray;
+}
+
+.title {
+  font-weight: 700;
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton {
+  color: $lilac;
+  padding: 10px;
+  cursor: pointer;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(1.3);
+  }
+}

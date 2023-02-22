@@ -88,5 +88,19 @@
   "Don't have an account? Sign Up": "Нет аккаунта? Зарегистрироваться",
   "Already have an account? Sign In": "Уже есть аккаунт? Войти",
   "Authors": "Авторы",
-  "Notes": "Заметки"
+  "Notes": "Заметки",
+  "Filter": "Фильтр",
+  "All accounts": "Все счета",
+  "Accounts filter": "Фильтр счетов",
+  "year": "год",
+  "Select range": "Выбрать диапазон",
+  "All time": "Всё время",
+  "Select day": "Выбрать день",
+  "Week": "Неделя",
+  "Today": "Сегодня",
+  "Year": "Год",
+  "Month": "Месяц",
+  "From": "С",
+  "To": "По",
+  "Search": "Поиск"
 }

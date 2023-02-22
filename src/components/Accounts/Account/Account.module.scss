@@ -7,6 +7,11 @@
   cursor: pointer;
   border-bottom: 0.5px solid $gray;
   margin-right: 5px;
+  transition: filter 0.3s;
+
+  :hover {
+    filter: brightness(1.2);
+  }
 }
 
 .iconWrapper {
@@ -31,6 +36,11 @@
 }
 
 .name {
+  font-size: 22px;
+}
+
+.nameActive {
+  color: $lilac;
   font-size: 22px;
 }
 

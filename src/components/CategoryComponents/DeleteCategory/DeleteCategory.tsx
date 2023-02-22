@@ -25,7 +25,7 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
     (transaction) => transaction.category === categoryId,
   );
 
-  async function deleteCategory() {
+  const deleteCategory = async () => {
     if (categoryId) {
       await deleteUserData(userData.userId, { categories: categoryId });
     }
@@ -37,7 +37,7 @@ export const DeleteCategory = ({ categoryId, handleCloseModalDelete }: DeleteCat
 
     changeUserData();
     drawerHandler('deleteCategory', 'bottom', false);
-  }
+  };
 
   return (
     <div

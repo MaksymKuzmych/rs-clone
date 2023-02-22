@@ -28,14 +28,21 @@ export interface ICategory {
   colorID: number;
 }
 
+export interface IPeriodItem {
+  name: string;
+  type: Period;
+  icon: string;
+}
+
 export interface ITransaction {
   id: string;
   date: number;
   type: TransactionType;
   account: string;
-  category: string;
+  accountTo: string | null;
+  category: string | null;
   amount: number;
-  description: string;
+  description: string | null;
 }
 
 export interface IData {
