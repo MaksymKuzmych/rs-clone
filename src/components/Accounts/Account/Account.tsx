@@ -11,9 +11,10 @@ import styles from './Account.module.scss';
 interface AccountProps {
   account: IAccount;
   onClick: () => void;
+  active?: boolean;
 }
 
-export const Account = memo(({ account, onClick }: AccountProps) => {
+export const Account = memo(({ account, onClick, active }: AccountProps) => {
   const { name, icon, color, description, balance } = account;
 
   const { setCurrency } = useContext(AuthContext);
@@ -29,7 +30,9 @@ export const Account = memo(({ account, onClick }: AccountProps) => {
       </div>
       <div className={styles.info}>
         <div className={styles.infoUpper}>
-          <h3 className={styles.name}>{defaultNames.includes(name) ? t(name) : name}</h3>
+          <h3 className={active ? styles.nameActive : styles.name}>
+            {defaultNames.includes(name) ? t(name) : name}
+          </h3>
           <p className={styles.description}>{description}</p>
         </div>
         <p

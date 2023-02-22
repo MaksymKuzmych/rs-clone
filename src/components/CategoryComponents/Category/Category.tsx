@@ -59,7 +59,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
             {iconItem}
           </span>
         </div>
-        {!buttonAdd ? <div className={styles.sum}>{setCurrency(sum)}</div> : null}
+        {!buttonAdd ? <div className={styles.sum}>{setCurrency(sum, 'never')}</div> : null}
       </div>
     </div>
   );

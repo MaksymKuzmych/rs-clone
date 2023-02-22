@@ -61,7 +61,7 @@ export const CategoryPage = () => {
             date: Date.now(),
             type: categoryType,
             iconID: 1,
-            colorID: 21,
+            colorID: 22,
           },
         ];
 
@@ -72,7 +72,7 @@ export const CategoryPage = () => {
       date: Date.now(),
       type: TransactionType.Income,
       iconID: 1,
-      colorID: 21,
+      colorID: 22,
     });
   }
 
