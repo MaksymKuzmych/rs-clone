@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const setCurrency: ISetCurrency = (amount, signDisplay = 'never') =>
+  const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
       style: 'currency',
       currency: userData.settings.currency,

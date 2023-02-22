@@ -1,21 +1,23 @@
+@import '../../../../styles/variables.scss';
+
 .calendar {
-  background-color: white;
   padding: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 20px;
+  background-color: $light-gray;
 }
 
 .calendarColumn {
-  background-color: white;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
+  background-color: $light-gray;
 }
 
 .title {
@@ -32,13 +34,12 @@
 }
 
 .iconButton {
-  color: green;
+  color: $lilac;
   padding: 10px;
   cursor: pointer;
-}
+  transition: filter 0.3s;
 
-.iconButtonClose {
-  color: red;
-  padding: 10px;
-  cursor: pointer;
+  &:hover {
+    filter: brightness(1.3);
+  }
 }

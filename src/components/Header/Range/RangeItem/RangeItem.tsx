@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+
 import { Period } from '../../../../enums';
 import { IPeriodItem } from '../../../../interfaces';
 
@@ -12,13 +13,13 @@ interface RangeItemProps {
   selectedPeriod: Period;
 }
 
-export default function RangeItem({
+export const RangeItem = ({
   onClick,
   openCalendar,
   openCalendarRange,
   period,
   selectedPeriod,
-}: RangeItemProps) {
+}: RangeItemProps) => {
   const { t } = useTranslation();
 
   const activePeriod = selectedPeriod === period.type ? true : false;
@@ -41,4 +42,4 @@ export default function RangeItem({
       <div>{t(period.name)}</div>
     </div>
   );
-}
+};

@@ -1,20 +1,22 @@
 import { useCallback, useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { AuthContext } from '../../../Auth/Auth';
 import { BasicModal } from '../../UI/Modal/Modal';
-import RangeModal from './RangeModal/RangeModal';
 import { IPeriodItem } from '../../../interfaces';
 import { updateUserSettings } from '../../../firebase/update-user-settings';
 import { periodTypes } from '../../../data/periodTypes';
-import { useTranslation } from 'react-i18next';
 import { Period } from '../../../enums';
 import { getPeriod } from '../../../utils/get-period';
-import CalendarModal from './CalendarModal/CalendarModal';
-import CalendarRangeModal from './CalendarRangeModal/CalendarRangeModal';
 import { decreasePeriod, increasePeriod } from '../../../utils/shift-period';
+
+import { CalendarModal } from './CalendarModal/CalendarModal';
+import { CalendarRangeModal } from './CalendarRangeModal/CalendarRangeModal';
+import { RangeModal } from './RangeModal/RangeModal';
 
 import styles from './RangePeriod.module.scss';
 
-export default function RangePeriod() {
+export const RangePeriod = () => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { t } = useTranslation();
 
@@ -102,7 +104,9 @@ export default function RangePeriod() {
           : null;
         return `${
           monthStart === monthEnd
-            ? `${dateStart}-${dateEnd} ${monthEnd}`
+            ? dateStart === dateEnd
+              ? `${dateStart} ${monthEnd}`
+              : `${dateStart}-${dateEnd} ${monthEnd}`
             : `${dateStart} ${monthStart} - ${dateEnd} ${monthEnd}`
         }`;
       case Period.Year:
@@ -197,4 +201,4 @@ export default function RangePeriod() {
       </BasicModal>
     </div>
   );
-}
+};

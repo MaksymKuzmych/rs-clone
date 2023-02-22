@@ -1,9 +1,9 @@
+import { useCallback, useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useCallback, useState, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import 'dayjs/locale/ru';
 import { Period } from '../../../../enums';
 import { updateUserSettings } from '../../../../firebase/update-user-settings';
@@ -16,7 +16,7 @@ interface CalendarModalProps {
   onClick(): void;
 }
 
-export default function CalendarModal({ onClick }: CalendarModalProps) {
+export const CalendarModal = ({ onClick }: CalendarModalProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const start =
     userData.settings.periodType === Period.Day && userData.settings.period.start
@@ -59,9 +59,6 @@ export default function CalendarModal({ onClick }: CalendarModalProps) {
       >
         <span className={`material-icons ${styles.iconButton}`}>check</span>
       </button>
-      <button onClick={onClick}>
-        <span className={`material-icons ${styles.iconButtonClose}`}>close</span>
-      </button>
     </div>
   );
-}
+};

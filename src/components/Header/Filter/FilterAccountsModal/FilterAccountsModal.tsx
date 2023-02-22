@@ -1,9 +1,11 @@
 import { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { AuthContext } from '../../../../Auth/Auth';
 import { Theme, ThemeColor } from '../../../../enums';
 import { updateUserSettings } from '../../../../firebase/update-user-settings';
 import { IAccount } from '../../../../interfaces';
+
 import { Account } from '../../../Accounts/Account/Account';
 
 import styles from './FilterAccountsModal.module.scss';
@@ -12,7 +14,7 @@ interface FilterAccountsModalProps {
   handleClose(): void;
 }
 
-export default function FilterAccountsModal({ handleClose }: FilterAccountsModalProps) {
+export const FilterAccountsModal = ({ handleClose }: FilterAccountsModalProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { t } = useTranslation();
 
@@ -41,6 +43,8 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
     description: '',
   };
 
+  const selectedAccount = userData.settings.selectedAccount;
+
   return (
     <div className={styles.modalWrapper}>
       <div className={styles.modalTitle}>{t('Accounts filter')}</div>
@@ -55,6 +59,7 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
           onClick={() => {
             accountDrawerHandler(AllAccounts);
           }}
+          active={selectedAccount === null ? true : false}
         />
       </div>
       <div
@@ -72,9 +77,10 @@ export default function FilterAccountsModal({ handleClose }: FilterAccountsModal
               onClick={() => {
                 accountDrawerHandler(account);
               }}
+              active={selectedAccount === account.id ? true : false}
             />
           ))}
       </div>
     </div>
   );
-}
+};
