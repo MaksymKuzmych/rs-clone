@@ -1,5 +1,5 @@
 export const defaultNames = [
-  'Gloceries',
+  'Groceries',
   'Restaurant',
   'Leisure',
   'Transport',

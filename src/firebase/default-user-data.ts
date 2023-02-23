@@ -37,7 +37,7 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory1',
         date: Date.now() + 1,
-        name: 'Gloceries',
+        name: 'Groceries',
         type: TransactionType.Expense,
         icon: 'shopping_basket',
         color: '#5c6ac2',

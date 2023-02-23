@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 
 import { AuthContext } from '../../Auth/Auth';
-import { TransactionForm } from '../../components/Forms/TransactionForm';
 import { Settings } from '../../components/Transactions/Settings/Settings';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
@@ -12,11 +11,12 @@ import { DrawerContext } from '../../context/Drawer';
 import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
 import { ITransaction, ITransactionAll } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
-
-import styles from './TransactionPage.module.scss';
 import { theme } from '../../styles/theme';
 import { SearchContext } from '../../context/Search';
 import { defaultNames } from '../../data/defaultNames';
+import { AddTransaction } from '../../components/Transactions/AddTransaction/AddTransaction';
+
+import styles from './TransactionPage.module.scss';
 
 interface ITransactionsDay {
   date: number;
@@ -54,8 +54,8 @@ export const TransactionPage = () => {
     switch (typeDrawer) {
       case 'info':
         return <Settings currentTransaction={currentTransaction} />;
-      case 'addAccount':
-        return <TransactionForm />;
+      case 'addTransaction':
+        return <AddTransaction />;
     }
   }, [currentTransaction, typeDrawer]);
 
@@ -175,7 +175,7 @@ export const TransactionPage = () => {
       >
         <button
           className={styles.buttonAdd}
-          onClick={() => drawerHandler('addAccount', 'bottom', true)}
+          onClick={() => drawerHandler('addTransaction', 'bottom', true)}
         >
           +
         </button>
