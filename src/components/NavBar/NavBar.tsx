@@ -16,7 +16,6 @@ import { BasicModal } from '../UI/Modal/Modal';
 import { Login } from './Login/Login';
 import { auth } from '../../firebase/firebase-config';
 import { signOutUser } from '../../firebase/sign-out-user';
-import { ImportXLS } from './ImportXLS/ImportXLS';
 import { NavLinkAccount } from './NavLinkAccount/NavLinkAccount';
 
 import styles from './NavBar.module.scss';
@@ -132,7 +131,6 @@ export const NavBar = () => {
             />
             <Divider />
             <div className={styles.subtitle}>{t('Data')}</div>
-            <ImportXLS />
             <DeleteButton />
             <Divider />
             <div className={styles.subtitle}>{t('Authors')}</div>
