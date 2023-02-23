@@ -112,15 +112,15 @@ export const TransactionPage = () => {
       })
       .filter(
         (transaction) =>
-          new Date(transaction.date).getDate().toString().includes(searchValue) ||
-          transaction.amount.toString().includes(searchValue) ||
-          transaction.description?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.accountName?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.accountNameRU?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.accountToName?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.accountToNameRU?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.categoryName?.toLocaleLowerCase().includes(searchValue) ||
-          transaction.categoryNameRU?.toLocaleLowerCase().includes(searchValue),
+          new Date(transaction.date).getDate().toString().includes(searchValue.toLowerCase()) ||
+          transaction.amount.toString().includes(searchValue.toLowerCase()) ||
+          transaction.description?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.accountName?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.accountNameRU?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.accountToName?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.accountToNameRU?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.categoryName?.toLocaleLowerCase().includes(searchValue.toLowerCase()) ||
+          transaction.categoryNameRU?.toLocaleLowerCase().includes(searchValue.toLowerCase()),
       )
       .forEach((transaction) => {
         const date = getPeriod(Period.Day, transaction.date).start || 0;
