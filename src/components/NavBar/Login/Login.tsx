@@ -6,15 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 
 import { theme } from '../../../styles/theme';
-import { signInGoogle } from '../../../firebase/sign-in-google';
 import { registerUser } from '../../../firebase/register-user';
 import { AuthContext } from '../../../Auth/Auth';
-import { Theme, ThemeColor } from '../../../enums';
+import { Provider, Theme, ThemeColor } from '../../../enums';
 import { signInUser } from '../../../firebase/sign-in-user';
 import { useSnackbar } from 'notistack';
-import { signInGithub } from '../../../firebase/sign-in-github';
 
 import styles from './Login.module.scss';
+import { signInProvider } from '../../../firebase/sign-in-provider';
 
 export const Login = () => {
   const { userData, changeUserData } = useContext(AuthContext);
@@ -25,8 +24,8 @@ export const Login = () => {
 
   const { t } = useTranslation();
 
-  const signInGoogleHandler = () => signInGoogle();
-  const signInGithubHandler = () => signInGithub();
+  const signInGoogleHandler = async () => await signInProvider(Provider.Google);
+  const signInGithubHandler = async () => await signInProvider(Provider.Github);
 
   const formik = useFormik({
     initialValues: {

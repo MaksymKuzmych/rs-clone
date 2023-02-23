@@ -2,34 +2,51 @@ import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { colors } from '../../../data/colors';
 import { defaultNames } from '../../../data/defaultNames';
-import { iconsCategory } from '../../../data/icons';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
-import { ITransaction } from '../../../interfaces';
+import { ITransaction, ITransactionAll } from '../../../interfaces';
 
 import styles from './Transaction.module.scss';
 
 interface AccountProps {
   transaction: ITransaction;
+  transactionDrawerHandler: (currentTransaction: ITransactionAll) => void;
 }
 
-export const Transaction = memo(({ transaction }: AccountProps) => {
+export const Transaction = memo(({ transaction, transactionDrawerHandler }: AccountProps) => {
   const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
-
   const { t } = useTranslation();
 
-  const { type, account, category, amount, description } = transaction;
+  const { id, date, type, account, accountTo, category, amount, description } = transaction;
   const { accounts, categories } = userData.data;
-  const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
-  const categoryName = categoryItem?.name || '';
-  const categoryIcon = iconsCategory.find((icon) => icon.id === categoryItem?.iconID)?.name;
-  const categoryColor = colors.find((color) => color.id === categoryItem?.colorID)?.color;
+
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
   const accountName = accountItem?.name || '';
-  const accountIcon = accountItem?.icon;
-  const sign = type === TransactionType.Income;
+  const accountColor = accountItem?.color || '';
+  const accountIcon = accountItem?.icon || '';
+  const accountToItem = accounts.find((accountItem) => accountItem.id === accountTo);
+  const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
+  const categoryName = categoryItem?.name || accountToItem?.name || '';
+  const categoryColor = categoryItem?.color || accountToItem?.color || '';
+  const categoryIcon = categoryItem?.icon || accountToItem?.icon || '';
+
+  const currentTransaction: ITransactionAll = {
+    id,
+    date,
+    type,
+    account,
+    accountTo,
+    category,
+    amount,
+    description,
+    accountName,
+    accountColor,
+    accountIcon,
+    categoryName,
+    categoryColor,
+    categoryIcon,
+  };
 
   return (
     <div
@@ -37,9 +54,15 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
       style={{
         backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : '#343a40',
       }}
+      onClick={() => transactionDrawerHandler(currentTransaction)}
     >
       <div className={styles.infoWrapper}>
-        <div className={styles.iconWrapper} style={{ backgroundColor: categoryColor }}>
+        <div
+          className={
+            type === TransactionType.Transfer ? styles.accountIconWrapper : styles.iconWrapper
+          }
+          style={{ backgroundColor: categoryColor }}
+        >
           <span className='material-icons' style={{ color: 'white' }}>
             {categoryIcon}
           </span>
@@ -57,8 +80,8 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <p className={sign ? styles.amountPositive : styles.amountNegative}>
-        {setCurrency(sign ? amount : -amount, 'always')}
+      <p className={amount > 0 ? styles.amountPositive : styles.amountNegative}>
+        {setCurrency(amount, 'always')}
       </p>
     </div>
   );

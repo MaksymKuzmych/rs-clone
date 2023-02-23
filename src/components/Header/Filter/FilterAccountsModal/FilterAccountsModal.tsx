@@ -21,11 +21,11 @@ export const FilterAccountsModal = memo(({ handleClose }: FilterAccountsModalPro
   const accountDrawerHandler = useCallback(
     async (account: IAccount) => {
       const newSelectedAccount = account.id === 'allAccounts' ? null : account.id;
-      await updateUserSettings(userData.userId, { selectedAccount: newSelectedAccount });
+      await updateUserSettings(userData.settings.userId, { selectedAccount: newSelectedAccount });
       await changeUserData();
       handleClose();
     },
-    [handleClose, changeUserData, userData.userId],
+    [handleClose, changeUserData, userData.settings.userId],
   );
 
   const allAccountsAmount = userData.data.accounts.reduce(

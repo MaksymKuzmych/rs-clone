@@ -33,10 +33,10 @@ export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccoun
   }, [currentAccount.name, userData.data.transactions]);
 
   const deleteUser = useCallback(async () => {
-    deleteUserData(userData.userId, { accounts: currentAccount.id });
+    await deleteUserData(userData.settings.userId, { accounts: currentAccount.id });
     await changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [changeUserData, currentAccount.id, drawerHandler, userData.userId]);
+  }, [changeUserData, currentAccount.id, drawerHandler, userData.settings.userId]);
 
   return (
     <div

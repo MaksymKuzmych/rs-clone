@@ -112,13 +112,13 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       };
 
       if (currentAccount) {
-        await updateUserData(userData.userId, {
+        await updateUserData(userData.settings.userId, {
           accounts: {
             [currentAccount.id]: accountInfo,
           },
         });
       } else {
-        await pushUserData(userData.userId, {
+        await pushUserData(userData.settings.userId, {
           accounts: [accountInfo],
         });
       }

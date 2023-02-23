@@ -1,5 +1,5 @@
 export const defaultNames = [
-  'Gloceries',
+  'Groceries',
   'Restaurant',
   'Leisure',
   'Transport',
@@ -11,4 +11,16 @@ export const defaultNames = [
   'Card',
   'Cash',
   'All accounts',
+];
+
+export const defaultNamesRu = [
+  'Продукты',
+  'Кафе',
+  'Досуг',
+  'Транспорт',
+  'Здоровье',
+  'Подарки',
+  'Семья',
+  'Покупки',
+  'Зарплата',
 ];

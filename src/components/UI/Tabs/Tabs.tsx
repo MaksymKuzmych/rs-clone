@@ -42,12 +42,21 @@ function a11yProps(index: number) {
 interface BasicTabsProps {
   firstChild: ReactNode;
   secondChild: ReactNode;
+  thirdChild?: ReactNode;
   firstTitle: string;
   secondTitle: string;
+  thirdTitle?: string;
 }
 
 export const BasicTabs = memo(
-  ({ firstChild, secondChild, firstTitle, secondTitle }: BasicTabsProps) => {
+  ({
+    firstChild,
+    secondChild,
+    thirdChild,
+    firstTitle,
+    secondTitle,
+    thirdTitle,
+  }: BasicTabsProps) => {
     const { userData } = useContext(AuthContext);
 
     const [value, setValue] = useState(0);
@@ -86,8 +95,19 @@ export const BasicTabs = memo(
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange}>
-              <Tab label={firstTitle} {...a11yProps(0)} style={{ width: '50%' }} />
-              <Tab label={secondTitle} {...a11yProps(1)} style={{ width: '50%' }} />
+              <Tab
+                label={firstTitle}
+                {...a11yProps(0)}
+                style={thirdTitle ? { width: '33.3%' } : { width: '50%' }}
+              />
+              <Tab
+                label={secondTitle}
+                {...a11yProps(1)}
+                style={thirdTitle ? { width: '33.3%' } : { width: '50%' }}
+              />
+              {thirdTitle && (
+                <Tab label={thirdTitle} {...a11yProps(1)} style={{ width: '33.3%' }} />
+              )}
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -96,6 +116,11 @@ export const BasicTabs = memo(
           <TabPanel value={value} index={1}>
             {secondChild}
           </TabPanel>
+          {thirdChild && (
+            <TabPanel value={value} index={2}>
+              {thirdChild}
+            </TabPanel>
+          )}
         </Box>
       </ThemeProvider>
     );

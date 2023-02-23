@@ -1,12 +1,18 @@
 import { Currency, Lang, Theme, Period, TransactionType } from './enums';
 
+export interface IPeriod {
+  start: number | null;
+  end: number | null;
+}
+
 export interface ISettings {
+  userId: string;
   lang: Lang;
   currency: Currency;
   theme: Theme;
   selectedAccount: string | null;
   periodType: Period;
-  period: { start: number | null; end: number | null };
+  period: IPeriod;
 }
 
 export interface IAccount {
@@ -24,8 +30,8 @@ export interface ICategory {
   date: number;
   name: string;
   type: TransactionType;
-  iconID: number;
-  colorID: number;
+  icon: string;
+  color: string;
 }
 
 export interface IPeriodItem {
@@ -64,7 +70,6 @@ export interface IDataFBGet {
 }
 
 export interface IStore {
-  userId: string;
   settings: ISettings;
   data: IData;
 }
@@ -73,11 +78,8 @@ export interface IDataFBFiltered {
   accounts?: null;
   categories?: null;
   transactions?: null | {
-    periodStart?: number;
-    periodEnd?: number;
-    account?: string;
-    category?: string;
-    type?: TransactionType;
+    account: string | null;
+    period: IPeriod;
   };
 }
 
@@ -113,4 +115,13 @@ export interface IDrawerSide {
   left: boolean;
   bottom: boolean;
   right: boolean;
+}
+
+export interface ITransactionAll extends ITransaction {
+  accountName: string;
+  accountColor: string;
+  accountIcon: string;
+  categoryName: string;
+  categoryColor: string;
+  categoryIcon: string;
 }

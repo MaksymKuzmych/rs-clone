@@ -7,7 +7,6 @@ import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLi
 import { AuthContext } from '../../Auth/Auth';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { ICategory, IChart } from '../../interfaces';
-import { colors } from '../../data/colors';
 import { TransactionType, CurrencySymbol, ThemeColor, Theme } from '../../enums';
 import { CategoryForm } from '../../components/Forms/CategoryForm';
 import { defaultNames } from '../../data/defaultNames';
@@ -21,7 +20,7 @@ export const CategoryPage = () => {
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
-  const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
+  const [categoryType, setCategoryType] = useState(TransactionType.Expense);
 
   const { t } = useTranslation();
 
@@ -51,40 +50,34 @@ export const CategoryPage = () => {
   const categoriesThisType =
     categories.length !== 0 ? categories.filter((category) => category.type === categoryType) : [];
 
+  const transactionsFiltered = transactions.filter(
+    (transaction) => transaction.type === categoryType,
+  );
+
+  const buttonAdd = {
+    id: '0',
+    name: '',
+    date: Date.now(),
+    type: categoryType,
+    icon: 'add',
+    color: `${userData.settings.theme === Theme.Light ? '#f8f8f8' : '#2a3139'}`,
+  };
+
   const categoriesFiltered =
     categories.length !== 0 && categoriesThisType.length !== 0
       ? categories.filter((category) => category.type === categoryType)
-      : [
-          {
-            id: '0',
-            name: '',
-            date: Date.now(),
-            type: categoryType,
-            iconID: 1,
-            colorID: 22,
-          },
-        ];
+      : [buttonAdd];
 
   if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
-    categoriesFiltered.push({
-      id: '0',
-      name: '',
-      date: Date.now(),
-      type: TransactionType.Income,
-      iconID: 1,
-      colorID: 22,
-    });
+    categoriesFiltered.push(buttonAdd);
   }
 
   categoriesFiltered.forEach((item) => {
     const name = defaultNames.includes(item.name) ? t(item.name) : item.name;
-    const color = colors.find((color) => color.id === item.colorID)?.color;
 
     dataForChart.labels.push(name);
 
-    if (color) {
-      dataForChart.datasets[0].backgroundColor.push(color);
-    }
+    dataForChart.datasets[0].backgroundColor.push(item.color);
 
     const categorySum = transactions
       .filter((action) => action.category === item.id)
@@ -98,7 +91,7 @@ export const CategoryPage = () => {
     .reduce((sum, current) => sum + current.amount, 0);
 
   const expenses = transactions
-    .filter((item) => item.type === TransactionType.Expenses)
+    .filter((item) => item.type === TransactionType.Expense)
     .reduce((sum, current) => sum + current.amount, 0);
 
   const transferCategory = useCallback(
@@ -160,7 +153,7 @@ export const CategoryPage = () => {
           />
           <ChartComponent
             type={categoryType}
-            dataChart={transactions.length ? dataForChart : dataForChartEmpty}
+            dataChart={transactionsFiltered.length ? dataForChart : dataForChartEmpty}
             income={income}
             expenses={expenses}
             currencySymbol={currencySymbol}

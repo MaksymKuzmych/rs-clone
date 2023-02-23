@@ -23,3 +23,21 @@
     background-color: $gray;
   }
 }
+
+.buttonAdd {
+  position: absolute;
+  bottom: 100px;
+  right: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: white;
+  font-size: 32px;
+  background-color: $blue;
+}
+
+.noTransactions {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 40vh;
+}

@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import { createContext, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BrowserRouterProps } from 'react-router-dom';
 
 import { Footer } from '../components/Footer/Footer';
@@ -11,6 +12,7 @@ import { createAnonUser } from '../firebase/create-anon-user';
 import { emptyUserData } from '../firebase/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
+import { pullUserSettings } from '../firebase/pull-user-settings';
 import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
 
@@ -35,6 +37,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
@@ -48,7 +51,15 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const changeUserData = useCallback(async () => {
     try {
       setPending(true);
-      setUserData(await pullUserData(userData, userData.userId));
+      setUserData(await pullUserSettings(userData, userData.settings.userId));
+      setUserData(
+        await pullUserData(
+          userData,
+          userData.settings.userId,
+          userData.settings.selectedAccount,
+          userData.settings.period,
+        ),
+      );
       setPending(false);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
@@ -59,14 +70,28 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
     onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
+          const displayName =
+            user.displayName ||
+            user.providerData[0]?.displayName ||
+            user.providerData[1]?.displayName ||
+            user.providerData[2]?.displayName ||
+            user.email;
           setPending(true);
           await createAnonUser(user.uid);
-          setUserData(await pullUserData(userData, user.uid));
+          setUserData(await pullUserSettings(userData, user.uid));
+          setUserData(
+            await pullUserData(
+              userData,
+              user.uid,
+              userData.settings.selectedAccount,
+              userData.settings.period,
+            ),
+          );
           setPending(false);
           if (user.isAnonymous) {
-            enqueueSnackbar('Anonymous Login', { variant: 'success' });
+            enqueueSnackbar(t('Anonymous Login'), { variant: 'success' });
           } else {
-            enqueueSnackbar(`${user.email} Login`, { variant: 'success' });
+            enqueueSnackbar(`${t('Login')} ${displayName}`, { variant: 'success' });
           }
         } else {
           await signInAnon();
@@ -75,7 +100,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
         enqueueSnackbar(`${error}`, { variant: 'error' });
       }
     });
-  }, [enqueueSnackbar, userData]);
+  }, [enqueueSnackbar, t, userData]);
 
   if (pending) {
     return (

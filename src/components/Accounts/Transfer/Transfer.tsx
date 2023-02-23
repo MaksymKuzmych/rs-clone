@@ -57,7 +57,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
     setIsError(false);
 
     if (targetAccount) {
-      await pushUserData(userData.userId, {
+      await pushUserData(userData.settings.userId, {
         transactions: [
           {
             id: '',
@@ -82,8 +82,8 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
         ],
       });
 
-      await incrementBalance(userData.userId, currentAccount.id, +amount);
-      await incrementBalance(userData.userId, targetAccount.id, +-amount);
+      await incrementBalance(userData.settings.userId, currentAccount.id, +amount);
+      await incrementBalance(userData.settings.userId, targetAccount.id, +-amount);
 
       await changeUserData();
       drawerHandler('info', 'bottom', false);

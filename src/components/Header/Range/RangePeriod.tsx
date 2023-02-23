@@ -40,14 +40,14 @@ export const RangePeriod = () => {
 
   const onClick = useCallback(
     async (range: IPeriodItem) => {
-      await updateUserSettings(userData.userId, {
+      await updateUserSettings(userData.settings.userId, {
         periodType: range.type,
         period: getPeriod(range.type, Date.now()),
       });
       await changeUserData();
       toggleModal();
     },
-    [changeUserData, toggleModal, userData.userId],
+    [changeUserData, toggleModal, userData.settings.userId],
   );
 
   const language: string = userData.settings.lang;
@@ -135,7 +135,7 @@ export const RangePeriod = () => {
           )
         : { date: Date.now(), dateEnd: undefined };
 
-    await updateUserSettings(userData.userId, {
+    await updateUserSettings(userData.settings.userId, {
       period: getPeriod(
         userData.settings.periodType,
         date,
@@ -157,7 +157,7 @@ export const RangePeriod = () => {
           )
         : { date: Date.now(), dateEnd: undefined };
 
-    await updateUserSettings(userData.userId, {
+    await updateUserSettings(userData.settings.userId, {
       period: getPeriod(
         userData.settings.periodType,
         date,
