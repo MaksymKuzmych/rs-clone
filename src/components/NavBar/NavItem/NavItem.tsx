@@ -71,7 +71,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
           break;
       }
 
-      changeUserData();
+      await changeUserData();
       setParam(event.target.value);
     },
     [changeUserData, i18n, userData.userId],

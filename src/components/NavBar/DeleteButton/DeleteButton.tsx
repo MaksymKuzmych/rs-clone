@@ -40,7 +40,7 @@ export const DeleteButton = () => {
       categories: defaultUserData.data.categories,
     });
 
-    changeUserData();
+    await changeUserData();
   }, [changeUserData, userData.data, userData.userId]);
 
   const deleteTransactions = useCallback(async () => {
@@ -48,7 +48,7 @@ export const DeleteButton = () => {
       await deleteUserData(userData.userId, { transactions: transaction.id });
     });
 
-    changeUserData();
+    await changeUserData();
   }, [changeUserData, userData.data.transactions, userData.userId]);
 
   return (
