@@ -16,6 +16,7 @@ import { getPeriod } from '../../utils/get-period';
 import styles from './TransactionPage.module.scss';
 import { theme } from '../../styles/theme';
 import { SearchContext } from '../../context/Search';
+import { defaultNames } from '../../data/defaultNames';
 
 interface ITransactionsDay {
   date: number;
@@ -90,11 +91,23 @@ export const TransactionPage = () => {
           amount: transaction.amount,
           description: transaction.description,
           accountName: accountItem?.name,
-          accountNameRU: t(accountItem?.name || ''),
+          accountNameRU: accountItem
+            ? defaultNames.includes(accountItem.name)
+              ? t(accountItem.name)
+              : null
+            : null,
           accountToName: accountToItem?.name,
-          accountToNameRU: t(accountToItem?.name || ''),
+          accountToNameRU: accountToItem
+            ? defaultNames.includes(accountToItem.name)
+              ? t(accountToItem.name)
+              : null
+            : null,
           categoryName: categoryItem?.name,
-          categoryNameRU: t(categoryItem?.name || ''),
+          categoryNameRU: categoryItem
+            ? defaultNames.includes(categoryItem.name)
+              ? t(categoryItem.name)
+              : null
+            : null,
         };
       })
       .filter(
