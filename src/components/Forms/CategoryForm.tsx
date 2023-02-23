@@ -177,14 +177,6 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
             {category ? (
               <div className={styles.categoriesBtnsWrapper}>
                 <SettingsBtn
-                  icon='add'
-                  color='#fec107'
-                  title={t('Add transaction')}
-                  onClick={() => {
-                    alert('edit');
-                  }}
-                />
-                <SettingsBtn
                   icon='delete'
                   color='#f34334'
                   title={t('Delete')}

@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
+import { defaultNames } from '../../../data/defaultNames';
 import { BasicModal } from '../../UI/Modal/Modal';
 
 import { FilterAccountsModal } from './FilterAccountsModal/FilterAccountsModal';
@@ -38,8 +39,12 @@ export const FilterBlock = ({ openSearch }: FilterBlockProps) => {
       <div className={styles.account} onClick={handleOpen}>
         <div className={styles.accountName}>
           <div className={styles.accoutTitle}>
-            {userData.settings.selectedAccount
-              ? `${t('Filter')} - ${selectedAccountName}`
+            {userData.settings.selectedAccount && selectedAccountName
+              ? `${t('Filter')} - ${
+                  defaultNames.includes(selectedAccountName)
+                    ? t(selectedAccountName)
+                    : selectedAccountName
+                }`
               : `${t('All accounts')}`}
           </div>
           <span className={`material-icons ${styles.arrow}`}>arrow_drop_down</span>

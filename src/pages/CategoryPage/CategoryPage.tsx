@@ -1,12 +1,12 @@
 import { useCallback, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeProvider } from '@mui/material';
+import { TextField, ThemeProvider } from '@mui/material';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
 import { AuthContext } from '../../Auth/Auth';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
-import { ICategory, IChart } from '../../interfaces';
+import { IAccount, ICategory, IChart } from '../../interfaces';
 import { TransactionType, CurrencySymbol, ThemeColor, Theme } from '../../enums';
 import { CategoryForm } from '../../components/Forms/CategoryForm';
 import { defaultNames } from '../../data/defaultNames';
@@ -14,10 +14,28 @@ import { DrawerContext } from '../../context/Drawer';
 import { theme } from '../../styles/theme';
 
 import styles from './CategoryPage.module.scss';
+import { BasicModal } from '../../components/UI/Modal/Modal';
+import { Transfer } from '../../components/CategoryComponents/Transfer/Transfer';
+import { SettingsBtn } from '../../components/Accounts/Settings/SettingsBtn/SettingsBtn';
 
 export const CategoryPage = () => {
   const { userData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const toggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
+
+  const selectedAccount = userData.data.accounts.find(
+    (account) => account.id === userData.settings.selectedAccount,
+  );
+
+  const [account, setAccount] = useState<IAccount | null>(
+    selectedAccount ? selectedAccount : userData.data.accounts[0],
+  );
+  const [amount, setAmount] = useState('');
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
   const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
@@ -36,7 +54,7 @@ export const CategoryPage = () => {
     labels: [],
     datasets: [
       {
-        label: categoryType,
+        label: categoryType === TransactionType.Expenses ? t('Expenses') : t('Income'),
         data: [],
         backgroundColor: [],
       },
@@ -94,11 +112,24 @@ export const CategoryPage = () => {
     .filter((item) => item.type === TransactionType.Expenses)
     .reduce((sum, current) => sum + current.amount, 0);
 
-  const transferCategory = useCallback(
+  const addTransaction = useCallback(
     (category: ICategory) => {
-      category ? setNewCategory(category) : setNewCategory(null);
+      setCategoryClicked(category);
+      toggleModal();
     },
-    [setNewCategory],
+    [toggleModal],
+  );
+
+  const createCategory = useCallback(() => {
+    drawerHandler('new', 'bottom', true);
+  }, [drawerHandler]);
+
+  const editCategory = useCallback(
+    (category: ICategory | null) => {
+      setOpenModal(false);
+      drawerHandler('edit', 'bottom', true);
+    },
+    [drawerHandler],
   );
 
   const dataForChartEmpty: IChart = {
@@ -128,28 +159,32 @@ export const CategoryPage = () => {
             start={0}
             end={4}
             classLine={'lineTop'}
-            callbackTransferCategory={transferCategory}
+            addCategory={createCategory}
+            callback={addTransaction}
           />
           <CategoriesLine
             dataCategories={categoriesFiltered}
             start={4}
             end={6}
             classLine={'lineLeft'}
-            callbackTransferCategory={transferCategory}
+            addCategory={createCategory}
+            callback={addTransaction}
           />
           <CategoriesLine
             dataCategories={categoriesFiltered}
             start={6}
             end={8}
             classLine={'lineRight'}
-            callbackTransferCategory={transferCategory}
+            addCategory={createCategory}
+            callback={addTransaction}
           />
           <CategoriesLine
             dataCategories={categoriesFiltered}
             start={8}
             end={12}
             classLine={'lineBottom'}
-            callbackTransferCategory={transferCategory}
+            addCategory={createCategory}
+            callback={addTransaction}
           />
           <ChartComponent
             type={categoryType}
@@ -160,6 +195,33 @@ export const CategoryPage = () => {
             callback={changeCategoryType}
           />
         </div>
+        <BasicModal openModal={openModal} handleClose={() => setOpenModal(!openModal)}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <Transfer text={t('From account')} account={account} />
+              <Transfer text={t('To category')} category={categoryClicked} />
+            </div>
+            <div className={styles.inputWrapper}>
+              <TextField
+                autoComplete='off'
+                variant='standard'
+                color='primary'
+                name='balance'
+                label={t('Amount')}
+                type='number'
+                sx={{ width: '160px' }}
+                value={amount}
+              />
+            </div>
+
+            <SettingsBtn
+              icon='edit'
+              color='#fec107'
+              title={t('Edit category')}
+              onClick={() => editCategory(categoryClicked)}
+            />
+          </div>
+        </BasicModal>
         <TemporaryDrawer
           state={state}
           anchor='bottom'

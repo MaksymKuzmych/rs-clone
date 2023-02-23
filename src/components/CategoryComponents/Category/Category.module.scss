@@ -6,6 +6,11 @@
   justify-content: center;
 }
 
+.wrapperActive {
+  border: 3px solid $lilac;
+  border-radius: 15px;
+}
+
 .category {
   display: flex;
   flex-direction: column;
