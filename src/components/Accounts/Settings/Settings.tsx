@@ -31,7 +31,7 @@ export const Settings = memo(({ currentAccount }: SettingsProps) => {
   const redirectToTransactions = useCallback(async () => {
     await updateUserSettings(userData.userId, { selectedAccount: currentAccount.id });
     navigate(`/transactions`);
-    changeUserData();
+    await changeUserData();
     drawerHandler('info', 'bottom', false);
   }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.userId]);
 

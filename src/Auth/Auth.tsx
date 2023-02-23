@@ -20,13 +20,13 @@ interface ISetCurrency {
 
 interface IAuthContext {
   userData: IStore;
-  changeUserData: () => void;
+  changeUserData: () => Promise<void>;
   setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   userData: emptyUserData,
-  changeUserData: () => {},
+  changeUserData: async () => {},
   setCurrency: () => '',
 });
 

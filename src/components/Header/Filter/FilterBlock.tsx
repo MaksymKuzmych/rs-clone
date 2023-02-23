@@ -1,10 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { defaultNames } from '../../../data/defaultNames';
 import { BasicModal } from '../../UI/Modal/Modal';
-
 import { FilterAccountsModal } from './FilterAccountsModal/FilterAccountsModal';
 
 import styles from './FilterBlock.module.scss';
@@ -13,14 +12,16 @@ interface FilterBlockProps {
   openSearch: boolean;
 }
 
-export const FilterBlock = ({ openSearch }: FilterBlockProps) => {
-  const { userData } = useContext(AuthContext);
-  const { setCurrency } = useContext(AuthContext);
+export const FilterBlock = memo(({ openSearch }: FilterBlockProps) => {
+  const { userData, setCurrency } = useContext(AuthContext);
 
   const { t } = useTranslation();
+
   const [openModal, setOpenModal] = useState(false);
+
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
+
   const allAccountsAmount = userData.data.accounts.reduce(
     (sum, current) => sum + current.balance,
     0,
@@ -60,4 +61,4 @@ export const FilterBlock = ({ openSearch }: FilterBlockProps) => {
       </BasicModal>
     </div>
   );
-};
+});

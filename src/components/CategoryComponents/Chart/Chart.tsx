@@ -15,7 +15,7 @@ interface ChartComponentProps {
   income: number;
   expenses: number;
   currencySymbol: string;
-  callback(props: TransactionType): void;
+  callback: (props: TransactionType) => void;
 }
 
 export const ChartComponent = memo(

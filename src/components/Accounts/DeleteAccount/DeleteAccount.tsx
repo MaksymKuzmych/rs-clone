@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
@@ -14,7 +14,7 @@ interface DeleteAccountProps {
   handleClose: () => void;
 }
 
-export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProps) => {
+export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccountProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
@@ -34,7 +34,7 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
 
   const deleteUser = useCallback(async () => {
     deleteUserData(userData.userId, { accounts: currentAccount.id });
-    changeUserData();
+    await changeUserData();
     drawerHandler('info', 'bottom', false);
   }, [changeUserData, currentAccount.id, drawerHandler, userData.userId]);
 
@@ -75,4 +75,4 @@ export const DeleteAccount = ({ currentAccount, handleClose }: DeleteAccountProp
       </div>
     </div>
   );
-};
+});

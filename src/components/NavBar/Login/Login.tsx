@@ -52,7 +52,7 @@ export const Login = () => {
       } else {
         try {
           await registerUser(values.email, values.password);
-          changeUserData();
+          await changeUserData();
           enqueueSnackbar(`${values.email} Login`, { variant: 'success' });
         } catch (error) {
           enqueueSnackbar(`${error}`, { variant: 'error' });
@@ -118,7 +118,7 @@ export const Login = () => {
                 color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               }}
               onClick={() => {
-                setType('signOut');
+                setType('signUp');
                 formik.initialValues = {
                   email: '',
                   password: '',
@@ -128,7 +128,7 @@ export const Login = () => {
               {t("Don't have an account? Sign Up")}
             </button>
           )}
-          {type === 'signOut' && (
+          {type === 'signUp' && (
             <button
               style={{
                 color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
