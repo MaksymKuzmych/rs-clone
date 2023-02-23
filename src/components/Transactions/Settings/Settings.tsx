@@ -5,11 +5,11 @@ import { ITransactionAll } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
-
-import styles from './Settings.module.scss';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 import { DeleteTransaction } from '../DeleteTransaction/DeleteTransaction';
 import { dayOfWeek } from '../../../utils/day-of-week';
+
+import styles from './Settings.module.scss';
 
 interface SettingsProps {
   currentTransaction: ITransactionAll;
@@ -86,7 +86,7 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
         }}
       >
         <input
-          type='text'
+          type='textfield'
           placeholder={t('Notes...') || ''}
           defaultValue={currentTransaction.description || ''}
           className={styles.notes}

@@ -2,18 +2,8 @@
 
 .buttons {
   display: flex;
-  flex-direction: column;
-
-  .button {
-    color: white;
-    font-size: 22px;
-    border: 1px solid white;
-    border-radius: 5px;
-    transition: box-shadow 0.5s;
-    &:hover {
-      box-shadow: 0 0 7px;
-    }
-  }
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .subtitle {
@@ -22,30 +12,26 @@
   font-size: 18px;
 }
 
-.googleBtn {
+.googleBtn,
+.githubBtn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16%;
+  padding: 8px 8px;
   margin: 5px 0;
   border-radius: 5px;
   background-color: #d44f3d;
   color: white;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .githubBtn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 16%;
-  margin: 5px 0;
-  border-radius: 5px;
   background-color: #90969f;
-  color: white;
-  width: 100%;
-  font-size: 20px;
 }
 
 .icon {

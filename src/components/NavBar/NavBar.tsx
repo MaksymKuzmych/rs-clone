@@ -112,7 +112,7 @@ export const NavBar = () => {
                 auth.currentUser?.providerData[1]?.displayName ||
                 auth.currentUser?.providerData[2]?.displayName ||
                 auth.currentUser?.email ||
-                t('User Name')}{' '}
+                t('User Name')}
             </div>
           </div>
         </div>

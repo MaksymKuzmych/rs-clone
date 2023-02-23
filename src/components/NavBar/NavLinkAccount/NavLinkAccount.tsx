@@ -52,21 +52,13 @@ export const NavLinkAccount = () => {
       <>
         <div className={styles.subtitle}>{t('Account ')}</div>
         <div className={styles.buttons}>
-          <button
-            onClick={() => linkProvider(Provider.Google)}
-            className={styles.googleBtn}
-            type='button'
-          >
+          <button onClick={() => linkProvider(Provider.Google)} className={styles.googleBtn}>
             <img className={styles.icon} src='./assets/google.png' alt='Google' />
-            {googleStatus ? t('Unlink') : t('Link')} Google
+            {googleStatus ? t('Unlink') : t('Link')}
           </button>
-          <button
-            onClick={() => linkProvider(Provider.Github)}
-            className={styles.githubBtn}
-            type='button'
-          >
+          <button onClick={() => linkProvider(Provider.Github)} className={styles.githubBtn}>
             <img className={styles.icon} src='./assets/github.png' alt='GitHub' />
-            {githubStatus ? t('Unlink') : t('Link')} GitHub
+            {githubStatus ? t('Unlink') : t('Link')}
           </button>
         </div>
         <Divider />

@@ -6,7 +6,7 @@
 
 .navHeader {
   background-color: $lilac;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -68,12 +68,12 @@
 
 .subtitle {
   color: $lilac;
-  padding: 5px 0;
+  padding: 4px 0;
   font-size: 18px;
 }
 
 .RssLogo {
-  width: 70%;
+  width: 100%;
 }
 
 .logoWrapper {
@@ -88,5 +88,4 @@
 .linkWrapper {
   width: 50%;
   margin: 0 auto;
-  padding-top: 10px;
 }

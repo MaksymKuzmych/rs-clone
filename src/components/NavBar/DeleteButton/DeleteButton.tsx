@@ -10,10 +10,10 @@ import { AuthContext } from '../../../Auth/Auth';
 import { defaultUserData } from '../../../firebase/default-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { Theme, ThemeColor } from '../../../enums';
-
-import styles from './DeleteButton.module.scss';
 import { deleteAllUserTransactions } from '../../../firebase/delete-all-user-transactions';
 import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
+
+import styles from './DeleteButton.module.scss';
 
 export const DeleteButton = () => {
   const { userData, changeUserData } = useContext(AuthContext);

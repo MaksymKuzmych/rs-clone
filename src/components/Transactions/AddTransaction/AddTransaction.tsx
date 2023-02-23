@@ -18,7 +18,7 @@ export const AddTransaction = () => {
   const Categories = useMemo(() => {
     const categorySum = (category: ICategory) =>
       userData.data.transactions.reduce(
-        (acc, val) => acc + (category.id === val.category ? val.amount : 0),
+        (sum, transaction) => sum + (category.id === transaction.category ? transaction.amount : 0),
         0,
       );
 

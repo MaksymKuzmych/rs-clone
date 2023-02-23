@@ -117,39 +117,6 @@ export interface IDrawerSide {
   right: boolean;
 }
 
-export interface IPrivat {
-  0: string;
-  1: string;
-  2: string;
-  3: string;
-  4: string;
-  5: number;
-  6: string;
-  7: number;
-  8: string;
-  9: number;
-  10: string;
-}
-
-export interface IMono {
-  0: string;
-  1: string;
-  2: string;
-  3: number;
-  4: number;
-  5: string;
-  6: string;
-  7: string;
-  8: string;
-  9: number;
-}
-
-export interface IImportedData {
-  transactions: ITransaction[];
-  accounts: IAccount[];
-  categories: ICategory[];
-}
-
 export interface ITransactionAll extends ITransaction {
   accountName: string;
   accountColor: string;

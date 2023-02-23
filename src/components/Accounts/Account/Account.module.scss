@@ -9,7 +9,7 @@
   margin-right: 5px;
   transition: filter 0.3s;
 
-  :hover {
+  &:hover {
     filter: brightness(1.2);
   }
 }

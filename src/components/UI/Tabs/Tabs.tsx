@@ -92,10 +92,8 @@ export const BasicTabs = memo(
 
     return (
       <ThemeProvider theme={theme}>
-        {' '}
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            {' '}
             <Tabs value={value} onChange={handleChange}>
               <Tab
                 label={firstTitle}
@@ -107,10 +105,8 @@ export const BasicTabs = memo(
                 {...a11yProps(1)}
                 style={thirdTitle ? { width: '33.3%' } : { width: '50%' }}
               />
-              {thirdTitle ? (
+              {thirdTitle && (
                 <Tab label={thirdTitle} {...a11yProps(1)} style={{ width: '33.3%' }} />
-              ) : (
-                <></>
               )}
             </Tabs>
           </Box>
@@ -120,12 +116,10 @@ export const BasicTabs = memo(
           <TabPanel value={value} index={1}>
             {secondChild}
           </TabPanel>
-          {thirdChild ? (
+          {thirdChild && (
             <TabPanel value={value} index={2}>
               {thirdChild}
             </TabPanel>
-          ) : (
-            <></>
           )}
         </Box>
       </ThemeProvider>

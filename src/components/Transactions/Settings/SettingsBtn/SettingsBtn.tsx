@@ -26,7 +26,6 @@ export const SettingsBtn = memo(({ icon, color, title, onClick }: SettingsBtnPro
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      type='button'
       style={{
         color:
           hover && userData.settings.theme === Theme.Light
