@@ -12,7 +12,7 @@ import styles from './Category.module.scss';
 interface CategoryProps {
   dataCategory: ICategory;
   sum: number;
-  callbackTransferCategory(category: ICategory | null): void;
+  callbackTransferCategory: (category: ICategory | null) => void;
 }
 
 export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: CategoryProps) => {

@@ -1,21 +1,21 @@
-import { useCallback, useContext } from 'react';
+import { memo, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../../Auth/Auth';
 import { Theme, ThemeColor } from '../../../../enums';
 import { updateUserSettings } from '../../../../firebase/update-user-settings';
 import { IAccount } from '../../../../interfaces';
-
 import { Account } from '../../../Accounts/Account/Account';
 
 import styles from './FilterAccountsModal.module.scss';
 
 interface FilterAccountsModalProps {
-  handleClose(): void;
+  handleClose: () => void;
 }
 
-export const FilterAccountsModal = ({ handleClose }: FilterAccountsModalProps) => {
+export const FilterAccountsModal = memo(({ handleClose }: FilterAccountsModalProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   const accountDrawerHandler = useCallback(
@@ -83,4 +83,4 @@ export const FilterAccountsModal = ({ handleClose }: FilterAccountsModalProps) =
       </div>
     </div>
   );
-};
+});

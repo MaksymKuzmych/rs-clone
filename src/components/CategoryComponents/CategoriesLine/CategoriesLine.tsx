@@ -11,7 +11,7 @@ interface CategoriesLineProps {
   start: number;
   end: number;
   classLine: string;
-  callbackTransferCategory(category: ICategory): void;
+  callbackTransferCategory: (category: ICategory | null) => void;
 }
 
 export const CategoriesLine = memo(

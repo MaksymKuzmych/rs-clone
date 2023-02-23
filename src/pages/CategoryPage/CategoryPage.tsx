@@ -95,7 +95,7 @@ export const CategoryPage = () => {
     .reduce((sum, current) => sum + current.amount, 0);
 
   const transferCategory = useCallback(
-    (category: ICategory) => {
+    (category: ICategory | null) => {
       category ? setNewCategory(category) : setNewCategory(null);
     },
     [setNewCategory],

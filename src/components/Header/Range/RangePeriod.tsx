@@ -9,7 +9,6 @@ import { periodTypes } from '../../../data/periodTypes';
 import { Period } from '../../../enums';
 import { getPeriod } from '../../../utils/get-period';
 import { decreasePeriod, increasePeriod } from '../../../utils/shift-period';
-
 import { CalendarModal } from './CalendarModal/CalendarModal';
 import { CalendarRangeModal } from './CalendarRangeModal/CalendarRangeModal';
 import { RangeModal } from './RangeModal/RangeModal';
@@ -18,20 +17,20 @@ import styles from './RangePeriod.module.scss';
 
 export const RangePeriod = () => {
   const { userData, changeUserData } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   const [openModal, setOpenModal] = useState(false);
-  const toggleModal = useCallback(() => setOpenModal(!openModal), [openModal]);
-
   const [openModalCalendar, setOpenModalCalendar] = useState(false);
+  const [openModalRangeCalendar, setOpenModalRangeCalendar] = useState(false);
+
+  const toggleModal = useCallback(() => setOpenModal(!openModal), [openModal]);
   const toggleModalCalendar = () => {
     if (openModal) {
       toggleModal();
     }
     setOpenModalCalendar(!openModalCalendar);
   };
-
-  const [openModalRangeCalendar, setOpenModalRangeCalendar] = useState(false);
   const toggleModalRangeCalendar = () => {
     if (openModal) {
       toggleModal();

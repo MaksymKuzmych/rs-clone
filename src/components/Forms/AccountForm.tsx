@@ -104,7 +104,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       const accountInfo = {
         id: currentAccount ? currentAccount.id : '',
         date: currentAccount ? currentAccount.date : Date.now(),
-        name: values.name,
+        name: values.name === 'Карта' ? 'Card' : values.name === 'Наличные' ? 'Cash' : values.name,
         balance: +values.balance,
         description: values.description,
         color: color,

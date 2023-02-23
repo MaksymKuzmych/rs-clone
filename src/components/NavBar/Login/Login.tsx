@@ -117,7 +117,7 @@ export const Login = () => {
                 color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               }}
               onClick={() => {
-                setType('signOut');
+                setType('signUp');
                 formik.initialValues = {
                   email: '',
                   password: '',
@@ -127,7 +127,7 @@ export const Login = () => {
               {t("Don't have an account? Sign Up")}
             </button>
           )}
-          {type === 'signOut' && (
+          {type === 'signUp' && (
             <button
               style={{
                 color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,

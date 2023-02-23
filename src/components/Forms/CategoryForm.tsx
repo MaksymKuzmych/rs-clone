@@ -120,7 +120,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
         });
       }
 
-      changeUserData();
+      await changeUserData();
       drawerHandler('changeCategory', 'bottom', false);
     },
   });
