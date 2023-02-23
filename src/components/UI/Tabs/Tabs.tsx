@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { memo, ReactNode, SyntheticEvent, useCallback, useContext, useMemo, useState } from 'react';
+import { memo, ReactNode, SyntheticEvent, useCallback, useContext, useState } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor } from '../../../enums';
