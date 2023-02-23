@@ -118,5 +118,7 @@
   "Transaction": "Transaction",
   "Transaction will be deleted": "Transaction will be deleted",
   "Transaction associated with this transfer will be deleted too": "Transaction associated with this transfer will be deleted too",
-  "This action cannot be undone": "This action cannot be undone"
+  "This action cannot be undone": "This action cannot be undone",
+  "From category": "From category",
+  "To category": "To category"
 }

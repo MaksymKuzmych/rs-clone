@@ -44,7 +44,7 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
             </p>
           </div>
         </div>
-        <p className={sum > 0 ? styles.amountPositive : styles.amountNegative}>
+        <p className={sum >= 0 ? styles.amountPositive : styles.amountNegative}>
           {setCurrency(sum, 'always')}
         </p>
       </div>

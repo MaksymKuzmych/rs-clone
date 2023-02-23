@@ -15,6 +15,7 @@ import { getPeriod } from '../../utils/get-period';
 
 import styles from './TransactionPage.module.scss';
 import { theme } from '../../styles/theme';
+import { SearchContext } from '../../context/Search';
 
 interface ITransactionsDay {
   date: number;
@@ -25,6 +26,7 @@ interface ITransactionsDay {
 export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
+  const { searchValue } = useContext(SearchContext);
   const { transactions } = userData.data;
   const { t } = useTranslation();
 
@@ -51,10 +53,6 @@ export const TransactionPage = () => {
     switch (typeDrawer) {
       case 'info':
         return <Settings currentTransaction={currentTransaction} />;
-      case 'edit':
-        return <>EDIT</>;
-      case 'transfer':
-        return <>TRANSFER</>;
       case 'addAccount':
         return <TransactionForm />;
     }
@@ -71,22 +69,62 @@ export const TransactionPage = () => {
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
 
-    transactions.forEach((transaction) => {
-      const date = getPeriod(Period.Day, transaction.date).start || 0;
-      const day = transactionsDays.find((day) => day.date === date);
-      const sum = transaction.amount;
+    transactions
+      .map((transaction) => {
+        const accountItem = userData.data.accounts.find(
+          (accountItem) => accountItem.id === transaction.account,
+        );
+        const accountToItem = userData.data.accounts.find(
+          (accountItem) => accountItem.id === transaction.accountTo,
+        );
+        const categoryItem = userData.data.categories.find(
+          (categoryItem) => categoryItem.id === transaction.category,
+        );
+        return {
+          id: transaction.id,
+          date: transaction.date,
+          type: transaction.type,
+          account: transaction.account,
+          accountTo: transaction.accountTo,
+          category: transaction.category,
+          amount: transaction.amount,
+          description: transaction.description,
+          accountName: accountItem?.name,
+          accountNameRU: t(accountItem?.name || ''),
+          accountToName: accountToItem?.name,
+          accountToNameRU: t(accountToItem?.name || ''),
+          categoryName: categoryItem?.name,
+          categoryNameRU: t(categoryItem?.name || ''),
+        };
+      })
+      .filter(
+        (transaction) =>
+          new Date(transaction.date).getDate().toString().includes(searchValue) ||
+          transaction.amount.toString().includes(searchValue) ||
+          transaction.description?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.accountName?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.accountNameRU?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.accountToName?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.accountToNameRU?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.categoryName?.toLocaleLowerCase().includes(searchValue) ||
+          transaction.categoryNameRU?.toLocaleLowerCase().includes(searchValue),
+      )
+      .forEach((transaction) => {
+        const date = getPeriod(Period.Day, transaction.date).start || 0;
+        const day = transactionsDays.find((day) => day.date === date);
+        const sum = transaction.amount;
 
-      if (day) {
-        day.sum += sum;
-        day.transactions.push(transaction);
-      } else {
-        transactionsDays.push({
-          date,
-          sum,
-          transactions: [transaction],
-        });
-      }
-    });
+        if (day) {
+          day.sum += sum;
+          day.transactions.push(transaction);
+        } else {
+          transactionsDays.push({
+            date,
+            sum,
+            transactions: [transaction],
+          });
+        }
+      });
 
     if (transactionsDays.length) {
       return transactionsDays.map((day) => (
@@ -103,7 +141,14 @@ export const TransactionPage = () => {
     } else {
       return <p className={styles.noTransactions}>{t('No transactions')}</p>;
     }
-  }, [t, transactionDrawerHandler, transactions]);
+  }, [
+    searchValue,
+    t,
+    transactionDrawerHandler,
+    transactions,
+    userData.data.accounts,
+    userData.data.categories,
+  ]);
 
   return (
     <ThemeProvider theme={theme(userData.settings.theme)}>
