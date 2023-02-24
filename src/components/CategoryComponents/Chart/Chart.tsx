@@ -32,15 +32,15 @@ export const ChartComponent = memo(
         />
         <div className={styles.chartInfo}>
           <div className={styles.transactionType}>
-            {t(`${type === 'expenses' ? 'Expenses' : 'Income'}`)}
+            {t(`${type === TransactionType.Expense ? 'Expenses' : 'Income'}`)}
           </div>
           <div
             className={styles.totalExpenses}
             onClick={() => {
-              callback(TransactionType.Expenses);
+              callback(TransactionType.Expense);
             }}
           >
-            {type === TransactionType.Expenses ? expenses : income}
+            {type === TransactionType.Expense ? expenses : income}
             {currencySymbol}
           </div>
           <div
@@ -49,7 +49,7 @@ export const ChartComponent = memo(
               callback(TransactionType.Income);
             }}
           >
-            {type === TransactionType.Expenses ? income : expenses}
+            {type === TransactionType.Expense ? income : expenses}
             {currencySymbol}
           </div>
         </div>

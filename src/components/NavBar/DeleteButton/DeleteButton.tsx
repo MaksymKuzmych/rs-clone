@@ -7,10 +7,11 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { deleteUserData } from '../../../firebase/delete-user-data';
 import { defaultUserData } from '../../../firebase/default-user-data';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { Theme, ThemeColor } from '../../../enums';
+import { deleteAllUserTransactions } from '../../../firebase/delete-all-user-transactions';
+import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
 
 import styles from './DeleteButton.module.scss';
 
@@ -25,31 +26,25 @@ export const DeleteButton = () => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   const deleteAllData = useCallback(async () => {
-    userData.data.accounts.forEach(async (account) => {
-      await deleteUserData(userData.userId, { accounts: account.id });
+    await deleteAllUserData(userData.settings.userId, {
+      accounts: userData.data.accounts,
+      categories: userData.data.categories,
     });
-    userData.data.categories.forEach(async (category) => {
-      await deleteUserData(userData.userId, { categories: category.id });
-    });
-    userData.data.transactions.forEach(async (transaction) => {
-      await deleteUserData(userData.userId, { transactions: transaction.id });
-    });
+    await deleteAllUserTransactions(userData.settings.userId);
 
-    await pushUserData(userData.userId, {
+    await pushUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
       categories: defaultUserData.data.categories,
     });
 
     await changeUserData();
-  }, [changeUserData, userData.data, userData.userId]);
+  }, [changeUserData, userData.data.accounts, userData.data.categories, userData.settings.userId]);
 
   const deleteTransactions = useCallback(async () => {
-    userData.data.transactions.forEach(async (transaction) => {
-      await deleteUserData(userData.userId, { transactions: transaction.id });
-    });
+    await deleteAllUserTransactions(userData.settings.userId);
 
     await changeUserData();
-  }, [changeUserData, userData.data.transactions, userData.userId]);
+  }, [changeUserData, userData.settings.userId]);
 
   return (
     <div>

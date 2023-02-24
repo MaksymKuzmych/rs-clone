@@ -5,37 +5,28 @@ import {
   where,
   getDocs,
   orderBy,
-  OrderByDirection,
 } from 'firebase/firestore';
+
+import { Sort } from '../enums';
 import { IDataFBFiltered } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 
-export const getFilteredUserData = async (
-  userId: string,
-  data: IDataFBFiltered,
-  orderType: OrderByDirection,
-) => {
+export const getFilteredUserData = async (userId: string, data: IDataFBFiltered, sort: Sort) => {
   try {
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
-    const order = orderBy('date', orderType);
+    const order = orderBy('date', sort);
     let queryRequest = query(dataRef, order);
     const queryArray: QueryFieldFilterConstraint[] = [];
-    if (data.transactions?.periodStart && data.transactions?.periodEnd) {
-      queryArray.push(where('date', '>=', data.transactions.periodStart));
-      queryArray.push(where('date', '<=', data.transactions.periodEnd));
+    if (data.transactions?.period.start && data.transactions?.period.end) {
+      queryArray.push(where('date', '>=', data.transactions.period.start));
+      queryArray.push(where('date', '<=', data.transactions.period.end));
     }
     if (data.transactions?.account) {
       queryArray.push(where('account', '==', data.transactions.account));
     }
-    if (data.transactions?.category) {
-      queryArray.push(where('category', '==', data.transactions.category));
-    }
-    if (data.transactions?.type) {
-      queryArray.push(where('type', '==', data.transactions.type));
-    }
     if (queryArray.length) {
-      queryRequest = query(dataRef, ...queryArray);
+      queryRequest = query(dataRef, order, ...queryArray);
     }
     const querySnapshot = await getDocs(queryRequest);
     const dataArray = querySnapshot.docs.map((doc) => doc.data());

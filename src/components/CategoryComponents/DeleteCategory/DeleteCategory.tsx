@@ -28,11 +28,11 @@ export const DeleteCategory = memo(
 
     const deleteCategory = async () => {
       if (categoryId) {
-        await deleteUserData(userData.userId, { categories: categoryId });
+        await deleteUserData(userData.settings.userId, { categories: categoryId });
       }
       if (transactionsWithThisCategory.length) {
         transactionsWithThisCategory.forEach(async (item) => {
-          await deleteUserData(userData.userId, { transactions: item.id });
+          await deleteUserData(userData.settings.userId, { transactions: item.id });
         });
       }
 

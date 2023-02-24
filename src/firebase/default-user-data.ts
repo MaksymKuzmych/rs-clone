@@ -3,8 +3,8 @@ import { IStore } from '../interfaces';
 import { getPeriod } from '../utils/get-period';
 
 export const defaultUserData: IStore = {
-  userId: 'default',
   settings: {
+    userId: 'default',
     lang: Lang.EN,
     currency: Currency.USD,
     theme: Theme.Dark,
@@ -37,8 +37,8 @@ export const defaultUserData: IStore = {
       {
         id: 'defaultCategory1',
         date: Date.now() + 1,
-        name: 'Gloceries',
-        type: TransactionType.Expenses,
+        name: 'Groceries',
+        type: TransactionType.Expense,
         icon: 'shopping_basket',
         color: '#5c6ac2',
       },
@@ -46,7 +46,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory2',
         date: Date.now() + 2,
         name: 'Restaurant',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'restaurant',
         color: '#6ebaa0',
       },
@@ -54,7 +54,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory3',
         date: Date.now() + 3,
         name: 'Leisure',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'theaters',
         color: '#cd4863',
       },
@@ -62,7 +62,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory4',
         date: Date.now() + 4,
         name: 'Transport',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'directions_bus',
         color: '#7f7f7f',
       },
@@ -70,7 +70,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory5',
         date: Date.now() + 5,
         name: 'Health',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'spa',
         color: '#4154b0',
       },
@@ -78,7 +78,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory6',
         date: Date.now() + 6,
         name: 'Gifts',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'redeem',
         color: '#4da8ef',
       },
@@ -86,7 +86,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory7',
         date: Date.now() + 7,
         name: 'Family',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'face',
         color: '#fa4c87',
       },
@@ -94,7 +94,7 @@ export const defaultUserData: IStore = {
         id: 'defaultCategory8',
         date: Date.now() + 8,
         name: 'Shopping',
-        type: TransactionType.Expenses,
+        type: TransactionType.Expense,
         icon: 'local_mall',
         color: '#eda948',
       },
@@ -112,8 +112,8 @@ export const defaultUserData: IStore = {
 };
 
 export const emptyUserData: IStore = {
-  userId: '',
   settings: {
+    userId: '',
     lang: Lang.EN,
     currency: Currency.USD,
     theme: Theme.Dark,

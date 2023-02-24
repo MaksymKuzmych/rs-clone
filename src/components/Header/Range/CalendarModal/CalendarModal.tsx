@@ -31,14 +31,14 @@ export const CalendarModal = memo(({ onClick }: CalendarModalProps) => {
 
   const setDate = useCallback(
     async (value: Dayjs | null) => {
-      await updateUserSettings(userData.userId, {
+      await updateUserSettings(userData.settings.userId, {
         periodType: Period.Day,
         period: getPeriod(Period.Day, Number(value?.toDate())),
       });
       await changeUserData();
       onClick();
     },
-    [changeUserData, onClick, userData.userId],
+    [changeUserData, onClick, userData.settings.userId],
   );
 
   return (

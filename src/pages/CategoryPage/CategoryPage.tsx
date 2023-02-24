@@ -98,6 +98,7 @@ export const CategoryPage = () => {
 
   if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
     categoriesFiltered.push(buttonAdd);
+    categoriesFiltered.push(buttonAdd);
   }
 
   categoriesFiltered.forEach((item) => {
@@ -105,6 +106,7 @@ export const CategoryPage = () => {
 
     dataForChart.labels.push(name);
 
+    dataForChart.datasets[0].backgroundColor.push(item.color);
     dataForChart.datasets[0].backgroundColor.push(item.color);
 
     const categorySum = transactions
@@ -119,7 +121,7 @@ export const CategoryPage = () => {
     .reduce((sum, current) => sum + current.amount, 0);
 
   const expenses = transactions
-    .filter((item) => item.type === TransactionType.Expenses)
+    .filter((item) => item.type === TransactionType.Expense)
     .reduce((sum, current) => sum + current.amount, 0);
 
   const addTransaction = useCallback(

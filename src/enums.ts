@@ -26,9 +26,9 @@ export enum Period {
 }
 
 export enum TransactionType {
-  Income = 'income',
-  Expenses = 'expenses',
-  Transfer = 'transfer',
+  Income = 'Income',
+  Expense = 'Expense',
+  Transfer = 'Transfer',
 }
 
 export enum Theme {
@@ -45,4 +45,14 @@ export enum AmountColor {
   Zero = '#7f7f7f',
   Income = '#6ebaa0',
   Expenses = '#cd4863',
+}
+
+export enum Sort {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export enum Provider {
+  Google = 'google.com',
+  Github = 'github.com',
 }

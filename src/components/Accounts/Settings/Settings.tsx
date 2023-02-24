@@ -29,11 +29,11 @@ export const Settings = memo(({ currentAccount }: SettingsProps) => {
   const navigate = useNavigate();
 
   const redirectToTransactions = useCallback(async () => {
-    await updateUserSettings(userData.userId, { selectedAccount: currentAccount.id });
+    await updateUserSettings(userData.settings.userId, { selectedAccount: currentAccount.id });
     navigate(`/transactions`);
     await changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.userId]);
+  }, [changeUserData, currentAccount.id, drawerHandler, navigate, userData.settings.userId]);
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
   const handleClose = useCallback(() => setOpenModal(false), []);

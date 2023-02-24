@@ -59,13 +59,15 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
       switch (target.name) {
         case 'Language':
           i18n.changeLanguage(event.target.value.toLowerCase());
-          await updateUserSettings(userData.userId, { lang: event.target.value as Lang });
+          await updateUserSettings(userData.settings.userId, { lang: event.target.value as Lang });
           break;
         case 'Theme':
-          await updateUserSettings(userData.userId, { theme: event.target.value as Theme });
+          await updateUserSettings(userData.settings.userId, {
+            theme: event.target.value as Theme,
+          });
           break;
         case 'Currency':
-          await updateUserSettings(userData.userId, {
+          await updateUserSettings(userData.settings.userId, {
             currency: event.target.value as Currency,
           });
           break;
@@ -74,7 +76,7 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
       await changeUserData();
       setParam(event.target.value);
     },
-    [changeUserData, i18n, userData.userId],
+    [changeUserData, i18n, userData.settings.userId],
   );
 
   return (

@@ -36,14 +36,14 @@ export const CalendarRangeModal = memo(({ onClick }: CalendarRangeModalProps) =>
 
   const setDate = useCallback(
     async (valueStart: Dayjs | null, valueEnd: Dayjs | null) => {
-      await updateUserSettings(userData.userId, {
+      await updateUserSettings(userData.settings.userId, {
         periodType: Period.Range,
         period: getPeriod(Period.Range, Number(valueStart?.toDate()), Number(valueEnd?.toDate())),
       });
       await changeUserData();
       onClick();
     },
-    [changeUserData, onClick, userData.userId],
+    [changeUserData, onClick, userData.settings.userId],
   );
 
   return (
