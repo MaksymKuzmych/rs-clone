@@ -60,8 +60,18 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
           <p className={styles.description}>{description}</p>
         </div>
       </div>
-      <p className={amount > 0 ? styles.amountPositive : styles.amountNegative}>
-        {setCurrency(amount, 'always')}
+      <p
+        className={
+          type === TransactionType.Transfer
+            ? styles.amountNone
+            : amount > 0
+            ? styles.amountPositive
+            : styles.amountNegative
+        }
+      >
+        {type === TransactionType.Transfer
+          ? setCurrency(amount, 'never')
+          : setCurrency(amount, 'always')}
       </p>
     </div>
   );

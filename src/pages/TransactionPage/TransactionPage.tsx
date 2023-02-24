@@ -3,12 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 
 import { AuthContext } from '../../Auth/Auth';
-
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { DrawerContext } from '../../context/Drawer';
-import { Period, Theme, ThemeColor } from '../../enums';
+import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
 import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 import { theme } from '../../styles/theme';
@@ -92,12 +91,12 @@ export const TransactionPage = () => {
         const sum = transaction.amount;
 
         if (day) {
-          day.sum += sum;
+          day.sum += transaction.type === TransactionType.Transfer ? 0 : sum;
           day.transactions.push(transaction);
         } else {
           transactionsDays.push({
             date,
-            sum,
+            sum: transaction.type === TransactionType.Transfer ? 0 : sum,
             transactions: [transaction],
           });
         }

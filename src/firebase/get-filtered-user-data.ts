@@ -16,20 +16,37 @@ export const getFilteredUserData = async (userId: string, data: IDataFBFiltered,
     const accounts = Object.entries(data);
     const dataRef = collection(db, `users/${userId}/${accounts[0][0]}`);
     const order = orderBy('date', sort);
+    const start = data.transactions?.period.start;
+    const end = data.transactions?.period.end;
+    const account = data.transactions?.account;
     let queryRequest = query(dataRef, order);
-    const queryArray: QueryFieldFilterConstraint[] = [];
-    if (data.transactions?.period.start && data.transactions?.period.end) {
-      queryArray.push(where('date', '>=', data.transactions.period.start));
-      queryArray.push(where('date', '<=', data.transactions.period.end));
+    let queryArray: QueryFieldFilterConstraint[] = [];
+
+    if (start && end) {
+      queryArray.push(where('date', '>=', start));
+      queryArray.push(where('date', '<=', end));
     }
-    if (data.transactions?.account) {
-      queryArray.push(where('account', '==', data.transactions.account));
+    if (account) {
+      queryArray.push(where('account', '==', account));
     }
     if (queryArray.length) {
       queryRequest = query(dataRef, order, ...queryArray);
     }
-    const querySnapshot = await getDocs(queryRequest);
-    const dataArray = querySnapshot.docs.map((doc) => doc.data());
+    let querySnapshot = await getDocs(queryRequest);
+    let dataArray = querySnapshot.docs.map((doc) => doc.data());
+
+    if (account) {
+      queryArray = queryArray.filter(
+        (query) => JSON.stringify(query) !== JSON.stringify(where('account', '==', account)),
+      );
+      queryArray.push(where('accountTo', '==', account));
+      queryRequest = query(dataRef, order, ...queryArray);
+      querySnapshot = await getDocs(queryRequest);
+      dataArray = [...dataArray, ...querySnapshot.docs.map((doc) => doc.data())].sort(
+        (firstTransaction, secondTransaction) => secondTransaction.date - firstTransaction.date,
+      );
+    }
+
     if (dataArray.length) {
       return dataArray;
     } else {

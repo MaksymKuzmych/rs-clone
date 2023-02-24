@@ -7,7 +7,6 @@ import { Theme, ThemeColor, TransactionType } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 import { incrementBalance } from '../../../firebase/increment-balance';
 import { ITransactionAll } from '../../../interfaces';
-import { findOppositeTransfer } from '../../../utils/find-opposite-transfer';
 
 import styles from './DeleteTransaction.module.scss';
 
@@ -30,9 +29,6 @@ export const DeleteTransaction = ({ currentTransaction, handleClose }: DeleteAcc
       -currentTransaction.amount,
     );
     if (currentTransaction.accountTo) {
-      await deleteUserData(userData.settings.userId, {
-        transactions: findOppositeTransfer(userData.data.transactions, currentTransaction),
-      });
       await incrementBalance(
         userData.settings.userId,
         currentTransaction.accountTo,
@@ -41,13 +37,7 @@ export const DeleteTransaction = ({ currentTransaction, handleClose }: DeleteAcc
     }
     await changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [
-    changeUserData,
-    currentTransaction,
-    drawerHandler,
-    userData.data.transactions,
-    userData.settings.userId,
-  ]);
+  }, [changeUserData, currentTransaction, drawerHandler, userData.settings.userId]);
 
   return (
     <div
