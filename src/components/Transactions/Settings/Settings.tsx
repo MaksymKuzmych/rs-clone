@@ -1,8 +1,8 @@
-import { memo, useCallback, useContext, useState } from 'react';
+import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { ITransaction, ITransactionAll } from '../../../interfaces';
+import { ITransactionAll } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
@@ -13,6 +13,7 @@ import { updateUserData } from '../../../firebase/update-user-data';
 import { DuplicateTransaction } from '../DuplicateTransaction/DuplicateTransaction';
 
 import styles from './Settings.module.scss';
+import { incrementBalance } from '../../../firebase/increment-balance';
 
 interface SettingsProps {
   currentTransaction: ITransactionAll;
@@ -63,36 +64,63 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
     }
   }, [currentTransaction, handleClose, typeModal]);
 
-  const Account = (
-    <div className={styles.account} style={{ backgroundColor: currentTransaction.accountColor }}>
-      <p className={styles.description}>
-        {currentTransaction.type === TransactionType.Income ? t('To account') : t('From account')}
-      </p>
-      <p>{currentTransaction.accountName}</p>
-      <div className={styles.accountIcon}>
-        <span className='material-icons' style={{ color: currentTransaction.accountColor }}>
-          {currentTransaction.accountIcon}
-        </span>
+  const Account = useMemo(
+    () => (
+      <div className={styles.account} style={{ backgroundColor: currentTransaction.accountColor }}>
+        <div>
+          <p className={styles.text}>
+            {currentTransaction.type === TransactionType.Income
+              ? t('To account')
+              : t('From account')}
+          </p>
+          <p className={styles.name}>{currentTransaction.accountName}</p>
+        </div>
+        <div className={styles.iconWrapper}>
+          <span className='material-icons' style={{ color: currentTransaction.accountColor }}>
+            {currentTransaction.accountIcon}
+          </span>
+        </div>
       </div>
-    </div>
+    ),
+    [
+      currentTransaction.accountColor,
+      currentTransaction.accountIcon,
+      currentTransaction.accountName,
+      currentTransaction.type,
+      t,
+    ],
   );
 
-  const Category = (
-    <div className={styles.category} style={{ backgroundColor: currentTransaction.categoryColor }}>
-      <p className={styles.description}>
-        {currentTransaction.type === TransactionType.Income
-          ? t('From category')
-          : currentTransaction.type === TransactionType.Transfer
-          ? t('To account')
-          : t('To category')}
-      </p>
-      <p>{currentTransaction.categoryName}</p>
-      <div className={styles.categoryIcon}>
-        <span className='material-icons' style={{ color: currentTransaction.categoryColor }}>
-          {currentTransaction.categoryIcon}
-        </span>
+  const Category = useMemo(
+    () => (
+      <div
+        className={styles.category}
+        style={{ backgroundColor: currentTransaction.categoryColor }}
+      >
+        <div>
+          <p className={styles.text}>
+            {currentTransaction.type === TransactionType.Income
+              ? t('From category')
+              : currentTransaction.type === TransactionType.Transfer
+              ? t('To account')
+              : t('To category')}
+          </p>
+          <p className={styles.name}>{currentTransaction.categoryName}</p>
+        </div>
+        <div className={styles.iconWrapper} style={{ borderRadius: '50%' }}>
+          <span className='material-icons' style={{ color: currentTransaction.categoryColor }}>
+            {currentTransaction.categoryIcon}
+          </span>
+        </div>
       </div>
-    </div>
+    ),
+    [
+      currentTransaction.categoryColor,
+      currentTransaction.categoryIcon,
+      currentTransaction.categoryName,
+      currentTransaction.type,
+      t,
+    ],
   );
 
   const transferMoney = async () => {
@@ -105,24 +133,38 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
       return;
     }
 
-    const currentTransactionClone: ITransaction = {
-      id: currentTransaction.id,
-      date: new Date(dayjs(day).toDate()).getTime(),
-      type: currentTransaction.type,
-      account: currentTransaction.account,
-      accountTo: currentTransaction.accountTo,
-      category: currentTransaction.category,
-      amount: currentTransaction.type === TransactionType.Expense ? -amount : +amount,
-      description: notes,
-    };
-
     setIsError(false);
 
     await updateUserData(userData.settings.userId, {
       transactions: {
-        [currentTransaction.id]: currentTransactionClone,
+        [currentTransaction.id]: {
+          date: new Date(dayjs(day).toDate()).getTime(),
+          amount: currentTransaction.type === TransactionType.Expense ? -amount : +amount,
+          description: notes,
+        },
       },
     });
+
+    if (currentTransaction.category) {
+      await incrementBalance(
+        userData.settings.userId,
+        currentTransaction.account,
+        (currentTransaction.type === TransactionType.Income ? +amount : -amount) -
+          currentTransaction.amount,
+      );
+    }
+    if (currentTransaction.accountTo) {
+      await incrementBalance(
+        userData.settings.userId,
+        currentTransaction.account,
+        currentTransaction.amount - +amount,
+      );
+      await incrementBalance(
+        userData.settings.userId,
+        currentTransaction.accountTo,
+        +amount - currentTransaction.amount,
+      );
+    }
 
     await changeUserData();
   };
@@ -130,7 +172,7 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
   return (
     <>
       <div className={styles.headerWrapper}>
-        <div className={styles.header}>
+        <div className={styles.modalHeader}>
           {currentTransaction.type === TransactionType.Income ? Category : Account}
           {currentTransaction.type === TransactionType.Income ? Account : Category}
         </div>

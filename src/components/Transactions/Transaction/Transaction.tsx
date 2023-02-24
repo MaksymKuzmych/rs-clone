@@ -27,8 +27,8 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
 
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
   const accountName = accountItem?.name || '';
-  const accountColor = accountItem?.color || '';
   const accountIcon = accountItem?.icon || '';
+  const accountColor = accountItem?.color || '';
   const accountToItem = accounts.find((accountItem) => accountItem.id === accountTo);
   const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
   const categoryName = categoryItem?.name || accountToItem?.name || '';
@@ -88,12 +88,22 @@ export const Transaction = memo(({ transaction }: AccountProps) => {
             <p className={styles.description}>{description}</p>
           </div>
         </div>
-        <p className={amount > 0 ? styles.amountPositive : styles.amountNegative}>
-          {setCurrency(amount, 'always')}
+        <p
+          className={
+            type === TransactionType.Transfer
+              ? styles.amountNone
+              : amount > 0
+              ? styles.amountPositive
+              : styles.amountNegative
+          }
+        >
+          {type === TransactionType.Transfer
+            ? setCurrency(amount, 'never')
+            : setCurrency(amount, 'always')}
         </p>
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <Settings currentTransaction={currentTransaction} />;
+        <Settings currentTransaction={currentTransaction} />
       </BasicModal>
     </>
   );

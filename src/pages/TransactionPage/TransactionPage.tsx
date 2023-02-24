@@ -1,15 +1,14 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 
 import { AuthContext } from '../../Auth/Auth';
-import { Settings } from '../../components/Transactions/Settings/Settings';
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { DrawerContext } from '../../context/Drawer';
 import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
-import { ITransaction, ITransactionAll } from '../../interfaces';
+import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 import { theme } from '../../styles/theme';
 import { SearchContext } from '../../context/Search';
@@ -30,13 +29,6 @@ export const TransactionPage = () => {
   const { searchValue } = useContext(SearchContext);
   const { transactions } = userData.data;
   const { t } = useTranslation();
-
-  const drawerContent = useCallback(() => {
-    switch (typeDrawer) {
-      case 'addTransaction':
-        return <AddTransaction />;
-    }
-  }, [typeDrawer]);
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -99,12 +91,12 @@ export const TransactionPage = () => {
         const sum = transaction.amount;
 
         if (day) {
-          day.sum += sum;
+          day.sum += transaction.type === TransactionType.Transfer ? 0 : sum;
           day.transactions.push(transaction);
         } else {
           transactionsDays.push({
             date,
-            sum,
+            sum: transaction.type === TransactionType.Transfer ? 0 : sum,
             transactions: [transaction],
           });
         }
@@ -146,7 +138,7 @@ export const TransactionPage = () => {
           type={typeDrawer}
           drawerHandler={drawerHandler}
         >
-          {drawerContent()}
+          <AddTransaction />
         </TemporaryDrawer>
       </div>
     </ThemeProvider>

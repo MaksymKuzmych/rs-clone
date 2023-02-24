@@ -69,16 +69,6 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
             amount: +amount,
             description: notes,
           },
-          {
-            id: '',
-            date: new Date(dayjs(day).toDate()).getTime(),
-            type: TransactionType.Transfer,
-            account: targetAccount.id,
-            accountTo: currentAccount.id,
-            category: null,
-            amount: +-amount,
-            description: notes,
-          },
         ],
       });
 
