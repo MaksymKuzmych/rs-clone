@@ -1,15 +1,15 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 
 import { AuthContext } from '../../Auth/Auth';
-import { Settings } from '../../components/Transactions/Settings/Settings';
+
 import { Transaction } from '../../components/Transactions/Transaction/Transaction';
 import { TransactionDay } from '../../components/Transactions/TransactionDay/TransactionDay';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { DrawerContext } from '../../context/Drawer';
-import { Period, Theme, ThemeColor, TransactionType } from '../../enums';
-import { ITransaction, ITransactionAll } from '../../interfaces';
+import { Period, Theme, ThemeColor } from '../../enums';
+import { ITransaction } from '../../interfaces';
 import { getPeriod } from '../../utils/get-period';
 import { theme } from '../../styles/theme';
 import { SearchContext } from '../../context/Search';
@@ -30,42 +30,6 @@ export const TransactionPage = () => {
   const { searchValue } = useContext(SearchContext);
   const { transactions } = userData.data;
   const { t } = useTranslation();
-
-  const emptyTransaction: ITransactionAll = {
-    id: '',
-    date: 0,
-    type: TransactionType.Expense,
-    account: '',
-    accountTo: null,
-    category: null,
-    amount: 0,
-    description: null,
-    accountName: '',
-    accountColor: '',
-    accountIcon: '',
-    categoryName: '',
-    categoryColor: '',
-    categoryIcon: '',
-  };
-
-  const [currentTransaction, setcurrentTransaction] = useState(emptyTransaction);
-
-  const drawerContent = useCallback(() => {
-    switch (typeDrawer) {
-      case 'info':
-        return <Settings currentTransaction={currentTransaction} />;
-      case 'addTransaction':
-        return <AddTransaction />;
-    }
-  }, [currentTransaction, typeDrawer]);
-
-  const transactionDrawerHandler = useCallback(
-    (currentTransaction: ITransactionAll) => {
-      setcurrentTransaction(currentTransaction);
-      drawerHandler('info', 'bottom', true);
-    },
-    [drawerHandler],
-  );
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -143,25 +107,14 @@ export const TransactionPage = () => {
       return transactionsDays.map((day) => (
         <TransactionDay key={day.date} date={day.date} sum={day.sum}>
           {day.transactions.map((transaction) => (
-            <Transaction
-              transaction={transaction}
-              key={transaction.id}
-              transactionDrawerHandler={transactionDrawerHandler}
-            />
+            <Transaction transaction={transaction} key={transaction.id} />
           ))}
         </TransactionDay>
       ));
     } else {
       return <p className={styles.noTransactions}>{t('No transactions')}</p>;
     }
-  }, [
-    searchValue,
-    t,
-    transactionDrawerHandler,
-    transactions,
-    userData.data.accounts,
-    userData.data.categories,
-  ]);
+  }, [searchValue, t, transactions, userData.data.accounts, userData.data.categories]);
 
   return (
     <ThemeProvider theme={theme(userData.settings.theme)}>
@@ -186,7 +139,7 @@ export const TransactionPage = () => {
           type={typeDrawer}
           drawerHandler={drawerHandler}
         >
-          {drawerContent()}
+          <AddTransaction />
         </TemporaryDrawer>
       </div>
     </ThemeProvider>

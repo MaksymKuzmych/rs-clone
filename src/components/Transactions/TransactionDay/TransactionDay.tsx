@@ -37,7 +37,7 @@ export const TransactionDay = memo(({ children, date, sum }: PropsWithChildren<I
         <div className={styles.infoWrapper}>
           <p className={styles.date}>{day}</p>
           <div>
-            <p className={styles.dayOfWeek}>{dayOfWeek(date, lang, t)}</p>
+            <p className={styles.dayOfWeek}>{dayOfWeek(date, lang, t).toUpperCase()}</p>
             <p className={styles.month}>
               {' '}
               {month} {year}

@@ -4,26 +4,24 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../Auth/Auth';
 import { defaultNames } from '../../../data/defaultNames';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
-import { ITransaction, ITransactionAll } from '../../../interfaces';
+import { ITransaction } from '../../../interfaces';
 
 import styles from './Transaction.module.scss';
 
 interface AccountProps {
   transaction: ITransaction;
-  transactionDrawerHandler: (currentTransaction: ITransactionAll) => void;
 }
 
-export const Transaction = memo(({ transaction, transactionDrawerHandler }: AccountProps) => {
+export const Transaction = memo(({ transaction }: AccountProps) => {
   const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
   const { t } = useTranslation();
 
-  const { id, date, type, account, accountTo, category, amount, description } = transaction;
+  const { type, account, accountTo, category, amount, description } = transaction;
   const { accounts, categories } = userData.data;
 
   const accountItem = accounts.find((accountItem) => accountItem.id === account);
   const accountName = accountItem?.name || '';
-  const accountColor = accountItem?.color || '';
   const accountIcon = accountItem?.icon || '';
   const accountToItem = accounts.find((accountItem) => accountItem.id === accountTo);
   const categoryItem = categories.find((categoryItem) => categoryItem.id === category);
@@ -31,30 +29,12 @@ export const Transaction = memo(({ transaction, transactionDrawerHandler }: Acco
   const categoryColor = categoryItem?.color || accountToItem?.color || '';
   const categoryIcon = categoryItem?.icon || accountToItem?.icon || '';
 
-  const currentTransaction: ITransactionAll = {
-    id,
-    date,
-    type,
-    account,
-    accountTo,
-    category,
-    amount,
-    description,
-    accountName,
-    accountColor,
-    accountIcon,
-    categoryName,
-    categoryColor,
-    categoryIcon,
-  };
-
   return (
     <div
       className={styles.transaction}
       style={{
         backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : '#343a40',
       }}
-      onClick={() => transactionDrawerHandler(currentTransaction)}
     >
       <div className={styles.infoWrapper}>
         <div

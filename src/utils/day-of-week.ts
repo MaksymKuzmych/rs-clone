@@ -28,11 +28,13 @@ export const dayOfWeek = (
   translate: TFunction<'translation', undefined, 'translation'>,
 ) => {
   const day = getPeriod(Period.Day, date).start;
+  const otherDay = new Date(date).toLocaleDateString(lang, { weekday: 'long' });
+
   if (day === today()) {
-    return translate('TODAY');
+    return translate('Today');
   }
   if (day === yesterday()) {
-    return translate('YESTERDAY');
+    return translate('Yesterday');
   }
-  return new Date(date).toLocaleDateString(lang, { weekday: 'long' }).toUpperCase();
+  return otherDay[0].toUpperCase() + otherDay.slice(1);
 };
