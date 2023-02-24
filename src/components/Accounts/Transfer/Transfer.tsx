@@ -66,7 +66,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
             account: currentAccount.id,
             accountTo: targetAccount.id,
             category: null,
-            amount: +amount,
+            amount: +-amount,
             description: notes,
           },
         ],
@@ -115,7 +115,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
           </div>
           {isError && <p className={styles.error}>{t('Amount must be at most 9 characters')}</p>}
           <Calculator
-            type={'Transfer'}
+            type='Transfer'
             amount={amount}
             notes={notes}
             day={day}

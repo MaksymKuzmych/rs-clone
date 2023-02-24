@@ -10,11 +10,11 @@ import { Settings } from '../Settings/Settings';
 
 import styles from './Transaction.module.scss';
 
-interface AccountProps {
+interface TransactionProps {
   transaction: ITransaction;
 }
 
-export const Transaction = memo(({ transaction }: AccountProps) => {
+export const Transaction = memo(({ transaction }: TransactionProps) => {
   const { userData } = useContext(AuthContext);
   const { setCurrency } = useContext(AuthContext);
 

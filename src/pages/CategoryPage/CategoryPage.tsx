@@ -24,13 +24,12 @@ export const CategoryPage = () => {
 
   const { t } = useTranslation();
 
-  const changeCategoryType = useCallback((type: TransactionType) => {
-    setCategoryType(type);
-  }, []);
+  const changeCategoryType = useCallback((type: TransactionType) => setCategoryType(type), []);
 
-  const setNewCategory = useCallback((category: ICategory | null) => {
-    setCategoryClicked(category);
-  }, []);
+  const setNewCategory = useCallback(
+    (category: ICategory | null) => setCategoryClicked(category),
+    [],
+  );
 
   const dataForChart: IChart = {
     labels: [],

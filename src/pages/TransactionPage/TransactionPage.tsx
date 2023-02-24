@@ -27,7 +27,9 @@ export const TransactionPage = () => {
   const { userData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
   const { searchValue } = useContext(SearchContext);
+
   const { transactions } = userData.data;
+
   const { t } = useTranslation();
 
   const transactionsDaysLayout = useMemo(() => {

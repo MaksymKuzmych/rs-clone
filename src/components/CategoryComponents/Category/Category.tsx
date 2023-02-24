@@ -20,6 +20,7 @@ export const Category = memo(({ dataCategory, sum, callbackTransferCategory }: C
 
   const { drawerHandler } = useContext(DrawerContext);
   const { userData, setCurrency } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   const buttonAdd = id === '0';

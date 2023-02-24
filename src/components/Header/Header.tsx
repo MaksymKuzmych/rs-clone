@@ -40,42 +40,48 @@ export const Header = () => {
   const { userData } = useContext(AuthContext);
 
   const location = useLocation();
+
   const [activePage, setActivePage] = useState(location.pathname);
+  const [open, setOpen] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     setActivePage(location.pathname);
   }, [location]);
 
-  const [open, setOpen] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-
   const handleDrawerOpen = useCallback(() => setOpen(true), []);
   const handleDrawerClose = useCallback(() => setOpen(false), []);
 
-  const closeSearch = () => {
+  const closeSearch = useCallback(() => {
     if (openSearch) {
       setInputValue('');
     }
     setOpenSearch(!openSearch);
-  };
+  }, [openSearch]);
 
-  const changeInputValue = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setNewValue(event.currentTarget.value);
-    setInputValue(event.currentTarget.value);
-  };
+  const changeInputValue = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setNewValue(event.currentTarget.value);
+      setInputValue(event.currentTarget.value);
+    },
+    [setNewValue],
+  );
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (openSearch) {
-      if (e.code === 'Escape') {
-        closeSearch();
-        setNewValue('');
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (openSearch) {
+        if (e.code === 'Escape') {
+          closeSearch();
+          setNewValue('');
+        }
+        if (e.code === 'Enter') {
+          closeSearch();
+        }
       }
-      if (e.code === 'Enter') {
-        closeSearch();
-      }
-    }
-  };
+    },
+    [closeSearch, openSearch, setNewValue],
+  );
 
   return (
     <>

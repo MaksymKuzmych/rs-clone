@@ -25,18 +25,20 @@ export const RangePeriod = () => {
   const [openModalRangeCalendar, setOpenModalRangeCalendar] = useState(false);
 
   const toggleModal = useCallback(() => setOpenModal(!openModal), [openModal]);
-  const toggleModalCalendar = () => {
+
+  const toggleModalCalendar = useCallback(() => {
     if (openModal) {
       toggleModal();
     }
     setOpenModalCalendar(!openModalCalendar);
-  };
-  const toggleModalRangeCalendar = () => {
+  }, [openModal, openModalCalendar, toggleModal]);
+
+  const toggleModalRangeCalendar = useCallback(() => {
     if (openModal) {
       toggleModal();
     }
     setOpenModalRangeCalendar(!openModalRangeCalendar);
-  };
+  }, [openModal, openModalRangeCalendar, toggleModal]);
 
   const onClick = useCallback(
     async (range: IPeriodItem) => {
@@ -123,7 +125,7 @@ export const RangePeriod = () => {
     userData.settings.periodType,
   ]);
 
-  const setPrevPeriod = async () => {
+  const setPrevPeriod = useCallback(async () => {
     const { date, dateEnd } =
       userData.settings.period.start && userData.settings.period.end
         ? decreasePeriod(
@@ -143,9 +145,15 @@ export const RangePeriod = () => {
       ),
     });
     await changeUserData();
-  };
+  }, [
+    changeUserData,
+    userData.settings.period.end,
+    userData.settings.period.start,
+    userData.settings.periodType,
+    userData.settings.userId,
+  ]);
 
-  const setNextPeriod = async () => {
+  const setNextPeriod = useCallback(async () => {
     const { date, dateEnd } =
       userData.settings.period.start && userData.settings.period.end
         ? increasePeriod(
@@ -165,7 +173,13 @@ export const RangePeriod = () => {
       ),
     });
     await changeUserData();
-  };
+  }, [
+    changeUserData,
+    userData.settings.period.end,
+    userData.settings.period.start,
+    userData.settings.periodType,
+    userData.settings.userId,
+  ]);
 
   return (
     <div className={styles.rangeWrapper}>

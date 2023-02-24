@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { memo, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
@@ -14,72 +14,74 @@ interface DeleteTransactionProps {
   handleClose: () => void;
 }
 
-export const DeleteTransaction = ({ currentTransaction, handleClose }: DeleteTransactionProps) => {
-  const { userData, changeUserData } = useContext(AuthContext);
+export const DeleteTransaction = memo(
+  ({ currentTransaction, handleClose }: DeleteTransactionProps) => {
+    const { userData, changeUserData } = useContext(AuthContext);
 
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  const deleteTransaction = useCallback(async () => {
-    await deleteUserData(userData.settings.userId, { transactions: currentTransaction.id });
-    await incrementBalance(
-      userData.settings.userId,
-      currentTransaction.account,
-      -currentTransaction.amount,
-    );
-    if (currentTransaction.accountTo) {
+    const deleteTransaction = useCallback(async () => {
+      await deleteUserData(userData.settings.userId, { transactions: currentTransaction.id });
       await incrementBalance(
         userData.settings.userId,
-        currentTransaction.accountTo,
-        currentTransaction.amount,
+        currentTransaction.account,
+        -currentTransaction.amount,
       );
-    }
-    await changeUserData();
-  }, [changeUserData, currentTransaction, userData.settings.userId]);
+      if (currentTransaction.accountTo) {
+        await incrementBalance(
+          userData.settings.userId,
+          currentTransaction.accountTo,
+          currentTransaction.amount,
+        );
+      }
+      await changeUserData();
+    }, [changeUserData, currentTransaction, userData.settings.userId]);
 
-  return (
-    <div
-      className={styles.wrapper}
-      style={{
-        color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-      }}
-    >
-      <div className={styles.header}>
-        <div
-          className={
-            currentTransaction.type === TransactionType.Transfer
-              ? styles.accountIconWrapper
-              : styles.iconWrapper
-          }
-          style={{ backgroundColor: currentTransaction.categoryColor }}
-        >
-          <span className='material-icons' style={{ color: 'white' }}>
-            {currentTransaction.categoryIcon}
-          </span>
+    return (
+      <div
+        className={styles.wrapper}
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+        }}
+      >
+        <div className={styles.header}>
+          <div
+            className={
+              currentTransaction.type === TransactionType.Transfer
+                ? styles.accountIconWrapper
+                : styles.iconWrapper
+            }
+            style={{ backgroundColor: currentTransaction.categoryColor }}
+          >
+            <span className='material-icons' style={{ color: 'white' }}>
+              {currentTransaction.categoryIcon}
+            </span>
+          </div>
+          <p className={styles.headerText}>
+            {t('Delete')}{' '}
+            {currentTransaction.type === TransactionType.Transfer
+              ? `${t('Transfer ')}?`
+              : `${t('Transaction')} ?`}
+          </p>
         </div>
-        <p className={styles.headerText}>
-          {t('Delete')}{' '}
-          {currentTransaction.type === TransactionType.Transfer
-            ? `${t('Transfer ')}?`
-            : `${t('Transaction')} ?`}
-        </p>
+        <div className={styles.description}>
+          <p>{t('Transaction will be deleted')}.</p>
+          <p>
+            {currentTransaction.type === TransactionType.Transfer
+              ? `${t('Transaction associated with this transfer will be deleted too')}.`
+              : ''}
+          </p>
+          <p>{t('This action cannot be undone')}.</p>
+        </div>
+        <div className={styles.btnsWrapper}>
+          <button className={`${styles.btn} ${styles.cancel}`} onClick={handleClose}>
+            {t('Cancel')}
+          </button>
+          <button className={`${styles.btn} ${styles.delete}`} onClick={deleteTransaction}>
+            {t('Delete')}
+          </button>
+        </div>
       </div>
-      <div className={styles.description}>
-        <p>{t('Transaction will be deleted')}.</p>
-        <p>
-          {currentTransaction.type === TransactionType.Transfer
-            ? `${t('Transaction associated with this transfer will be deleted too')}.`
-            : ''}
-        </p>
-        <p>{t('This action cannot be undone')}.</p>
-      </div>
-      <div className={styles.btnsWrapper}>
-        <button className={`${styles.btn} ${styles.cancel}`} onClick={handleClose}>
-          {t('Cancel')}
-        </button>
-        <button className={`${styles.btn} ${styles.delete}`} onClick={deleteTransaction}>
-          {t('Delete')}
-        </button>
-      </div>
-    </div>
-  );
-};
+    );
+  },
+);

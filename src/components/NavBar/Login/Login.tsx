@@ -11,9 +11,9 @@ import { AuthContext } from '../../../Auth/Auth';
 import { Provider, Theme, ThemeColor } from '../../../enums';
 import { signInUser } from '../../../firebase/sign-in-user';
 import { useSnackbar } from 'notistack';
+import { signInProvider } from '../../../firebase/sign-in-provider';
 
 import styles from './Login.module.scss';
-import { signInProvider } from '../../../firebase/sign-in-provider';
 
 export const Login = () => {
   const { userData, changeUserData } = useContext(AuthContext);

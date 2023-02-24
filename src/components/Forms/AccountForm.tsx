@@ -22,7 +22,7 @@ interface AccountFormProps {
   currentAccount?: IAccount;
 }
 
-const themeForTitle = () =>
+export const themeForTitle = () =>
   createTheme({
     palette: {
       primary: {
