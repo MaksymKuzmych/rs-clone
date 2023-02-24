@@ -7,6 +7,12 @@
   align-items: flex-start;
 }
 
+.emptyCategoriesWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .accountsWrapper {
   display: flex;
   flex-direction: column;
@@ -135,4 +141,22 @@
 
 .balance {
   font-size: 26px;
+}
+
+.emptyAccountsTitle {
+  padding: 20px 10px;
+  color: $gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.modalContent {
+  width: 320px;
+}
+
+.modalHeader {
+  display: flex;
+  color: white;
 }

@@ -24,7 +24,8 @@
   }
 }
 
-.buttonAdd {
+.buttonAdd,
+.buttonAddDisabled {
   position: absolute;
   bottom: 100px;
   right: 30px;
@@ -34,6 +35,10 @@
   color: white;
   font-size: 32px;
   background-color: $lilac;
+}
+
+.buttonAddDisabled {
+  background-color: $gray;
 }
 
 .noTransactions {

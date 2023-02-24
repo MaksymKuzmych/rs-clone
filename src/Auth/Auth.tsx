@@ -9,7 +9,7 @@ import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 import { Theme, ThemeColor } from '../enums';
 import { createAnonUser } from '../firebase/create-anon-user';
-import { emptyUserData } from '../firebase/default-user-data';
+import { emptyUserData } from '../data/default-user-data';
 import { auth } from '../firebase/firebase-config';
 import { pullUserData } from '../firebase/pull-user-data';
 import { pullUserSettings } from '../firebase/pull-user-settings';
