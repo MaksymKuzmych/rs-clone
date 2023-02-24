@@ -44,7 +44,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
 
   const handleClose = useCallback(() => setOpenModal(false), []);
 
-  const transferMoney = async () => {
+  const transferMoney = useCallback(async () => {
     if (amount === '') {
       return;
     }
@@ -78,7 +78,16 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
       await changeUserData();
       drawerHandler('info', 'bottom', false);
     }
-  };
+  }, [
+    amount,
+    changeUserData,
+    currentAccount.id,
+    day,
+    drawerHandler,
+    notes,
+    targetAccount,
+    userData.settings.userId,
+  ]);
 
   const accounts = useMemo(
     () =>
