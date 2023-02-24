@@ -121,5 +121,6 @@
   "Transaction associated with this transfer will be deleted too": "Операция, связанная с этим переводом, также будет удалена",
   "This action cannot be undone": "Действие невозможно будет отменить",
   "From category": "С категории",
-  "To category": "На категорию"
+  "To category": "На категорию",
+  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами"
 }

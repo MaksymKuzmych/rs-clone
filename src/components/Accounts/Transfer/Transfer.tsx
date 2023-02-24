@@ -82,8 +82,8 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
         ],
       });
 
-      await incrementBalance(userData.settings.userId, currentAccount.id, +amount);
-      await incrementBalance(userData.settings.userId, targetAccount.id, +-amount);
+      await incrementBalance(userData.settings.userId, currentAccount.id, +-amount);
+      await incrementBalance(userData.settings.userId, targetAccount.id, +amount);
 
       await changeUserData();
       drawerHandler('info', 'bottom', false);

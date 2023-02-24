@@ -7,5 +7,5 @@ export const findOppositeTransfer = (array: ITransaction[], transaction: ITransa
       transactionItem.accountTo === transaction.account &&
       transactionItem.amount === -transaction.amount,
   );
-  return oppositeTransaction?.id || '';
+  return oppositeTransaction;
 };

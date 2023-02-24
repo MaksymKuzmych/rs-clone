@@ -123,5 +123,6 @@
   "Transaction associated with this transfer will be deleted too": "Transaction associated with this transfer will be deleted too",
   "This action cannot be undone": "This action cannot be undone",
   "From category": "From category",
-  "To category": "To category"
+  "To category": "To category",
+  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters"
 }

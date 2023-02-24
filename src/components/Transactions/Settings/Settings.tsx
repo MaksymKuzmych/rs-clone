@@ -1,13 +1,16 @@
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import dayjs, { Dayjs } from 'dayjs';
 
-import { ITransactionAll } from '../../../interfaces';
+import { ITransaction, ITransactionAll } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
 import { SettingsBtn } from './SettingsBtn/SettingsBtn';
 import { DeleteTransaction } from '../DeleteTransaction/DeleteTransaction';
-import { dayOfWeek } from '../../../utils/day-of-week';
+import { Calculator } from '../../UI/Calculator/Calculator';
+import { updateUserData } from '../../../firebase/update-user-data';
+import { DuplicateTransaction } from '../DuplicateTransaction/DuplicateTransaction';
 
 import styles from './Settings.module.scss';
 
@@ -16,15 +19,49 @@ interface SettingsProps {
 }
 
 export const Settings = memo(({ currentTransaction }: SettingsProps) => {
-  const { userData, setCurrency } = useContext(AuthContext);
-  const { lang } = userData.settings;
+  const { userData, changeUserData } = useContext(AuthContext);
+
+  const [typeModal, setTypeModal] = useState('');
+
+  const modalContentHandler = (value: string) => {
+    setTypeModal(value);
+    handleOpen();
+  };
 
   const [openModal, setOpenModal] = useState(false);
+  const [amount, setAmount] = useState(
+    `${
+      currentTransaction.type === TransactionType.Expense
+        ? -currentTransaction.amount
+        : currentTransaction.amount
+    }`,
+  );
+  const [notes, setNotes] = useState(
+    currentTransaction.description ? currentTransaction.description : '',
+  );
+  const [day, setDay] = useState<Dayjs | null>(dayjs(currentTransaction.date));
+  const [isError, setIsError] = useState(false);
 
   const { t } = useTranslation();
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
   const handleClose = useCallback(() => setOpenModal(false), []);
+  const changeAmountHandler = (value: string) => setAmount(value);
+  const changeNotesHandler = (value: string) => setNotes(value);
+  const changeDayHandler = (value: Dayjs | null) => setDay(value);
+
+  const modalContent = useCallback(() => {
+    switch (typeModal) {
+      case 'duplicate':
+        return (
+          <DuplicateTransaction currentTransaction={currentTransaction} handleClose={handleClose} />
+        );
+      case 'delete':
+        return (
+          <DeleteTransaction currentTransaction={currentTransaction} handleClose={handleClose} />
+        );
+    }
+  }, [currentTransaction, handleClose, typeModal]);
 
   const Account = (
     <div className={styles.account} style={{ backgroundColor: currentTransaction.accountColor }}>
@@ -58,6 +95,38 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
     </div>
   );
 
+  const transferMoney = async () => {
+    if (amount === '') {
+      return;
+    }
+
+    if (amount.length > 9) {
+      setIsError(true);
+      return;
+    }
+
+    const currentTransactionClone: ITransaction = {
+      id: currentTransaction.id,
+      date: new Date(dayjs(day).toDate()).getTime(),
+      type: currentTransaction.type,
+      account: currentTransaction.account,
+      accountTo: currentTransaction.accountTo,
+      category: currentTransaction.category,
+      amount: currentTransaction.type === TransactionType.Expense ? -amount : +amount,
+      description: notes,
+    };
+
+    setIsError(false);
+
+    await updateUserData(userData.settings.userId, {
+      transactions: {
+        [currentTransaction.id]: currentTransactionClone,
+      },
+    });
+
+    await changeUserData();
+  };
+
   return (
     <>
       <div className={styles.headerWrapper}>
@@ -66,50 +135,17 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
           {currentTransaction.type === TransactionType.Income ? Account : Category}
         </div>
       </div>
-      <div
-        className={styles.amountWrapper}
-        style={{
-          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor:
-            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-        }}
-      >
-        <p className={styles.type}>{t(`${currentTransaction.type} `)}</p>
-        <p className={styles.amount}>{setCurrency(currentTransaction.amount, 'never')}</p>
-      </div>
-      <div
-        className={styles.notesWrapper}
-        style={{
-          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor:
-            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-        }}
-      >
-        <input
-          type='textfield'
-          placeholder={t('Notes...') || ''}
-          defaultValue={currentTransaction.description || ''}
-          className={styles.notes}
-          style={{
-            color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-            backgroundColor:
-              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-          }}
-        />
-      </div>
-      <p
-        className={styles.date}
-        style={{
-          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor:
-            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-        }}
-      >
-        {dayOfWeek(currentTransaction.date, lang, t) + ', '}
-        {new Date(currentTransaction.date)
-          .toLocaleDateString(lang, { month: 'long', day: 'numeric', year: 'numeric' })
-          .toUpperCase()}
-      </p>
+      {isError && <p className={styles.error}>{t('Amount must be at most 9 characters')}</p>}
+      <Calculator
+        type={currentTransaction.type}
+        amount={amount}
+        notes={notes}
+        day={day}
+        changeAmountHandler={changeAmountHandler}
+        changeNotesHandler={changeNotesHandler}
+        changeDayHandler={changeDayHandler}
+        transferMoney={transferMoney}
+      />
       <div
         className={styles.btnsWrapper}
         style={{
@@ -121,13 +157,17 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
           icon='content_copy'
           color='#5c6ac2'
           title={t('Duplicate')}
-          onClick={() => {}}
+          onClick={() => modalContentHandler('duplicate')}
         />
-        <SettingsBtn icon='event' color='#a8adb3' title={t('Date')} onClick={() => {}} />
-        <SettingsBtn icon='delete' color='#f34334' title={t('Delete')} onClick={handleOpen} />
+        <SettingsBtn
+          icon='delete'
+          color='#f34334'
+          title={t('Delete')}
+          onClick={() => modalContentHandler('delete')}
+        />
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <DeleteTransaction currentTransaction={currentTransaction} handleClose={handleClose} />
+        {modalContent()}
       </BasicModal>
     </>
   );

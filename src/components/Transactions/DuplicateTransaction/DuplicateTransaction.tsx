@@ -3,37 +3,55 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
-import { deleteUserData } from '../../../firebase/delete-user-data';
 import { incrementBalance } from '../../../firebase/increment-balance';
-import { ITransactionAll } from '../../../interfaces';
+import { pushUserData } from '../../../firebase/push-user-data';
+import { ITransaction, ITransactionAll } from '../../../interfaces';
 import { findOppositeTransfer } from '../../../utils/find-opposite-transfer';
 
-import styles from './DeleteTransaction.module.scss';
+import styles from './DuplicateTransaction.module.scss';
 
-interface DeleteTransactionProps {
+interface DuplicateTransactionProps {
   currentTransaction: ITransactionAll;
   handleClose: () => void;
 }
 
-export const DeleteTransaction = ({ currentTransaction, handleClose }: DeleteTransactionProps) => {
+export const DuplicateTransaction = ({
+  currentTransaction,
+  handleClose,
+}: DuplicateTransactionProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
 
   const { t } = useTranslation();
 
-  const deleteTransaction = useCallback(async () => {
-    await deleteUserData(userData.settings.userId, { transactions: currentTransaction.id });
-    await incrementBalance(
-      userData.settings.userId,
-      currentTransaction.account,
-      -currentTransaction.amount,
-    );
+  const duplicateTransaction = useCallback(async () => {
+    currentTransaction.date += 1;
     if (currentTransaction.accountTo) {
-      await deleteUserData(userData.settings.userId, {
-        transactions: findOppositeTransfer(userData.data.transactions, currentTransaction)?.id,
+      await pushUserData(userData.settings.userId, {
+        transactions: [
+          currentTransaction,
+          findOppositeTransfer(userData.data.transactions, currentTransaction) as ITransaction,
+        ],
       });
+
+      await incrementBalance(
+        userData.settings.userId,
+        currentTransaction.account,
+        -currentTransaction.amount,
+      );
+
       await incrementBalance(
         userData.settings.userId,
         currentTransaction.accountTo,
+        currentTransaction.amount,
+      );
+    } else {
+      await pushUserData(userData.settings.userId, {
+        transactions: [currentTransaction],
+      });
+
+      await incrementBalance(
+        userData.settings.userId,
+        currentTransaction.account,
         currentTransaction.amount,
       );
     }
@@ -61,27 +79,21 @@ export const DeleteTransaction = ({ currentTransaction, handleClose }: DeleteTra
           </span>
         </div>
         <p className={styles.headerText}>
-          {t('Delete')}{' '}
+          {t('Duplicate')}{' '}
           {currentTransaction.type === TransactionType.Transfer
             ? `${t('Transfer ')}?`
             : `${t('Transaction')} ?`}
         </p>
       </div>
       <div className={styles.description}>
-        <p>{t('Transaction will be deleted')}.</p>
-        <p>
-          {currentTransaction.type === TransactionType.Transfer
-            ? `${t('Transaction associated with this transfer will be deleted too')}.`
-            : ''}
-        </p>
-        <p>{t('This action cannot be undone')}.</p>
+        <p>{t('Transaction will be duplicated with the same parameters')}.</p>
       </div>
       <div className={styles.btnsWrapper}>
         <button className={`${styles.btn} ${styles.cancel}`} onClick={handleClose}>
           {t('Cancel')}
         </button>
-        <button className={`${styles.btn} ${styles.delete}`} onClick={deleteTransaction}>
-          {t('Delete')}
+        <button className={`${styles.btn} ${styles.duplicate}`} onClick={duplicateTransaction}>
+          {t('Duplicate')}
         </button>
       </div>
     </div>

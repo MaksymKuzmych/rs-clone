@@ -31,41 +31,12 @@ export const TransactionPage = () => {
   const { transactions } = userData.data;
   const { t } = useTranslation();
 
-  const emptyTransaction: ITransactionAll = {
-    id: '',
-    date: 0,
-    type: TransactionType.Expense,
-    account: '',
-    accountTo: null,
-    category: null,
-    amount: 0,
-    description: null,
-    accountName: '',
-    accountColor: '',
-    accountIcon: '',
-    categoryName: '',
-    categoryColor: '',
-    categoryIcon: '',
-  };
-
-  const [currentTransaction, setcurrentTransaction] = useState(emptyTransaction);
-
   const drawerContent = useCallback(() => {
     switch (typeDrawer) {
-      case 'info':
-        return <Settings currentTransaction={currentTransaction} />;
       case 'addTransaction':
         return <AddTransaction />;
     }
-  }, [currentTransaction, typeDrawer]);
-
-  const transactionDrawerHandler = useCallback(
-    (currentTransaction: ITransactionAll) => {
-      setcurrentTransaction(currentTransaction);
-      drawerHandler('info', 'bottom', true);
-    },
-    [drawerHandler],
-  );
+  }, [typeDrawer]);
 
   const transactionsDaysLayout = useMemo(() => {
     const transactionsDays: ITransactionsDay[] = [];
@@ -143,25 +114,14 @@ export const TransactionPage = () => {
       return transactionsDays.map((day) => (
         <TransactionDay key={day.date} date={day.date} sum={day.sum}>
           {day.transactions.map((transaction) => (
-            <Transaction
-              transaction={transaction}
-              key={transaction.id}
-              transactionDrawerHandler={transactionDrawerHandler}
-            />
+            <Transaction transaction={transaction} key={transaction.id} />
           ))}
         </TransactionDay>
       ));
     } else {
       return <p className={styles.noTransactions}>{t('No transactions')}</p>;
     }
-  }, [
-    searchValue,
-    t,
-    transactionDrawerHandler,
-    transactions,
-    userData.data.accounts,
-    userData.data.categories,
-  ]);
+  }, [searchValue, t, transactions, userData.data.accounts, userData.data.categories]);
 
   return (
     <ThemeProvider theme={theme(userData.settings.theme)}>
