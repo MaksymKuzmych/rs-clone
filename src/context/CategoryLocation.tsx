@@ -7,12 +7,12 @@ interface ISearchContext {
 }
 
 export const CategoryLocationContext = createContext<ISearchContext>({
-  categoryLocation: TransactionType.Expenses,
+  categoryLocation: TransactionType.Expense,
   setNewValue: () => {},
 });
 
 export const CategoryLocationProvider = memo(({ children }: PropsWithChildren) => {
-  const [categoryLocation, setCategoryLocation] = useState(TransactionType.Expenses);
+  const [categoryLocation, setCategoryLocation] = useState(TransactionType.Expense);
   const setNewValue = (value: TransactionType) => {
     setCategoryLocation(value);
   };

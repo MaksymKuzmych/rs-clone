@@ -27,6 +27,10 @@ export const CategoryPage = () => {
   const { categoryLocation, setNewValue } = useContext(CategoryLocationContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
+  console.log(userData.settings.userId);
+
+  console.log(categoryLocation);
+
   const [openModal, setOpenModal] = useState(false);
 
   const toggleModal = useCallback(() => {
@@ -62,7 +66,7 @@ export const CategoryPage = () => {
     labels: [],
     datasets: [
       {
-        label: categoryLocation === TransactionType.Expenses ? t('Expenses') : t('Income'),
+        label: categoryLocation === TransactionType.Expense ? t('Expense') : t('Income'),
         data: [],
         backgroundColor: [],
       },
@@ -171,7 +175,7 @@ export const CategoryPage = () => {
 
   const transferMoney = async () => {
     if (newTransaction)
-      await pushUserData(userData.userId, {
+      await pushUserData(userData.settings.userId, {
         transactions: [newTransaction],
       });
 
@@ -269,7 +273,7 @@ export const CategoryPage = () => {
                 <SettingsBtn
                   icon='edit'
                   color='#fec107'
-                  title={t('Edit category')}
+                  title={t('Edit')}
                   onClick={() => editCategory(categoryClicked)}
                 />
               </div>

@@ -36,7 +36,7 @@ export const CategoriesLine = memo(
               addCategory={addCategory}
             />
           )),
-      [dataCategories, start, end, transactions],
+      [dataCategories, start, end, transactions, addCategory, callback],
     );
 
     return <div className={styles[`${classLine}`]}>{memoList}</div>;

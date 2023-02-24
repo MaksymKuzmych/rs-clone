@@ -16,7 +16,6 @@ import { DeleteCategory } from '../CategoryComponents/DeleteCategory/DeleteCateg
 import { Theme, ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
 import { defaultNames, defaultNamesRu } from '../../data/defaultNames';
-import { defaultNames, defaultNamesRu } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
 
 import styles from './Forms.module.scss';
@@ -72,8 +71,6 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
 
   const [icon, setIcon] = useState(category && category.icon ? category.icon : 'shopping_cart');
   const [color, setColor] = useState(category && category.color ? category.color : '#f95c57');
-  const [icon, setIcon] = useState(category && category.icon ? category.icon : 'shopping_cart');
-  const [color, setColor] = useState(category && category.color ? category.color : '#f95c57');
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
@@ -112,13 +109,13 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
         description: '',
       };
       if (category) {
-        await updateUserData(userData.userId, {
+        await updateUserData(userData.settings.userId, {
           categories: {
             [category.id]: categoryInfo,
           },
         });
       } else {
-        await pushUserData(userData.userId, {
+        await pushUserData(userData.settings.userId, {
           categories: [categoryInfo],
         });
       }
