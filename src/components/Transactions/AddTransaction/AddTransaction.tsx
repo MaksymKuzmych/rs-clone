@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
@@ -14,17 +14,28 @@ export const AddTransaction = () => {
   const { t } = useTranslation();
 
   const { name, icon, color, description, balance } = userData.data.accounts[0];
+  const incomes = userData.data.categories.filter(
+    (category) => category.type === TransactionType.Income,
+  );
+  const expenses = userData.data.categories.filter(
+    (category) => category.type === TransactionType.Expense,
+  );
+  const CATEGORY_HEIGHT = 133;
+  const maxHeight = useMemo(
+    () => Math.max(Math.ceil(incomes.length / 4), Math.ceil(expenses.length / 4)) * CATEGORY_HEIGHT,
+    [expenses.length, incomes.length],
+  );
 
-  const Categories = useMemo(() => {
-    const categorySum = (category: ICategory) =>
-      userData.data.transactions.reduce(
-        (sum, transaction) => sum + (category.id === transaction.category ? transaction.amount : 0),
-        0,
-      );
+  const Categories = useCallback(
+    (array: ICategory[]) => {
+      const categorySum = (category: ICategory) =>
+        userData.data.transactions.reduce(
+          (sum, transaction) =>
+            sum + (category.id === transaction.category ? transaction.amount : 0),
+          0,
+        );
 
-    return userData.data.categories
-      .filter((category) => category.type === TransactionType.Expense)
-      .map((category) => (
+      return array.map((category) => (
         <div
           key={category.id}
           className={categorySum(category) === 0 ? styles.categoryInactive : styles.category}
@@ -40,7 +51,29 @@ export const AddTransaction = () => {
           <p className={styles.sum}>{setCurrency(categorySum(category), 'never')}</p>
         </div>
       ));
-  }, [setCurrency, t, userData.data.categories, userData.data.transactions]);
+    },
+    [setCurrency, t, userData.data.transactions],
+  );
+
+  const Accounts = useMemo(
+    () =>
+      userData.data.accounts.map((account) => (
+        <div key={account.id} className={styles.account}>
+          <div className={styles.accountIconWrapper} style={{ backgroundColor: account.color }}>
+            <span className='material-icons' style={{ color: 'white' }}>
+              {account.icon}
+            </span>
+          </div>
+          <div>
+            <p className={styles.name}>
+              {defaultNames.includes(account.name) ? t(account.name) : account.name}
+            </p>
+            <p className={styles.sum}>{setCurrency(account.balance, 'auto')}</p>
+          </div>
+        </div>
+      )),
+    [userData.data.accounts],
+  );
 
   return (
     <>
@@ -66,9 +99,21 @@ export const AddTransaction = () => {
         }}
       >
         <BasicTabs
-          firstChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
-          secondChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
-          thirdChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
+          firstChild={
+            <div className={styles.categoriesWrapper} style={{ height: maxHeight + 'px' }}>
+              {Categories(incomes)}
+            </div>
+          }
+          secondChild={
+            <div className={styles.categoriesWrapper} style={{ height: maxHeight + 'px' }}>
+              {Categories(expenses)}
+            </div>
+          }
+          thirdChild={
+            <div className={styles.accountsWrapper} style={{ height: maxHeight + 'px' }}>
+              {Accounts}
+            </div>
+          }
           firstTitle={t(TransactionType.Income + ' ').toUpperCase()}
           secondTitle={t(TransactionType.Expense).toUpperCase()}
           thirdTitle={t(TransactionType.Transfer + ' ').toUpperCase()}
