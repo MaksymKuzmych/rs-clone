@@ -64,7 +64,7 @@ export const Transaction = memo(({ transaction, transactionDrawerHandler }: Acco
           style={{ backgroundColor: categoryColor }}
         >
           <span className='material-icons' style={{ color: 'white' }}>
-            {categoryItem?.icon}
+            {categoryIcon}
           </span>
         </div>
         <div>
