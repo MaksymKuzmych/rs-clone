@@ -72,7 +72,7 @@ export const AddTransaction = () => {
           </div>
         </div>
       )),
-    [userData.data.accounts],
+    [setCurrency, t, userData.data.accounts],
   );
 
   return (
