@@ -13,7 +13,7 @@
   "Expenses": "Expenses",
   "Income": "Income",
   "Transfer ": "Transfer ",
-  "Expense ": "Expense ",
+  "Expense": "Expense",
   "Income ": "Income ",
   "Groceries": "Groceries",
   "Restaurant": "Restaurant",
@@ -123,5 +123,4 @@
   "This action cannot be undone": "This action cannot be undone",
   "From category": "From category",
   "To category": "To category"
-  
 }

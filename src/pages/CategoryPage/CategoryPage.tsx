@@ -1,35 +1,32 @@
 import { useCallback, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
 import { AuthContext } from '../../Auth/Auth';
 import { TemporaryDrawer } from '../../components/UI/Drawer/Drawer';
 import { IAccount, ICategory, IChart } from '../../interfaces';
-import { TransactionType, CurrencySymbol, ThemeColor, Theme } from '../../enums';
+import { TransactionType, ThemeColor, Theme } from '../../enums';
 import { CategoryForm } from '../../components/Forms/CategoryForm';
 import { defaultNames } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
 import { theme } from '../../styles/theme';
-
-import styles from './CategoryPage.module.scss';
 import { BasicModal } from '../../components/UI/Modal/Modal';
-import { Transfer } from '../../components/CategoryComponents/Transfer/Transfer';
+import { TransferCategory } from '../../components/CategoryComponents/Transfer/TransferCategory';
 import { SettingsBtn } from '../../components/Accounts/Settings/SettingsBtn/SettingsBtn';
 import { Calculator } from '../../components/UI/Calculator/Calculator';
-import dayjs, { Dayjs } from 'dayjs';
 import { pushUserData } from '../../firebase/push-user-data';
 import { CategoryLocationContext } from '../../context/CategoryLocation';
+import { incrementBalance } from '../../firebase/increment-balance';
+
+import styles from './CategoryPage.module.scss';
 
 export const CategoryPage = () => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { categoryLocation, setNewValue } = useContext(CategoryLocationContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
-
-  console.log(userData.settings.userId);
-
-  console.log(categoryLocation);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -73,7 +70,6 @@ export const CategoryPage = () => {
     ],
   };
 
-  const currencySymbol = CurrencySymbol[userData.settings.currency];
   const categories = userData.data.categories;
   const transactions = userData.data.transactions;
 
@@ -102,7 +98,6 @@ export const CategoryPage = () => {
 
   if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
     categoriesFiltered.push(buttonAdd);
-    categoriesFiltered.push(buttonAdd);
   }
 
   categoriesFiltered.forEach((item) => {
@@ -110,7 +105,6 @@ export const CategoryPage = () => {
 
     dataForChart.labels.push(name);
 
-    dataForChart.datasets[0].backgroundColor.push(item.color);
     dataForChart.datasets[0].backgroundColor.push(item.color);
 
     const categorySum = transactions
@@ -168,7 +162,7 @@ export const CategoryPage = () => {
           account: account?.id,
           accountTo: null,
           category: categoryClicked?.id,
-          amount: +amount,
+          amount: categoryLocation === TransactionType.Expense ? -+amount : +amount,
           description: notes,
         }
       : null;
@@ -178,7 +172,12 @@ export const CategoryPage = () => {
       await pushUserData(userData.settings.userId, {
         transactions: [newTransaction],
       });
-
+    if (account)
+      await incrementBalance(
+        userData.settings.userId,
+        account.id,
+        categoryLocation === TransactionType.Expense ? -+amount : +amount,
+      );
     await changeUserData();
   };
 
@@ -238,26 +237,42 @@ export const CategoryPage = () => {
             dataChart={transactionsFiltered.length ? dataForChart : dataForChartEmpty}
             income={income}
             expenses={expenses}
-            currencySymbol={currencySymbol}
             callback={changeCategoryLocation}
           />
         </div>
         <BasicModal openModal={openModal} handleClose={() => setOpenModal(!openModal)}>
           <div className={styles.modalContent}>
-            <div className={styles.modalHeader}>
-              <Transfer
-                text={t('From account')}
-                account={account}
-                changeAccount={changeAccount}
-                changeCategory={changeCategory}
-              />
-              <Transfer
-                text={t('To category')}
-                category={categoryClicked}
-                changeAccount={changeAccount}
-                changeCategory={changeCategory}
-              />
-            </div>
+            {categoryLocation === TransactionType.Expense ? (
+              <div className={styles.modalHeader}>
+                <TransferCategory
+                  text={t('From account')}
+                  account={account}
+                  changeAccount={changeAccount}
+                  changeCategory={changeCategory}
+                />
+                <TransferCategory
+                  text={t('To category')}
+                  category={categoryClicked}
+                  changeAccount={changeAccount}
+                  changeCategory={changeCategory}
+                />{' '}
+              </div>
+            ) : (
+              <div className={styles.modalHeader}>
+                <TransferCategory
+                  text={t('From category')}
+                  category={categoryClicked}
+                  changeAccount={changeAccount}
+                  changeCategory={changeCategory}
+                />
+                <TransferCategory
+                  text={t('To account')}
+                  account={account}
+                  changeAccount={changeAccount}
+                  changeCategory={changeCategory}
+                />
+              </div>
+            )}
             <div className={styles.inputWrapper}>
               <Calculator
                 type={'Transfer'}

@@ -1,13 +1,15 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { defaultNames } from '../../../data/defaultNames';
 import { IAccount, ICategory } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { FromAccount } from './FromAccount/FromAccount';
 import { ToCategory } from './ToCategory/ToCategory';
-import styles from './Transfer.module.scss';
 
-interface TransferProps {
+import styles from './TransferCategory.module.scss';
+
+interface TransferCategoryProps {
   text: string;
   account?: IAccount | null;
   category?: ICategory | null;
@@ -15,8 +17,8 @@ interface TransferProps {
   changeCategory: (data: ICategory | null) => void;
 }
 
-export const Transfer = memo(
-  ({ text, account, category, changeAccount, changeCategory }: TransferProps) => {
+export const TransferCategory = memo(
+  ({ text, account, category, changeAccount, changeCategory }: TransferCategoryProps) => {
     const { t } = useTranslation();
 
     const [activeAccount, setActiveAccount] = useState(account);

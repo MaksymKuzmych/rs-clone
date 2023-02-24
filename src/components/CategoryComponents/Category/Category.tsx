@@ -36,7 +36,12 @@ export const Category = memo(
             <h3
               className={styles.title}
               style={{
-                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                color:
+                  activeCategory === id
+                    ? '#5c6ac2 '
+                    : userData.settings.theme === Theme.Light
+                    ? ThemeColor.Dark
+                    : ThemeColor.Light,
               }}
             >
               {defaultNames.includes(name) ? t(name) : name}
