@@ -1,6 +1,6 @@
 import { useCallback, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 
 import { ChartComponent } from '../../components/CategoryComponents/Chart/Chart';
 import { CategoriesLine } from '../../components/CategoryComponents/CategoriesLine/CategoriesLine';
@@ -17,9 +17,14 @@ import styles from './CategoryPage.module.scss';
 import { BasicModal } from '../../components/UI/Modal/Modal';
 import { Transfer } from '../../components/CategoryComponents/Transfer/Transfer';
 import { SettingsBtn } from '../../components/Accounts/Settings/SettingsBtn/SettingsBtn';
+import { Calculator } from '../../components/UI/Calculator/Calculator';
+import dayjs, { Dayjs } from 'dayjs';
+import { pushUserData } from '../../firebase/push-user-data';
+import { CategoryLocationContext } from '../../context/CategoryLocation';
 
 export const CategoryPage = () => {
-  const { userData } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
+  const { categoryLocation, setNewValue } = useContext(CategoryLocationContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -36,25 +41,28 @@ export const CategoryPage = () => {
     selectedAccount ? selectedAccount : userData.data.accounts[0],
   );
   const [amount, setAmount] = useState('');
+  const [notes, setNotes] = useState('');
+  const [day, setDay] = useState<Dayjs | null>(dayjs(Date.now()));
+
+  const changeAmountHandler = (value: string) => setAmount(value);
+  const changeNotesHandler = (value: string) => setNotes(value);
+  const changeDayHandler = (value: Dayjs | null) => setDay(value);
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
-  const [categoryType, setCategoryType] = useState(TransactionType.Expenses);
-
   const { t } = useTranslation();
 
-  const changeCategoryType = useCallback((type: TransactionType) => {
-    setCategoryType(type);
-  }, []);
-
-  const setNewCategory = useCallback((category: ICategory | null) => {
-    setCategoryClicked(category);
-  }, []);
+  const changeCategoryLocation = useCallback(
+    (type: TransactionType) => {
+      setNewValue(type);
+    },
+    [setNewValue],
+  );
 
   const dataForChart: IChart = {
     labels: [],
     datasets: [
       {
-        label: categoryType === TransactionType.Expenses ? t('Expenses') : t('Income'),
+        label: categoryLocation === TransactionType.Expenses ? t('Expenses') : t('Income'),
         data: [],
         backgroundColor: [],
       },
@@ -66,24 +74,26 @@ export const CategoryPage = () => {
   const transactions = userData.data.transactions;
 
   const categoriesThisType =
-    categories.length !== 0 ? categories.filter((category) => category.type === categoryType) : [];
+    categories.length !== 0
+      ? categories.filter((category) => category.type === categoryLocation)
+      : [];
 
   const transactionsFiltered = transactions.filter(
-    (transaction) => transaction.type === categoryType,
+    (transaction) => transaction.type === categoryLocation,
   );
 
   const buttonAdd = {
     id: '0',
     name: '',
     date: Date.now(),
-    type: categoryType,
+    type: categoryLocation,
     icon: 'add',
     color: `${userData.settings.theme === Theme.Light ? '#f8f8f8' : '#2a3139'}`,
   };
 
   const categoriesFiltered =
     categories.length !== 0 && categoriesThisType.length !== 0
-      ? categories.filter((category) => category.type === categoryType)
+      ? categories.filter((category) => category.type === categoryLocation)
       : [buttonAdd];
 
   if (categoriesFiltered.length < 12 && categoriesFiltered[0].id !== '0') {
@@ -136,11 +146,42 @@ export const CategoryPage = () => {
     labels: [''],
     datasets: [
       {
-        label: categoryType,
+        label: categoryLocation,
         data: [100],
         backgroundColor: ['#a8adb3'],
       },
     ],
+  };
+
+  const newTransaction =
+    categoryClicked && account
+      ? {
+          id: '',
+          date: new Date(dayjs(day).toDate()).getTime(),
+          type: categoryLocation,
+          account: account?.id,
+          accountTo: null,
+          category: categoryClicked?.id,
+          amount: +amount,
+          description: notes,
+        }
+      : null;
+
+  const transferMoney = async () => {
+    if (newTransaction)
+      await pushUserData(userData.userId, {
+        transactions: [newTransaction],
+      });
+
+    await changeUserData();
+  };
+
+  const changeAccount = (data: IAccount) => {
+    setAccount(data);
+  };
+
+  const changeCategory = (data: ICategory | null) => {
+    setCategoryClicked(data);
   };
 
   return (
@@ -187,39 +228,50 @@ export const CategoryPage = () => {
             callback={addTransaction}
           />
           <ChartComponent
-            type={categoryType}
+            type={categoryLocation}
             dataChart={transactionsFiltered.length ? dataForChart : dataForChartEmpty}
             income={income}
             expenses={expenses}
             currencySymbol={currencySymbol}
-            callback={changeCategoryType}
+            callback={changeCategoryLocation}
           />
         </div>
         <BasicModal openModal={openModal} handleClose={() => setOpenModal(!openModal)}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
-              <Transfer text={t('From account')} account={account} />
-              <Transfer text={t('To category')} category={categoryClicked} />
-            </div>
-            <div className={styles.inputWrapper}>
-              <TextField
-                autoComplete='off'
-                variant='standard'
-                color='primary'
-                name='balance'
-                label={t('Amount')}
-                type='number'
-                sx={{ width: '160px' }}
-                value={amount}
+              <Transfer
+                text={t('From account')}
+                account={account}
+                changeAccount={changeAccount}
+                changeCategory={changeCategory}
+              />
+              <Transfer
+                text={t('To category')}
+                category={categoryClicked}
+                changeAccount={changeAccount}
+                changeCategory={changeCategory}
               />
             </div>
-
-            <SettingsBtn
-              icon='edit'
-              color='#fec107'
-              title={t('Edit category')}
-              onClick={() => editCategory(categoryClicked)}
-            />
+            <div className={styles.inputWrapper}>
+              <Calculator
+                type={'Transfer'}
+                amount={amount}
+                notes={notes}
+                day={day}
+                changeAmountHandler={changeAmountHandler}
+                changeNotesHandler={changeNotesHandler}
+                changeDayHandler={changeDayHandler}
+                transferMoney={transferMoney}
+              />
+              <div className={styles.buttonArea}>
+                <SettingsBtn
+                  icon='edit'
+                  color='#fec107'
+                  title={t('Edit category')}
+                  onClick={() => editCategory(categoryClicked)}
+                />
+              </div>
+            </div>
           </div>
         </BasicModal>
         <TemporaryDrawer
@@ -228,7 +280,7 @@ export const CategoryPage = () => {
           type={typeDrawer}
           drawerHandler={drawerHandler}
         >
-          <CategoryForm category={categoryClicked} type={categoryType} />
+          <CategoryForm category={categoryClicked} type={categoryLocation} />
         </TemporaryDrawer>
       </div>
     </ThemeProvider>

@@ -1,10 +1,9 @@
-import { memo, useCallback, useContext } from 'react';
+import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ICategory } from '../../../interfaces';
 import { defaultNames } from '../../../data/defaultNames';
 import { AuthContext } from '../../../Auth/Auth';
-import { DrawerContext } from '../../../context/Drawer';
 import { Theme, ThemeColor } from '../../../enums';
 
 import styles from './Category.module.scss';
