@@ -131,16 +131,14 @@ export const CategoryPage = () => {
   );
 
   const createCategory = useCallback(() => {
+    setCategoryClicked(null);
     drawerHandler('new', 'bottom', true);
   }, [drawerHandler]);
 
-  const editCategory = useCallback(
-    (category: ICategory | null) => {
-      setOpenModal(false);
-      drawerHandler('edit', 'bottom', true);
-    },
-    [drawerHandler],
-  );
+  const editCategory = useCallback(() => {
+    setOpenModal(false);
+    drawerHandler('edit', 'bottom', true);
+  }, [drawerHandler]);
 
   const dataForChartEmpty: IChart = {
     labels: [''],
@@ -289,7 +287,7 @@ export const CategoryPage = () => {
                   icon='edit'
                   color='#fec107'
                   title={t('Edit')}
-                  onClick={() => editCategory(categoryClicked)}
+                  onClick={() => editCategory()}
                 />
               </div>
             </div>
