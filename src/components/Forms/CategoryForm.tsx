@@ -94,7 +94,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
     validationSchema: object().shape({
       name: string()
         .min(2, `${t('Name must be at least 2 characters')}`)
-        .max(10, `${t('Name must be at most 8 characters')}`)
+        .max(10, `${t('Name must be at most 10 characters')}`)
         .required(`${t('Required')}`),
     }),
     onSubmit: async (values) => {
@@ -120,8 +120,6 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
         });
       }
 
-      await changeUserData();
-      drawerHandler('changeCategory', 'bottom', false);
       await changeUserData();
       drawerHandler('changeCategory', 'bottom', false);
     },
@@ -182,9 +180,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
                   icon='delete'
                   color='#f34334'
                   title={t('Delete')}
-                  onClick={() => {
-                    handleOpenModalDelete();
-                  }}
+                  onClick={handleOpenModalDelete}
                 />
               </div>
             ) : (

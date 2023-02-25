@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../../../Auth/Auth';
 import { Theme, ThemeColor } from '../../../../enums';
 import { IAccount } from '../../../../interfaces';
-
 import { Account } from '../../../Accounts/Account/Account';
 
 import styles from './FromAccount.module.scss';
