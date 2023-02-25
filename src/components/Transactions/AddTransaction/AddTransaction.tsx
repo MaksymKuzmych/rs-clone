@@ -33,7 +33,13 @@ export const AddTransaction = () => {
   const changeAmountHandler = (value: string) => setAmount(value);
   const changeNotesHandler = (value: string) => setNotes(value);
   const changeDayHandler = (value: Dayjs | null) => setDay(value);
-  const currentAccount = userData.data.accounts[0];
+
+  const currentAccount = useMemo(() => {
+    const selectedAccount = userData.data.accounts.find(
+      (account) => account.id === userData.settings.selectedAccount,
+    );
+    return selectedAccount || userData.data.accounts[0];
+  }, [userData.data.accounts, userData.settings.selectedAccount]);
 
   const handleClose = useCallback(() => setOpenModal(false), []);
 
@@ -114,7 +120,7 @@ export const AddTransaction = () => {
     userData.settings.userId,
   ]);
 
-  const { name, icon, color, description, balance } = userData.data.accounts[0];
+  const { name, icon, color, description, balance } = currentAccount;
   const incomes = userData.data.categories.filter(
     (category) => category.type === TransactionType.Income,
   );
@@ -165,7 +171,7 @@ export const AddTransaction = () => {
     () =>
       userData.data.accounts.length > 1 ? (
         userData.data.accounts
-          .filter((_, index) => index !== 0)
+          .filter((account) => account !== currentAccount)
           .map((account) => (
             <div key={account.id} className={styles.account} onClick={() => toAccount(account)}>
               <div className={styles.accountIconWrapper} style={{ backgroundColor: account.color }}>
@@ -184,7 +190,7 @@ export const AddTransaction = () => {
       ) : (
         <div className={styles.emptyAccountsTitle}>{t('No accounts available')}</div>
       ),
-    [setCurrency, t, toAccount, userData.data.accounts],
+    [currentAccount, setCurrency, t, toAccount, userData.data.accounts],
   );
 
   return (
@@ -213,7 +219,9 @@ export const AddTransaction = () => {
         <BasicTabs
           firstChild={
             <div
-              className={incomes.length ? styles.categoriesWrapper : styles.emptyCategoriesWrapper}
+              className={
+                incomes.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
+              }
               style={{ height: maxHeight + 'px' }}
             >
               {Categories(incomes)}
@@ -221,7 +229,9 @@ export const AddTransaction = () => {
           }
           secondChild={
             <div
-              className={expenses.length ? styles.categoriesWrapper : styles.emptyCategoriesWrapper}
+              className={
+                expenses.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
+              }
               style={{ height: maxHeight + 'px' }}
             >
               {Categories(expenses)}
