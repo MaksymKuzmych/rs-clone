@@ -94,7 +94,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
     validationSchema: object().shape({
       name: string()
         .min(2, `${t('Name must be at least 2 characters')}`)
-        .max(8, `${t('Name must be at most 8 characters')}`)
+        .max(10, `${t('Name must be at most 10 characters')}`)
         .required(`${t('Required')}`),
     }),
     onSubmit: async (values) => {
@@ -177,20 +177,10 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
             {category ? (
               <div className={styles.categoriesBtnsWrapper}>
                 <SettingsBtn
-                  icon='add'
-                  color='#fec107'
-                  title={t('Add transaction')}
-                  onClick={() => {
-                    alert('edit');
-                  }}
-                />
-                <SettingsBtn
                   icon='delete'
                   color='#f34334'
                   title={t('Delete')}
-                  onClick={() => {
-                    handleOpenModalDelete();
-                  }}
+                  onClick={handleOpenModalDelete}
                 />
               </div>
             ) : (
