@@ -22,12 +22,14 @@ interface ISetCurrency {
 
 interface IAuthContext {
   userData: IStore;
+  changeUserSettings: () => Promise<void>;
   changeUserData: () => Promise<void>;
   setCurrency: ISetCurrency;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   userData: emptyUserData,
+  changeUserSettings: async () => {},
   changeUserData: async () => {},
   setCurrency: () => '',
 });
@@ -48,9 +50,18 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
       signDisplay,
     }).format(amount);
 
-  const changeUserData = useCallback(async () => {
+  const changeUserSettings = useCallback(async () => {
     try {
       setPending(true);
+      setUserData(await pullUserSettings(userData, userData.settings.userId));
+      setPending(false);
+    } catch (error) {
+      enqueueSnackbar(`${error}`, { variant: 'error' });
+    }
+  }, [enqueueSnackbar, userData]);
+
+  const changeUserData = useCallback(async () => {
+    try {
       setUserData(await pullUserSettings(userData, userData.settings.userId));
       setUserData(
         await pullUserData(
@@ -60,7 +71,6 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
           userData.settings.period,
         ),
       );
-      setPending(false);
     } catch (error) {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     }
@@ -121,7 +131,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userData, changeUserData, setCurrency }}>
+    <AuthContext.Provider value={{ userData, changeUserSettings, changeUserData, setCurrency }}>
       {children}
     </AuthContext.Provider>
   );
