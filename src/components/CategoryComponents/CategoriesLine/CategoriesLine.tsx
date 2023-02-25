@@ -11,11 +11,12 @@ interface CategoriesLineProps {
   start: number;
   end: number;
   classLine: string;
-  callbackTransferCategory: (category: ICategory | null) => void;
+  callback(category: ICategory | null): void;
+  addCategory?: () => void;
 }
 
 export const CategoriesLine = memo(
-  ({ dataCategories, start, end, classLine, callbackTransferCategory }: CategoriesLineProps) => {
+  ({ dataCategories, start, end, classLine, addCategory, callback }: CategoriesLineProps) => {
     const { userData } = useContext(AuthContext);
 
     const transactions = userData.data.transactions;
@@ -31,10 +32,11 @@ export const CategoriesLine = memo(
               sum={Object.values(transactions)
                 .filter((item) => item.category === category.id)
                 .reduce((sum, current) => sum + current.amount, 0)}
-              callbackTransferCategory={callbackTransferCategory}
+              callback={callback}
+              addCategory={addCategory}
             />
           )),
-      [dataCategories, start, end, callbackTransferCategory, transactions],
+      [dataCategories, start, end, transactions, addCategory, callback],
     );
 
     return <div className={styles[`${classLine}`]}>{memoList}</div>;

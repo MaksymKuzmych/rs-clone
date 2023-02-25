@@ -52,6 +52,10 @@ export const RangePeriod = () => {
 
   const language: string = userData.settings.lang;
 
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   const getTitleOfSelectedPeriod = useCallback(() => {
     switch (userData.settings.periodType) {
       case Period.All:
@@ -67,10 +71,12 @@ export const RangePeriod = () => {
           : null;
       case Period.Month:
         return userData.settings.period.start
-          ? new Date(userData.settings.period.start).toLocaleString(language, {
-              month: 'long',
-              year: 'numeric',
-            })
+          ? capitalizeFirstLetter(
+              new Date(userData.settings.period.start).toLocaleString(language, {
+                month: 'long',
+                year: 'numeric',
+              }),
+            )
           : null;
       case Period.Today:
         return userData.settings.period.start

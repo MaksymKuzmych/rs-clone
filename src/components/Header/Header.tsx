@@ -148,7 +148,7 @@ export const Header = () => {
             </Toolbar>
           </div>
           {activePage === '/accounts' ? (
-            <div className={styles.headerBottom}>Accounts</div>
+            <div className={styles.headerBottom}>{t('Accounts')}</div>
           ) : (
             <ThemeProvider theme={theme(userData.settings.theme)}>
               <RangePeriod />

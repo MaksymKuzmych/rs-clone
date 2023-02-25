@@ -9,22 +9,25 @@ import { DrawerProvider } from '../../context/Drawer';
 import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { TransactionPage } from '../../pages/TransactionPage/TransactionPage';
 import { SearchProvider } from '../../context/Search';
+import { CategoryLocationProvider } from '../../context/CategoryLocation';
 
 export const App = () => {
   return (
     <DrawerProvider>
       <AuthProvider>
         <SearchProvider>
-          <Header />
-          <div className='main'>
-            <Routes>
-              <Route path='/' element={<CategoryPage />} />
-              <Route path='/accounts' element={<AccountPage />} />
-              <Route path='/transactions' element={<TransactionPage />} />
-              <Route path='*' element={<NotFound />} />
-            </Routes>
-          </div>
-          <Footer />
+          <CategoryLocationProvider>
+            <Header />
+            <div className='main'>
+              <Routes>
+                <Route path='/' element={<CategoryPage />} />
+                <Route path='/accounts' element={<AccountPage />} />
+                <Route path='/transactions' element={<TransactionPage />} />
+                <Route path='*' element={<NotFound />} />
+              </Routes>
+            </div>
+            <Footer />
+          </CategoryLocationProvider>
         </SearchProvider>
       </AuthProvider>
     </DrawerProvider>
