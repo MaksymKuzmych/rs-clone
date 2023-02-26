@@ -1,6 +1,6 @@
 import { checkUser } from './check-user';
 import { createUser } from './create-user';
-import { defaultUserData } from './default-user-data';
+import { defaultUserData } from '../data/default-user-data';
 import { FirebaseError } from './firebase-config';
 
 export const createAnonUser = async (userId: string) => {

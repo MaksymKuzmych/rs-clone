@@ -18,14 +18,12 @@ import { TransferCategory } from '../../components/CategoryComponents/Transfer/T
 import { SettingsBtn } from '../../components/Accounts/Settings/SettingsBtn/SettingsBtn';
 import { Calculator } from '../../components/UI/Calculator/Calculator';
 import { pushUserData } from '../../firebase/push-user-data';
-import { CategoryLocationContext } from '../../context/CategoryLocation';
 import { incrementBalance } from '../../firebase/increment-balance';
 
 import styles from './CategoryPage.module.scss';
 
 export const CategoryPage = () => {
   const { userData, changeUserData } = useContext(AuthContext);
-  const { categoryLocation, setNewValue } = useContext(CategoryLocationContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -44,6 +42,7 @@ export const CategoryPage = () => {
   const [amount, setAmount] = useState('');
   const [notes, setNotes] = useState('');
   const [day, setDay] = useState<Dayjs | null>(dayjs(Date.now()));
+  const [categoryLocation, setCategoryLocation] = useState(TransactionType.Expense);
 
   const changeAmountHandler = (value: string) => setAmount(value);
   const changeNotesHandler = (value: string) => setNotes(value);
@@ -54,9 +53,9 @@ export const CategoryPage = () => {
 
   const changeCategoryLocation = useCallback(
     (type: TransactionType) => {
-      setNewValue(type);
+      setCategoryLocation(type);
     },
-    [setNewValue],
+    [setCategoryLocation],
   );
 
   const dataForChart: IChart = {
@@ -177,6 +176,8 @@ export const CategoryPage = () => {
         categoryLocation === TransactionType.Expense ? -+amount : +amount,
       );
     await changeUserData();
+    toggleModal();
+    setAmount('');
   };
 
   const changeAccount = (data: IAccount) => {
@@ -247,12 +248,14 @@ export const CategoryPage = () => {
                   account={account}
                   changeAccount={changeAccount}
                   changeCategory={changeCategory}
+                  type={categoryLocation}
                 />
                 <TransferCategory
                   text={t('To category')}
                   category={categoryClicked}
                   changeAccount={changeAccount}
                   changeCategory={changeCategory}
+                  type={categoryLocation}
                 />{' '}
               </div>
             ) : (
@@ -262,12 +265,14 @@ export const CategoryPage = () => {
                   category={categoryClicked}
                   changeAccount={changeAccount}
                   changeCategory={changeCategory}
+                  type={categoryLocation}
                 />
                 <TransferCategory
                   text={t('To account')}
                   account={account}
                   changeAccount={changeAccount}
                   changeCategory={changeCategory}
+                  type={categoryLocation}
                 />
               </div>
             )}
