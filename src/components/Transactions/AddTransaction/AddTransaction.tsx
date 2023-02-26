@@ -11,6 +11,7 @@ import styles from './AddTransaction.module.scss';
 
 export const AddTransaction = () => {
   const { userData, setCurrency } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   const { name, icon, color, description, balance } = userData.data.accounts[0];
@@ -57,47 +58,23 @@ export const AddTransaction = () => {
           <p className={styles.balance}>{setCurrency(balance, 'never')}</p>
         </div>
       </header>
-      <BasicTabs
-        firstChild={
-          <div
-            className={styles.categoriesWrapper}
-            style={{
-              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-              backgroundColor:
-                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-            }}
-          >
-            {Categories}
-          </div>
-        }
-        secondChild={
-          <div
-            className={styles.categoriesWrapper}
-            style={{
-              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-              backgroundColor:
-                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-            }}
-          >
-            {Categories}
-          </div>
-        }
-        thirdChild={
-          <div
-            className={styles.categoriesWrapper}
-            style={{
-              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-              backgroundColor:
-                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-            }}
-          >
-            {Categories}
-          </div>
-        }
-        firstTitle={t(TransactionType.Income + ' ').toUpperCase()}
-        secondTitle={t(TransactionType.Expense + ' ').toUpperCase()}
-        thirdTitle={t(TransactionType.Transfer + ' ').toUpperCase()}
-      />
+      <div
+        className={styles.tabsWrapper}
+        style={{
+          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+          backgroundColor:
+            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+        }}
+      >
+        <BasicTabs
+          firstChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
+          secondChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
+          thirdChild={<div className={styles.categoriesWrapper}>{Categories}</div>}
+          firstTitle={t(TransactionType.Income + ' ').toUpperCase()}
+          secondTitle={t(TransactionType.Expense).toUpperCase()}
+          thirdTitle={t(TransactionType.Transfer + ' ').toUpperCase()}
+        />
+      </div>
     </>
   );
 };

@@ -12,11 +12,11 @@ interface SettingsHeaderProps {
 }
 
 export const SettingsHeader = memo(({ currentAccount }: SettingsHeaderProps) => {
-  const { t } = useTranslation();
-
   const { name, icon, color, description, balance } = currentAccount;
 
   const { setCurrency } = useContext(AuthContext);
+
+  const { t } = useTranslation();
 
   return (
     <header className={styles.header} style={{ backgroundColor: `${color}` }}>

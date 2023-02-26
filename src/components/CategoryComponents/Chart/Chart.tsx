@@ -20,8 +20,9 @@ interface ChartComponentProps {
 
 export const ChartComponent = memo(
   ({ type, dataChart, income, expenses, callback }: ChartComponentProps) => {
-    const { t } = useTranslation();
     const { setCurrency } = useContext(AuthContext);
+
+    const { t } = useTranslation();
 
     Chart.defaults.plugins.legend.display = false;
 

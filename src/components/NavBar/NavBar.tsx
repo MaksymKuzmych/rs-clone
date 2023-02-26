@@ -116,7 +116,13 @@ export const NavBar = () => {
             </div>
           </div>
         </div>
-        <div className={styles.menu}>
+        <div
+          className={styles.menu}
+          style={{
+            backgroundColor:
+              userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+          }}
+        >
           <List component='nav' aria-label='burgerMenu'>
             <NavLinkAccount />
             <div className={styles.subtitle}>{t('Settings')}</div>

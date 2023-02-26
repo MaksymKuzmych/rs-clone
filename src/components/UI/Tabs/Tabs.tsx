@@ -81,6 +81,7 @@ export const BasicTabs = memo(
         MuiTab: {
           styleOverrides: {
             root: {
+              '&.MuiTab-textColorPrimary': { color: '#777777' },
               '&.Mui-selected': {
                 color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               },
@@ -106,7 +107,7 @@ export const BasicTabs = memo(
                 style={thirdTitle ? { width: '33.3%' } : { width: '50%' }}
               />
               {thirdTitle && (
-                <Tab label={thirdTitle} {...a11yProps(1)} style={{ width: '33.3%' }} />
+                <Tab label={thirdTitle} {...a11yProps(2)} style={{ width: '33.3%' }} />
               )}
             </Tabs>
           </Box>

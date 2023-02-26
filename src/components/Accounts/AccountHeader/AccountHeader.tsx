@@ -11,9 +11,9 @@ interface AccountHeaderProps {
 }
 
 export const AccountHeader = memo(({ amount }: AccountHeaderProps) => {
-  const { t } = useTranslation();
-
   const { setCurrency } = useContext(AuthContext);
+
+  const { t } = useTranslation();
 
   return (
     <header className={styles.header}>

@@ -2,12 +2,13 @@
 
 .value {
   color: $lilac;
-  transition: filter .3s;
+  transition: filter 0.3s;
 }
 
 .navItem {
   cursor: pointer;
+
   &:hover .value {
-    filter: brightness(1.5);
+    filter: brightness(1.2);
   }
 }

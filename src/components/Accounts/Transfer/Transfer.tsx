@@ -44,7 +44,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
 
   const handleClose = useCallback(() => setOpenModal(false), []);
 
-  const transferMoney = async () => {
+  const transferMoney = useCallback(async () => {
     if (amount === '') {
       return;
     }
@@ -66,16 +66,6 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
             account: currentAccount.id,
             accountTo: targetAccount.id,
             category: null,
-            amount: +amount,
-            description: notes,
-          },
-          {
-            id: '',
-            date: new Date(dayjs(day).toDate()).getTime(),
-            type: TransactionType.Transfer,
-            account: targetAccount.id,
-            accountTo: currentAccount.id,
-            category: null,
             amount: +-amount,
             description: notes,
           },
@@ -88,7 +78,16 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
       await changeUserData();
       drawerHandler('info', 'bottom', false);
     }
-  };
+  }, [
+    amount,
+    changeUserData,
+    currentAccount.id,
+    day,
+    drawerHandler,
+    notes,
+    targetAccount,
+    userData.settings.userId,
+  ]);
 
   const accounts = useMemo(
     () =>
@@ -125,7 +124,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
           </div>
           {isError && <p className={styles.error}>{t('Amount must be at most 9 characters')}</p>}
           <Calculator
-            type={'Transfer'}
+            type='Transfer'
             amount={amount}
             notes={notes}
             day={day}

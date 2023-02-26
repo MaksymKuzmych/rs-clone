@@ -1,4 +1,4 @@
-import { createTheme, TextField, ThemeProvider } from '@mui/material';
+import { TextField, ThemeProvider } from '@mui/material';
 import { useFormik } from 'formik';
 import { memo, useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ import { Theme, ThemeColor, TransactionType } from '../../enums';
 import { ICategory } from '../../interfaces';
 import { defaultNames, defaultNamesRu } from '../../data/defaultNames';
 import { DrawerContext } from '../../context/Drawer';
+import { themeForTitle } from './AccountForm';
 
 import styles from './Forms.module.scss';
 
@@ -24,46 +25,6 @@ interface CategoryFormProps {
   type: TransactionType;
   category: ICategory | null;
 }
-
-const themeForTitle = () =>
-  createTheme({
-    palette: {
-      primary: {
-        main: '#fff',
-      },
-    },
-    components: {
-      MuiInput: {
-        styleOverrides: {
-          underline: {
-            color: '#fff',
-          },
-        },
-      },
-      MuiInputBase: {
-        styleOverrides: {
-          root: {
-            fontSize: '22px',
-          },
-        },
-      },
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            marginBottom: '5px',
-          },
-        },
-      },
-      MuiInputLabel: {
-        styleOverrides: {
-          root: {
-            color: '#f8f8f8',
-            fontSize: '23px',
-          },
-        },
-      },
-    },
-  });
 
 export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
   const { userData, changeUserData } = useContext(AuthContext);

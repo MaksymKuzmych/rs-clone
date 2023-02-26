@@ -1,4 +1,4 @@
-import { createContext, memo, PropsWithChildren, useState } from 'react';
+import { createContext, memo, PropsWithChildren, useCallback, useState } from 'react';
 import { TransactionType } from '../enums';
 
 interface ISearchContext {
@@ -13,10 +13,8 @@ export const CategoryLocationContext = createContext<ISearchContext>({
 
 export const CategoryLocationProvider = memo(({ children }: PropsWithChildren) => {
   const [categoryLocation, setCategoryLocation] = useState(TransactionType.Expense);
-  const setNewValue = (value: TransactionType) => {
-    setCategoryLocation(value);
-  };
 
+  const setNewValue = useCallback((value: TransactionType) => setCategoryLocation(value), []);
   return (
     <CategoryLocationContext.Provider value={{ categoryLocation, setNewValue }}>
       {children}

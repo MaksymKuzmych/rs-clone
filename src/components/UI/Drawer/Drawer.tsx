@@ -15,6 +15,7 @@ interface TemporaryDrawerProps {
 export const TemporaryDrawer = memo(
   ({ state, anchor, children, type, drawerHandler }: PropsWithChildren<TemporaryDrawerProps>) => {
     const { overlay } = useContext(OverlayContext);
+
     return (
       <div className={overlay ? `overlayOpenPending overlay` : `overlay`}>
         <Drawer

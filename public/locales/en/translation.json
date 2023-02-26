@@ -80,8 +80,8 @@
   "USD": "USD",
   "UAH": "UAH",
   "RUB": "RUB",
-  "TODAY": "TODAY",
-  "YESTERDAY": "YESTERDAY",
+  "Today": "Today",
+  "Yesterday": "Yesterday",
   "Email": "Email",
   "Password": "Password",
   "Invalid email": "Invalid email",
@@ -101,7 +101,6 @@
   "All time": "All time",
   "Select day": "Select day",
   "Week": "Week",
-  "Today": "Today",
   "Year": "Year",
   "Month": "Month",
   "From": "From",
@@ -123,5 +122,6 @@
   "Transaction associated with this transfer will be deleted too": "Transaction associated with this transfer will be deleted too",
   "This action cannot be undone": "This action cannot be undone",
   "From category": "From category",
-  "To category": "To category"
+  "To category": "To category",
+  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters"
 }

@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const [pending, setPending] = useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
+
   const { t } = useTranslation();
   const { setNewValue } = useContext(OverlayContext);
 
@@ -135,7 +136,14 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
               userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
           }}
         >
-          <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%' }} />
+          <CircularProgress
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
         </div>
         <Footer />
       </>
