@@ -23,7 +23,7 @@ interface NavItemProps {
 }
 
 export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
 
   const [param, setParam] = useState('EN');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -73,10 +73,10 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
           break;
       }
 
-      await changeUserData();
+      await changeUserSettings();
       setParam(event.target.value);
     },
-    [changeUserData, i18n, userData.settings.userId],
+    [changeUserSettings, i18n, userData.settings.userId],
   );
 
   return (

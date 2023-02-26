@@ -14,7 +14,7 @@ interface FilterAccountsModalProps {
 }
 
 export const FilterAccountsModal = memo(({ handleClose }: FilterAccountsModalProps) => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
 
   const { t } = useTranslation();
 
@@ -22,10 +22,10 @@ export const FilterAccountsModal = memo(({ handleClose }: FilterAccountsModalPro
     async (account: IAccount) => {
       const newSelectedAccount = account.id === 'allAccounts' ? null : account.id;
       await updateUserSettings(userData.settings.userId, { selectedAccount: newSelectedAccount });
-      await changeUserData();
+      await changeUserSettings();
       handleClose();
     },
-    [handleClose, changeUserData, userData.settings.userId],
+    [handleClose, changeUserSettings, userData.settings.userId],
   );
 
   const allAccountsAmount = userData.data.accounts.reduce(

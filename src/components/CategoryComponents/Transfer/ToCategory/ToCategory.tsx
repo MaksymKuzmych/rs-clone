@@ -2,8 +2,7 @@ import { memo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../../Auth/Auth';
-import { CategoryLocationContext } from '../../../../context/CategoryLocation';
-import { Theme, ThemeColor } from '../../../../enums';
+import { Theme, ThemeColor, TransactionType } from '../../../../enums';
 import { ICategory } from '../../../../interfaces';
 import { Category } from '../../Category/Category';
 
@@ -12,16 +11,16 @@ import styles from './ToCategory.module.scss';
 interface ToCategoryProps {
   changeCategory: (category: ICategory | null) => void;
   activeCategory: string;
+  type: TransactionType;
 }
 
-export const ToCategory = memo(({ changeCategory, activeCategory }: ToCategoryProps) => {
+export const ToCategory = memo(({ changeCategory, activeCategory, type }: ToCategoryProps) => {
   const { userData } = useContext(AuthContext);
-  const { categoryLocation } = useContext(CategoryLocationContext);
   const { t } = useTranslation();
 
   return (
     <div className={styles.modalWrapper}>
-      <div className={styles.modalTitle}>{t(categoryLocation)}</div>
+      <div className={styles.modalTitle}>{t(type)}</div>
       <div
         className={styles.wrapper}
         style={{
@@ -30,7 +29,7 @@ export const ToCategory = memo(({ changeCategory, activeCategory }: ToCategoryPr
       >
         {userData.data.categories.length !== 0 &&
           userData.data.categories
-            .filter((item) => item.type === categoryLocation)
+            .filter((item) => item.type === type)
             .map((category) => (
               <Category
                 dataCategory={category}
