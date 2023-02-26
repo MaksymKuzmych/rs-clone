@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -24,8 +24,8 @@ export const Login = () => {
 
   const { t } = useTranslation();
 
-  const signInGoogleHandler = async () => await signInProvider(Provider.Google);
-  const signInGithubHandler = async () => await signInProvider(Provider.Github);
+  const signInGoogleHandler = useCallback(async () => await signInProvider(Provider.Google), []);
+  const signInGithubHandler = useCallback(async () => await signInProvider(Provider.Github), []);
 
   const formik = useFormik({
     initialValues: {

@@ -1,5 +1,6 @@
 import { TransactionType } from '../enums';
 import { ITransaction } from '../interfaces';
+
 export const storeTr: ITransaction[] = [
   {
     id: '1',

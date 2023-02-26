@@ -13,6 +13,7 @@ interface TransferAccountProps {
 
 export const TransferAccount = memo(({ account, text }: TransferAccountProps) => {
   const { t } = useTranslation();
+
   return (
     <div className={styles.wrapper} style={{ backgroundColor: account?.color }}>
       <div>

@@ -103,7 +103,7 @@ export const Transaction = memo(({ transaction }: TransactionProps) => {
         </p>
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
-        <Settings currentTransaction={currentTransaction} />
+        <Settings currentTransaction={currentTransaction} handleClose={handleClose} />
       </BasicModal>
     </>
   );

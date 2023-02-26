@@ -18,9 +18,10 @@ import styles from './Settings.module.scss';
 
 interface SettingsProps {
   currentTransaction: ITransactionAll;
+  handleClose: () => void;
 }
 
-export const Settings = memo(({ currentTransaction }: SettingsProps) => {
+export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
 
   const [typeModal, setTypeModal] = useState('');
@@ -47,7 +48,6 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
   const { t } = useTranslation();
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
-  const handleClose = useCallback(() => setOpenModal(false), []);
   const changeAmountHandler = (value: string) => setAmount(value);
   const changeNotesHandler = (value: string) => setNotes(value);
   const changeDayHandler = (value: Dayjs | null) => setDay(value);

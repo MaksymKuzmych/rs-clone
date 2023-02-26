@@ -12,9 +12,8 @@ export const OverlayContext = createContext<IOverlay>({
 
 export const OverlayProvider = memo(({ children }: PropsWithChildren) => {
   const [overlay, setOverlay] = useState(false);
-  const setNewValue = useCallback((value: boolean) => {
-    setOverlay(value);
-  }, []);
+
+  const setNewValue = useCallback((value: boolean) => setOverlay(value), []);
 
   return (
     <OverlayContext.Provider value={{ overlay, setNewValue }}>{children}</OverlayContext.Provider>

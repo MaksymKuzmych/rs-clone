@@ -11,6 +11,7 @@ import styles from './AddTransaction.module.scss';
 
 export const AddTransaction = () => {
   const { userData, setCurrency } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   const { name, icon, color, description, balance } = userData.data.accounts[0];

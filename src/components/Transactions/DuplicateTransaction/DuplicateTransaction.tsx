@@ -38,7 +38,8 @@ export const DuplicateTransaction = memo(
       }
 
       await changeUserData();
-    }, [changeUserData, currentTransaction, userData.settings.userId]);
+      handleClose();
+    }, [changeUserData, currentTransaction, handleClose, userData.settings.userId]);
 
     return (
       <div
