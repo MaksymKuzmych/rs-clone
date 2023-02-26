@@ -53,16 +53,6 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
       signDisplay,
     }).format(amount);
 
-  const changeUserSettings = useCallback(async () => {
-    try {
-      setPending(true);
-      setUserData(await pullUserSettings(userData, userData.settings.userId));
-      setPending(false);
-    } catch (error) {
-      enqueueSnackbar(`${error}`, { variant: 'error' });
-    }
-  }, [enqueueSnackbar, userData]);
-
   const changeUserData = useCallback(async () => {
     try {
       setNewValue(true);
@@ -80,6 +70,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     }
   }, [enqueueSnackbar, userData, setNewValue]);
+
+  const changeUserSettings = useCallback(async () => {
+    setPending(true);
+    changeUserData();
+    setPending(false);
+  }, [changeUserData]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {

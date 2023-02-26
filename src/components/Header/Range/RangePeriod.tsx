@@ -16,7 +16,7 @@ import { RangeModal } from './RangeModal/RangeModal';
 import styles from './RangePeriod.module.scss';
 
 export const RangePeriod = () => {
-  const { userData, changeUserSettings, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
 
   const { t } = useTranslation();
 
@@ -46,11 +46,10 @@ export const RangePeriod = () => {
         periodType: range.type,
         period: getPeriod(range.type, Date.now()),
       });
-      await changeUserData();
       await changeUserSettings();
       toggleModal();
     },
-    [changeUserData, changeUserSettings, toggleModal, userData.settings.userId],
+    [changeUserSettings, toggleModal, userData.settings.userId],
   );
 
   const language: string = userData.settings.lang;
@@ -151,10 +150,8 @@ export const RangePeriod = () => {
         userData.settings.periodType === Period.Range ? dateEnd : undefined,
       ),
     });
-    await changeUserData();
     await changeUserSettings();
   }, [
-    changeUserData,
     changeUserSettings,
     userData.settings.period.end,
     userData.settings.period.start,
@@ -181,10 +178,8 @@ export const RangePeriod = () => {
         userData.settings.periodType === Period.Range ? dateEnd : undefined,
       ),
     });
-    await changeUserData();
     await changeUserSettings();
   }, [
-    changeUserData,
     changeUserSettings,
     userData.settings.period.end,
     userData.settings.period.start,

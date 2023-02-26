@@ -18,7 +18,7 @@ interface CalendarRangeModalProps {
 }
 
 export const CalendarRangeModal = memo(({ onClick }: CalendarRangeModalProps) => {
-  const { userData, changeUserSettings, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
 
   const start =
     userData.settings.periodType === Period.Range && userData.settings.period.start
@@ -41,10 +41,9 @@ export const CalendarRangeModal = memo(({ onClick }: CalendarRangeModalProps) =>
         period: getPeriod(Period.Range, Number(valueStart?.toDate()), Number(valueEnd?.toDate())),
       });
       await changeUserSettings();
-      await changeUserData();
       onClick();
     },
-    [changeUserData, changeUserSettings, onClick, userData.settings.userId],
+    [changeUserSettings, onClick, userData.settings.userId],
   );
 
   return (
