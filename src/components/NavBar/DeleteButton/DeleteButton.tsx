@@ -38,8 +38,10 @@ export const DeleteButton = () => {
     });
 
     await changeUserSettings();
+    handleClose();
   }, [
     changeUserSettings,
+    handleClose,
     userData.data.accounts,
     userData.data.categories,
     userData.settings.userId,

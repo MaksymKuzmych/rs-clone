@@ -126,5 +126,13 @@
   "To category": "To category",
   "No categories available": "No categories available",
   "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters",
-  "Please allow pop-up": "Please allow pop-up"
+  "Please allow pop-up": "Please allow pop-up",
+  "Import data": "Import data",
+  "Import XLS": "Import XLS",
+  "Importing data will create new accounts, categories, and transactions.": "Importing data will create new accounts, categories, and transactions.",
+  "Attention! All unused accounts and categories will be deleted!": "Attention! All unused accounts and categories will be deleted!",
+  "Import file example": "Import file example",
+  "and": "and",
+  "PrivatBank": "PrivatBank",
+  "Monobank": "Monobank"
 }
