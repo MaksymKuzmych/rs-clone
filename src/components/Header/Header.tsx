@@ -18,6 +18,7 @@ import { SearchContext } from '../../context/Search';
 import { theme } from '../../styles/theme';
 import { AuthContext } from '../../Auth/Auth';
 import { Theme, ThemeColor } from '../../enums';
+import { OverlayContext } from '../../context/Overlay';
 
 import styles from './Header.module.scss';
 
@@ -38,6 +39,7 @@ export const Header = () => {
 
   const { setNewValue } = useContext(SearchContext);
   const { userData } = useContext(AuthContext);
+  const { overlay } = useContext(OverlayContext);
 
   const location = useLocation();
 
@@ -84,7 +86,7 @@ export const Header = () => {
   );
 
   return (
-    <>
+    <div>
       <ThemeProvider theme={themePaper}>
         <AppBar
           position='static'
@@ -154,7 +156,7 @@ export const Header = () => {
             </Toolbar>
           </div>
           {activePage === '/accounts' ? (
-            <div className={styles.headerBottom}>Accounts</div>
+            <div className={styles.headerBottom}>{t('Accounts')}</div>
           ) : (
             <ThemeProvider theme={theme(userData.settings.theme)}>
               <RangePeriod />
@@ -174,7 +176,13 @@ export const Header = () => {
           <NavBar />
         </Drawer>
         <div
-          className={!open ? styles.overlay : `${styles.overlay} ${styles.overlayOpen}`}
+          className={
+            overlay
+              ? `${styles.overlayOpenPending} ${styles.overlay}`
+              : !open
+              ? styles.overlay
+              : `${styles.overlay} ${styles.overlayOpen}`
+          }
           onClick={handleDrawerClose}
         ></div>
         <div
@@ -184,6 +192,6 @@ export const Header = () => {
           onClick={closeSearch}
         ></div>
       </ThemeProvider>
-    </>
+    </div>
   );
 };

@@ -16,7 +16,7 @@ interface DeleteAccountProps {
 }
 
 export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccountProps) => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [transactions, setTransactions] = useState(0);
@@ -44,10 +44,10 @@ export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccoun
       }
     });
 
-    await changeUserData();
+    await changeUserSettings();
     drawerHandler('info', 'bottom', false);
   }, [
-    changeUserData,
+    changeUserSettings,
     currentAccount.id,
     drawerHandler,
     userData.data.transactions,

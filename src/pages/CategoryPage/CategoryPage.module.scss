@@ -69,3 +69,13 @@
   height: 53px;
   cursor: pointer;
 }
+
+.modalHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttonArea {
+  padding: 10px 0;
+  border-top: 1px solid $gray;
+}

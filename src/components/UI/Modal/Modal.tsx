@@ -3,6 +3,7 @@ import Modal from '@mui/material/Modal';
 import { memo, PropsWithChildren, useContext } from 'react';
 
 import { AuthContext } from '../../../Auth/Auth';
+import { OverlayContext } from '../../../context/Overlay';
 import { Theme, ThemeColor } from '../../../enums';
 
 interface BasicModalProps {
@@ -13,14 +14,16 @@ interface BasicModalProps {
 export const BasicModal = memo(
   ({ openModal, children, handleClose }: PropsWithChildren<BasicModalProps>) => {
     const { userData } = useContext(AuthContext);
+    const { overlay } = useContext(OverlayContext);
 
     return (
-      <div>
+      <div className={overlay ? `overlayOpenPending overlay` : `overlay`}>
         <Modal
           open={openModal}
           onClose={handleClose}
           aria-labelledby='modal-modal-title'
           aria-describedby='modal-modal-description'
+          disableAutoFocus={true}
         >
           <Box
             sx={{
