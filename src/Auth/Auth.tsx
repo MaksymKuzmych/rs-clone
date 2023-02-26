@@ -64,22 +64,6 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   const changeUserData = useCallback(async () => {
     try {
-      setUserData(await pullUserSettings(userData, userData.settings.userId));
-      setUserData(
-        await pullUserData(
-          userData,
-          userData.settings.userId,
-          userData.settings.selectedAccount,
-          userData.settings.period,
-        ),
-      );
-    } catch (error) {
-      enqueueSnackbar(`${error}`, { variant: 'error' });
-    }
-  }, [enqueueSnackbar, userData]);
-
-  const changeUserData = useCallback(async () => {
-    try {
       setNewValue(true);
       setUserData(await pullUserSettings(userData, userData.settings.userId));
       setUserData(
