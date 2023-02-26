@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouterProps } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import { pullUserData } from '../firebase/pull-user-data';
 import { pullUserSettings } from '../firebase/pull-user-settings';
 import { signInAnon } from '../firebase/sign-in-anon';
 import { IStore } from '../interfaces';
+import { OverlayContext } from '../context/Overlay';
 
 interface ISetCurrency {
   (amount: number, signDisplay?: 'always' | 'auto' | 'never'): string;
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
+  const { setNewValue } = useContext(OverlayContext);
 
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
@@ -75,6 +77,24 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
       enqueueSnackbar(`${error}`, { variant: 'error' });
     }
   }, [enqueueSnackbar, userData]);
+
+  const changeUserData = useCallback(async () => {
+    try {
+      setNewValue(true);
+      setUserData(await pullUserSettings(userData, userData.settings.userId));
+      setUserData(
+        await pullUserData(
+          userData,
+          userData.settings.userId,
+          userData.settings.selectedAccount,
+          userData.settings.period,
+        ),
+      );
+      setNewValue(false);
+    } catch (error) {
+      enqueueSnackbar(`${error}`, { variant: 'error' });
+    }
+  }, [enqueueSnackbar, userData, setNewValue]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {

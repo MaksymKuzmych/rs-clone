@@ -16,7 +16,7 @@ import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
 import styles from './DeleteButton.module.scss';
 
 export const DeleteButton = () => {
-  const { userData, changeUserData } = useContext(AuthContext);
+  const { userData, changeUserSettings } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
 
@@ -37,14 +37,19 @@ export const DeleteButton = () => {
       categories: defaultUserData.data.categories,
     });
 
-    await changeUserData();
-  }, [changeUserData, userData.data.accounts, userData.data.categories, userData.settings.userId]);
+    await changeUserSettings();
+  }, [
+    changeUserSettings,
+    userData.data.accounts,
+    userData.data.categories,
+    userData.settings.userId,
+  ]);
 
   const deleteTransactions = useCallback(async () => {
     await deleteAllUserTransactions(userData.settings.userId);
-
-    await changeUserData();
-  }, [changeUserData, userData.settings.userId]);
+    await changeUserSettings();
+    handleClose();
+  }, [changeUserSettings, userData.settings.userId, handleClose]);
 
   return (
     <div>

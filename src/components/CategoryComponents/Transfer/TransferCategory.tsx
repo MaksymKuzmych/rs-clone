@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { defaultNames } from '../../../data/defaultNames';
+import { TransactionType } from '../../../enums';
 import { IAccount, ICategory } from '../../../interfaces';
 import { BasicModal } from '../../UI/Modal/Modal';
 import { FromAccount } from './FromAccount/FromAccount';
@@ -15,10 +16,11 @@ interface TransferCategoryProps {
   category?: ICategory | null;
   changeAccount: (data: IAccount) => void;
   changeCategory: (data: ICategory | null) => void;
+  type: TransactionType;
 }
 
 export const TransferCategory = memo(
-  ({ text, account, category, changeAccount, changeCategory }: TransferCategoryProps) => {
+  ({ text, account, category, changeAccount, changeCategory, type }: TransferCategoryProps) => {
     const { t } = useTranslation();
 
     const [activeAccount, setActiveAccount] = useState(account);
@@ -70,7 +72,11 @@ export const TransferCategory = memo(
           {activeAccount ? (
             <FromAccount changeAccount={setAccount} activeAccount={activeAccount?.id} />
           ) : activeCategory ? (
-            <ToCategory changeCategory={setCategory} activeCategory={activeCategory?.id} />
+            <ToCategory
+              changeCategory={setCategory}
+              activeCategory={activeCategory?.id}
+              type={type}
+            />
           ) : null}
         </BasicModal>
       </div>

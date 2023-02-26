@@ -53,7 +53,7 @@ export const RangePeriod = () => {
   const language: string = userData.settings.lang;
 
   const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str[0].toUpperCase() + str.slice(1);
   };
 
   const getTitleOfSelectedPeriod = useCallback(() => {

@@ -9,14 +9,14 @@ import { DrawerProvider } from '../../context/Drawer';
 import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { TransactionPage } from '../../pages/TransactionPage/TransactionPage';
 import { SearchProvider } from '../../context/Search';
-import { CategoryLocationProvider } from '../../context/CategoryLocation';
+import { OverlayProvider } from '../../context/Overlay';
 
 export const App = () => {
   return (
-    <DrawerProvider>
-      <AuthProvider>
-        <SearchProvider>
-          <CategoryLocationProvider>
+    <OverlayProvider>
+      <DrawerProvider>
+        <AuthProvider>
+          <SearchProvider>
             <Header />
             <div className='main'>
               <Routes>
@@ -27,9 +27,9 @@ export const App = () => {
               </Routes>
             </div>
             <Footer />
-          </CategoryLocationProvider>
-        </SearchProvider>
-      </AuthProvider>
-    </DrawerProvider>
+          </SearchProvider>
+        </AuthProvider>
+      </DrawerProvider>
+    </OverlayProvider>
   );
 };

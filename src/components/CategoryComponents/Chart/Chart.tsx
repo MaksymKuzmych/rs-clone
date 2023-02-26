@@ -31,24 +31,25 @@ export const ChartComponent = memo(
           data={dataChart}
           options={{ responsive: true, maintainAspectRatio: true, cutout: '85%' }}
         />
-        <div className={styles.chartInfo}>
+        <div
+          className={styles.chartInfo}
+          onClick={() => {
+            type === TransactionType.Expense
+              ? callback(TransactionType.Income)
+              : callback(TransactionType.Expense);
+          }}
+        >
           <div className={styles.transactionType}>
             {type === TransactionType.Expense ? t('Expenses') : t('Income')}
           </div>
           <div
             className={styles.totalExpenses}
-            onClick={() => {
-              callback(TransactionType.Expense);
-            }}
             style={{ color: type === TransactionType.Expense ? '#cd4863' : '#6ebaa0' }}
           >
             {setCurrency(type === TransactionType.Expense ? expenses : income, 'never')}
           </div>
           <div
             className={styles.totalIncome}
-            onClick={() => {
-              callback(TransactionType.Income);
-            }}
             style={{ color: type === TransactionType.Income ? '#cd4863' : '#6ebaa0' }}
           >
             {setCurrency(type === TransactionType.Expense ? income : expenses, 'never')}
