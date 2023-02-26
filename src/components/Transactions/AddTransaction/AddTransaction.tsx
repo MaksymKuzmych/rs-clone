@@ -21,11 +21,22 @@ export const AddTransaction = () => {
   const { drawerHandler } = useContext(DrawerContext);
   const { t } = useTranslation();
 
+  const selectedAccount = useMemo(
+    () =>
+      userData.data.accounts.find((account) => account.id === userData.settings.selectedAccount),
+    [userData.data.accounts, userData.settings.selectedAccount],
+  );
+
+  const [currentAccount, setCurrentAccount] = useState<IAccount>(
+    selectedAccount || userData.data.accounts[0],
+  );
   const [targetAccount, setTargetAccount] = useState<IAccount | null>(null);
   const [targetCategory, setTargetCategory] = useState<ICategory | null>(null);
   const [type, setType] = useState<TransactionType | null>(null);
+  const [modalType, setModalType] = useState<TransactionType | null>(null);
   const [day, setDay] = useState<Dayjs | null>(dayjs(Date.now()));
   const [openModal, setOpenModal] = useState(false);
+  const [openSubModal, setOpenSubModal] = useState(false);
   const [isError, setIsError] = useState(false);
   const [amount, setAmount] = useState('');
   const [notes, setNotes] = useState('');
@@ -34,28 +45,46 @@ export const AddTransaction = () => {
   const changeNotesHandler = (value: string) => setNotes(value);
   const changeDayHandler = (value: Dayjs | null) => setDay(value);
 
-  const currentAccount = useMemo(() => {
-    const selectedAccount = userData.data.accounts.find(
-      (account) => account.id === userData.settings.selectedAccount,
-    );
-    return selectedAccount || userData.data.accounts[0];
-  }, [userData.data.accounts, userData.settings.selectedAccount]);
-
   const handleClose = useCallback(() => setOpenModal(false), []);
+  const handleSubClose = useCallback(() => setOpenSubModal(false), []);
+
+  const selectCurrentAccount = useCallback(() => {
+    setModalType(null);
+    setOpenSubModal(true);
+  }, []);
+  const selectTargetAccount = useCallback(() => {
+    setModalType(TransactionType.Transfer);
+    setOpenSubModal(true);
+  }, []);
+  const selectTargetCategory = useCallback(() => {
+    setModalType(targetCategory?.type || null);
+    setOpenSubModal(true);
+  }, [targetCategory?.type]);
 
   const toCategory = useCallback((target: ICategory) => {
     setType(target.type);
     setTargetCategory(target);
     setTargetAccount(null);
     setOpenModal(true);
+    setOpenSubModal(false);
   }, []);
-
   const toAccount = useCallback((target: IAccount) => {
     setType(TransactionType.Transfer);
     setTargetAccount(target);
     setTargetCategory(null);
     setOpenModal(true);
+    setOpenSubModal(false);
   }, []);
+  const toCurrentAccount = useCallback(
+    (target: IAccount) => {
+      setCurrentAccount(target);
+      setOpenSubModal(false);
+      if (targetAccount === target) {
+        setTargetAccount(userData.data.accounts.filter((account) => account !== target)[0]);
+      }
+    },
+    [targetAccount, userData.data.accounts],
+  );
 
   const makeTransaction = useCallback(async () => {
     if (amount.length > 9) {
@@ -120,12 +149,17 @@ export const AddTransaction = () => {
     userData.settings.userId,
   ]);
 
-  const { name, icon, color, description, balance } = currentAccount;
-  const incomes = userData.data.categories.filter(
-    (category) => category.type === TransactionType.Income,
+  const { name, icon, color, description, balance } = useMemo(
+    () => currentAccount,
+    [currentAccount],
   );
-  const expenses = userData.data.categories.filter(
-    (category) => category.type === TransactionType.Expense,
+  const incomes = useMemo(
+    () => userData.data.categories.filter((category) => category.type === TransactionType.Income),
+    [userData.data.categories],
+  );
+  const expenses = useMemo(
+    () => userData.data.categories.filter((category) => category.type === TransactionType.Expense),
+    [userData.data.categories],
   );
   const CATEGORY_HEIGHT = 133;
   const maxHeight = useMemo(
@@ -167,13 +201,19 @@ export const AddTransaction = () => {
     [setCurrency, t, toCategory, userData.data.transactions],
   );
 
-  const Accounts = useMemo(
-    () =>
+  const Accounts = useCallback(
+    (transfer = true) =>
       userData.data.accounts.length > 1 ? (
         userData.data.accounts
-          .filter((account) => account !== currentAccount)
+          .filter((account) => account !== (transfer && currentAccount))
           .map((account) => (
-            <div key={account.id} className={styles.account} onClick={() => toAccount(account)}>
+            <div
+              key={account.id}
+              className={styles.account}
+              onClick={() => {
+                transfer ? toAccount(account) : toCurrentAccount(account);
+              }}
+            >
               <div className={styles.accountIconWrapper} style={{ backgroundColor: account.color }}>
                 <span className='material-icons' style={{ color: 'white' }}>
                   {account.icon}
@@ -190,7 +230,71 @@ export const AddTransaction = () => {
       ) : (
         <div className={styles.emptyAccountsTitle}>{t('No accounts available')}</div>
       ),
-    [currentAccount, setCurrency, t, toAccount, userData.data.accounts],
+    [currentAccount, setCurrency, t, toAccount, toCurrentAccount, userData.data.accounts],
+  );
+
+  const fillModal = useCallback(
+    (modalType: TransactionType | null) => {
+      switch (modalType) {
+        case TransactionType.Expense:
+          return (
+            <div
+              className={
+                expenses.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
+              }
+              style={{
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                backgroundColor:
+                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+              }}
+            >
+              {Categories(expenses)}
+            </div>
+          );
+        case TransactionType.Income:
+          return (
+            <div
+              className={
+                incomes.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
+              }
+              style={{
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                backgroundColor:
+                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+              }}
+            >
+              {Categories(incomes)}
+            </div>
+          );
+        case TransactionType.Transfer:
+          return (
+            <div
+              className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
+              style={{
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                backgroundColor:
+                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+              }}
+            >
+              {Accounts()}
+            </div>
+          );
+        default:
+          return (
+            <div
+              className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
+              style={{
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                backgroundColor:
+                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+              }}
+            >
+              {Accounts(false)}
+            </div>
+          );
+      }
+    },
+    [Accounts, Categories, expenses, incomes, userData.settings.theme],
   );
 
   return (
@@ -242,7 +346,7 @@ export const AddTransaction = () => {
               className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
               style={{ height: maxHeight + 'px' }}
             >
-              {Accounts}
+              {Accounts()}
             </div>
           }
           firstTitle={t(TransactionType.Income + ' ').toUpperCase()}
@@ -254,16 +358,36 @@ export const AddTransaction = () => {
         <div className={styles.modalContent}>
           <div className={styles.modalHeader}>
             {targetCategory?.type === TransactionType.Income ? (
-              <TransferAccount category={targetCategory} text={t('From category')} />
+              <TransferAccount
+                category={targetCategory}
+                text={t('From category')}
+                onClick={selectTargetCategory}
+              />
             ) : (
-              <TransferAccount account={currentAccount} text={t('From account')} />
+              <TransferAccount
+                account={currentAccount}
+                text={t('From account')}
+                onClick={selectCurrentAccount}
+              />
             )}
             {targetCategory?.type === TransactionType.Income ? (
-              <TransferAccount account={currentAccount} text={t('To account')} />
+              <TransferAccount
+                account={currentAccount}
+                text={t('To account')}
+                onClick={selectCurrentAccount}
+              />
             ) : targetAccount ? (
-              <TransferAccount account={targetAccount} text={t('To account')} />
+              <TransferAccount
+                account={targetAccount}
+                text={t('To account')}
+                onClick={selectTargetAccount}
+              />
             ) : (
-              <TransferAccount category={targetCategory} text={t('To category')} />
+              <TransferAccount
+                category={targetCategory}
+                text={t('To category')}
+                onClick={selectTargetCategory}
+              />
             )}
           </div>
           {isError && <p className={styles.error}>{t('Amount must be at most 9 characters')}</p>}
@@ -278,6 +402,9 @@ export const AddTransaction = () => {
             transferMoney={makeTransaction}
           />
         </div>
+      </BasicModal>
+      <BasicModal openModal={openSubModal} handleClose={handleSubClose}>
+        {fillModal(modalType)}
       </BasicModal>
     </>
   );

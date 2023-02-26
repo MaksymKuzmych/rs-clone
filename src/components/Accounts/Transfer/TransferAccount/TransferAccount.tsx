@@ -10,38 +10,45 @@ interface TransferAccountProps {
   account?: IAccount | null;
   category?: ICategory | null;
   text: string;
+  onClick?: () => void;
 }
 
-export const TransferAccount = memo(({ account, category, text }: TransferAccountProps) => {
-  const { t } = useTranslation();
+export const TransferAccount = memo(
+  ({ account, category, text, onClick }: TransferAccountProps) => {
+    const { t } = useTranslation();
 
-  return account ? (
-    <div className={styles.wrapper} style={{ backgroundColor: account?.color }}>
-      <div>
-        <p className={styles.text}>{text}</p>
-        <p className={styles.name}>
-          {defaultNames.includes(account.name) ? t(account.name) : account.name}
-        </p>
+    return account ? (
+      <div className={styles.wrapper} style={{ backgroundColor: account?.color }} onClick={onClick}>
+        <div>
+          <p className={styles.text}>{text}</p>
+          <p className={styles.name}>
+            {defaultNames.includes(account.name) ? t(account.name) : account.name}
+          </p>
+        </div>
+        <div className={styles.iconWrapper}>
+          <span className='material-icons' style={{ color: account?.color }}>
+            {account?.icon}
+          </span>
+        </div>
       </div>
-      <div className={styles.iconWrapper}>
-        <span className='material-icons' style={{ color: account?.color }}>
-          {account?.icon}
-        </span>
+    ) : (
+      <div
+        className={styles.wrapper}
+        style={{ backgroundColor: category?.color }}
+        onClick={onClick}
+      >
+        <div>
+          <p className={styles.text}>{text}</p>
+          <p className={styles.name}>
+            {defaultNames.includes(category?.name || '') ? t(category?.name || '') : category?.name}
+          </p>
+        </div>
+        <div className={styles.iconWrapper}>
+          <span className='material-icons' style={{ color: category?.color }}>
+            {category?.icon}
+          </span>
+        </div>
       </div>
-    </div>
-  ) : (
-    <div className={styles.wrapper} style={{ backgroundColor: category?.color }}>
-      <div>
-        <p className={styles.text}>{text}</p>
-        <p className={styles.name}>
-          {defaultNames.includes(category?.name || '') ? t(category?.name || '') : category?.name}
-        </p>
-      </div>
-      <div className={styles.iconWrapper}>
-        <span className='material-icons' style={{ color: category?.color }}>
-          {category?.icon}
-        </span>
-      </div>
-    </div>
-  );
-});
+    );
+  },
+);
