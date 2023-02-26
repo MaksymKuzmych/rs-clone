@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
+import { defaultNames } from '../../../data/defaultNames';
 import { Theme, ThemeColor } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
 import { IAccount } from '../../../interfaces';
@@ -15,7 +16,7 @@ interface DeleteAccountProps {
 }
 
 export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccountProps) => {
-  const { userData, changeUserSettings } = useContext(AuthContext);
+  const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
   const [transactions, setTransactions] = useState(0);
@@ -25,18 +26,33 @@ export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccoun
   useEffect(() => {
     if (userData.data.transactions) {
       const transactionsQuantity = userData.data.transactions.filter(
-        (transaction) => transaction.account === currentAccount.name,
+        (transaction) => transaction.account === currentAccount.id,
       ).length;
 
       setTransactions(transactionsQuantity);
     }
-  }, [currentAccount.name, userData.data.transactions]);
+  }, [currentAccount.id, currentAccount.name, userData.data.transactions]);
 
   const deleteUser = useCallback(async () => {
     await deleteUserData(userData.settings.userId, { accounts: currentAccount.id });
-    await changeUserSettings();
+
+    userData.data.transactions.forEach(async (transaction) => {
+      const { id, account, accountTo } = transaction;
+
+      if (account === currentAccount.id || accountTo === currentAccount.id) {
+        await deleteUserData(userData.settings.userId, { transactions: id });
+      }
+    });
+
+    await changeUserData();
     drawerHandler('info', 'bottom', false);
-  }, [changeUserSettings, currentAccount.id, drawerHandler, userData.settings.userId]);
+  }, [
+    changeUserData,
+    currentAccount.id,
+    drawerHandler,
+    userData.data.transactions,
+    userData.settings.userId,
+  ]);
 
   return (
     <div
@@ -52,7 +68,11 @@ export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccoun
           </span>
         </div>
         <p className={styles.headerText}>
-          {t('Delete')} {currentAccount.name} ?
+          {t('Delete')}{' '}
+          {defaultNames.includes(currentAccount.name)
+            ? t(currentAccount.name)
+            : currentAccount.name}
+          ?
         </p>
       </div>
       <div className={styles.description}>

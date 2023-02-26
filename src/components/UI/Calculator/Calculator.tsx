@@ -66,7 +66,7 @@ export const Calculator = memo(
     const updateCalculation = useCallback(
       (value: string) => {
         if (
-          (actions.includes(value) && amount === '' && value !== '-') ||
+          (actions.includes(value) && amount === '') ||
           (actions.includes(value) && actions.includes(amount.slice(-1)))
         ) {
           return;

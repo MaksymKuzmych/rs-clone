@@ -3,34 +3,38 @@ import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
 import { Theme, ThemeColor, TransactionType } from '../../../enums';
-import { deleteUserData } from '../../../firebase/delete-user-data';
 import { incrementBalance } from '../../../firebase/increment-balance';
+import { pushUserData } from '../../../firebase/push-user-data';
 import { ITransactionAll } from '../../../interfaces';
 
-import styles from './DeleteTransaction.module.scss';
+import styles from './DuplicateTransaction.module.scss';
 
-interface DeleteTransactionProps {
+interface DuplicateTransactionProps {
   currentTransaction: ITransactionAll;
   handleClose: () => void;
 }
 
-export const DeleteTransaction = memo(
-  ({ currentTransaction, handleClose }: DeleteTransactionProps) => {
+export const DuplicateTransaction = memo(
+  ({ currentTransaction, handleClose }: DuplicateTransactionProps) => {
     const { userData, changeUserData } = useContext(AuthContext);
 
     const { t } = useTranslation();
 
-    const deleteTransaction = useCallback(async () => {
-      const { id, category, account, amount, accountTo } = currentTransaction;
+    const duplicateTransaction = useCallback(async () => {
+      const { id, date, type, account, accountTo, category, amount, description } =
+        currentTransaction;
 
-      await deleteUserData(userData.settings.userId, { transactions: id });
+      await pushUserData(userData.settings.userId, {
+        transactions: [{ id, date, type, account, accountTo, category, amount, description }],
+      });
 
       if (category) {
-        await incrementBalance(userData.settings.userId, account, -amount);
-      }
-      if (accountTo) {
         await incrementBalance(userData.settings.userId, account, amount);
-        await incrementBalance(userData.settings.userId, accountTo, -amount);
+      }
+
+      if (accountTo) {
+        await incrementBalance(userData.settings.userId, account, -amount);
+        await incrementBalance(userData.settings.userId, accountTo, +amount);
       }
 
       await changeUserData();
@@ -58,27 +62,21 @@ export const DeleteTransaction = memo(
             </span>
           </div>
           <p className={styles.headerText}>
-            {t('Delete')}{' '}
+            {t('Duplicate')}{' '}
             {currentTransaction.type === TransactionType.Transfer
               ? `${t('Transfer ')}?`
               : `${t('Transaction')} ?`}
           </p>
         </div>
         <div className={styles.description}>
-          <p>{t('Transaction will be deleted')}.</p>
-          <p>
-            {currentTransaction.type === TransactionType.Transfer
-              ? `${t('Transaction associated with this transfer will be deleted too')}.`
-              : ''}
-          </p>
-          <p>{t('This action cannot be undone')}.</p>
+          <p>{t('Transaction will be duplicated with the same parameters')}.</p>
         </div>
         <div className={styles.btnsWrapper}>
           <button className={`${styles.btn} ${styles.cancel}`} onClick={handleClose}>
             {t('Cancel')}
           </button>
-          <button className={`${styles.btn} ${styles.delete}`} onClick={deleteTransaction}>
-            {t('Delete')}
+          <button className={`${styles.btn} ${styles.duplicate}`} onClick={duplicateTransaction}>
+            {t('Duplicate')}
           </button>
         </div>
       </div>

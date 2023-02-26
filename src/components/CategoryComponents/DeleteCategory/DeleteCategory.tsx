@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react';
+import { memo, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
@@ -26,7 +26,7 @@ export const DeleteCategory = memo(
       (transaction) => transaction.category === categoryId,
     );
 
-    const deleteCategory = async () => {
+    const deleteCategory = useCallback(async () => {
       if (categoryId) {
         await deleteUserData(userData.settings.userId, { categories: categoryId });
       }
@@ -38,7 +38,13 @@ export const DeleteCategory = memo(
 
       await changeUserData();
       drawerHandler('deleteCategory', 'bottom', false);
-    };
+    }, [
+      categoryId,
+      changeUserData,
+      drawerHandler,
+      transactionsWithThisCategory,
+      userData.settings.userId,
+    ]);
 
     return (
       <div

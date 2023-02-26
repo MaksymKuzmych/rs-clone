@@ -19,7 +19,9 @@ interface CategoryProps {
 export const Category = memo(
   ({ dataCategory, sum, callback, addCategory, activeCategory }: CategoryProps) => {
     const { id, name, icon, color } = dataCategory;
+
     const { userData, setCurrency } = useContext(AuthContext);
+
     const { t } = useTranslation();
 
     const buttonAdd = id === '0';

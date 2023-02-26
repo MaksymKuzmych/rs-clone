@@ -1,4 +1,4 @@
-import { createContext, memo, PropsWithChildren, useState } from 'react';
+import { createContext, memo, PropsWithChildren, useCallback, useState } from 'react';
 
 interface ISearchContext {
   searchValue: string;
@@ -12,9 +12,8 @@ export const SearchContext = createContext<ISearchContext>({
 
 export const SearchProvider = memo(({ children }: PropsWithChildren) => {
   const [searchValue, setSearchValue] = useState('');
-  const setNewValue = (value: string) => {
-    setSearchValue(value);
-  };
+
+  const setNewValue = useCallback((value: string) => setSearchValue(value), []);
 
   return (
     <SearchContext.Provider value={{ searchValue, setNewValue }}>{children}</SearchContext.Provider>

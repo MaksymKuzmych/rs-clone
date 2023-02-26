@@ -124,5 +124,6 @@
   "This action cannot be undone": "Действие невозможно будет отменить",
   "From category": "С категории",
   "To category": "На категорию",
+  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами",
   "No categories available": "Нет доступных категорий"
 }

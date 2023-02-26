@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +11,9 @@ import { AuthContext } from '../../../Auth/Auth';
 import { Provider, Theme, ThemeColor } from '../../../enums';
 import { signInUser } from '../../../firebase/sign-in-user';
 import { useSnackbar } from 'notistack';
+import { signInProvider } from '../../../firebase/sign-in-provider';
 
 import styles from './Login.module.scss';
-import { signInProvider } from '../../../firebase/sign-in-provider';
 
 export const Login = () => {
   const { userData, changeUserData } = useContext(AuthContext);
@@ -24,8 +24,8 @@ export const Login = () => {
 
   const { t } = useTranslation();
 
-  const signInGoogleHandler = async () => await signInProvider(Provider.Google);
-  const signInGithubHandler = async () => await signInProvider(Provider.Github);
+  const signInGoogleHandler = useCallback(async () => await signInProvider(Provider.Google), []);
+  const signInGithubHandler = useCallback(async () => await signInProvider(Provider.Github), []);
 
   const formik = useFormik({
     initialValues: {
