@@ -34,10 +34,6 @@
     border-radius: 3px;
     background-color: $gray;
   }
-
-  :last-child {
-    border-bottom: none;
-  }
 }
 
 .category,
@@ -159,4 +155,11 @@
 .modalHeader {
   display: flex;
   color: white;
+}
+
+.title {
+  border-bottom: solid 2px $gray;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
 }

@@ -125,5 +125,6 @@
   "From category": "From category",
   "To category": "To category",
   "No categories available": "No categories available",
-  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters"
+  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters",
+  "Please allow pop-up": "Please allow pop-up"
 }

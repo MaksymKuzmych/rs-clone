@@ -233,20 +233,29 @@ export const AddTransaction = () => {
     [currentAccount, setCurrency, t, toAccount, toCurrentAccount, userData.data.accounts],
   );
 
-  const fillModal = useCallback(
-    (modalType: TransactionType | null) => {
-      switch (modalType) {
+  const fillTab = useCallback(
+    (type: TransactionType, transfer = true) => {
+      switch (type) {
+        case TransactionType.Transfer:
+          return (
+            <div
+              className={
+                userData.data.accounts.length > 1
+                  ? styles.accountsWrapper
+                  : styles.emptyCategoriesWrapper
+              }
+              style={{ height: maxHeight + 'px' }}
+            >
+              {Accounts(transfer)}
+            </div>
+          );
         case TransactionType.Expense:
           return (
             <div
               className={
                 expenses.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
               }
-              style={{
-                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-                backgroundColor:
-                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-              }}
+              style={{ height: maxHeight + 'px' }}
             >
               {Categories(expenses)}
             </div>
@@ -257,44 +266,51 @@ export const AddTransaction = () => {
               className={
                 incomes.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
               }
-              style={{
-                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-                backgroundColor:
-                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-              }}
+              style={{ height: maxHeight + 'px' }}
             >
               {Categories(incomes)}
             </div>
           );
-        case TransactionType.Transfer:
-          return (
-            <div
-              className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
-              style={{
-                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-                backgroundColor:
-                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-              }}
-            >
-              {Accounts()}
-            </div>
-          );
-        default:
-          return (
-            <div
-              className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
-              style={{
-                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-                backgroundColor:
-                  userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-              }}
-            >
-              {Accounts(false)}
-            </div>
-          );
       }
     },
-    [Accounts, Categories, expenses, incomes, userData.settings.theme],
+    [Accounts, Categories, expenses, incomes, maxHeight, userData.data.accounts.length],
+  );
+
+  const fillModal = useCallback(
+    (modalType: TransactionType | null) => {
+      switch (modalType) {
+        case TransactionType.Expense:
+          return fillTab(TransactionType.Expense);
+        case TransactionType.Income:
+          return fillTab(TransactionType.Income);
+        case TransactionType.Transfer:
+          return fillTab(TransactionType.Transfer);
+        default:
+          return fillTab(TransactionType.Transfer, false);
+      }
+    },
+    [fillTab],
+  );
+
+  const themeStyle = {
+    color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+    backgroundColor: userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+  };
+
+  const title = useCallback(
+    (type: TransactionType | null) => {
+      switch (type) {
+        case TransactionType.Income:
+          return t(TransactionType.Income + ' ').toUpperCase();
+        case TransactionType.Expense:
+          return t(TransactionType.Expense + ' ').toUpperCase();
+        case TransactionType.Transfer:
+          return t(TransactionType.Transfer + ' ').toUpperCase();
+        default:
+          return t('Accounts').toUpperCase();
+      }
+    },
+    [t],
   );
 
   return (
@@ -312,43 +328,11 @@ export const AddTransaction = () => {
           <p className={styles.balance}>{setCurrency(balance, 'never')}</p>
         </div>
       </header>
-      <div
-        className={styles.tabsWrapper}
-        style={{
-          color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-          backgroundColor:
-            userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
-        }}
-      >
+      <div className={styles.tabsWrapper} style={themeStyle}>
         <BasicTabs
-          firstChild={
-            <div
-              className={
-                incomes.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
-              }
-              style={{ height: maxHeight + 'px' }}
-            >
-              {Categories(incomes)}
-            </div>
-          }
-          secondChild={
-            <div
-              className={
-                expenses.length > 3 ? styles.categoriesWrapper : styles.emptyCategoriesWrapper
-              }
-              style={{ height: maxHeight + 'px' }}
-            >
-              {Categories(expenses)}
-            </div>
-          }
-          thirdChild={
-            <div
-              className={incomes.length ? styles.accountsWrapper : styles.emptyCategoriesWrapper}
-              style={{ height: maxHeight + 'px' }}
-            >
-              {Accounts()}
-            </div>
-          }
+          firstChild={fillTab(TransactionType.Income)}
+          secondChild={fillTab(TransactionType.Expense)}
+          thirdChild={fillTab(TransactionType.Transfer)}
           firstTitle={t(TransactionType.Income + ' ').toUpperCase()}
           secondTitle={t(TransactionType.Expense + ' ').toUpperCase()}
           thirdTitle={t(TransactionType.Transfer + ' ').toUpperCase()}
@@ -404,7 +388,10 @@ export const AddTransaction = () => {
         </div>
       </BasicModal>
       <BasicModal openModal={openSubModal} handleClose={handleSubClose}>
-        {fillModal(modalType)}
+        <div className={styles.tabsWrapper} style={themeStyle}>
+          <p className={styles.title}>{title(modalType)}</p>
+          {fillModal(modalType)}
+        </div>
       </BasicModal>
     </>
   );

@@ -1,5 +1,4 @@
 import { IStore } from '../interfaces';
-import { storeTr } from '../mockData/transactions';
 import { FirebaseError } from './firebase-config';
 import { setUserData } from './set-user-data';
 import { setUserSettings } from './set-user-settings';
@@ -12,7 +11,6 @@ export const createUser = async (userId: string, userData: IStore) => {
     await setUserData(userId, {
       accounts: userData.data.accounts,
       categories: userData.data.categories,
-      transactions: storeTr,
     });
   } catch (error) {
     throw new FirebaseError(`Create User: ${error}`);

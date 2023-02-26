@@ -18,7 +18,7 @@ interface CalendarModalProps {
 }
 
 export const CalendarModal = memo(({ onClick }: CalendarModalProps) => {
-  const { userData, changeUserSettings } = useContext(AuthContext);
+  const { userData, changeUserSettings, changeUserData } = useContext(AuthContext);
 
   const start =
     userData.settings.periodType === Period.Day && userData.settings.period.start
@@ -35,10 +35,11 @@ export const CalendarModal = memo(({ onClick }: CalendarModalProps) => {
         periodType: Period.Day,
         period: getPeriod(Period.Day, Number(value?.toDate())),
       });
+      await changeUserData();
       await changeUserSettings();
       onClick();
     },
-    [changeUserSettings, onClick, userData.settings.userId],
+    [changeUserData, changeUserSettings, onClick, userData.settings.userId],
   );
 
   return (

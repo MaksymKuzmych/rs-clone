@@ -7,16 +7,16 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 
 import { AuthContext } from '../../../Auth/Auth';
-import { defaultUserData } from '../../../data/default-user-data';
-import { pushUserData } from '../../../firebase/push-user-data';
 import { Theme, ThemeColor } from '../../../enums';
 import { deleteAllUserTransactions } from '../../../firebase/delete-all-user-transactions';
 import { deleteAllUserData } from '../../../firebase/delete-all-user-data';
+import { setUserData } from '../../../firebase/set-user-data';
+import { defaultUserData } from '../../../data/default-user-data';
 
 import styles from './DeleteButton.module.scss';
 
 export const DeleteButton = () => {
-  const { userData, changeUserSettings } = useContext(AuthContext);
+  const { userData, changeUserSettings, changeUserData } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
 
@@ -32,13 +32,15 @@ export const DeleteButton = () => {
     });
     await deleteAllUserTransactions(userData.settings.userId);
 
-    await pushUserData(userData.settings.userId, {
+    await setUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
       categories: defaultUserData.data.categories,
     });
 
+    await changeUserData();
     await changeUserSettings();
   }, [
+    changeUserData,
     changeUserSettings,
     userData.data.accounts,
     userData.data.categories,
@@ -47,9 +49,10 @@ export const DeleteButton = () => {
 
   const deleteTransactions = useCallback(async () => {
     await deleteAllUserTransactions(userData.settings.userId);
+    await changeUserData();
     await changeUserSettings();
     handleClose();
-  }, [changeUserSettings, userData.settings.userId, handleClose]);
+  }, [userData.settings.userId, changeUserData, changeUserSettings, handleClose]);
 
   return (
     <div>
