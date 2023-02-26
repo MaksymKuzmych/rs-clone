@@ -21,19 +21,18 @@ export const DeleteTransaction = memo(
     const { t } = useTranslation();
 
     const deleteTransaction = useCallback(async () => {
-      await deleteUserData(userData.settings.userId, { transactions: currentTransaction.id });
-      await incrementBalance(
-        userData.settings.userId,
-        currentTransaction.account,
-        -currentTransaction.amount,
-      );
-      if (currentTransaction.accountTo) {
-        await incrementBalance(
-          userData.settings.userId,
-          currentTransaction.accountTo,
-          currentTransaction.amount,
-        );
+      const { id, category, account, amount, accountTo } = currentTransaction;
+
+      await deleteUserData(userData.settings.userId, { transactions: id });
+
+      if (category) {
+        await incrementBalance(userData.settings.userId, account, -amount);
       }
+      if (accountTo) {
+        await incrementBalance(userData.settings.userId, account, amount);
+        await incrementBalance(userData.settings.userId, accountTo, -amount);
+      }
+
       await changeUserData();
     }, [changeUserData, currentTransaction, userData.settings.userId]);
 

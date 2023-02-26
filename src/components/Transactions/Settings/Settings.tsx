@@ -66,6 +66,7 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
   }, [currentTransaction, handleClose, typeModal]);
 
   const transferMoney = async () => {
+    const { id, type, account, accountTo, category } = currentTransaction;
     if (amount === '') {
       return;
     }
@@ -79,31 +80,30 @@ export const Settings = memo(({ currentTransaction }: SettingsProps) => {
 
     await updateUserData(userData.settings.userId, {
       transactions: {
-        [currentTransaction.id]: {
+        [id]: {
           date: new Date(dayjs(day).toDate()).getTime(),
-          amount: currentTransaction.type === TransactionType.Expense ? -amount : +amount,
+          amount: type === TransactionType.Expense ? -amount : +amount,
           description: notes,
         },
       },
     });
 
-    if (currentTransaction.category) {
+    if (category) {
       await incrementBalance(
         userData.settings.userId,
-        currentTransaction.account,
-        (currentTransaction.type === TransactionType.Income ? +amount : -amount) -
-          currentTransaction.amount,
+        account,
+        (type === TransactionType.Income ? +amount : -amount) - currentTransaction.amount,
       );
     }
-    if (currentTransaction.accountTo) {
+    if (accountTo) {
       await incrementBalance(
         userData.settings.userId,
-        currentTransaction.account,
+        account,
         currentTransaction.amount - +amount,
       );
       await incrementBalance(
         userData.settings.userId,
-        currentTransaction.accountTo,
+        accountTo,
         +amount - currentTransaction.amount,
       );
     }

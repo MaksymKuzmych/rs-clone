@@ -28,11 +28,14 @@ export const DuplicateTransaction = memo(
         transactions: [{ id, date, type, account, accountTo, category, amount, description }],
       });
 
-      await incrementBalance(
-        userData.settings.userId,
-        currentTransaction.account,
-        currentTransaction.amount,
-      );
+      if (category) {
+        await incrementBalance(userData.settings.userId, account, amount);
+      }
+
+      if (accountTo) {
+        await incrementBalance(userData.settings.userId, account, -amount);
+        await incrementBalance(userData.settings.userId, accountTo, +amount);
+      }
 
       await changeUserData();
     }, [changeUserData, currentTransaction, userData.settings.userId]);

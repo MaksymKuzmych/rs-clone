@@ -37,11 +37,10 @@ export const DeleteAccount = memo(({ currentAccount, handleClose }: DeleteAccoun
     await deleteUserData(userData.settings.userId, { accounts: currentAccount.id });
 
     userData.data.transactions.forEach(async (transaction) => {
-      if (
-        transaction.account === currentAccount.id ||
-        transaction.accountTo === currentAccount.id
-      ) {
-        await deleteUserData(userData.settings.userId, { transactions: transaction.id });
+      const { id, account, accountTo } = transaction;
+
+      if (account === currentAccount.id || accountTo === currentAccount.id) {
+        await deleteUserData(userData.settings.userId, { transactions: id });
       }
     });
 
