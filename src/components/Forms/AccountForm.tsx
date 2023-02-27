@@ -133,7 +133,13 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       <form onSubmit={formik.handleSubmit} autoComplete='off'>
         <div className={styles.upperWrapper} style={{ backgroundColor: `${color}` }}>
           <div className={styles.header}>
-            <h2 className={styles.title}>{t('New account')}</h2>
+            <h2 className={styles.title}>
+              {!currentAccount
+                ? t('New account')
+                : defaultNames.includes(currentAccount.name)
+                ? t(currentAccount.name)
+                : currentAccount.name}
+            </h2>
             <button type='submit'>
               <span className='material-icons' style={{ color: 'white' }}>
                 check
