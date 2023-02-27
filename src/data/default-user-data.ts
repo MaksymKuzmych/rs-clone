@@ -5,7 +5,7 @@ import { getPeriod } from '../utils/get-period';
 export const defaultUserData: IStore = {
   settings: {
     userId: 'default',
-    lang: Lang.RU,
+    lang: Lang.EN,
     currency: Currency.USD,
     theme: Theme.Dark,
     selectedAccount: null,
