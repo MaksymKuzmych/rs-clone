@@ -1,4 +1,4 @@
-import { useState, useContext, memo } from 'react';
+import { useState, useContext, memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../Auth/Auth';
@@ -19,8 +19,8 @@ export const FilterBlock = memo(({ openSearch }: FilterBlockProps) => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
+  const handleOpen = useCallback(() => setOpenModal(true), []);
+  const handleClose = useCallback(() => setOpenModal(false), []);
 
   const allAccountsAmount = userData.data.accounts.reduce(
     (sum, current) => sum + current.balance,

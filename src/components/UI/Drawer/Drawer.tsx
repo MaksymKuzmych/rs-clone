@@ -1,7 +1,7 @@
 import Drawer from '@mui/material/Drawer';
 import { memo, PropsWithChildren, useContext } from 'react';
-import { OverlayContext } from '../../../context/Overlay';
 
+import { OverlayContext } from '../../../context/Overlay';
 import { IDrawerSide } from '../../../interfaces';
 import { Anchor } from '../../../types';
 

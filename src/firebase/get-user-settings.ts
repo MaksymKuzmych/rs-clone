@@ -1,4 +1,5 @@
 import { doc, getDoc } from 'firebase/firestore';
+
 import { db, FirebaseError } from './firebase-config';
 
 export const getUserSettings = async (userId: string) => {

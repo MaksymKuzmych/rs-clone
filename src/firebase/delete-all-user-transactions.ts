@@ -1,4 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
+
 import { Sort } from '../enums';
 import { db, FirebaseError } from './firebase-config';
 import { getFilteredUserData } from './get-filtered-user-data';

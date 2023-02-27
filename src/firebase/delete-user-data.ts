@@ -1,4 +1,5 @@
 import { deleteDoc, doc, getDoc } from 'firebase/firestore';
+
 import { IDataFBGet } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 

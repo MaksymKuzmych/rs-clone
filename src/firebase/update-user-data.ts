@@ -1,4 +1,5 @@
 import { doc, updateDoc } from 'firebase/firestore';
+
 import { IDataFB } from '../interfaces';
 import { DataAllFB } from '../types';
 import { db, FirebaseError } from './firebase-config';

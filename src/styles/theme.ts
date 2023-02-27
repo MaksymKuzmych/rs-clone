@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+
 import { Theme, ThemeColor } from '../enums';
 
 export const theme = (theme: Theme) =>

@@ -1,4 +1,5 @@
 import { signInAnonymously } from 'firebase/auth';
+
 import { auth, FirebaseError } from './firebase-config';
 
 export const signInAnon = async () => {

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultNames } from '../../../../data/defaultNames';
 
+import { defaultNames } from '../../../../data/defaultNames';
 import { IAccount, ICategory } from '../../../../interfaces';
 
 import styles from './TransferAccount.module.scss';

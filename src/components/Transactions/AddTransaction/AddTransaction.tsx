@@ -19,6 +19,7 @@ import styles from './AddTransaction.module.scss';
 export const AddTransaction = () => {
   const { userData, setCurrency, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
+
   const { t } = useTranslation();
 
   const selectedAccount = useMemo(
@@ -41,9 +42,9 @@ export const AddTransaction = () => {
   const [amount, setAmount] = useState('');
   const [notes, setNotes] = useState('');
 
-  const changeAmountHandler = (value: string) => setAmount(value);
-  const changeNotesHandler = (value: string) => setNotes(value);
-  const changeDayHandler = (value: Dayjs | null) => setDay(value);
+  const changeAmountHandler = useCallback((value: string) => setAmount(value), []);
+  const changeNotesHandler = useCallback((value: string) => setNotes(value), []);
+  const changeDayHandler = useCallback((value: Dayjs | null) => setDay(value), []);
 
   const handleClose = useCallback(() => setOpenModal(false), []);
   const handleSubClose = useCallback(() => setOpenSubModal(false), []);

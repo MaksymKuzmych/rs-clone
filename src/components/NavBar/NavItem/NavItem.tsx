@@ -9,14 +9,14 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import { Button } from '@mui/material';
 
 import { updateUserSettings } from '../../../firebase/update-user-settings';
 import { AuthContext } from '../../../Auth/Auth';
 import { Currency, Lang, Theme, ThemeColor } from '../../../enums';
+import { BasicModal } from '../../UI/Modal/Modal';
 
 import styles from './NavItem.module.scss';
-import { BasicModal } from '../../UI/Modal/Modal';
-import { Button } from '@mui/material';
 
 interface NavItemProps {
   icon: string;

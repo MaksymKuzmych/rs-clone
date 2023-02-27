@@ -1,4 +1,5 @@
 import { TFunction } from 'i18next';
+
 import { Lang, Period } from '../enums';
 import { getPeriod } from './get-period';
 
