@@ -38,9 +38,11 @@ export const DeleteButton = () => {
     });
     await changeUserData();
     await changeUserSettings();
+    handleClose();
   }, [
     changeUserData,
     changeUserSettings,
+    handleClose,
     userData.data.accounts,
     userData.data.categories,
     userData.settings.userId,

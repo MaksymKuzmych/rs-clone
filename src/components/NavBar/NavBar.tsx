@@ -17,6 +17,7 @@ import { Login } from './Login/Login';
 import { auth } from '../../firebase/firebase-config';
 import { signOutUser } from '../../firebase/sign-out-user';
 import { NavLinkAccount } from './NavLinkAccount/NavLinkAccount';
+import { ImportXLS } from './ImportXLS/ImportXLS';
 
 import styles from './NavBar.module.scss';
 
@@ -137,6 +138,8 @@ export const NavBar = () => {
             />
             <Divider />
             <div className={styles.subtitle}>{t('Data')}</div>
+            <ImportXLS />
+            <Divider />
             <DeleteButton />
             <Divider />
             <div className={styles.subtitle}>{t('Authors')}</div>

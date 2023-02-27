@@ -124,9 +124,17 @@
   "This action cannot be undone": "Действие невозможно будет отменить",
   "From category": "С категории",
   "To category": "На категорию",
-  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами",
   "No categories available": "Нет доступных категорий",
+  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами",
   "Please allow pop-up": "Пожалуйста, разрешите всплывающее окно",
+  "Import data": "Импортировать данные",
+  "Import XLS": "Импортировать XLS",
+  "Importing data will create new accounts, categories, and transactions.": "При импорте данных будут созданы новые счета, категории и операции.",
+  "Attention! All unused accounts and categories will be deleted!": "Внимание! Все неиспользуемые счета и категории будут удалены!",
+  "Import file example": "Пример файла для импорта",
+  "and": "и",
+  "PrivatBank": "ПриватБанк",
+  "Monobank": "Монобанк",
   "Accept": "Принять",
   "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon.": "Изменение валюты не пересчитает существующие операции по курсу, а лишь изменит отображение знака валюты."
 }
