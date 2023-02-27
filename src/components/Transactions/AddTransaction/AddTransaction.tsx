@@ -5,7 +5,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
 import { defaultNames } from '../../../data/defaultNames';
-import { Theme, ThemeColor, TransactionType } from '../../../enums';
+import { AmountColor, Theme, ThemeColor, TransactionType } from '../../../enums';
 import { incrementBalance } from '../../../firebase/increment-balance';
 import { pushUserData } from '../../../firebase/push-user-data';
 import { IAccount, ICategory } from '../../../interfaces';
@@ -162,10 +162,11 @@ export const AddTransaction = () => {
     [userData.data.categories],
   );
   const CATEGORY_HEIGHT = 133;
-  const maxHeight = useMemo(
-    () => Math.max(Math.ceil(incomes.length / 4), Math.ceil(expenses.length / 4)) * CATEGORY_HEIGHT,
-    [expenses.length, incomes.length],
-  );
+  const maxHeight = useMemo(() => {
+    const height =
+      Math.max(Math.ceil(incomes.length / 4), Math.ceil(expenses.length / 4)) * CATEGORY_HEIGHT;
+    return height > CATEGORY_HEIGHT * 2 ? CATEGORY_HEIGHT * 2 : height;
+  }, [expenses.length, incomes.length]);
 
   const Categories = useCallback(
     (array: ICategory[]) => {
@@ -221,10 +222,21 @@ export const AddTransaction = () => {
                 </span>
               </div>
               <div>
-                <p className={styles.name}>
+                <h3 className={styles.name}>
                   {defaultNames.includes(account.name) ? t(account.name) : account.name}
+                </h3>
+                <p
+                  className={styles.sum}
+                  style={{
+                    color: !account.balance
+                      ? AmountColor.Zero
+                      : account.balance > 0
+                      ? AmountColor.Income
+                      : AmountColor.Expenses,
+                  }}
+                >
+                  {setCurrency(account.balance, 'auto')}
                 </p>
-                <p className={styles.sum}>{setCurrency(account.balance, 'auto')}</p>
               </div>
             </div>
           ))
