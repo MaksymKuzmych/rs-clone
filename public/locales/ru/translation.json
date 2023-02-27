@@ -134,5 +134,7 @@
   "Import file example": "Пример файла для импорта",
   "and": "и",
   "PrivatBank": "ПриватБанк",
-  "Monobank": "Монобанк"
+  "Monobank": "Монобанк",
+  "Accept": "Принять",
+  "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon.": "Изменение валюты не пересчитает существующие операции по курсу, а лишь изменит отображение знака валюты."
 }

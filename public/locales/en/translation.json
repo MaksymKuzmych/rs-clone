@@ -134,5 +134,7 @@
   "Import file example": "Import file example",
   "and": "and",
   "PrivatBank": "PrivatBank",
-  "Monobank": "Monobank"
+  "Monobank": "Monobank",
+  "Accept": "Accept",
+  "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon.": "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon."
 }

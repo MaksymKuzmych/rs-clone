@@ -15,6 +15,8 @@ import { AuthContext } from '../../../Auth/Auth';
 import { Currency, Lang, Theme, ThemeColor } from '../../../enums';
 
 import styles from './NavItem.module.scss';
+import { BasicModal } from '../../UI/Modal/Modal';
+import { Button } from '@mui/material';
 
 interface NavItemProps {
   icon: string;
@@ -27,6 +29,11 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
 
   const [param, setParam] = useState('EN');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = useCallback(() => setOpenModal(true), []);
+  const handleCloseModal = useCallback(() => setOpenModal(false), []);
 
   const { t, i18n } = useTranslation();
 
@@ -46,9 +53,15 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
     }
   }, [name, userData.settings.currency, userData.settings.lang, userData.settings.theme]);
 
-  const handleClick = useCallback((event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
-  }, []);
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      setAnchorEl(event.currentTarget);
+      if (name === 'Currency') {
+        handleOpenModal();
+      }
+    },
+    [handleOpenModal, name],
+  );
 
   const handleClose = useCallback(() => setAnchorEl(null), []);
 
@@ -80,72 +93,93 @@ export const NavItem = memo(({ icon, name, enumData }: NavItemProps) => {
   );
 
   return (
-    <div className={styles.navItem}>
-      <ListItem
-        onClick={(event) => {
-          handleClick(event);
-        }}
-      >
-        <ListItemIcon>
-          <span
-            className='material-icons'
-            style={{
-              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
-            }}
-          >
-            {icon}
-          </span>
-        </ListItemIcon>
-        <div>
-          <ListItemText primary={t(`${name}`)} />
-          <div className={styles.value}>{t(`${param}`)}</div>
-        </div>
-      </ListItem>
-      <Menu
-        id='simple-menu'
-        keepMounted
-        open={open}
-        anchorEl={anchorEl}
-        onClick={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        sx={{
-          left: '50px',
-        }}
-      >
-        <div className={styles.paper}>
-          <FormControl
-            component='fieldset'
-            sx={{
-              padding: '15px',
-            }}
-          >
-            <FormLabel component='legend'>{t(`${name}`)}</FormLabel>
-            <RadioGroup
-              aria-label={name}
-              name={name}
-              value={param}
-              onChange={(event) => {
-                handleChange(event);
+    <>
+      <div className={styles.navItem}>
+        <ListItem
+          onClick={(event) => {
+            handleClick(event);
+          }}
+        >
+          <ListItemIcon>
+            <span
+              className='material-icons'
+              style={{
+                color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
               }}
             >
-              {enumData.map((item) => (
-                <FormControlLabel
-                  value={item}
-                  control={<Radio color={'primary'} />}
-                  label={t(`${item}`)}
-                  key={item}
-                  sx={{
-                    padding: '10px',
-                  }}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+              {icon}
+            </span>
+          </ListItemIcon>
+          <div>
+            <ListItemText primary={t(`${name}`)} />
+            <div className={styles.value}>{t(`${param}`)}</div>
+          </div>
+        </ListItem>
+        <Menu
+          id='simple-menu'
+          keepMounted
+          open={open}
+          anchorEl={anchorEl}
+          onClick={handleClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          sx={{
+            left: '50px',
+          }}
+        >
+          <div className={styles.paper}>
+            <FormControl
+              component='fieldset'
+              sx={{
+                padding: '15px',
+              }}
+            >
+              <FormLabel component='legend'>{t(`${name}`)}</FormLabel>
+              <RadioGroup
+                aria-label={name}
+                name={name}
+                value={param}
+                onChange={(event) => {
+                  handleChange(event);
+                }}
+              >
+                {enumData.map((item) => (
+                  <FormControlLabel
+                    value={item}
+                    control={<Radio color={'primary'} />}
+                    label={t(`${item}`)}
+                    key={item}
+                    sx={{
+                      padding: '10px',
+                    }}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </div>
+        </Menu>
+      </div>
+      <BasicModal openModal={openModal} handleClose={handleCloseModal}>
+        <div className={styles.modalWrapper}>
+          <p
+            className={styles.modalContent}
+            style={{
+              color: userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+              backgroundColor:
+                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            }}
+          >
+            {t(
+              'Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon.',
+            )}
+          </p>
+          <Button color='primary' onClick={handleCloseModal} className={styles.modalBtn}>
+            {t('Accept')}
+          </Button>
         </div>
-      </Menu>
-    </div>
+      </BasicModal>
+    </>
   );
 });

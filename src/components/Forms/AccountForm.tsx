@@ -7,10 +7,12 @@ import { object, string } from 'yup';
 import { AuthContext } from '../../Auth/Auth';
 import { DrawerContext } from '../../context/Drawer';
 import { defaultNames } from '../../data/defaultNames';
+import { iconsCard } from '../../data/icons';
 import { CurrencySymbol, Theme, ThemeColor } from '../../enums';
 import { pushUserData } from '../../firebase/push-user-data';
 import { updateUserData } from '../../firebase/update-user-data';
 import { IAccount } from '../../interfaces';
+import { getRandomColor, getRandomIcon } from '../../utils/get-random-data';
 import { Colors } from '../UI/Colors/Colors';
 import { Icons } from '../UI/Icons/Icons';
 import { BasicModal } from '../UI/Modal/Modal';
@@ -66,8 +68,12 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
-  const [icon, setIcon] = useState(`${currentAccount ? currentAccount.icon : 'credit_card'}`);
-  const [color, setColor] = useState(`${currentAccount ? currentAccount.color : '#4154b0'}`);
+  const [icon, setIcon] = useState(
+    `${currentAccount ? currentAccount.icon : getRandomIcon(iconsCard).name}`,
+  );
+  const [color, setColor] = useState(
+    `${currentAccount ? currentAccount.color : getRandomColor().color}`,
+  );
   const [openModal, setOpenModal] = useState(false);
 
   const { t } = useTranslation();
@@ -87,7 +93,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
           ? t(currentAccount.name)
           : currentAccount.name
       }`,
-      balance: `${currentAccount ? currentAccount.balance : ''}`,
+      balance: `${currentAccount ? currentAccount.balance : '0'}`,
       description: `${currentAccount ? currentAccount.description : ''}`,
     },
     validationSchema: object().shape({
@@ -133,7 +139,13 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
       <form onSubmit={formik.handleSubmit} autoComplete='off'>
         <div className={styles.upperWrapper} style={{ backgroundColor: `${color}` }}>
           <div className={styles.header}>
-            <h2 className={styles.title}>{t('New account')}</h2>
+            <h2 className={styles.title}>
+              {!currentAccount
+                ? t('New account')
+                : defaultNames.includes(currentAccount.name)
+                ? t(currentAccount.name)
+                : currentAccount.name}
+            </h2>
             <button type='submit'>
               <span className='material-icons' style={{ color: 'white' }}>
                 check
@@ -142,6 +154,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
           </div>
           <ThemeProvider theme={themeForTitle}>
             <TextField
+              autoFocus
               variant='standard'
               color='primary'
               sx={{ width: '70%' }}
