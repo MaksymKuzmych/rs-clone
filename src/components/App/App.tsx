@@ -10,26 +10,29 @@ import { CategoryPage } from '../../pages/CategoryPage/CategoryPage';
 import { TransactionPage } from '../../pages/TransactionPage/TransactionPage';
 import { SearchProvider } from '../../context/Search';
 import { OverlayProvider } from '../../context/Overlay';
+import { CategoryLocationProvider } from '../../context/CategoryLocation';
 
 export const App = () => {
   return (
-    <OverlayProvider>
-      <DrawerProvider>
-        <AuthProvider>
-          <SearchProvider>
-            <Header />
-            <div className='main'>
-              <Routes>
-                <Route path='/' element={<CategoryPage />} />
-                <Route path='/accounts' element={<AccountPage />} />
-                <Route path='/transactions' element={<TransactionPage />} />
-                <Route path='*' element={<NotFound />} />
-              </Routes>
-            </div>
-            <Footer />
-          </SearchProvider>
-        </AuthProvider>
-      </DrawerProvider>
-    </OverlayProvider>
+    <CategoryLocationProvider>
+      <OverlayProvider>
+        <DrawerProvider>
+          <AuthProvider>
+            <SearchProvider>
+              <Header />
+              <div className='main'>
+                <Routes>
+                  <Route path='/' element={<CategoryPage />} />
+                  <Route path='/accounts' element={<AccountPage />} />
+                  <Route path='/transactions' element={<TransactionPage />} />
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </div>
+              <Footer />
+            </SearchProvider>
+          </AuthProvider>
+        </DrawerProvider>
+      </OverlayProvider>
+    </CategoryLocationProvider>
   );
 };
