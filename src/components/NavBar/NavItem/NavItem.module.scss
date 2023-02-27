@@ -12,3 +12,17 @@
     filter: brightness(1.2);
   }
 }
+
+.modalWrapper {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalContent {
+  padding: 10px;
+}
+
+.modalBtn {
+  align-self: flex-end;
+}

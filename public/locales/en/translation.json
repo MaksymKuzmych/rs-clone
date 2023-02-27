@@ -126,5 +126,7 @@
   "To category": "To category",
   "No categories available": "No categories available",
   "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters",
-  "Please allow pop-up": "Please allow pop-up"
+  "Please allow pop-up": "Please allow pop-up",
+  "Accept": "Accept",
+  "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon.": "Changing the currency will not recalculate existing transactions at the rate, but only change the display of the currency icon."
 }
