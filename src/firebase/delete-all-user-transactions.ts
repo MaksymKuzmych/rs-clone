@@ -5,7 +5,7 @@ import { db, FirebaseError } from './firebase-config';
 import { getFilteredUserData } from './get-filtered-user-data';
 import { incrementBalance } from './increment-balance';
 
-export const deleteAllUserTransactions = async (userId: string) => {
+export const deleteAllUserTransactions = async (userId: string, transfer = false) => {
   try {
     const transactions = await getFilteredUserData(
       userId,
@@ -18,13 +18,12 @@ export const deleteAllUserTransactions = async (userId: string) => {
     transactions.forEach(async (transaction) => {
       const { account, accountTo, amount } = transaction;
 
-      if (accountTo) {
+      if (transfer) {
         await incrementBalance(userId, account, -amount);
-        await incrementBalance(userId, accountTo, +amount);
-      } else {
-        await incrementBalance(userId, account, -amount);
+        if (accountTo) {
+          await incrementBalance(userId, accountTo, +amount);
+        }
       }
-
       const docRef = doc(db, `users/${userId}/transactions`, transaction.id);
       await deleteDoc(docRef);
     });

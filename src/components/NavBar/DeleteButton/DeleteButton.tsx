@@ -49,7 +49,7 @@ export const DeleteButton = () => {
   ]);
 
   const deleteTransactions = useCallback(async () => {
-    await deleteAllUserTransactions(userData.settings.userId);
+    await deleteAllUserTransactions(userData.settings.userId, true);
     await changeUserData();
     await changeUserSettings();
     handleClose();
