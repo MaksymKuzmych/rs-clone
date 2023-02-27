@@ -178,20 +178,21 @@ export const AddTransaction = () => {
 
       return array.length ? (
         array.map((category) => (
-          <div
-            key={category.id}
-            className={categorySum(category) === 0 ? styles.categoryInactive : styles.category}
-            onClick={() => toCategory(category)}
-          >
-            <p className={styles.name}>
-              {defaultNames.includes(category.name) ? t(category.name) : category.name}
-            </p>
-            <div className={styles.iconWrapper} style={{ backgroundColor: category.color }}>
-              <span className='material-icons' style={{ color: 'white' }}>
-                {category.icon}
-              </span>
+          <div key={category.id} className={styles.categoryWrapper}>
+            <div
+              className={categorySum(category) === 0 ? styles.categoryInactive : styles.category}
+              onClick={() => toCategory(category)}
+            >
+              <p className={styles.name}>
+                {defaultNames.includes(category.name) ? t(category.name) : category.name}
+              </p>
+              <div className={styles.iconWrapper} style={{ backgroundColor: category.color }}>
+                <span className='material-icons' style={{ color: 'white' }}>
+                  {category.icon}
+                </span>
+              </div>
+              <p className={styles.sum}>{setCurrency(categorySum(category), 'never')}</p>
             </div>
-            <p className={styles.sum}>{setCurrency(categorySum(category), 'never')}</p>
           </div>
         ))
       ) : (
