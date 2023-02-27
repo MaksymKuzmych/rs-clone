@@ -111,7 +111,7 @@ export const ImportXLS = () => {
               <Button color='primary'>{t('PrivatBank')}</Button>
             </a>
             {' ' + t('and') + ' '}
-            <a href='assets/statements.xls'>
+            <a href='assets/monobank.xls'>
               <Button color='primary'>{t('Monobank')}</Button>
             </a>
           </p>
