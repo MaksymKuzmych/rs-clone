@@ -108,7 +108,7 @@ export const ImportXLS = () => {
           <p className={styles.modalContent}>{t('This action cannot be undone')}.</p>
           <p className={styles.modalContent}>
             {t('Import file example') + ' '}
-            <Link to='/assets/statements.xls' target='_blank' download>
+            <Link to='/assets/privatbank.xls' target='_blank' download>
               <Button color='primary'>{t('PrivatBank')}</Button>
             </Link>
             {' ' + t('and') + ' '}
