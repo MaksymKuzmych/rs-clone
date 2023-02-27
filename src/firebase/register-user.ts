@@ -3,6 +3,7 @@ import {
   EmailAuthProvider,
   linkWithCredential,
 } from 'firebase/auth';
+
 import { auth, FirebaseError } from './firebase-config';
 
 export const registerUser = async (email: string, password: string) => {

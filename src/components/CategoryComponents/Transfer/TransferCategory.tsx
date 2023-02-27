@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { defaultNames } from '../../../data/defaultNames';
@@ -26,21 +26,28 @@ export const TransferCategory = memo(
     const [activeAccount, setActiveAccount] = useState(account);
     const [activeCategory, setActiveCategory] = useState(category);
     const [openModal, setOpenModal] = useState(false);
-    const toggleModal = () => setOpenModal(!openModal);
 
-    const setAccount = (account: IAccount) => {
-      toggleModal();
-      setActiveAccount(account);
-      changeAccount(account);
-    };
+    const toggleModal = useCallback(() => setOpenModal(!openModal), [openModal]);
 
-    const setCategory = (category: ICategory | null) => {
-      toggleModal();
-      if (category) {
-        setActiveCategory(category);
-        changeCategory(category);
-      }
-    };
+    const setAccount = useCallback(
+      (account: IAccount) => {
+        toggleModal();
+        setActiveAccount(account);
+        changeAccount(account);
+      },
+      [changeAccount, toggleModal],
+    );
+
+    const setCategory = useCallback(
+      (category: ICategory | null) => {
+        toggleModal();
+        if (category) {
+          setActiveCategory(category);
+          changeCategory(category);
+        }
+      },
+      [changeCategory, toggleModal],
+    );
 
     const name = activeAccount ? activeAccount.name : activeCategory ? activeCategory.name : null;
 

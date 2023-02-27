@@ -39,10 +39,11 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const [userData, setUserData] = useState(emptyUserData);
   const [pending, setPending] = useState(true);
 
+  const { setNewValue } = useContext(OverlayContext);
+
   const { enqueueSnackbar } = useSnackbar();
 
   const { t } = useTranslation();
-  const { setNewValue } = useContext(OverlayContext);
 
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {

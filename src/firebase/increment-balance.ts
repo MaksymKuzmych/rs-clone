@@ -1,4 +1,5 @@
 import { doc, updateDoc, increment } from 'firebase/firestore';
+
 import { db, FirebaseError } from './firebase-config';
 
 export const incrementBalance = async (userId: string, accountId: string, amount: number) => {

@@ -1,4 +1,4 @@
-import { useCallback, useState, useContext } from 'react';
+import { useCallback, useState, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
@@ -19,9 +19,9 @@ import { SettingsBtn } from '../../components/Accounts/Settings/SettingsBtn/Sett
 import { Calculator } from '../../components/UI/Calculator/Calculator';
 import { pushUserData } from '../../firebase/push-user-data';
 import { incrementBalance } from '../../firebase/increment-balance';
+import { CategoryLocationContext } from '../../context/CategoryLocation';
 
 import styles from './CategoryPage.module.scss';
-import { CategoryLocationContext } from '../../context/CategoryLocation';
 
 export const CategoryPage = () => {
   const { userData, changeUserData } = useContext(AuthContext);
@@ -30,9 +30,7 @@ export const CategoryPage = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const toggleModal = useCallback(() => {
-    setOpenModal(!openModal);
-  }, [openModal]);
+  const toggleModal = useCallback(() => setOpenModal(!openModal), [openModal]);
 
   const selectedAccount = userData.data.accounts.find(
     (account) => account.id === userData.settings.selectedAccount,
@@ -45,17 +43,16 @@ export const CategoryPage = () => {
   const [notes, setNotes] = useState('');
   const [day, setDay] = useState<Dayjs | null>(dayjs(Date.now()));
 
-  const changeAmountHandler = (value: string) => setAmount(value);
-  const changeNotesHandler = (value: string) => setNotes(value);
-  const changeDayHandler = (value: Dayjs | null) => setDay(value);
+  const changeAmountHandler = useCallback((value: string) => setAmount(value), []);
+  const changeNotesHandler = useCallback((value: string) => setNotes(value), []);
+  const changeDayHandler = useCallback((value: Dayjs | null) => setDay(value), []);
 
   const [categoryClicked, setCategoryClicked] = useState<ICategory | null>(null);
+
   const { t } = useTranslation();
 
   const changeCategoryLocation = useCallback(
-    (type: TransactionType) => {
-      setNewValue(type);
-    },
+    (type: TransactionType) => setNewValue(type),
     [setNewValue],
   );
 
@@ -151,21 +148,24 @@ export const CategoryPage = () => {
     ],
   };
 
-  const newTransaction =
-    categoryClicked && account
-      ? {
-          id: '',
-          date: new Date(dayjs(day).toDate()).getTime(),
-          type: categoryLocation,
-          account: account?.id,
-          accountTo: null,
-          category: categoryClicked?.id,
-          amount: categoryLocation === TransactionType.Expense ? -+amount : +amount,
-          description: notes,
-        }
-      : null;
+  const newTransaction = useMemo(
+    () =>
+      categoryClicked && account
+        ? {
+            id: '',
+            date: new Date(dayjs(day).toDate()).getTime(),
+            type: categoryLocation,
+            account: account?.id,
+            accountTo: null,
+            category: categoryClicked?.id,
+            amount: categoryLocation === TransactionType.Expense ? -+amount : +amount,
+            description: notes,
+          }
+        : null,
+    [account, amount, categoryClicked, categoryLocation, day, notes],
+  );
 
-  const transferMoney = async () => {
+  const transferMoney = useCallback(async () => {
     if (newTransaction)
       await pushUserData(userData.settings.userId, {
         transactions: [newTransaction],
@@ -179,15 +179,19 @@ export const CategoryPage = () => {
     await changeUserData();
     toggleModal();
     setAmount('');
-  };
+  }, [
+    account,
+    amount,
+    categoryLocation,
+    changeUserData,
+    newTransaction,
+    toggleModal,
+    userData.settings.userId,
+  ]);
 
-  const changeAccount = (data: IAccount) => {
-    setAccount(data);
-  };
+  const changeAccount = useCallback((data: IAccount) => setAccount(data), []);
 
-  const changeCategory = (data: ICategory | null) => {
-    setCategoryClicked(data);
-  };
+  const changeCategory = useCallback((data: ICategory | null) => setCategoryClicked(data), []);
 
   return (
     <ThemeProvider theme={theme(userData.settings.theme)}>

@@ -15,6 +15,7 @@ interface TransactionDayProps {
 export const TransactionDay = memo(
   ({ children, date, sum }: PropsWithChildren<TransactionDayProps>) => {
     const { userData, setCurrency } = useContext(AuthContext);
+
     const { t } = useTranslation();
 
     const { lang } = userData.settings;

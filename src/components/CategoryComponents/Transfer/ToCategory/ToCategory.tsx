@@ -16,6 +16,7 @@ interface ToCategoryProps {
 
 export const ToCategory = memo(({ changeCategory, activeCategory, type }: ToCategoryProps) => {
   const { userData } = useContext(AuthContext);
+
   const { t } = useTranslation();
 
   return (

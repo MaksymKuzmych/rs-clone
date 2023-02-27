@@ -14,9 +14,9 @@ interface FromAccountProps {
 }
 
 export const FromAccount = memo(({ changeAccount, activeAccount }: FromAccountProps) => {
-  const { userData } = useContext(AuthContext);
+  const { userData, setCurrency } = useContext(AuthContext);
+
   const { t } = useTranslation();
-  const { setCurrency } = useContext(AuthContext);
 
   const allAccountsAmount = userData.data.accounts.reduce(
     (sum, current) => sum + current.balance,

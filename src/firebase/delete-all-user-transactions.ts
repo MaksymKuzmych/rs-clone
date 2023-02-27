@@ -1,4 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
+
 import { Sort } from '../enums';
 import { IData, ITransaction } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
