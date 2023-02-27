@@ -1,5 +1,6 @@
 import { useSnackbar } from 'notistack';
 import { ChangeEvent, useCallback, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -107,13 +108,13 @@ export const ImportXLS = () => {
           <p className={styles.modalContent}>{t('This action cannot be undone')}.</p>
           <p className={styles.modalContent}>
             {t('Import file example') + ' '}
-            <a className={styles.link} href='assets/statements.xls'>
+            <Link to='/assets/statements.xls' target='_blank' download>
               <Button color='primary'>{t('PrivatBank')}</Button>
-            </a>
+            </Link>
             {' ' + t('and') + ' '}
-            <a href='assets/monobank.xls'>
+            <Link to='/assets/monobank.xls' target='_blank' download>
               <Button color='primary'>{t('Monobank')}</Button>
-            </a>
+            </Link>
           </p>
           <div className={styles.buttons}>
             <Button color='primary'>
