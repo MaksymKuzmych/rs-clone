@@ -67,7 +67,8 @@ export const Calculator = memo(
       (value: string) => {
         if (
           (actions.includes(value) && amount === '') ||
-          (actions.includes(value) && actions.includes(amount.slice(-1)))
+          (actions.includes(value) && actions.includes(amount.slice(-1))) ||
+          (value === '.' && amount.includes('.'))
         ) {
           return;
         }
@@ -139,17 +140,21 @@ export const Calculator = memo(
 
     const handleKeyUp = useCallback(
       (event: React.KeyboardEvent) => {
-        if (digits.includes(event.key) || actions.includes(event.key)) {
+        if (digits.includes(event.key) || actions.includes(event.key) || event.key === '.') {
           updateCalculation(event.key);
         }
         if (event.key === 'Backspace') {
           clear();
         }
         if (event.key === 'Enter') {
-          calculate();
+          if (!isSolved) {
+            calculate();
+          } else {
+            transferMoney();
+          }
         }
       },
-      [actions, calculate, clear, digits, updateCalculation],
+      [actions, calculate, clear, digits, isSolved, transferMoney, updateCalculation],
     );
 
     const digitsBtns = useMemo(

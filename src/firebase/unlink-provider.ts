@@ -1,4 +1,5 @@
 import { unlink } from 'firebase/auth';
+
 import { Provider } from '../enums';
 import { auth, FirebaseError } from './firebase-config';
 

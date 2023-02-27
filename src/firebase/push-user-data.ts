@@ -1,4 +1,5 @@
 import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+
 import { IData } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 

@@ -1,4 +1,5 @@
 import { doc, updateDoc } from 'firebase/firestore';
+
 import { ISettings } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 

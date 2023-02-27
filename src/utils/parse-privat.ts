@@ -12,7 +12,7 @@ export const parsePrivat = (data: IPrivat[]) => {
 
   data.forEach((row, index) => {
     if (index === 2) {
-      balance = row[9];
+      balance = +row[9].toFixed(2);
     }
     if (index > 1 && index < data.length - 1) {
       const time = row[1].split(':').map((hours) => +hours);
@@ -34,7 +34,7 @@ export const parsePrivat = (data: IPrivat[]) => {
         icon: 'credit_card',
         color: getRandomColor().color,
         balance,
-        description: row[3].split('(')[1].replace(')', ''),
+        description: row[3].split('(')[1].replace(')', '').slice(-4),
       };
       const category: ICategory = {
         id: categoryId,

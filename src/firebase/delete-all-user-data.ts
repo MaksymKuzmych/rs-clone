@@ -1,4 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
+
 import { IData } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 

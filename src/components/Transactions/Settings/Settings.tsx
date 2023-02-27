@@ -48,9 +48,10 @@ export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps
   const { t } = useTranslation();
 
   const handleOpen = useCallback(() => setOpenModal(true), []);
-  const changeAmountHandler = (value: string) => setAmount(value);
-  const changeNotesHandler = (value: string) => setNotes(value);
-  const changeDayHandler = (value: Dayjs | null) => setDay(value);
+
+  const changeAmountHandler = useCallback((value: string) => setAmount(value), []);
+  const changeNotesHandler = useCallback((value: string) => setNotes(value), []);
+  const changeDayHandler = useCallback((value: Dayjs | null) => setDay(value), []);
 
   const modalContent = useCallback(() => {
     switch (typeModal) {
@@ -65,7 +66,7 @@ export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps
     }
   }, [currentTransaction, handleClose, typeModal]);
 
-  const transferMoney = async () => {
+  const transferMoney = useCallback(async () => {
     const { id, type, account, accountTo, category } = currentTransaction;
     if (amount === '') {
       return;
@@ -110,7 +111,15 @@ export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps
 
     await changeUserData();
     handleClose();
-  };
+  }, [
+    amount,
+    changeUserData,
+    currentTransaction,
+    day,
+    handleClose,
+    notes,
+    userData.settings.userId,
+  ]);
 
   const Account = useMemo(
     () => (

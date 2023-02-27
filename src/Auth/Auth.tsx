@@ -39,10 +39,11 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
   const [userData, setUserData] = useState(emptyUserData);
   const [pending, setPending] = useState(true);
 
+  const { setNewValue } = useContext(OverlayContext);
+
   const { enqueueSnackbar } = useSnackbar();
 
   const { t } = useTranslation();
-  const { setNewValue } = useContext(OverlayContext);
 
   const setCurrency: ISetCurrency = (amount, signDisplay = 'auto') =>
     new Intl.NumberFormat('ru-RU', {
@@ -122,16 +123,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
             flexGrow: 1,
             backgroundColor:
               userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <CircularProgress
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
+          <CircularProgress />
         </div>
         <Footer />
       </>
