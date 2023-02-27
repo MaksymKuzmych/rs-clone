@@ -3,6 +3,7 @@ import { Sort } from '../enums';
 import { IData, ITransaction } from '../interfaces';
 import { db, FirebaseError } from './firebase-config';
 import { getFilteredUserData } from './get-filtered-user-data';
+import { incrementBalance } from './increment-balance';
 
 export const deleteAllUserTransactions = async (userId: string) => {
   const firebase: Partial<IData> = { transactions: [] };
@@ -15,11 +16,16 @@ export const deleteAllUserTransactions = async (userId: string) => {
       Sort.DESC,
     )) as ITransaction[];
 
-    Object.entries(firebase).forEach(async (accounts) => {
-      accounts[1].forEach(async (account) => {
-        const docRef = doc(db, `users/${userId}/${accounts[0]}`, account.id);
-        await deleteDoc(docRef);
-      });
+    firebase.transactions.forEach(async (transaction) => {
+      const { account, accountTo, amount } = transaction;
+      if (accountTo) {
+        await incrementBalance(userId, account, -amount);
+        await incrementBalance(userId, accountTo, +amount);
+      } else {
+        await incrementBalance(userId, account, -amount);
+      }
+      const docRef = doc(db, `users/${userId}/transactions`, transaction.id);
+      await deleteDoc(docRef);
     });
   } catch (error) {
     throw new FirebaseError(`Delete User Data: ${error}`);

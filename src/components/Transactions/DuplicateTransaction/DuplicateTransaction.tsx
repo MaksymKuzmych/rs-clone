@@ -33,8 +33,8 @@ export const DuplicateTransaction = memo(
       }
 
       if (accountTo) {
-        await incrementBalance(userData.settings.userId, account, -amount);
-        await incrementBalance(userData.settings.userId, accountTo, +amount);
+        await incrementBalance(userData.settings.userId, account, +amount);
+        await incrementBalance(userData.settings.userId, accountTo, -amount);
       }
 
       await changeUserData();

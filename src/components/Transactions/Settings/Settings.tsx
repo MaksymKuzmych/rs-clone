@@ -34,9 +34,9 @@ export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps
   const [openModal, setOpenModal] = useState(false);
   const [amount, setAmount] = useState(
     `${
-      currentTransaction.type === TransactionType.Expense
-        ? -currentTransaction.amount
-        : currentTransaction.amount
+      currentTransaction.type === TransactionType.Income
+        ? +currentTransaction.amount
+        : -currentTransaction.amount
     }`,
   );
   const [notes, setNotes] = useState(
@@ -99,16 +99,17 @@ export const Settings = memo(({ currentTransaction, handleClose }: SettingsProps
       await incrementBalance(
         userData.settings.userId,
         account,
-        currentTransaction.amount - +amount,
+        -amount - currentTransaction.amount,
       );
       await incrementBalance(
         userData.settings.userId,
         accountTo,
-        +amount - currentTransaction.amount,
+        currentTransaction.amount + +amount,
       );
     }
 
     await changeUserData();
+    handleClose();
   };
 
   const Account = useMemo(
