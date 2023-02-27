@@ -28,7 +28,7 @@ export const FromAccount = memo(({ changeAccount, activeAccount }: FromAccountPr
       <div className={styles.modalTitle}>{t('From account')}</div>
       <div className={styles.amountBlock}>
         <div className={styles.modalSubtitle}>{t('Accounts')}</div>
-        <div className={styles.modalSubtitle}>{setCurrency(allAccountsAmount, 'never')}</div>
+        <div className={styles.modalSubtitle}>{setCurrency(allAccountsAmount, 'auto')}</div>
       </div>
       <div
         className={styles.wrapper}
