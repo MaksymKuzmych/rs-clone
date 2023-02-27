@@ -165,9 +165,13 @@ export const AddTransaction = () => {
   const CATEGORY_HEIGHT = 133;
   const maxHeight = useMemo(() => {
     const height =
-      Math.max(Math.ceil(incomes.length / 4), Math.ceil(expenses.length / 4)) * CATEGORY_HEIGHT;
+      Math.max(
+        Math.ceil(incomes.length / 4),
+        Math.ceil(expenses.length / 4),
+        Math.ceil((userData.data.accounts.length - 1) / 2),
+      ) * CATEGORY_HEIGHT;
     return height > CATEGORY_HEIGHT * 2 ? CATEGORY_HEIGHT * 2 : height;
-  }, [expenses.length, incomes.length]);
+  }, [expenses.length, incomes.length, userData.data.accounts.length]);
 
   const Categories = useCallback(
     (array: ICategory[]) => {
