@@ -13,7 +13,7 @@ export const parseMono = (data: IMono[]) => {
 
   data.forEach((row, index) => {
     if (index === 9) {
-      cardNumber = row[0].split(':')[1].replaceAll(' ', '');
+      cardNumber = row[0].split(':')[1].replaceAll(' ', '').slice(-4);
     }
     if (index === 17) {
       balance = parseFloat(row[0].split(': ')[1].replace(' ', ''));

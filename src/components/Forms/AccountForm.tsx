@@ -204,6 +204,9 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
               name='balance'
               label={t('Account balance')}
               type='number'
+              inputProps={{
+                step: '0.01',
+              }}
               sx={{ width: '260px' }}
               onChange={formik.handleChange}
               value={formik.values.balance}
