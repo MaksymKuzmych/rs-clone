@@ -20,6 +20,8 @@ import { DrawerContext } from '../../context/Drawer';
 import { themeForTitle } from './AccountForm';
 
 import styles from './Forms.module.scss';
+import { getRandomColor, getRandomIcon } from '../../utils/get-random-data';
+import { iconsCategory } from '../../data/icons';
 
 interface CategoryFormProps {
   type: TransactionType;
@@ -30,8 +32,12 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { drawerHandler } = useContext(DrawerContext);
 
-  const [icon, setIcon] = useState(category && category.icon ? category.icon : 'shopping_cart');
-  const [color, setColor] = useState(category && category.color ? category.color : '#f95c57');
+  const [icon, setIcon] = useState(
+    category && category.icon ? category.icon : getRandomIcon(iconsCategory).name,
+  );
+  const [color, setColor] = useState(
+    category && category.color ? category.color : getRandomColor().color,
+  );
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
