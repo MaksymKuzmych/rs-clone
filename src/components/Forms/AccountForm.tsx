@@ -93,7 +93,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
           ? t(currentAccount.name)
           : currentAccount.name
       }`,
-      balance: `${currentAccount ? currentAccount.balance : '0'}`,
+      balance: `${currentAccount ? currentAccount.balance.toFixed(2) : '0'}`,
       description: `${currentAccount ? currentAccount.description : ''}`,
     },
     validationSchema: object().shape({
