@@ -3,6 +3,37 @@
 .categoriesWrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.emptyCategoriesWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accountsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track {
+    padding: 2px 0;
+    border-radius: 3px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    border-radius: 3px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $gray;
+  }
 }
 
 .category,
@@ -16,10 +47,23 @@
 }
 
 .categoryInactive {
-  opacity: 0.3;
+  filter: brightness(0.5);
 }
 
-.iconWrapper {
+.account {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 0.5px solid #7f7f7f;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.iconWrapper,
+.accountIconWrapper {
   width: 55px;
   height: 55px;
   display: flex;
@@ -28,6 +72,14 @@
   border-radius: 50%;
   margin: 10px;
   cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.accountIconWrapper {
+  border-radius: 5px;
 }
 
 .sum,
@@ -85,4 +137,29 @@
 
 .balance {
   font-size: 26px;
+}
+
+.emptyAccountsTitle {
+  padding: 20px 10px;
+  color: $gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.modalContent {
+  width: 320px;
+}
+
+.modalHeader {
+  display: flex;
+  color: white;
+}
+
+.title {
+  border-bottom: solid 2px $gray;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
 }

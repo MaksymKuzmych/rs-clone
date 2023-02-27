@@ -25,7 +25,7 @@ export const FilterAccountsModal = memo(({ handleClose }: FilterAccountsModalPro
       await changeUserSettings();
       handleClose();
     },
-    [handleClose, changeUserSettings, userData.settings.userId],
+    [userData.settings.userId, changeUserSettings, handleClose],
   );
 
   const allAccountsAmount = userData.data.accounts.reduce(

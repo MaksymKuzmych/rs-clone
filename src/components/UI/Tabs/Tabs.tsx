@@ -59,7 +59,7 @@ export const BasicTabs = memo(
   }: BasicTabsProps) => {
     const { userData } = useContext(AuthContext);
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(thirdChild ? 1 : 0);
 
     const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {
       setValue(newValue);

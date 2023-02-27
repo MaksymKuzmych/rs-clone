@@ -22,13 +22,29 @@
   transition: filter 0.3s;
 
   &:hover {
-    filter: brightness(1.2);
+    filter: brightness(0.9);
   }
 }
 
 .totalExpenses {
   font-size: 20px;
   padding: 10px;
+  cursor: pointer;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.totalIncome {
+  padding: 10px;
+  cursor: pointer;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }
 
 .transactionType {

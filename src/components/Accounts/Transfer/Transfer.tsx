@@ -113,7 +113,7 @@ export const Transfer = memo(({ currentAccount }: TransferProps) => {
         {accounts.length ? (
           accounts
         ) : (
-          <p className={styles.emptyAccountsTitle}>{t('No other accounts')}</p>
+          <p className={styles.emptyAccountsTitle}>{t('No accounts available')}</p>
         )}
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>

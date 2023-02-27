@@ -128,8 +128,9 @@ export const TransactionPage = () => {
         }}
       >
         <button
-          className={styles.buttonAdd}
+          className={userData.data.accounts.length ? styles.buttonAdd : styles.buttonAddDisabled}
           onClick={() => drawerHandler('addTransaction', 'bottom', true)}
+          disabled={!userData.data.accounts.length}
         >
           +
         </button>

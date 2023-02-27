@@ -14,6 +14,7 @@
   "Income": "Доходы",
   "Transfer ": "Перевод ",
   "Expense": "Расход",
+  "Expense ": "Расход ",
   "Income ": "Доход ",
   "Groceries": "Продукты",
   "Restaurant": "Кафе",
@@ -73,7 +74,7 @@
   "associated with this account will be deleted. The balances of your other accounts will not change": "связанные с этой учетной записью, будут удалены. Балансы других ваших счетов не изменятся",
   "The account cannot be restored": "Счёт не может быть восстановлен",
   "Enter transfer amount": "Введите сумму перевода",
-  "No other accounts": "Других счетов нет",
+  "No accounts available": "Нет доступных счетов",
   "Delete account permanently": "Удалить аккаунт безвозвратно",
   "associated with the category will be deleted": ", связанные с этой категорией будут удалены",
   "The category cannot be restored": "Категорию нельзя будет восстановить",
@@ -123,5 +124,7 @@
   "This action cannot be undone": "Действие невозможно будет отменить",
   "From category": "С категории",
   "To category": "На категорию",
-  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами"
+  "Transaction will be duplicated with the same parameters": "Операция будет продублирована с теми же параметрами",
+  "No categories available": "Нет доступных категорий",
+  "Please allow pop-up": "Пожалуйста, разрешите всплывающее окно"
 }

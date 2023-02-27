@@ -24,8 +24,21 @@ export const Login = () => {
 
   const { t } = useTranslation();
 
-  const signInGoogleHandler = useCallback(async () => await signInProvider(Provider.Google), []);
-  const signInGithubHandler = useCallback(async () => await signInProvider(Provider.Github), []);
+  const signInGoogleHandler = useCallback(async () => {
+    try {
+      await signInProvider(Provider.Google);
+    } catch (error) {
+      enqueueSnackbar(t('Please allow pop-up'), { variant: 'error' });
+    }
+  }, [enqueueSnackbar, t]);
+
+  const signInGithubHandler = useCallback(async () => {
+    try {
+      await signInProvider(Provider.Github);
+    } catch (error) {
+      enqueueSnackbar(t('Please allow pop-up'), { variant: 'error' });
+    }
+  }, [enqueueSnackbar, t]);
 
   const formik = useFormik({
     initialValues: {

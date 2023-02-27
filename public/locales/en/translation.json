@@ -14,6 +14,7 @@
   "Income": "Income",
   "Transfer ": "Transfer ",
   "Expense": "Expense",
+  "Expense ": "Expense ",
   "Income ": "Income ",
   "Groceries": "Groceries",
   "Restaurant": "Restaurant",
@@ -73,7 +74,7 @@
   "associated with this account will be deleted. The balances of your other accounts will not change": "associated with this account will be deleted. The balances of your other accounts will not change",
   "The account cannot be restored": "The account cannot be restored",
   "Enter transfer amount": "Enter transfer amount",
-  "No other accounts": "No other accounts",
+  "No accounts available": "No accounts available",
   "Delete account permanently": "Delete account permanently",
   "associated with the category will be deleted": "associated with the category will be deleted",
   "The category cannot be restored": "The category cannot be restored",
@@ -123,5 +124,7 @@
   "This action cannot be undone": "This action cannot be undone",
   "From category": "From category",
   "To category": "To category",
-  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters"
+  "No categories available": "No categories available",
+  "Transaction will be duplicated with the same parameters": "Transaction will be duplicated with the same parameters",
+  "Please allow pop-up": "Please allow pop-up"
 }

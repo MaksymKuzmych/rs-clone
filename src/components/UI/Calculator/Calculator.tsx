@@ -11,7 +11,7 @@ import { DateSelect } from './DateSelect/DateSelect';
 import styles from './Calculator.module.scss';
 
 interface CalculatorProps {
-  type: string;
+  type: string | null;
   amount: string;
   notes: string;
   day: Dayjs | null;
@@ -165,7 +165,7 @@ export const Calculator = memo(
     return (
       <>
         <div className={styles.outputWrapper} onKeyUp={handleKeyUp} ref={divRef} tabIndex={0}>
-          <h4 className={styles.outputTitle}>{t(type)}</h4>
+          <h4 className={styles.outputTitle}>{t(type || '')}</h4>
           <div className={styles.output}>
             {amount || '0'} {CurrencySymbol[userData.settings.currency]}
           </div>
