@@ -171,6 +171,20 @@ export const Header = () => {
           sx={{
             flexShrink: 0,
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '300px' },
+            '& .MuiDrawer-paper::-webkit-scrollbar-track': {
+              padding: '2px 0',
+              borderRadius: '3px',
+              backgroundColor:
+                userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            },
+            '& .MuiDrawer-paper::-webkit-scrollbar': {
+              borderRadius: '3px',
+              width: '5px',
+            },
+            '& .MuiDrawer-paper::-webkit-scrollbar-thumb': {
+              borderRadius: '3px',
+              backgroundColor: '#7f7f7f',
+            },
           }}
         >
           <NavBar />

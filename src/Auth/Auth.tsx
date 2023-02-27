@@ -122,16 +122,12 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
             flexGrow: 1,
             backgroundColor:
               userData.settings.theme === Theme.Light ? ThemeColor.Light : ThemeColor.Dark,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <CircularProgress
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
+          <CircularProgress />
         </div>
         <Footer />
       </>

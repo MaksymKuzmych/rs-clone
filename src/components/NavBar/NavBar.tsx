@@ -181,6 +181,15 @@ export const NavBar = () => {
                   )}
                 </ListItem>
               </NavLink>
+              <p
+                className={styles.year}
+                style={{
+                  color:
+                    userData.settings.theme === Theme.Light ? ThemeColor.Dark : ThemeColor.Light,
+                }}
+              >
+                2023
+              </p>
             </div>
           </List>
         </div>
