@@ -106,6 +106,7 @@ export const CategoryForm = memo(({ type, category }: CategoryFormProps) => {
           </div>
           <ThemeProvider theme={themeForTitle}>
             <TextField
+              autoFocus
               variant='standard'
               color='primary'
               sx={{ width: '70%' }}

@@ -142,6 +142,7 @@ export const AccountForm = memo(({ currentAccount }: AccountFormProps) => {
           </div>
           <ThemeProvider theme={themeForTitle}>
             <TextField
+              autoFocus
               variant='standard'
               color='primary'
               sx={{ width: '70%' }}
