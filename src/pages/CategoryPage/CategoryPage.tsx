@@ -21,10 +21,12 @@ import { pushUserData } from '../../firebase/push-user-data';
 import { incrementBalance } from '../../firebase/increment-balance';
 
 import styles from './CategoryPage.module.scss';
+import { CategoryLocationContext } from '../../context/CategoryLocation';
 
 export const CategoryPage = () => {
   const { userData, changeUserData } = useContext(AuthContext);
   const { state, typeDrawer, drawerHandler } = useContext(DrawerContext);
+  const { categoryLocation, setNewValue } = useContext(CategoryLocationContext);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -42,7 +44,6 @@ export const CategoryPage = () => {
   const [amount, setAmount] = useState('');
   const [notes, setNotes] = useState('');
   const [day, setDay] = useState<Dayjs | null>(dayjs(Date.now()));
-  const [categoryLocation, setCategoryLocation] = useState(TransactionType.Expense);
 
   const changeAmountHandler = (value: string) => setAmount(value);
   const changeNotesHandler = (value: string) => setNotes(value);
@@ -53,9 +54,9 @@ export const CategoryPage = () => {
 
   const changeCategoryLocation = useCallback(
     (type: TransactionType) => {
-      setCategoryLocation(type);
+      setNewValue(type);
     },
-    [setCategoryLocation],
+    [setNewValue],
   );
 
   const dataForChart: IChart = {

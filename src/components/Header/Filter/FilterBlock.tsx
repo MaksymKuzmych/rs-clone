@@ -52,8 +52,8 @@ export const FilterBlock = memo(({ openSearch }: FilterBlockProps) => {
         </div>
         <div className={styles.accountAmount}>
           {userData.settings.selectedAccount
-            ? setCurrency(selectedAccountAmount ? selectedAccountAmount : 0, 'never')
-            : setCurrency(allAccountsAmount, 'never')}
+            ? setCurrency(selectedAccountAmount ? selectedAccountAmount : 0, 'auto')
+            : setCurrency(allAccountsAmount, 'auto')}
         </div>
       </div>
       <BasicModal openModal={openModal} handleClose={handleClose}>
