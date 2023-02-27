@@ -5,6 +5,7 @@ import { AuthContext } from '../../../Auth/Auth';
 import { DrawerContext } from '../../../context/Drawer';
 import { Theme, ThemeColor } from '../../../enums';
 import { deleteUserData } from '../../../firebase/delete-user-data';
+import { incrementBalance } from '../../../firebase/increment-balance';
 
 import styles from './DeleteCategory.module.scss';
 
@@ -32,6 +33,7 @@ export const DeleteCategory = memo(
       }
       if (transactionsWithThisCategory.length) {
         transactionsWithThisCategory.forEach(async (item) => {
+          await incrementBalance(userData.settings.userId, item.account, -+item.amount);
           await deleteUserData(userData.settings.userId, { transactions: item.id });
         });
       }
