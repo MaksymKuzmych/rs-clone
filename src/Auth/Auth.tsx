@@ -74,8 +74,10 @@ export const AuthProvider = ({ children }: BrowserRouterProps) => {
 
   const changeUserSettings = useCallback(async () => {
     setPending(true);
-    await changeUserData();
-    setPending(false);
+    setTimeout(async () => {
+      await changeUserData();
+      setPending(false);
+    }, 200);
   }, [changeUserData]);
 
   useEffect(() => {

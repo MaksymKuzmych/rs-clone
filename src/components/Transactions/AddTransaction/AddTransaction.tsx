@@ -223,11 +223,11 @@ export const AddTransaction = () => {
                 </span>
               </div>
               <div>
-                <h3 className={styles.name}>
+                <h3 className={styles.accountName}>
                   {defaultNames.includes(account.name) ? t(account.name) : account.name}
                 </h3>
                 <p
-                  className={styles.sum}
+                  className={styles.accountName}
                   style={{
                     color: !account.balance
                       ? AmountColor.Zero
