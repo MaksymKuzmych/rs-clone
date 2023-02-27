@@ -60,15 +60,15 @@ export const ImportXLS = () => {
   const onChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      // try {
-      await parseStatement(files);
-      await deleteAllUserData(userData.settings.userId, await findUnusedData());
-      await pushImportedData(userData.settings.userId, await parseStatement(files));
-      await changeUserSettings();
-      enqueueSnackbar('Import Successfull', { variant: 'success' });
-      // } catch (error) {
-      //   enqueueSnackbar('Wrong Import Format', { variant: 'error' });
-      // }
+      try {
+        await parseStatement(files);
+        await deleteAllUserData(userData.settings.userId, await findUnusedData());
+        await pushImportedData(userData.settings.userId, await parseStatement(files));
+        await changeUserSettings();
+        enqueueSnackbar('Import Successfull', { variant: 'success' });
+      } catch (error) {
+        enqueueSnackbar('Wrong Import Format', { variant: 'error' });
+      }
     },
     [changeUserSettings, enqueueSnackbar, findUnusedData, userData.settings.userId],
   );
