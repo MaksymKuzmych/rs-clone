@@ -29,8 +29,8 @@ export const DeleteTransaction = memo(
         await incrementBalance(userData.settings.userId, account, -amount);
       }
       if (accountTo) {
-        await incrementBalance(userData.settings.userId, account, amount);
-        await incrementBalance(userData.settings.userId, accountTo, -amount);
+        await incrementBalance(userData.settings.userId, account, -amount);
+        await incrementBalance(userData.settings.userId, accountTo, +amount);
       }
 
       await changeUserData();

@@ -43,7 +43,7 @@ export const TransferAccount = memo(
             {defaultNames.includes(category?.name || '') ? t(category?.name || '') : category?.name}
           </p>
         </div>
-        <div className={styles.iconWrapper}>
+        <div className={styles.iconWrapper} style={{ borderRadius: '50%' }}>
           <span className='material-icons' style={{ color: category?.color }}>
             {category?.icon}
           </span>

@@ -16,7 +16,7 @@ import { defaultUserData } from '../../../data/default-user-data';
 import styles from './DeleteButton.module.scss';
 
 export const DeleteButton = () => {
-  const { userData, changeUserSettings } = useContext(AuthContext);
+  const { userData, changeUserSettings, changeUserData } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
 
@@ -26,19 +26,20 @@ export const DeleteButton = () => {
   const handleClose = useCallback(() => setOpen(false), []);
 
   const deleteAllData = useCallback(async () => {
+    await deleteAllUserTransactions(userData.settings.userId);
     await deleteAllUserData(userData.settings.userId, {
       accounts: userData.data.accounts,
       categories: userData.data.categories,
     });
-    await deleteAllUserTransactions(userData.settings.userId);
 
     await setUserData(userData.settings.userId, {
       accounts: defaultUserData.data.accounts,
       categories: defaultUserData.data.categories,
     });
-
+    await changeUserData();
     await changeUserSettings();
   }, [
+    changeUserData,
     changeUserSettings,
     userData.data.accounts,
     userData.data.categories,
@@ -47,9 +48,10 @@ export const DeleteButton = () => {
 
   const deleteTransactions = useCallback(async () => {
     await deleteAllUserTransactions(userData.settings.userId);
+    await changeUserData();
     await changeUserSettings();
     handleClose();
-  }, [userData.settings.userId, changeUserSettings, handleClose]);
+  }, [userData.settings.userId, changeUserData, changeUserSettings, handleClose]);
 
   return (
     <div>
