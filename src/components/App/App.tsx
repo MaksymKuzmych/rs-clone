@@ -20,14 +20,14 @@ export const App = () => {
           <AuthProvider>
             <SearchProvider>
               <Header />
-              <div className='main'>
+              <main className='main'>
                 <Routes>
                   <Route path='/' element={<CategoryPage />} />
                   <Route path='/accounts' element={<AccountPage />} />
                   <Route path='/transactions' element={<TransactionPage />} />
                   <Route path='*' element={<NotFound />} />
                 </Routes>
-              </div>
+              </main>
               <Footer />
             </SearchProvider>
           </AuthProvider>
