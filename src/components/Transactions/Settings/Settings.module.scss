@@ -1,0 +1,54 @@
+@import '../../../styles/variables.scss';
+
+.headerWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  color: white;
+}
+
+.account,
+.category {
+  display: flex;
+  width: 50%;
+  text-align: center;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.name {
+  font-size: 21px;
+}
+
+.iconWrapper {
+  margin-top: -32.5px;
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnsWrapper {
+  border-top: 1px solid $gray;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+
+.error {
+  color: $red-font;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+}

@@ -1,0 +1,63 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10px;
+
+  &:hover .img {
+    filter: brightness(0.9);
+  }
+}
+
+.categoryEmpty {
+  opacity: 0.7;
+}
+
+.buttonAdd {
+  border: 2px dashed $gray;
+  border-radius: 50%;
+  width: 51px;
+  height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $gray;
+}
+
+.img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s;
+}
+
+.title {
+  font-weight: 500;
+  margin: 0;
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+
+.sum {
+  padding-top: 10px;
+  color: $gray;
+  font-weight: 700;
+}
+
+.add {
+  color: $gray;
+}

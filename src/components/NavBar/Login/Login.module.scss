@@ -1,0 +1,52 @@
+@import '../../../styles/variables.scss';
+
+.wrapper {
+  padding: 20px;
+}
+
+.title {
+  margin-top: 0;
+  text-align: center;
+}
+
+.submitBtn {
+  width: 100%;
+  border-radius: 5px;
+  margin: 20px 0;
+  background-color: $lilac;
+  padding: 10px;
+  color: white;
+  font-size: 24px;
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #d44f3d;
+  color: white;
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.githubBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #90969f;
+  color: white;
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.icon {
+  width: 25px;
+}

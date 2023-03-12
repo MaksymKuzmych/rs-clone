@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+
+.bar {
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid black;
+  height: 65px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 18px;
+  outline: none;
+
+  .text {
+    display: none;
+  }
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+.item:active {
+  transform: scale(0.95);
+}
+
+.activeItem {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 18px;
+  outline: none;
+}

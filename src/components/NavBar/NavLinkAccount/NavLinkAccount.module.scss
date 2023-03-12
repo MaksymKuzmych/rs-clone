@@ -1,0 +1,40 @@
+@import '../../../styles/variables.scss';
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.subtitle {
+  color: $lilac;
+  padding: 5px 0;
+  font-size: 18px;
+}
+
+.googleBtn,
+.githubBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 8px 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #d44f3d;
+  color: white;
+  width: 100%;
+  font-size: 18px;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.githubBtn {
+  background-color: #90969f;
+}
+
+.icon {
+  height: 25px;
+}

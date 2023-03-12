@@ -1,0 +1,44 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 50%;
+  padding: 10px 0;
+  cursor: pointer;
+  align-items: center;
+  padding-left: 10px;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.name {
+  font-size: 23px;
+}
+
+.iconWrapper {
+  position: absolute;
+  right: 5px;
+  top: -25px;
+  width: 45px;
+  height: 45px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.iconWrapperCategory {
+  border-radius: 50%;
+  padding: 10px;
+}

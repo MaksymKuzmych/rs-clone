@@ -1,0 +1,48 @@
+@import '../../styles/variables.scss';
+
+.transactionPage {
+  flex-grow: 1;
+}
+
+.transactionWrapper {
+  height: calc(100vh - 100px - 65px);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    border-radius: 3px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $gray;
+  }
+}
+
+.buttonAdd,
+.buttonAddDisabled {
+  position: absolute;
+  bottom: 100px;
+  right: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: white;
+  font-size: 32px;
+  background-color: $lilac;
+}
+
+.buttonAddDisabled {
+  background-color: $gray;
+}
+
+.noTransactions {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 40vh;
+}

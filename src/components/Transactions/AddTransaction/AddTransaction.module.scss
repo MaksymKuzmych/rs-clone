@@ -1,0 +1,192 @@
+@import '../../../styles/variables.scss';
+
+.categoriesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track {
+    padding: 2px 0;
+    border-radius: 3px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    border-radius: 3px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $gray;
+  }
+}
+
+.emptyCategoriesWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accountsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track {
+    padding: 2px 0;
+    border-radius: 3px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    border-radius: 3px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $gray;
+  }
+}
+
+.categoryWrapper {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category,
+.categoryInactive {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.categoryInactive {
+  opacity: 0.7;
+}
+
+.account {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 0.5px solid #7f7f7f;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.iconWrapper,
+.accountIconWrapper {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.accountIconWrapper {
+  width: 65px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.accountName {
+  font-size: 22px;
+}
+
+.tabWrapper {
+  display: flex;
+}
+
+.tab {
+  display: flex;
+  width: 33.3%;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  padding: 20px;
+  border-bottom: solid 2px $gray;
+}
+
+.header {
+  padding: 20px;
+  margin: 0 10px;
+  color: white;
+  border-radius: 5px 5px 0 0;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.description {
+  font-size: 20px;
+  color: $gray;
+}
+
+.balanceWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+}
+
+.balance {
+  font-size: 26px;
+}
+
+.emptyAccountsTitle {
+  padding: 20px 10px;
+  color: $gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.modalContent {
+  width: 320px;
+}
+
+.modalHeader {
+  display: flex;
+  color: white;
+}
+
+.title {
+  border-bottom: solid 2px $gray;
+  text-align: center;
+  color: #7f7f7f;
+  font-weight: 700;
+  padding-bottom: 10px;
+  margin: 20px;
+}

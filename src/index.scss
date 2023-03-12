@@ -1,0 +1,80 @@
+@import '/node_modules/normalize.css';
+@import './styles/variables.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto';
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .SnackbarContainer-bottom {
+    bottom: 65px;
+  }
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.css-epd502 {
+  position: absolute;
+  top: 0;
+  right: -185px;
+}
+
+.material-icons {
+  font-size: 30px;
+}
+
+a.text:active,
+a.text:hover,
+a.text {
+  text-decoration: none;
+  color: #666;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  outline: none;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 0;
+  background-color: black;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.overlayOpenPending {
+  width: 100%;
+  z-index: 3;
+}
