@@ -1,0 +1,54 @@
+@import '../../../styles/variables.scss';
+
+.account {
+  display: flex;
+  gap: 20px;
+  padding: 15px 0;
+  cursor: pointer;
+  border-bottom: 0.5px solid $gray;
+  margin-right: 5px;
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.iconWrapper {
+  width: 65px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.infoUpper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 22px;
+}
+
+.nameActive {
+  color: $lilac;
+  font-size: 22px;
+}
+
+.description {
+  font-size: 20px;
+  color: $gray;
+}
+
+.amount {
+  font-size: 22px;
+}

@@ -1,0 +1,97 @@
+@import '../../styles/variables.scss';
+
+.wrapper {
+  height: 100%;
+}
+
+.navHeader {
+  background-color: $lilac;
+  padding: 10.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+
+  .button {
+    color: white;
+    font-size: 12px;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    transition: box-shadow 0.5s;
+    &:hover {
+      box-shadow: 0 0 7px;
+    }
+  }
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.userUpper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.userAva {
+  background-color: $gray-light;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+}
+
+.userPhoto {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.userName {
+  color: white;
+  padding-top: 10px;
+}
+
+.menu {
+  padding: 0 10px;
+  position: relative;
+}
+
+.subtitle {
+  color: $lilac;
+  padding: 4px 0;
+  font-size: 18px;
+}
+
+.RssLogo {
+  width: 100%;
+}
+
+.logoWrapper {
+  padding: 5px 0;
+  border-radius: 15px;
+  transition: transform 0.5s;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.linkWrapper {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.year {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+}

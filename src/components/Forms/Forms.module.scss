@@ -1,0 +1,63 @@
+@import '../../styles/variables.scss';
+
+.upperWrapper {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  flex-grow: 1;
+  margin: 0 10px 10px 0;
+  font-size: 26px;
+}
+
+.innerWrapper {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  margin: -25px 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iconWrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.balanceWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.currency {
+  font-size: 24px;
+}
+
+.categoriesBtnsWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

@@ -1,0 +1,27 @@
+@import '../../../styles/variables.scss';
+
+.add {
+  display: flex;
+  gap: 20px;
+  padding: 15px 0;
+  color: $gray;
+  cursor: pointer;
+}
+
+.iconWrapper {
+  width: 65px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 2px dashed $gray;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  font-size: 22px;
+}

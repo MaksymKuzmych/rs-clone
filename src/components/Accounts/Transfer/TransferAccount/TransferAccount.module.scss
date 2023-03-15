@@ -1,0 +1,30 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 50%;
+  padding: 10px 0 10px 10px;
+}
+
+.text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.name {
+  font-size: 23px;
+  text-align: center;
+}
+
+.iconWrapper {
+  position: absolute;
+  right: 5px;
+  margin-top: -32.5px;
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

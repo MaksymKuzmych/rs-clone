@@ -1,0 +1,36 @@
+@import '../../../../styles/variables.scss';
+
+.calendar {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.title {
+  font-weight: 700;
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton {
+  color: $lilac;
+  padding: 5px;
+  cursor: pointer;
+  transition: filter 0.3s;
+  align-self: flex-end;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}

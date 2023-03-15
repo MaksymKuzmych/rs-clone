@@ -1,0 +1,32 @@
+.wrapper {
+  padding: 20px;
+}
+
+.content {
+  padding-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.delete {
+  color: #f3433490;
+}
+
+.delete:hover {
+  color: #f34334;
+}
+
+.cancel {
+  color: #7f7f7f90;
+}
+
+.cancel:hover {
+  color: #7f7f7f;
+}
