@@ -50,6 +50,11 @@ export const Calculator = memo(
     const solved = useCallback(() => setIsSolved(true), []);
     const notSolved = useCallback(() => setIsSolved(false), []);
 
+    useEffect(() => {
+      changeAmountHandler('');
+      changeNotesHandler('');
+    }, [changeAmountHandler, changeNotesHandler]);
+
     useEffect(() => divRef.current?.focus(), []);
 
     useEffect(() => {
